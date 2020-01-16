@@ -1,4 +1,5 @@
-import 'package:custed2/ui/tabs/home/home.dart';
+import 'package:custed2/ui/home/home_tab.dart';
+import 'package:custed2/ui/user/user_tab.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -8,6 +9,7 @@ class AppFrame extends StatefulWidget {
 }
 
 class _AppFrameState extends State<AppFrame> {
+  // 处理多 Navigator 情况下安卓返回键行为
   // See: https://github.com/flutter/flutter/issues/24105#issuecomment-530222677
   final _tabController = CupertinoTabController();
   final _tab0NavKey = GlobalKey<NavigatorState>();
@@ -97,7 +99,7 @@ class _AppFrameState extends State<AppFrame> {
               navigatorKey: _tab3NavKey,
               defaultTitle: '账户',
               builder: (context) {
-                return PlaceholderWidget();
+                return UserTab();
               },
             );
         }

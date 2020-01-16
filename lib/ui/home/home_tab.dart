@@ -1,4 +1,5 @@
-import 'package:custed2/ui/tabs/home/widgets/weather.dart';
+import 'package:custed2/config/route.dart';
+import 'package:custed2/ui/home/widgets/weather.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/title.dart';
@@ -12,7 +13,11 @@ class HomeTab extends StatelessWidget {
       navigationBar: NavBar.cupertino(
         context: context,
         leading: NavBarTitle(
-          child: Text('Custed'),
+          child: GestureDetector(
+            child: Text('Custed'),
+            onTap: () => print('1'),
+            onLongPress: () => debugPage.go(context),
+          ),
         ),
         middle: WeatherWidget(),
         trailing: NavBarMoreBtn(
