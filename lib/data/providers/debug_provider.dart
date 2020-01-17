@@ -1,7 +1,7 @@
+import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/data/debug_data.dart';
-import 'package:flutter/widgets.dart';
 
-class DebugProvider extends ChangeNotifier {
+class DebugProvider extends ProviderBase {
   DebugData debugData = DebugData();
 
   void addText(String text) {

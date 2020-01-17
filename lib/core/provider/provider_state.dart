@@ -1,0 +1,4 @@
+enum ProviderState {
+  idle,
+  busy,
+}

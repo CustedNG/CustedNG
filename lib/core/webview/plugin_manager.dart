@@ -1,12 +1,10 @@
-import 'package:custed2/web/plugin.dart';
-import 'package:custed2/web/plugin_set.dart';
-import 'package:custed2/web/plugins/login_plugin.dart';
+import 'package:custed2/config/webview.dart';
+import 'package:custed2/core/webview/plugin.dart';
+import 'package:custed2/core/webview/plugin_set.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PluginManager {
-  final plugins = <WebPlugin>[
-    LoginPlugin(),
-  ];
+  final plugins = webviewPlugins;
 
   PluginSet getPulgins(Uri uri) {
     final activePlugins = <WebPlugin>[];

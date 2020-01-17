@@ -31,6 +31,9 @@ dependencies:
   webview_flutter: ^0.3.19+2
   otp: ^1.0.3
 
+  chopper: ^3.0.1+1
+  chopper_generator: ^3.0.3
+
 
 
 

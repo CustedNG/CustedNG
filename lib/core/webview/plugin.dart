@@ -1,4 +1,4 @@
-import 'package:custed2/web/plugin_set.dart';
+import 'package:custed2/core/webview/plugin_set.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

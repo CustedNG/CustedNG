@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:custed2/platform/platform_api.dart';
+import 'package:custed2/core/platform/platform_api.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AppDocDir extends PlatformApi<Future<String>> {

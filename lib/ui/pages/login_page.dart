@@ -1,6 +1,6 @@
 import 'package:custed2/config/theme.dart';
-import 'package:custed2/web/plugin_manager.dart';
-import 'package:custed2/web/plugin_set.dart';
+import 'package:custed2/core/webview/plugin_manager.dart';
+import 'package:custed2/core/webview/plugin_set.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 

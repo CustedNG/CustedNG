@@ -1,6 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/app_frame.dart';
-import 'package:custed2/platform/os/app_doc_dir.dart';
+import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
