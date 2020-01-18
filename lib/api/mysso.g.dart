@@ -32,4 +32,23 @@ class _MyssoApi implements MyssoApi {
     final value = _result.data;
     return Future.value(value);
   }
+
+  @override
+  login(data) async {
+    ArgumentError.checkNotNull(data, 'data');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(data.toJson() ?? <String, dynamic>{});
+    final Response<String> _result = await _dio.request('/cas/login',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = _result.data;
+    return Future.value(value);
+  }
 }

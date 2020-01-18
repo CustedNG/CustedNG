@@ -43,7 +43,7 @@ class LoginPlugin extends WebviewPlugin {
     controller.evaluateJavascript(rmHeader);
     controller.evaluateJavascript(loginHook);
 
-    final userData = await locator.getAsync<UserDataService>();
+    final userData = await locator.getAsync<UserDataStore>();
     final username = userData.username.fetch();
     final password = userData.password.fetch();
 

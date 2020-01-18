@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
           plugins = pluginManager.getPulgins(Uri.parse(request.url));
           plugins.onEvent('loginData').listen((data) async {
             print(data);
-            final userData = await locator.getAsync<UserDataService>();
+            final userData = await locator.getAsync<UserDataStore>();
             userData.username.put(data['username']);
             userData.password.put(data['password']);
           });

@@ -1,6 +1,6 @@
-import 'package:custed2/core/service/presistent_service.dart';
+import 'package:custed2/core/store/presistent_store.dart';
 
-class UserDataService with PresistentService {
+class UserDataStore with PresistentStore {
   @override
   final boxName = 'user';
 

@@ -14,4 +14,21 @@ abstract class MyssoApi {
 
   @GET("/cas/login")
   Future<String> getLoginPage();
+
+  @POST("/cas/login")
+  Future<String> login(@Body() MyssoLoginData data);
+}
+
+class MyssoLoginData {
+  String username;
+  String password;
+  String execution;
+
+  Map<String, String> toJson() => {
+    'username': username,
+    'password': password,
+    'execution': execution,
+    '_eventId': 'submit',
+    'geolocation': '',
+  };
 }
