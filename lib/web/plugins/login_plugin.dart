@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:custed2/core/webview/plugin.dart';
+import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/user_service.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -33,6 +34,7 @@ class LoginPlugin extends WebviewPlugin {
     (function() {
       document.querySelector('input[id=username]').value = '$username';
       document.querySelector('input[id=password]').value = '$password';
+      document.querySelector('input[type=submit]').disabled = false;
     })();
   ''';
 
@@ -51,8 +53,12 @@ class LoginPlugin extends WebviewPlugin {
   }
 
   @override
-  void onMessage(String message) {
+  void onMessage(String message) async {
     final data = json.decode(message);
     emitEvent('loginData', data);
+    locator<SnakebarProvider>().info('登录成功');
+    await Future.delayed(Duration(milliseconds: 5000));
+    locator<SnakebarProvider>().clear();
+
   }
 }

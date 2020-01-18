@@ -120,9 +120,10 @@ class _DebugPageState extends State<DebugPage> {
           child: SizedBox.expand(
             child: SingleChildScrollView(
               child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: debug.debugData.widgets),
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: debug.widgets,
+              ),
             ),
           ),
         ),

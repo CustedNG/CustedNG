@@ -1,6 +1,7 @@
 import 'package:custed2/ui/home/home_tab.dart';
 import 'package:custed2/ui/user/user_tab.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
+import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/cupertino.dart';
 
 class AppFrame extends StatefulWidget {
@@ -23,7 +24,7 @@ class _AppFrameState extends State<AppFrame> {
       onWillPop: () async {
         return !await _currentNavigatorKey().currentState.maybePop();
       },
-      child: _buildScaffold(),
+      child: _buildFrame(),
     );
   }
 
@@ -39,6 +40,17 @@ class _AppFrameState extends State<AppFrame> {
         return _tab3NavKey;
     }
     throw 'unreachable';
+  }
+
+  Widget _buildFrame() {
+    return Column(
+      children: <Widget>[
+        Flexible(
+          child: _buildScaffold(),
+        ),
+        Snakebar(),
+      ],
+    );
   }
 
   Widget _buildScaffold() {
