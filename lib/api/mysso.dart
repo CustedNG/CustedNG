@@ -1,6 +1,6 @@
 import 'package:custed2/locator.dart';
 import 'package:dio/dio.dart';
-import 'package:retrofit/retrofit.dart';
+import 'package:retrofit/retrofit.dart' hide Headers;
 
 part 'mysso.g.dart';
 
@@ -9,7 +9,8 @@ abstract class MyssoApi {
   factory MyssoApi() => _MyssoApi(_buildDio());
 
   static Dio _buildDio() {
-    return locator<Dio>();
+    return locator<Dio>()
+      ..options.contentType = Headers.formUrlEncodedContentType;
   }
 
   @GET("/cas/login")
@@ -20,15 +21,21 @@ abstract class MyssoApi {
 }
 
 class MyssoLoginData {
+  MyssoLoginData({
+    this.username,
+    this.password,
+    this.execution,
+  });
+
   String username;
   String password;
   String execution;
 
   Map<String, String> toJson() => {
-    'username': username,
-    'password': password,
-    'execution': execution,
-    '_eventId': 'submit',
-    'geolocation': '',
-  };
+        'username': username,
+        'password': password,
+        'execution': execution,
+        '_eventId': 'submit',
+        'geolocation': '',
+      };
 }

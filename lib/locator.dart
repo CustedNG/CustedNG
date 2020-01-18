@@ -10,6 +10,7 @@ import 'package:custed2/cmds/test.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/store/cookie_store.dart';
 import 'package:custed2/store/user_store.dart';
 import 'package:custed2/store/weather_store.dart';
@@ -55,4 +56,6 @@ void setupLocator(String docDir) {
   });
 
   locator.registerLazySingleton(() => MyssoApi());
+  locator.registerLazySingleton(() => MyssoService());
+
 }

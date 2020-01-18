@@ -1,6 +1,7 @@
-import 'package:custed2/api/mysso.dart';
 import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/core/tty/executer.dart';
+import 'package:custed2/locator.dart';
+import 'package:custed2/service/mysso_service.dart';
 
 class TestCommand extends TTYCommand {
   @override
@@ -14,7 +15,6 @@ class TestCommand extends TTYCommand {
 
   @override
   main(TTYExecuter executer, List<String> args) async {
-    final resp = await MyssoApi().getLoginPage();
-    print(resp);
+    locator<MyssoService>().login();
   }
 }

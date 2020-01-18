@@ -17,9 +17,14 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  provider: ^3.2.0
   flutter:
     sdk: flutter
+
+  provider: ^3.2.0
+  get_it: ^4.0.0-beta3
+
+  html: ^0.14.0+3
+  path: ^1.6.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -37,15 +42,12 @@ dependencies:
   chopper: ^3.0.1+1
   chopper_generator: ^3.0.3
 
-  get_it: ^4.0.0-beta3
-
   dio: ^3.0.8
   retrofit: ^1.0.1+1
   cookie_jar: ^1.0.1
   dio_flutter_transformer: ^3.0.2
   dio_cookie_manager: ^1.0.0
   
-  path: ^1.6.4
 
 
 

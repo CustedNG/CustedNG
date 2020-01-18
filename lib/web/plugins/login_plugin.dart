@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:custed2/core/webview/plugin.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/service/user_service.dart';
+import 'package:custed2/store/user_store.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginPlugin extends WebviewPlugin {
