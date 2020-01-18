@@ -13,13 +13,9 @@ import 'package:provider/provider.dart';
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initHive();
-  setupLocator();
-}
-
-Future<void> initHive() async {
   final docDir = await getAppDocDir.invoke();
   Hive.init(docDir);
+  setupLocator(docDir);
 }
 
 void runInZone(Function body) {

@@ -1,6 +1,5 @@
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:custed2/data/debug_data.dart';
 
 class DebugProvider extends ProviderBase {
   final widgets = <Widget>[];
@@ -53,5 +52,10 @@ class DebugProvider extends ProviderBase {
     );
 
     widgets.add(outlined);
+  }
+
+  void clear() {
+    widgets.clear();
+    notifyListeners();
   }
 }

@@ -9,12 +9,15 @@ class HelpCommand extends TTYCommand {
   final help = 'Print help information';
 
   @override
+  final alias = 'h';
+
+  @override
   main(TTYExecuter executer, List<String> args) {
     final builder = StringBuffer();
     builder.writeln('AVALIABLE COMMANDS:');
     builder.writeln('');
     for (var cmd in executer.commands) {
-      builder.writeln(cmd.name.padRight(10) + cmd.help);
+      builder.writeln('  ' + cmd.name.padRight(10) + cmd.help);
     }
     print(builder.toString());
   }
