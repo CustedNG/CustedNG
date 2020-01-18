@@ -1,4 +1,6 @@
+import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -92,25 +94,60 @@ class _DebugPageState extends State<DebugPage> {
   }
 
   Widget _buildTerminal(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        children: <Widget>[
+          Flexible(
+            child: _buildTerminalText(context),
+          ),
+          _buildPrompt(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTerminalText(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
       color: CupertinoColors.black,
       child: DefaultTextStyle(
-          style: TextStyle(
-            fontFamily: 'monospace',
-            color: CupertinoColors.white,
-            fontWeight: FontWeight.bold,
-          ),
-          child: SafeArea(
-            child: SizedBox.expand(
-              child: SingleChildScrollView(
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: debug.debugData.widgets),
-              ),
+        style: TextStyle(
+          fontFamily: 'monospace',
+          color: CupertinoColors.white,
+          fontWeight: FontWeight.bold,
+        ),
+        child: SafeArea(
+          child: SizedBox.expand(
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: debug.debugData.widgets),
             ),
-          )),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPrompt(BuildContext context) {
+    return CupertinoTextField(
+      decoration: BoxDecoration(
+        color: CupertinoColors.black,
+      ),
+      style: TextStyle(
+        color: CupertinoColors.white,
+        fontFamily: 'monospace',
+      ),
+      cursorColor: CupertinoColors.activeGreen,
+      prefix: Icon(
+        Icons.arrow_forward,
+        color: CupertinoColors.white,
+      ),
+      onSubmitted: (text) {
+        final executer = locator<TTYExecuter>();
+        executer.execute(text);
+      },
     );
   }
 }

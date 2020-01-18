@@ -16,7 +16,7 @@ class _Event {
 class PluginSet {
   PluginSet({this.plugins});
 
-  List<WebPlugin> plugins;
+  List<WebviewPlugin> plugins;
 
   final _events = StreamController<_Event>();
 

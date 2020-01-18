@@ -7,7 +7,7 @@ class PluginManager {
   final plugins = webviewPlugins;
 
   PluginSet getPulgins(Uri uri) {
-    final activePlugins = <WebPlugin>[];
+    final activePlugins = <WebviewPlugin>[];
 
     for (var plugin in plugins) {
       if (plugin.shouldActivate(uri)) {

@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:custed2/core/webview/plugin.dart';
+import 'package:custed2/locator.dart';
+import 'package:custed2/service/user_service.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class LoginPlugin extends WebPlugin {
+class LoginPlugin extends WebviewPlugin {
   @override
   final targetPath = '/cas/login';
 
@@ -27,10 +29,25 @@ class LoginPlugin extends WebPlugin {
     }
   ''';
 
+  String setUserLoginInfo(String username, String password) => '''
+    (function() {
+      document.querySelector('input[id=username]').value = '$username';
+      document.querySelector('input[id=password]').value = '$password';
+    })();
+  ''';
+
   @override
-  void onPageFinished(String url, WebViewController controller) {
+  void onPageFinished(String url, WebViewController controller) async {
     controller.evaluateJavascript(rmHeader);
     controller.evaluateJavascript(loginHook);
+
+    final userData = await locator.getAsync<UserDataService>();
+    final username = userData.username.fetch();
+    final password = userData.password.fetch();
+
+    if (username != null || password != null) {
+      controller.evaluateJavascript(setUserLoginInfo(username, password));
+    }
   }
 
   @override

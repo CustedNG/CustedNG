@@ -1,0 +1,34 @@
+import 'package:custed2/core/tty/command.dart';
+
+class TTYExecuter {
+  final Map<String, TTYCommand> _commandMap = <String, TTYCommand>{};
+
+  Iterable<TTYCommand> get commands => _commandMap.values;
+
+  void register(TTYCommand command) {
+    _commandMap[command.name] = command;
+  }
+
+  void remove(TTYCommand command) {
+    _commandMap.remove(command.name);
+  }
+
+  void execute(String cmd) {
+    final tokens = cmd.split(RegExp(r'\s+'));
+
+    if (tokens.isEmpty) {
+      print('Empty command');
+      return;
+    }
+
+    final name = tokens[0];
+    final command = _commandMap[name];
+
+    if (command == null) {
+      print('no such command: $name');
+      return;
+    }
+
+    command.main(this, tokens.sublist(1));
+  }
+}

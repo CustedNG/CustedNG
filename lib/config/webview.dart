@@ -1,6 +1,6 @@
 import 'package:custed2/core/webview/plugin.dart';
 import 'package:custed2/web/plugins/login_plugin.dart';
 
-final webviewPlugins = <WebPlugin>[
+final webviewPlugins = <WebviewPlugin>[
     LoginPlugin(),
 ];

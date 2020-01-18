@@ -27,12 +27,17 @@ dependencies:
   
   after_layout: ^1.0.7+2
   path_provider: ^1.5.1
+
   hive: ^1.3.0
+  hive_flutter: ^0.3.0+1
+
   webview_flutter: ^0.3.19+2
   otp: ^1.0.3
 
   chopper: ^3.0.1+1
   chopper_generator: ^3.0.3
+
+  get_it: ^4.0.0-beta3
 
 
 

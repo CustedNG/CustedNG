@@ -2,7 +2,7 @@ import 'package:custed2/core/webview/plugin_set.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-abstract class WebPlugin {
+abstract class WebviewPlugin {
   final targetPath = '/';
 
   String channel;
