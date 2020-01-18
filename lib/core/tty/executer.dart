@@ -3,6 +3,7 @@ import 'package:custed2/core/tty/command.dart';
 class TTYExecuter {
   final Map<String, TTYCommand> _commandMap = <String, TTYCommand>{};
   final Map<String, TTYCommand> _commandAliasMap = <String, TTYCommand>{};
+  String _cwd = '/';
 
   Iterable<TTYCommand> get commands => _commandMap.values;
 
@@ -38,4 +39,10 @@ class TTYExecuter {
 
     command.main(this, tokens.sublist(1));
   }
+
+  void cd(String path) {
+    _cwd = path;
+  }
+
+  String get cwd => _cwd;
 }

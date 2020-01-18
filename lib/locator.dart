@@ -5,6 +5,7 @@ import 'package:custed2/cmds/clear.dart';
 import 'package:custed2/cmds/cookies.dart';
 import 'package:custed2/cmds/echo.dart';
 import 'package:custed2/cmds/help.dart';
+import 'package:custed2/cmds/ls.dart';
 import 'package:custed2/cmds/snake.dart';
 import 'package:custed2/cmds/test.dart';
 import 'package:custed2/core/tty/executer.dart';
@@ -35,13 +36,15 @@ void setupLocator(String docDir) {
 
   locator.registerLazySingleton(() {
     return TTYExecuter()
+      ..cd(docDir)
       ..register(BoxCommand())
       ..register(EchoCommand())
       ..register(HelpCommand())
       ..register(SnakeCommand())
       ..register(TestCommand())
       ..register(ClearCommand())
-      ..register(CookiesCommand());
+      ..register(CookiesCommand())
+      ..register(LsCommand());
   });
 
   locator.registerLazySingleton(
@@ -57,5 +60,4 @@ void setupLocator(String docDir) {
 
   locator.registerLazySingleton(() => MyssoApi());
   locator.registerLazySingleton(() => MyssoService());
-
 }

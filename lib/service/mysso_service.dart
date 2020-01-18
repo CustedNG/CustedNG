@@ -2,16 +2,22 @@ import 'package:custed2/api/mysso.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/store/user_store.dart';
 import 'package:html/parser.dart' show parse;
-import 'package:html/dom.dart';
 
 class MyssoService {
   final _api = locator<MyssoApi>();
 
-  login() async {
+  Future<bool> login() async {
+    final loginPage = await _api.getLoginPage();
+    if (loginPage.contains('登录成功')) {
+      print(loginPage);
+      return true;
+    }
+
     final userData = await locator.getAsync<UserDataStore>();
-    final loginPage = parse(await _api.getLoginPage());
+
+    final loginPageParsed = parse(loginPage);
     final execution =
-        loginPage.querySelector('input[name=execution]').attributes['value'];
+        loginPageParsed.querySelector('input[name=execution]').attributes['value'];
 
     final resp = await _api.login(MyssoLoginData(
       username: userData.username.fetch(),
@@ -20,5 +26,6 @@ class MyssoService {
     ));
 
     print(resp);
+    return true;
   }
 }

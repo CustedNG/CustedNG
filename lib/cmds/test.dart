@@ -15,6 +15,6 @@ class TestCommand extends TTYCommand {
 
   @override
   main(TTYExecuter executer, List<String> args) async {
-    locator<MyssoService>().login();
+    print(await locator<MyssoService>().login());
   }
 }
