@@ -1,15 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'mysso.dart';
+part of 'webvpn.dart';
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class _MyssoApi implements MyssoApi {
-  _MyssoApi(this._dio, {this.baseUrl}) {
+class _WebvpnApi implements WebvpnApi {
+  _WebvpnApi(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118/';
+    this.baseUrl ??= 'https://webvpn.cust.edu.cn/';
   }
 
   final Dio _dio;
@@ -17,11 +17,11 @@ class _MyssoApi implements MyssoApi {
   String baseUrl;
 
   @override
-  getLoginPage() async {
+  home() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<String> _result = await _dio.request('/cas/login',
+    final Response<String> _result = await _dio.request('/',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -34,16 +34,18 @@ class _MyssoApi implements MyssoApi {
   }
 
   @override
-  login(data) async {
-    ArgumentError.checkNotNull(data, 'data');
+  login(ticket, [entryID = '1']) async {
+    ArgumentError.checkNotNull(ticket, 'ticket');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      'ticket': ticket,
+      'entry_id': entryID
+    };
     final _data = <String, dynamic>{};
-    _data.addAll(data.toJson() ?? <String, dynamic>{});
-    final Response<String> _result = await _dio.request('/cas/login',
+    final Response<String> _result = await _dio.request('/auth/cas_validate',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'POST',
+            method: 'GET',
             headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),

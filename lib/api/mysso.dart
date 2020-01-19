@@ -2,22 +2,65 @@ import 'package:custed2/locator.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart' hide Headers;
 
-part 'mysso.g.dart';
-
-@RestApi(baseUrl: "http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118/")
-abstract class MyssoApi {
-  factory MyssoApi() => _MyssoApi(_buildDio());
+class MyssoApi {
+  final Dio _dio = _buildDio();
 
   static Dio _buildDio() {
     return locator<Dio>()
+      ..options.baseUrl = 'http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118/'
       ..options.contentType = Headers.formUrlEncodedContentType;
   }
 
-  @GET("/cas/login")
-  Future<String> getLoginPage();
+  Future<String> getLoginPage() async {
+    final resp = await _dio.request<String>(
+      '/cas/login',
+      options: RequestOptions(method: 'GET'),
+    );
+    return resp.data;
+  }
 
-  @POST("/cas/login")
-  Future<String> login(@Body() MyssoLoginData data);
+  Future<String> login(MyssoLoginData data) async {
+    final resp = await _dio.request<String>('/cas/login',
+        options: RequestOptions(
+          method: 'POST',
+          data: data.toJson(),
+        ));
+    return resp.data;
+  }
+
+  Future<String> getTicket(String service) async {
+    // Example
+    // http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118/cas/login?service=http://192.168.223.72:8080/welcome
+
+    final resp = await _dio.get(
+      '/cas/login',
+      queryParameters: {
+        'service': service,
+      },
+      options: Options(
+        followRedirects: false,
+        validateStatus: (status) => status == 302,
+      ),
+    );
+
+    final redirect = Uri.parse(resp.headers.value('location'));
+    return redirect.queryParameters['ticket'];
+  }
+
+  Future<void> auth(String service) async {
+    // Example
+    // http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118/cas/login?service=http://192.168.223.72:8080/welcome
+
+    final resp = await _dio.get(
+      '/cas/login',
+      queryParameters: {
+        'service': service,
+      },
+      options: Options(
+        followRedirects: true,
+      ),
+    );
+  }
 }
 
 class MyssoLoginData {

@@ -23,73 +23,67 @@ class _DebugPageState extends State<DebugPage> {
 
   @override
   Widget build(BuildContext context) {
-    final content = permitted
-        ? PageView(
-            children: <Widget>[
-              _buildTerminal(context),
-            ],
-          )
-        : SingleChildScrollView(
-            child: Center(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              constraints: BoxConstraints(maxWidth: 300),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 50,
-                  ),
-                  CupertinoTextField(
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    onChanged: (otp) => otpInput = otp,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: CupertinoColors.inactiveGray.withAlpha(200),
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  CupertinoButton(
-                    child: Text('Unlock'),
-                    onPressed: () {
-                      final otp = OTP.generateTOTPCode(
-                        'ORXWC43UORXWC43U',
-                        DateTime.now().millisecondsSinceEpoch,
-                      );
-                      if (otp.toString() == otpInput) {
-                        setState(() {
-                          permitted = true;
-                        });
-                      }
-                    },
-                  )
-                ],
-              ),
-            ),
-          ));
+    final content =
+        permitted ? _buildTerminal(context) : _buildLockScreen(context);
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         backgroundColor: CupertinoColors.black,
         actionsForegroundColor: CupertinoColors.white,
         middle: Text(
-          '终端',
+          'Terminal',
           style: TextStyle(
             color: CupertinoColors.white,
           ),
         ),
-        // trailing: components.NavBarButton(
-        //   child: Icon(CupertinoIcons.clear),
-        //   alignment: Alignment.centerRight,
-        //   onPressed: () => setState(() {
-        //     debug.clear();
-        //   }),
-        // ),
       ),
       child: content,
+    );
+  }
+
+  Widget _buildLockScreen(BuildContext context) {
+    return SingleChildScrollView(
+      child: Center(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          constraints: BoxConstraints(maxWidth: 300),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 50,
+              ),
+              CupertinoTextField(
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+                onChanged: (otp) => otpInput = otp,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: CupertinoColors.inactiveGray.withAlpha(200),
+                  ),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              CupertinoButton(
+                child: Text('Unlock'),
+                onPressed: () {
+                  final otp = OTP.generateTOTPCode(
+                    'ORXWC43UORXWC43U',
+                    DateTime.now().millisecondsSinceEpoch,
+                  );
+                  if (otp.toString() == otpInput) {
+                    setState(() {
+                      permitted = true;
+                    });
+                  }
+                },
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 

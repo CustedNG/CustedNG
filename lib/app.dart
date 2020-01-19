@@ -1,4 +1,5 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:alice/alice.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
@@ -16,13 +17,17 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   Widget build(BuildContext context) {
     const isDark = false;
 
-    return CupertinoApp(
-      theme: CupertinoThemeData(
-        // 在这里修改亮度可以决定应用主题，详见 [AppTheme] 类
-        brightness: isDark ? Brightness.dark : Brightness.light,
+    return MaterialApp(
+      navigatorKey: locator<Alice>().getNavigatorKey(),
+      home: CupertinoApp(
+        navigatorKey: locator<GlobalKey<NavigatorState>>(),
+        theme: CupertinoThemeData(
+          // 在这里修改亮度可以决定应用主题，详见 [AppTheme] 类
+          brightness: isDark ? Brightness.dark : Brightness.light,
+        ),
+        title: 'Custed',
+        home: AppFrame(),
       ),
-      title: 'Custed',
-      home: AppFrame(),
     );
   }
 

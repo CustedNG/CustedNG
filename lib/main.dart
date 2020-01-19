@@ -31,6 +31,7 @@ void runInZone(Function body) {
     final debugProvider = locator<DebugProvider>();
     print('error: $obj');
     debugProvider.addError(obj);
+    debugProvider.addError(stack);
   };
 
   runZoned(

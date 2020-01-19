@@ -25,10 +25,12 @@ dependencies:
 
   html: ^0.14.0+3
   path: ^1.6.4
+  convert: ^2.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  alice: ^0.0.21
   
   after_layout: ^1.0.7+2
   path_provider: ^1.5.1

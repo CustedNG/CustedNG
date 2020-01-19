@@ -9,19 +9,23 @@ class CookiesCommand extends TTYCommand {
   final name = 'cookies';
 
   @override
-  final help = 'Dump cookies in cookieJar';
+  final help = 'cookies [clear]';
 
   @override
   final alias = 'ckl';
 
   @override
   main(TTYExecuter executer, List<String> args) {
+    if (args.isNotEmpty) {
+      return _runSubCommand(args);
+    }
+    
     final buffer = StringBuffer();
     final domains = locator<PersistCookieJar>().domains;
 
     buffer.writeln('COOKIES:');
     buffer.writeln('');
-    
+
     for (var domain in domains) {
       for (var host in domain.keys) {
         buffer.writeln(host);
@@ -34,6 +38,28 @@ class CookiesCommand extends TTYCommand {
         }
       }
     }
+
     locator<DebugProvider>().addMultiline(buffer.toString());
+  }
+
+  void _runSubCommand(List<String> args) {
+    if (args[0] == 'clear') {
+      return _runClear();
+    }
+
+    if (args[0] == 'dump') {
+      return _runDump(Uri.parse(args[1]));
+    }
+  }
+
+  void _runClear() {
+    locator<PersistCookieJar>().deleteAll();
+    print('Cookies all cleared');
+  }
+
+  void _runDump(Uri uri) {
+    final cookies = locator<PersistCookieJar>().loadForRequest(uri);
+    print('COOKIES FOR: $uri');
+    print(cookies);
   }
 }
