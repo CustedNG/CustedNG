@@ -20,7 +20,6 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     return MaterialApp(
       navigatorKey: locator<Alice>().getNavigatorKey(),
       home: CupertinoApp(
-        navigatorKey: locator<GlobalKey<NavigatorState>>(),
         theme: CupertinoThemeData(
           // 在这里修改亮度可以决定应用主题，详见 [AppTheme] 类
           brightness: isDark ? Brightness.dark : Brightness.light,
