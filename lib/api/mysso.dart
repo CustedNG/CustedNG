@@ -1,6 +1,5 @@
 import 'package:custed2/locator.dart';
 import 'package:dio/dio.dart';
-import 'package:retrofit/retrofit.dart' hide Headers;
 
 class MyssoApi {
   final Dio _dio = _buildDio();

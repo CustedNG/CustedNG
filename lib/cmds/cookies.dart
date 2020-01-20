@@ -1,5 +1,6 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/tty/command.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/locator.dart';
@@ -15,7 +16,7 @@ class CookiesCommand extends TTYCommand {
   final alias = 'ckl';
 
   @override
-  main(TTYExecuter executer, List<String> args) {
+  main(TTYExecuter executer, BuildContext context,  List<String> args) {
     if (args.isNotEmpty) {
       return _runSubCommand(args);
     }

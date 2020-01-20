@@ -1,4 +1,6 @@
 import 'package:custed2/core/tty/command.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 
 class TTYExecuter {
   final Map<String, TTYCommand> _commandMap = <String, TTYCommand>{};
@@ -21,7 +23,7 @@ class TTYExecuter {
     }
   }
 
-  void execute(String cmd) {
+  void execute(String cmd, BuildContext context) {
     final tokens = cmd.split(RegExp(r'\s+'));
 
     if (tokens.isEmpty) {
@@ -37,7 +39,7 @@ class TTYExecuter {
       return;
     }
 
-    command.main(this, tokens.sublist(1));
+    command.main(this, context, tokens.sublist(1));
   }
 
   void cd(String path) {

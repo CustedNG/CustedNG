@@ -1,4 +1,5 @@
 import 'package:custed2/core/tty/command.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
@@ -13,7 +14,7 @@ class SnakeCommand extends TTYCommand {
   final help = 'snake <info|clear> [message]';
 
   @override
-  main(TTYExecuter executer, List<String> args) {
+  main(TTYExecuter executer, BuildContext context,  List<String> args) {
     final handlers = <String, SnakeSubCommandHandler>{
       'info': _infoHandler,
       'clear': _clearHandler,

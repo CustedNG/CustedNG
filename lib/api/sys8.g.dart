@@ -59,7 +59,7 @@ class _Sys8Api implements Sys8Api {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(params.toJson() ?? <String, dynamic>{});
-    final Response<String> _result = await _dio.request(
+    final Response<Map<String, dynamic>> _result = await _dio.request(
         '/api/ClientStudent/Home/StudentHomeApi/QueryStudentScheduleData',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -68,7 +68,7 @@ class _Sys8Api implements Sys8Api {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = _result.data;
+    final value = JwResponse.fromJson(_result.data);
     return Future.value(value);
   }
 }

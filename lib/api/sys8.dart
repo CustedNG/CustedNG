@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:convert/convert.dart';
+import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/locator.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart' hide Headers;
@@ -24,7 +25,7 @@ abstract class Sys8Api {
   Future<String> myssoLogin(@Body() Sys8Params params);
 
   @POST("/api/ClientStudent/Home/StudentHomeApi/QueryStudentScheduleData")
-  Future<String> getSchedule([
+  Future<JwResponse> getSchedule([
     @Body() Sys8Params params = const Sys8Params({}),
   ]);
 }

@@ -141,7 +141,7 @@ class _DebugPageState extends State<DebugPage> {
       ),
       onSubmitted: (text) {
         final executer = locator<TTYExecuter>();
-        executer.execute(text);
+        executer.execute(text, context);
       },
     );
   }
