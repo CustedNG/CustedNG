@@ -17,4 +17,6 @@ class JwResponse {
       _$JwResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$JwResponseToJson(this);
+
+  bool get isSuccess => state == 0;
 }
