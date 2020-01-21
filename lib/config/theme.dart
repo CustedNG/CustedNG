@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' as material;
 
 class AppTheme {
-  AppTheme({
+  const AppTheme({
     this.btnPrimaryColor,
     this.navBarColor,
     this.navBarActionsColor,
     this.webviewNavBarColor,
+    this.lightTextColor,
+    this.scheduleOutlineColor,
+    this.scheduleButtonColor,
+    this.scheduleButtonTextColor,
+    this.scheduleTextColor,
   });
 
   static AppTheme bright = AppTheme(
@@ -13,6 +19,11 @@ class AppTheme {
     navBarColor: CupertinoColors.activeBlue,
     navBarActionsColor: CupertinoColors.white,
     webviewNavBarColor: Color(0xFF153E50),
+    lightTextColor: Color(0xFF8A8A8A),
+    scheduleOutlineColor: Color(0xFFE7ECEb),
+    scheduleButtonColor: Color(0xFFF0EFF3),
+    scheduleButtonTextColor: Color(0xFF83868E),
+    scheduleTextColor: Color(0xFF898C91),
   );
 
   static AppTheme dark = AppTheme(
@@ -20,6 +31,12 @@ class AppTheme {
     navBarColor: Color(0xFF113f67),
     navBarActionsColor: CupertinoColors.white,
     webviewNavBarColor: Color(0xFF153E50),
+    lightTextColor: Color(0xFF8A8A8A),
+    scheduleOutlineColor: material.Colors.grey[800],
+    scheduleButtonColor: Color(
+        0xFFF0EFF3), // should be material.Theme.of(context).backgroundColor
+    scheduleButtonTextColor: Color(0xFF83868E),
+    scheduleTextColor: Color(0xFF898C91),
   );
 
   // 根据当前context的亮度，返回应用主题数据
@@ -29,8 +46,13 @@ class AppTheme {
         : bright;
   }
 
-  Color btnPrimaryColor;
-  Color navBarColor;
-  Color navBarActionsColor;
-  Color webviewNavBarColor;
+  final Color btnPrimaryColor;
+  final Color navBarColor;
+  final Color navBarActionsColor;
+  final Color webviewNavBarColor;
+  final Color lightTextColor;
+  final Color scheduleOutlineColor;
+  final Color scheduleButtonColor;
+  final Color scheduleButtonTextColor;
+  final Color scheduleTextColor;
 }

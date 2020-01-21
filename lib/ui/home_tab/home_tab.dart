@@ -1,5 +1,5 @@
 import 'package:custed2/config/route.dart';
-import 'package:custed2/ui/home/widgets/weather.dart';
+import 'package:custed2/ui/home_tab/home_weather.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/title.dart';
@@ -19,7 +19,7 @@ class HomeTab extends StatelessWidget {
             onLongPress: () => debugPage.go(context),
           ),
         ),
-        middle: WeatherWidget(),
+        middle: HomeWeather(),
         trailing: NavBarMoreBtn(
           onTap: () {},
         ),

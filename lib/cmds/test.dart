@@ -1,6 +1,3 @@
-import 'package:custed2/api/mysso.dart';
-import 'package:custed2/api/sys8.dart';
-import 'package:custed2/api/webvpn.dart';
 import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/service/jw_service.dart';
@@ -41,6 +38,7 @@ class TestCommand extends TTYCommand {
     // print(await MyssoService().getTicketForWebvpn());
 
     print(await JwService().getSchedule());
+    print(await JwService().getWeekTime());
     // print(await JwService().isSessionExpired(null));
     // print(await JwService().isSessionExpired(await JwService().get('http://qq.com')));
   }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
+import 'package:custed2/data/models/jw_week_time.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/webvpn_based_service.dart';
@@ -47,6 +48,21 @@ class JwService extends WebvpnBasedService {
 
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
     return JwSchedule.fromJson(parsedResponse.data);
+  }
+
+  Future<JwWeekTime> getWeekTime() async {
+    final resp = await xRequest(
+      'POST',
+      Uri.parse(
+          '$baseUrl/api/ClientStudent/Home/StudentHomeApi/GetHomeCurWeekTime'),
+      body: encodeParams({}),
+      headers: {
+        'content-type': 'application/json',
+      },
+    );
+
+    final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
+    return JwWeekTime.fromJson(parsedResponse.data);
   }
 
   static Map<String, dynamic> encodeParams(Map<String, dynamic> data) {

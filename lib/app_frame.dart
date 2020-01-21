@@ -1,5 +1,6 @@
-import 'package:custed2/ui/home/home_tab.dart';
-import 'package:custed2/ui/user/user_tab.dart';
+import 'package:custed2/ui/home_tab/home_tab.dart';
+import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
+import 'package:custed2/ui/user_tab/user_tab.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/cupertino.dart';
@@ -95,7 +96,7 @@ class _AppFrameState extends State<AppFrame> {
               navigatorKey: _tab1NavKey,
               defaultTitle: '成绩',
               builder: (context) {
-                return PlaceholderWidget();
+                return PlaceholderWidget('施工中...');
               },
             );
           case 2:
@@ -103,7 +104,7 @@ class _AppFrameState extends State<AppFrame> {
               navigatorKey: _tab2NavKey,
               defaultTitle: '课表',
               builder: (context) {
-                return PlaceholderWidget();
+                return ScheduleTab();
               },
             );
           case 3:

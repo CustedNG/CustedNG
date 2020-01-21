@@ -30,7 +30,6 @@ class JwScheduleSection {
   /// e.g. "0910"
   String Section;
 
-  /// e.g. "0910"
   List<JwScheduleLesson> Dtos;
 
   factory JwScheduleSection.fromJson(Map<String, dynamic> json) =>

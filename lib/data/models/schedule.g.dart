@@ -19,18 +19,21 @@ class ScheduleAdapter extends TypeAdapter<Schedule> {
     return Schedule()
       ..lessons = (fields[0] as List)?.cast<ScheduleLesson>()
       ..createdAt = fields[1] as DateTime
-      ..versionHash = fields[2] as DateTime;
+      ..versionHash = fields[2] as String
+      ..startDate = fields[3] as DateTime;
   }
 
   @override
   void write(BinaryWriter writer, Schedule obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.lessons)
       ..writeByte(1)
       ..write(obj.createdAt)
       ..writeByte(2)
-      ..write(obj.versionHash);
+      ..write(obj.versionHash)
+      ..writeByte(3)
+      ..write(obj.startDate);
   }
 }

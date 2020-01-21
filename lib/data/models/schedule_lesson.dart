@@ -44,7 +44,7 @@ class ScheduleLesson {
   @HiveField(9)
   List<int> weeks;
 
-  /// e.g. 0 (周一)
+  /// e.g. 1 (周一)
   @HiveField(10)
   int weekday;
 

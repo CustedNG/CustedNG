@@ -1,7 +1,5 @@
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:custed2/api/mysso.dart';
-import 'package:custed2/api/webvpn.dart';
 import 'package:custed2/cmds/box.dart';
 import 'package:custed2/cmds/clear.dart';
 import 'package:custed2/cmds/cookies.dart';
@@ -15,14 +13,13 @@ import 'package:custed2/cmds/test.dart';
 import 'package:custed2/cmds/test2.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
+import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/store/cookie_store.dart';
 import 'package:custed2/store/user_store.dart';
 import 'package:custed2/store/weather_store.dart';
-import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:dio_flutter_transformer/dio_flutter_transformer.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as path;
 
@@ -31,6 +28,7 @@ GetIt locator = GetIt.instance;
 void setupLocatorForProviders() {
   locator.registerSingleton(DebugProvider());
   locator.registerSingleton(SnakebarProvider());
+  locator.registerSingleton(ScheduleProvider());
 }
 
 void setupLocator(String docDir) {
@@ -62,19 +60,6 @@ void setupLocator(String docDir) {
   locator.registerLazySingleton(
       () => Alice(darkTheme: true, showNotification: false));
 
-  locator.registerFactory(() {
-    final cookieJar = locator<PersistCookieJar>();
-    final alice = locator<Alice>();
-    return Dio()
-      ..options.headers['user-agent'] =
-          'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36'
-      ..transformer = FlutterTransformer()
-      ..interceptors.add(CookieManager(cookieJar))
-      ..interceptors.add(alice.getDioInterceptor());
-  });
-
-  locator.registerLazySingleton(() => MyssoApi());
   locator.registerLazySingleton(() => MyssoService());
-  locator.registerLazySingleton(() => MyssoServiceR());
-  locator.registerLazySingleton(() => WebvpnApi());
+  locator.registerLazySingleton(() => JwService());
 }

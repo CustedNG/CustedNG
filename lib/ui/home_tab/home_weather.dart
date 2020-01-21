@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
-class WeatherWidget extends StatefulWidget {
-  WeatherWidget();
+class HomeWeather extends StatefulWidget {
+  HomeWeather();
 
   @override
-  _WeatherWidgetState createState() => _WeatherWidgetState();
+  _HomeWeatherState createState() => _HomeWeatherState();
 }
 
-class _WeatherWidgetState extends State<WeatherWidget> {
+class _HomeWeatherState extends State<HomeWeather> {
   bool showCurrent = false;
 
   @override

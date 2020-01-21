@@ -34,6 +34,7 @@ class CatClient {
     // Let's handle redirects manually and correctly :)
     request.followRedirects = false;
     loadCookies(request);
+    setUserAgent(request);
     final response = await Response.fromStream(await _client.send(request));
     saveCookies(response);
     _alice.onHttpResponse(response);
@@ -117,6 +118,14 @@ class CatClient {
 
   String findCookiesAsString(Uri uri) {
     return formatCookies(findCookies(uri));
+  }
+
+  void setUserAgent(Request request) {
+    final ua =
+        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36';
+    if (request.headers[HttpHeaders.userAgentHeader] == null) {
+      request.headers[HttpHeaders.userAgentHeader] = ua;
+    }
   }
 }
 

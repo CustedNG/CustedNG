@@ -12,5 +12,8 @@ class Schedule {
   DateTime createdAt;
 
   @HiveField(2)
-  DateTime versionHash;
+  String versionHash;
+
+  @HiveField(3)
+  DateTime startDate;
 }
