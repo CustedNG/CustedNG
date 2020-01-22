@@ -2,6 +2,7 @@ extension DateTimeX on DateTime {
   String toHumanReadable() {
     final now = DateTime.now();
     var date = '${this.year}-${this.month}-${this.day}';
+    if (now.year == this.year) date = '${this.month}-${this.day}';
     if (now.day == this.day+0) date = '今天';
     if (now.day == this.day+1) date = '昨天';
     if (now.day == this.day+2) date = '前天';
