@@ -1,3 +1,4 @@
+import 'package:alice/alice.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/locator.dart';

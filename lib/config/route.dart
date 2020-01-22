@@ -8,6 +8,6 @@ final loginPage = AppRoute(
 );
 
 final debugPage = AppRoute(
-  title: '终端',
+  title: 'Terminal',
   page: DebugPage(),
 );

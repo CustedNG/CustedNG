@@ -1,4 +1,6 @@
+import 'package:alice/alice.dart';
 import 'package:custed2/config/route.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_weather.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';

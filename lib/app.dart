@@ -17,18 +17,23 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   @override
   Widget build(BuildContext context) {
     const isDark = false;
+    final cupertinoTheme = CupertinoThemeData(
+      // 在这里修改亮度可以决定应用主题，详见 [AppTheme] 类
+      brightness: isDark ? Brightness.dark : Brightness.light,
+    );
+    final theme = ThemeData(cupertinoOverrideTheme: cupertinoTheme);
 
-    return MaterialApp(
-      navigatorKey: locator<Alice>().getNavigatorKey(),
-      home: CupertinoApp(
-        theme: CupertinoThemeData(
-          // 在这里修改亮度可以决定应用主题，详见 [AppTheme] 类
-          brightness: isDark ? Brightness.dark : Brightness.light,
-        ),
+    // return MaterialApp(
+    //   navigatorKey: locator<Alice>().getNavigatorKey(),
+    /*home:  */ return Theme(
+      data: theme,
+      child: CupertinoApp(
+        navigatorKey: locator<GlobalKey<NavigatorState>>(),
         title: 'Custed',
         home: AppFrame(),
       ),
-    );
+    ); // ,
+    // );
   }
 
   // 在这里进行初始化，避免启动掉帧
@@ -36,7 +41,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   void afterFirstLayout(BuildContext context) async {
     final path = await getAppDocDir.invoke();
     print('AppDocDir: $path');
-    
+
     final debug = locator<DebugProvider>();
     debug.addMultiline(r'''
   
@@ -48,7 +53,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       App First Layout Done. 
   
     ''');
-    
+
     final schedule = locator<ScheduleProvider>();
     schedule.getInitData();
   }

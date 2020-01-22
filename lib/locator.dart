@@ -21,6 +21,7 @@ import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/data/store/cookie_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/data/store/weather_store.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as path;
 
@@ -36,13 +37,13 @@ void setupLocator(String docDir) {
   locator.registerLazySingleton(() => CookieStore());
   locator.registerLazySingleton(() => WeatherStore());
 
-  locator.registerSingletonAsync<UserDataStore>( (_) async { 
+  locator.registerSingletonAsync<UserDataStore>((_) async {
     final store = UserDataStore();
     await store.init();
     return store;
   });
-  
-  locator.registerSingletonAsync<ScheduleStore>( (_) async { 
+
+  locator.registerSingletonAsync<ScheduleStore>((_) async {
     final store = ScheduleStore();
     await store.init();
     return store;
@@ -68,8 +69,16 @@ void setupLocator(String docDir) {
     () => PersistCookieJar(dir: path.join(docDir, ".cookies/")),
   );
 
+  locator.registerSingleton(GlobalKey<NavigatorState>());
+
   locator.registerLazySingleton(
-      () => Alice(darkTheme: true, showNotification: false));
+    () => Alice(
+      // I will fix darkTheme someday...
+      darkTheme: false,
+      showNotification: false,
+      navigatorKey: locator<GlobalKey<NavigatorState>>(),
+    ),
+  );
 
   locator.registerLazySingleton(() => MyssoService());
   locator.registerLazySingleton(() => JwService());
