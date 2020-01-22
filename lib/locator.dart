@@ -15,11 +15,12 @@ import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/service/mysso_service.dart';
-import 'package:custed2/store/cookie_store.dart';
-import 'package:custed2/store/user_store.dart';
-import 'package:custed2/store/weather_store.dart';
+import 'package:custed2/data/store/cookie_store.dart';
+import 'package:custed2/data/store/user_data_store.dart';
+import 'package:custed2/data/store/weather_store.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as path;
 
@@ -35,7 +36,17 @@ void setupLocator(String docDir) {
   locator.registerLazySingleton(() => CookieStore());
   locator.registerLazySingleton(() => WeatherStore());
 
-  locator.registerSingletonAsync((_) => UserDataStore()..init());
+  locator.registerSingletonAsync<UserDataStore>( (_) async { 
+    final store = UserDataStore();
+    await store.init();
+    return store;
+  });
+  
+  locator.registerSingletonAsync<ScheduleStore>( (_) async { 
+    final store = ScheduleStore();
+    await store.init();
+    return store;
+  });
 
   locator.registerLazySingleton(() {
     return TTYExecuter()

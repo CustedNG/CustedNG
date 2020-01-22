@@ -63,6 +63,8 @@ class ScheduleLesson {
   /// e.g. 11:40
   @HiveField(14)
   String endTime;
+
+  bool isActiveInWeek(int week) => weeks.contains(week);
 }
 
 @HiveType(typeId: 1)

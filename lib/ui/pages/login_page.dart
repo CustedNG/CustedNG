@@ -2,7 +2,7 @@ import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/webview/plugin_manager.dart';
 import 'package:custed2/core/webview/plugin_set.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/store/user_store.dart';
+import 'package:custed2/data/store/user_data_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';

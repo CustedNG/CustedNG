@@ -1,4 +1,5 @@
 import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -10,10 +11,13 @@ class ScheduleMenu extends StatelessWidget {
     return CupertinoActionSheet(
       actions: <Widget>[
         CupertinoActionSheetAction(
-          child: Text('同步课表'),
+          child: Text('更新课表'),
           onPressed: () {
             Navigator.of(context).pop();
-            scheduleProvider.updateScheduleData();
+            final snakebar = locator<SnakebarProvider>();
+            snakebar.catchAll(() async {
+              await scheduleProvider.updateScheduleData();
+            }, message: '教务系统超时 :(', duration: Duration(seconds: 7));
           },
         ),
         CupertinoActionSheetAction(

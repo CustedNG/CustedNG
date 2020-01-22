@@ -2,13 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class PresistentStore {
+class PresistentStore<E> {
   final String boxName = 'defaultBox';
 
-  Box box;
+  Box<E> box;
 
-  Future<void> init() async {
+  Future<PresistentStore<E>> init() async {
     box = await Hive.openBox(boxName);
+    return this;
   }
 
   Property<T> property<T>(String key) {

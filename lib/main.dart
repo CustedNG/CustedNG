@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:custed2/app.dart';
+import 'package:custed2/data/models/schedule.dart';
+import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/pages/init_page.dart';
@@ -15,6 +18,9 @@ Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   final docDir = await getAppDocDir.invoke();
   Hive.init(docDir);
+  Hive.registerAdapter(ScheduleAdapter());
+  Hive.registerAdapter(ScheduleLessonAdapter());
+  Hive.registerAdapter(ScheduleLessonTypeAdapter());
   setupLocator(docDir);
 }
 
@@ -50,6 +56,7 @@ void main() async {
         providers: [
           ChangeNotifierProvider(create: (_) => locator<DebugProvider>()),
           ChangeNotifierProvider(create: (_) => locator<SnakebarProvider>()),
+          ChangeNotifierProvider(create: (_) => locator<ScheduleProvider>()),
         ],
         child: FutureBuilder(
           future: initApp(),

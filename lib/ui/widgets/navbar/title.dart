@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class NavBarTitle extends StatelessWidget {
-  NavBarTitle({this.child});
+  NavBarTitle({this.child, Key key}) : super(key: key);
 
   final Widget child;
 

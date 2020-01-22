@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 part 'schedule.g.dart';
 
 @HiveType(typeId: 3)
-class Schedule {
+class Schedule extends HiveObject {
   @HiveField(0)
   List<ScheduleLesson> lessons;
 
@@ -16,4 +16,17 @@ class Schedule {
 
   @HiveField(3)
   DateTime startDate;
+
+  Iterable<ScheduleLesson> activeLessons(int week) {
+    return lessons.where((lesson) => lesson.isActiveInWeek(week));
+  }
+
+  Iterable<ScheduleLesson> inactiveLessons(int week) {
+    return lessons.where((lesson) => !lesson.isActiveInWeek(week));
+  }
+
+  @override
+  String toString() {
+    return 'Schedule<$versionHash>';
+  }
 }

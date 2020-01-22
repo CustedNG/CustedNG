@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 class SnakebarProvider extends ProviderBase {
   static const kSnakebarDefaultHeight = 25;
+  static const kDefaultDuration = Duration(seconds: 3);
 
   SnakebarProvider() {
     _contentQueue = StreamController<SnakeBarContent>();
@@ -39,7 +40,7 @@ class SnakebarProvider extends ProviderBase {
   add(
     Widget widget, {
     Color bgColor = CupertinoColors.activeBlue,
-    Duration duration = const Duration(seconds: 3),
+    Duration duration = kDefaultDuration,
   }) {
     final content = SnakeBarContent(
       // set different keys to widget for AnimatedSwitcher to work.
@@ -64,13 +65,26 @@ class SnakebarProvider extends ProviderBase {
     ));
   }
 
+  warning(String message) {
+    add(
+      Text(
+        message,
+        style: TextStyle(
+          fontSize: 15,
+          color: CupertinoColors.white,
+        ),
+      ),
+      bgColor: CupertinoColors.activeOrange,
+    );
+  }
+
   clear() {
     _isActive = false;
     notifyListeners();
   }
 
-  catchAll(func()) {
-    Future.sync(func).catchError((e) => info('$e'));
+  catchAll(func(), {String message, Duration duration = kDefaultDuration}) {
+    Future.sync(func).catchError((e) => warning(message ?? '$e'));
   }
 }
 

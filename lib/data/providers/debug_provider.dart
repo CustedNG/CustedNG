@@ -40,6 +40,11 @@ class DebugProvider extends ProviderBase {
     ));
   }
 
+  void addWidget(Widget widget) {
+    _addWidget(widget);
+    notifyListeners();
+  }
+  
   void _addWidget(Widget widget) {
     final outlined = Container(
       margin: EdgeInsets.symmetric(vertical: 2),

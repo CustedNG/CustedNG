@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:custed2/core/service/cat_service.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/store/user_store.dart';
+import 'package:custed2/data/store/user_data_store.dart';
 import 'package:html/parser.dart' show parse;
 
 class MyssoService extends CatService {

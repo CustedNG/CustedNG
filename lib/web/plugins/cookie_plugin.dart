@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:custed2/core/webview/plugin.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/store/cookie_store.dart';
+import 'package:custed2/data/store/cookie_store.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class CookiePlugin extends WebviewPlugin {

@@ -1,30 +1,36 @@
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/schedule_tab/schedule_week_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
-class ScheduleWeekSelector extends StatelessWidget {
-  ScheduleWeekSelector();
+class ScheduleWeekNavigator extends StatelessWidget {
+  ScheduleWeekNavigator();
 
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    final scheduleProvider = locator<ScheduleProvider>();
+    final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    final hasSchedule = scheduleProvider.schedule != null;
 
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
           color: theme.scheduleOutlineColor,
-          width: 1,
+          width: hasSchedule ? 0 : 1,
         ),
       ),
       padding: EdgeInsets.all(5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          _buildRoundButton(context, '第一周', () {}),
-          _buildArrowButton(context, CupertinoIcons.back, () {}),
-          _buildArrowButton(context, CupertinoIcons.forward, () {}),
+          _buildRoundButton(context, '第${scheduleProvider.selectedWeek}周',
+              () => _openPicker(context)),
+          _buildArrowButton(
+              context, CupertinoIcons.back, scheduleProvider.gotoPrevWeek),
+          _buildArrowButton(
+              context, CupertinoIcons.forward, scheduleProvider.gotoNextWeek),
         ],
       ),
     );
@@ -64,5 +70,25 @@ class ScheduleWeekSelector extends StatelessWidget {
       onPressed: onPressed, //this.incrWeek,
       padding: EdgeInsets.all(0),
     );
+  }
+
+  void _openPicker(BuildContext context) async {
+    final scheduleProvider = locator<ScheduleProvider>();
+    if (scheduleProvider.schedule == null) {
+      return;
+    }
+
+    int week = scheduleProvider.selectedWeek;
+    await showCupertinoModalPopup(
+      context: context,
+      builder: (context) => ScheduleWeekPicker(
+        currentWeek: 1, // TODO: calculate current week
+        selectedWeek: scheduleProvider.selectedWeek,
+        maxWeek: scheduleProvider.maxWeek,
+        onChange: (n) => week = n,
+      ),
+    );
+    print('Week: $week');
+    scheduleProvider.selectWeek(week);
   }
 }

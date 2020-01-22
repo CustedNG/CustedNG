@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:convert/convert.dart';
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/jw_week_time.dart';
@@ -15,13 +16,13 @@ class JwService extends WebvpnBasedService {
 
   @override
   final Pattern sessionExpirationTest = '过期';
-  
+
   @override
   Future<bool> login() async {
     final ticket = await _mysso.getTicketForJw();
     final response = await xRequest(
       'POST',
-      Uri.parse('$baseUrl/api/LoginApi/LGSSOLocalLogin'),
+      '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
       body: encodeParams({
         'Ticket': ticket,
         'Url': 'http://192.168.223.72:8080/welcome',
@@ -30,7 +31,7 @@ class JwService extends WebvpnBasedService {
         'content-type': 'application/json',
       },
     );
-    
+
     final parsedResponse = JwResponse.fromJson(json.decode(response.body));
     return parsedResponse.isSuccess;
   }
@@ -38,12 +39,10 @@ class JwService extends WebvpnBasedService {
   Future<JwSchedule> getSchedule() async {
     final resp = await xRequest(
       'POST',
-      Uri.parse(
-          '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentScheduleData'),
+      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentScheduleData'
+          .toUri(),
       body: encodeParams({}),
-      headers: {
-        'content-type': 'application/json',
-      },
+      headers: {'content-type': 'application/json'},
     );
 
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
@@ -53,12 +52,10 @@ class JwService extends WebvpnBasedService {
   Future<JwWeekTime> getWeekTime() async {
     final resp = await xRequest(
       'POST',
-      Uri.parse(
-          '$baseUrl/api/ClientStudent/Home/StudentHomeApi/GetHomeCurWeekTime'),
+      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/GetHomeCurWeekTime'
+          .toUri(),
       body: encodeParams({}),
-      headers: {
-        'content-type': 'application/json',
-      },
+      headers: {'content-type': 'application/json'},
     );
 
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
@@ -92,8 +89,6 @@ class JwService extends WebvpnBasedService {
 
     encoded = base64.encode(utf8.encode(encoded));
 
-    return {
-      'param': encoded,
-    };
+    return {'param': encoded};
   }
 }

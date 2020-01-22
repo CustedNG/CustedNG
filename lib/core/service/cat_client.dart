@@ -7,14 +7,13 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/locator.dart';
 import 'package:http/http.dart';
 
-const kDefaultMaxRedirects = 10;
-
 String formatCookies(List<Cookie> cookies) {
   return cookies.map((cookie) => "${cookie.name}=${cookie.value}").join('; ');
 }
 
 class CatClient {
   static const kDefaultMaxRedirects = 10;
+  static const kDefaultTimeout = Duration(seconds: 10);
 
   final Client _client = Client();
   final PersistCookieJar _cookieJar = locator<PersistCookieJar>();
@@ -26,6 +25,7 @@ class CatClient {
     dynamic body,
     Map<String, String> headers = const {},
     int maxRedirects = kDefaultMaxRedirects,
+    Duration timeout = kDefaultTimeout,
   }) async {
     print('Cat Request: $method $url');
     final request = CatRequest(method, url);
@@ -35,7 +35,9 @@ class CatClient {
     request.followRedirects = false;
     loadCookies(request);
     setUserAgent(request);
-    final response = await Response.fromStream(await _client.send(request));
+    final response = await Response.fromStream(
+      await _client.send(request).timeout(timeout),
+    );
     saveCookies(response);
     _alice.onHttpResponse(response);
     return await followRedirect(response, maxRedirects);

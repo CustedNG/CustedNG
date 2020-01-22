@@ -18,7 +18,7 @@ class _SnakebarState extends State<Snakebar> {
       color: snakebarData.content.bgColor,
       child: Center(
         child: AnimatedSwitcher(
-          duration: Duration(milliseconds: 200),
+          duration: Duration(milliseconds: 300),
           child: snakebarData.content.widget,
         ),
       ),

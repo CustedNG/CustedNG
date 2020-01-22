@@ -37,6 +37,24 @@ class JwScheduleLesson {
   String getRoom() => getProp('Room');
   String getWeeks() => getProp('Time');
 
+  List<int> parseWeeks() {
+    final result = <int>[];
+
+    final weeks = getWeeks().replaceAll(RegExp(r'[^0-9,-]'), '');
+    for (var part in weeks.split(',')) {
+      if (weeks.contains('-')) {
+        final splited = weeks.split('-');
+        final start = int.parse(splited[0]);
+        final end = int.parse(splited[1]);
+        result.addAll(List.generate(end - start + 1, (i) => i + start));
+      } else {
+        result.add(int.parse(part));
+      }
+    }
+
+    return result;
+  }
+
   @override
   String toString() {
     return '${getName()}(${getRoom()}|${getTeacher() ?? '无教师信息'})';

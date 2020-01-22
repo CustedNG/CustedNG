@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
@@ -28,6 +29,7 @@ class UndergraduateUser implements User {
       for (var section in day.allSections()) {
         for (var rawLesson in section.Dtos) {
           final lesson = ScheduleLesson()
+            ..weeks = rawLesson.parseWeeks()
             ..name = rawLesson.getName()
             ..classes = rawLesson.Classs.map((c) => c.Name).toList()
             ..startTime = section.StartTime
@@ -39,7 +41,7 @@ class UndergraduateUser implements User {
             ..endSection = section.EndSection
             ..roomRaw = rawLesson.getRoom()
             ..teacherName = rawLesson.getTeacher()
-            ..classRaw = rawLesson.getWeeks();
+            ..classRaw = rawLesson.LessonObjName;
           result.lessons.add(lesson);
         }
       }
@@ -50,7 +52,7 @@ class UndergraduateUser implements User {
 
   static String computeScheduleHash(JwSchedule raw) {
     final hash = sha1.convert(utf8.encode(json.encode(raw))).bytes;
-    return base64.encode(hash);
+    return hex.encode(hash);
   }
 
   static Future<String> computeScheduleHashAsync(JwSchedule raw) {
@@ -60,7 +62,7 @@ class UndergraduateUser implements User {
   static DateTime getScheduleStartTime() {
     // This is hardcoded, don't forget to update this :)
     final table = {
-      '20202': DateTime(2020, 2, 23),
+      '20202': DateTime(2020, 2, 24),
     };
 
     final year = DateTime.now().year.toString();
