@@ -8,20 +8,22 @@ class ScheduleLessonWidget extends StatelessWidget {
     this.lesson, {
     this.isActive = true,
     this.conflict = const [],
+    this.customChild,
   });
+
+  ScheduleLessonWidget.empty()
+      : this.lesson = null,
+        this.customChild = Container(),
+        this.isActive = true,
+        this.conflict = const [];
 
   final ScheduleLesson lesson;
   final List<ScheduleLesson> conflict; // TODO: handle conflict
   final bool isActive;
+  final Widget customChild;
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.bold,
-      color: isActive ? CupertinoColors.white : Color(0xFF9C9C9C),
-    );
-
     return Container(
       margin: EdgeInsets.all(2),
       constraints: BoxConstraints(maxWidth: 70, maxHeight: 100),
@@ -30,21 +32,39 @@ class ScheduleLessonWidget extends StatelessWidget {
         color: selectColorForLesson(context),
       ),
       padding: EdgeInsets.all(4.0),
-      child: DefaultTextStyle(
-        style: textStyle,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(lesson.name, maxLines: 2),
-            SizedBox(height: 2),
-            Text('@' + lesson.roomRaw, maxLines: 3),
-          ],
-        ),
+      child: _buildContent(context),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    if (customChild != null) {
+      return customChild;
+    }
+
+    final textStyle = TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.bold,
+      color: isActive ? CupertinoColors.white : Color(0xFF9C9C9C),
+    );
+
+    return DefaultTextStyle(
+      style: textStyle,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text(lesson.name, maxLines: 2),
+          SizedBox(height: 2),
+          Text('@' + lesson.roomRaw, maxLines: 3),
+        ],
       ),
     );
   }
 
   Color selectColorForLesson(BuildContext context) {
+    if (lesson == null) {
+      return null;
+    }
+    
     const colors = [
       DynamicColor(Color(0xFFED4239), Color(0xFF847577)),
       DynamicColor(Color(0xFF3EC9FE), Color(0xFF4c6f73)),

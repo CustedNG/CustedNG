@@ -18,7 +18,7 @@ class ScheduleTable extends StatelessWidget {
   final bool showInactive;
   final Set<DateTime> highlight;
 
-  final placeHolder = Container();
+  final placeHolder = ScheduleLessonWidget.empty();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,9 @@ class ScheduleTable extends StatelessWidget {
       if (lessonWidget == placeHolder) {
         rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(lesson);
       } else {
-        (lessonWidget as ScheduleLessonWidget).conflict.add(lesson);
+        final lw = (lessonWidget as ScheduleLessonWidget);
+        lw.conflict.add(lesson);
+        print('Conflict Detected: ${lw.lesson} -> ${lw.conflict}');
       }
     }
   }
