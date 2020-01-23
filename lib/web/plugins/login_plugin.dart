@@ -56,9 +56,5 @@ class LoginPlugin extends WebviewPlugin {
   void onMessage(String message) async {
     final data = json.decode(message);
     emitEvent('loginData', data);
-    locator<SnakebarProvider>().info('登录成功');
-    await Future.delayed(Duration(milliseconds: 5000));
-    locator<SnakebarProvider>().clear();
-
   }
 }

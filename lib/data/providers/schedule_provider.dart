@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/schedule.dart';
@@ -16,6 +18,8 @@ class ScheduleProvider extends ProviderBase {
 
   final int minWeek = 1;
   final int maxWeek = 24;
+
+  int get currentWeek => _schedule?.calculateWeekSinceStart(DateTime.now());
 
   void selectWeek(int week) {
     if (week < minWeek || week > maxWeek) {
@@ -66,9 +70,15 @@ class ScheduleProvider extends ProviderBase {
   }
 
   void gotoPrevWeek() {
-    if (_schedule != null && _selectedWeek > minWeek) {
+    final minAllowedWeek = math.min(currentWeek, minWeek);
+    if (_schedule != null && _selectedWeek > minAllowedWeek) {
       _selectedWeek--;
       notifyListeners();
     }
+  }
+
+  void gotoCurrentWeek() {
+    _selectedWeek = currentWeek;
+    notifyListeners();
   }
 }

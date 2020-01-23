@@ -6,7 +6,7 @@ class CbsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(),
-      child: PlaceholderWidget('Custed Backup Service'),
+      child: PlaceholderWidget(text: 'Custed Backup Service'),
     );
   }
 }

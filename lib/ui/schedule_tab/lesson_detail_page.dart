@@ -11,6 +11,9 @@ class LessonDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
 
+    final classes = lesson.classes.toList();
+    classes.sort();
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(),
       child: DefaultTextStyle(
@@ -25,7 +28,7 @@ class LessonDetailPage extends StatelessWidget {
               '上课时间': '${lesson.startTime}~${lesson.endTime}',
               '任课教师': lesson.teacherName,
               '上课周数': lesson.weeks.join(','),
-              '上课班级': lesson.classes.join('\n'),
+              '上课班级': classes.join('\n'),
             }),
           ],
         ),
@@ -50,7 +53,7 @@ class _LessonInfo extends StatelessWidget {
     );
 
     final lines = <Widget>[];
-    
+
     for (var item in items.entries) {
       lines.add(Text(
         item.key,

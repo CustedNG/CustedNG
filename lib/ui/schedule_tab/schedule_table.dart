@@ -1,4 +1,5 @@
 import 'package:custed2/config/theme.dart';
+import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/ui/dynamic_color.dart';
@@ -10,13 +11,13 @@ class ScheduleTable extends StatelessWidget {
     this.schedule, {
     this.week = 1,
     this.showInactive = true,
-    this.highlight = const {},
+    this.highLightToday = true,
   });
 
   final Schedule schedule;
   final int week;
   final bool showInactive;
-  final Set<DateTime> highlight;
+  final bool highLightToday;
 
   final placeHolder = Container();
 
@@ -85,19 +86,27 @@ class ScheduleTable extends StatelessWidget {
       fontSize: 15,
     );
 
+    final dateStyleHighlight = dateStyle.copyWith(color: theme.textColor);
+    final chsDateStyleHighlight = chsDateStyle.copyWith(color: theme.textColor);
+
+    final today = DateTime.now();
     for (var i = 0; i < 7; i++) {
       final dayOffset = (week - 1) * 7 + i;
       final date = schedule.startDate.add(Duration(days: dayOffset));
       final shouldShowMonth = i == 0 || date.day == 1;
       final displayDate =
           shouldShowMonth ? '${date.month}/${date.day}' : '${date.day}';
+      final shouldHighlight =
+          highLightToday ? date.isInSameDayAs(today) : false;
 
       items.add(Container(
         padding: EdgeInsets.symmetric(vertical: 5),
         alignment: Alignment.center,
         child: Column(children: <Widget>[
-          Text(displayDate, style: dateStyle),
-          Text(weekdayInChinese(date.weekday), style: chsDateStyle),
+          Text(displayDate,
+              style: shouldHighlight ? dateStyleHighlight : dateStyle),
+          Text(weekdayInChinese(date.weekday),
+              style: shouldHighlight ? chsDateStyleHighlight : chsDateStyle),
         ]),
       ));
     }

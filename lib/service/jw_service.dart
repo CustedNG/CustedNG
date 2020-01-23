@@ -4,6 +4,7 @@ import 'package:convert/convert.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
+import 'package:custed2/data/models/jw_student_info.dart';
 import 'package:custed2/data/models/jw_week_time.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
@@ -49,6 +50,19 @@ class JwService extends WebvpnBasedService {
     return JwSchedule.fromJson(parsedResponse.data);
   }
 
+  Future<JwStudentInfo> getStudentInfo() async {
+    final resp = await xRequest(
+      'POST',
+      '$baseUrl/api/ClientStudent/Home/StudentInfoApi/GetSudentInfoByStudentId'
+          .toUri(),
+      body: encodeParams({}),
+      headers: {'content-type': 'application/json'},
+    );
+
+    final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
+    return JwStudentInfo.fromJson(parsedResponse.data);
+  }
+
   Future<JwWeekTime> getWeekTime() async {
     final resp = await xRequest(
       'POST',
@@ -61,6 +75,8 @@ class JwService extends WebvpnBasedService {
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
     return JwWeekTime.fromJson(parsedResponse.data);
   }
+
+  // Future<
 
   static Map<String, dynamic> encodeParams(Map<String, dynamic> data) {
     var encoded = percent.encode(utf8.encode(

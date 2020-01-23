@@ -1,4 +1,5 @@
 import 'package:custed2/core/store/presistent_store.dart';
+import 'package:custed2/data/models/user_profile.dart';
 
 class UserDataStore with PresistentStore {
   @override
@@ -6,5 +7,5 @@ class UserDataStore with PresistentStore {
 
   Property<String> get username => property('username');
   Property<String> get password => property('password');
-  Property<String> get realname => property('realname');
+  Property<UserProfile> get profile => property('profile');
 }

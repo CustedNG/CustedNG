@@ -25,6 +25,11 @@ class Schedule extends HiveObject {
     return lessons.where((lesson) => !lesson.isActiveInWeek(week));
   }
 
+  int calculateWeekSinceStart(DateTime dateTime) {
+    final weeks = dateTime.difference(startDate).inDays ~/ 7;
+    return dateTime.isAfter(startDate) ? weeks + 1 : weeks;
+  }
+
   @override
   String toString() {
     return 'Schedule<$versionHash>';

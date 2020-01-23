@@ -239,6 +239,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.6.3"
+  flutter_cupertino_settings:
+    dependency: "direct main"
+    description:
+      name: flutter_cupertino_settings
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.0"
   flutter_local_notifications:
     dependency: transitive
     description:

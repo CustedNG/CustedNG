@@ -6,9 +6,12 @@ import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
+import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart';
 
 class UndergraduateUser implements User {
   JwService _jw = locator<JwService>();
@@ -17,6 +20,18 @@ class UndergraduateUser implements User {
     final rawSchedule = await _jw.getSchedule();
     return normalizeSchedule(rawSchedule);
   }
+
+  Future<UserProfile> getProfile() async {
+    final rawProfile = await _jw.getStudentInfo();
+
+    return UserProfile(
+      displayName: rawProfile.XM,
+      department: 'Null 学院',
+    );
+  }
+
+  Future<ImageProvider> getAvatar() async => ImageRes.defaultAvatar;
+
 
   static Future<Schedule> normalizeSchedule(JwSchedule raw) async {
     final result = Schedule()

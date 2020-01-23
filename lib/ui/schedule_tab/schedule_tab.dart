@@ -81,7 +81,7 @@ class _ScheduleTabState extends State<ScheduleTab>
     if (scheduleProvider.schedule == null) {
       return Center(
         child: Column(
-          children: <Widget>[SizedBox(height: 150), PlaceholderWidget('无课表信息')],
+          children: <Widget>[SizedBox(height: 150), PlaceholderWidget(text: '无课表信息')],
         ),
       );
     }
@@ -93,9 +93,12 @@ class _ScheduleTabState extends State<ScheduleTab>
         if (details.primaryVelocity < -50)
           return scheduleProvider.gotoNextWeek();
       },
-      child: ScheduleTable(
-        scheduleProvider.schedule,
-        week: scheduleProvider.selectedWeek,
+      child: Container(
+        color: CupertinoColors.white,
+        child: ScheduleTable(
+          scheduleProvider.schedule,
+          week: scheduleProvider.selectedWeek,
+        ),
       ),
     );
   }

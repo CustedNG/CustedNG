@@ -1,6 +1,8 @@
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/webview/plugin_manager.dart';
 import 'package:custed2/core/webview/plugin_set.dart';
+import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +20,9 @@ class _LoginPageState extends State<LoginPage> {
   PluginSet plugins;
   bool isBusy = false;
 
+  String username;
+  String password;
+
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
@@ -31,9 +36,10 @@ class _LoginPageState extends State<LoginPage> {
           style: TextStyle(color: theme.navBarActionsColor),
         ),
         trailing: isBusy ? _buildIndicator(context) : null,
-
       ),
       child: WebView(
+        javascriptMode: JavascriptMode.unrestricted,
+        javascriptChannels: pluginManager.getChannels(),
         onWebViewCreated: (controller) {
           this.controller = controller;
           CookieManager().clearCookies();
@@ -52,16 +58,19 @@ class _LoginPageState extends State<LoginPage> {
             isBusy = false;
           });
         },
-        javascriptMode: JavascriptMode.unrestricted,
-        javascriptChannels: pluginManager.getChannels(),
         navigationDelegate: (request) async {
           print('Redirect: ${request.url}');
+
+          if (request.url.contains('webvpn.cust.edu.cn/portal/#!/service')) {
+            Future.delayed(Duration(seconds: 1), _loginSuccessCallback);
+            return NavigationDecision.prevent;
+          }
+
           plugins = pluginManager.getPulgins(Uri.parse(request.url));
           plugins.onEvent('loginData').listen((data) async {
             print(data);
-            final userData = await locator.getAsync<UserDataStore>();
-            userData.username.put(data['username']);
-            userData.password.put(data['password']);
+            username = data['username'];
+            password = data['password'];
           });
           return NavigationDecision.navigate;
         },
@@ -69,12 +78,26 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Future<void> _loginSuccessCallback() async {
+    Navigator.pop(context);
+
+    final userData = await locator.getAsync<UserDataStore>();
+    userData.username.put(this.username);
+    userData.password.put(this.password);
+
+    final user = locator<UserProvider>();
+    user.updateProfileData();
+
+    final snake = locator<SnakebarProvider>();
+    snake.info('登录成功');
+  }
+
   Widget _buildIndicator(BuildContext context) {
     return CupertinoTheme(
       data: CupertinoThemeData(
         brightness: Brightness.dark,
       ),
-      child:  CupertinoActivityIndicator(),
+      child: CupertinoActivityIndicator(),
     );
   }
 }

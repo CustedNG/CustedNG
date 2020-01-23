@@ -42,7 +42,7 @@ class JwScheduleLesson {
 
     final rawWeeks = getWeeks();
     final weeks = rawWeeks.replaceAll(RegExp(r'[^0-9,-]'), '');
-    
+
     for (var part in weeks.split(',')) {
       if (weeks.contains('-')) {
         final splited = weeks.split('-');
@@ -54,14 +54,17 @@ class JwScheduleLesson {
       }
     }
 
-    if (rawWeeks.contains('单周')) result.retainWhere(oddWeekFilter);
-    if (rawWeeks.contains('双周')) result.retainWhere(evenWeekFilter);
+    // In case some novice operator don't know what '单周' means.
+    if (result.length > 1) {
+      if (rawWeeks.contains('单周')) result.retainWhere(_oddWeekFilter);
+      if (rawWeeks.contains('双周')) result.retainWhere(_evenWeekFilter);
+    }
 
     return result;
   }
 
-  static bool oddWeekFilter(int week) => (week % 2) != 0;
-  static bool evenWeekFilter(int week) => (week % 2) == 0;
+  static bool _oddWeekFilter(int week) => (week % 2) != 0;
+  static bool _evenWeekFilter(int week) => (week % 2) == 0;
 
   @override
   String toString() {

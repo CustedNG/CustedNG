@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:custed2/core/webview/plugin.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/data/store/cookie_store.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class CookiePlugin extends WebviewPlugin {
@@ -24,7 +23,6 @@ class CookiePlugin extends WebviewPlugin {
   @override
   void onMessage(String message) {
     final data = json.decode(message);
-    final cookieStore = locator<CookieStore>();
 
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter_advanced_networkimage/zoomable.dart';
 
-import 'package:custed2/res/images.dart';
+import 'package:custed2/res/image_res.dart';
 
 class CustCompusMap {
   const CustCompusMap({
@@ -86,14 +86,14 @@ class Maps {
     minScale: 4,
     maxScale: 7,
     initScale: 6,
-    image: Images.custEMapSimple,
+    image: ImageRes.custEMapSimple,
   );
 
   static const custS = CustCompusMap(
     minScale: 4,
     maxScale: 7,
     initScale: 6,
-    image: Images.custSMapSimple,
+    image: ImageRes.custSMapSimple,
   );
 
   static Widget search(String name) {

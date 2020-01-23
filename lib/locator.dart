@@ -16,10 +16,10 @@ import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/service/mysso_service.dart';
-import 'package:custed2/data/store/cookie_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/data/store/weather_store.dart';
 import 'package:flutter/widgets.dart';
@@ -32,10 +32,10 @@ void setupLocatorForProviders() {
   locator.registerSingleton(DebugProvider());
   locator.registerSingleton(SnakebarProvider());
   locator.registerSingleton(ScheduleProvider());
+  locator.registerSingleton(UserProvider());
 }
 
 void setupLocator(String docDir) {
-  locator.registerLazySingleton(() => CookieStore());
   locator.registerLazySingleton(() => WeatherStore());
 
   locator.registerSingletonAsync<UserDataStore>((_) async {

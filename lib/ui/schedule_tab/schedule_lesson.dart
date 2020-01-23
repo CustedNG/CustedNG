@@ -25,7 +25,7 @@ class ScheduleLessonWidget extends StatelessWidget {
 
   Widget _buildLessonCell(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(2),
+      margin: EdgeInsets.all(2.5),
       constraints: BoxConstraints(maxWidth: 70, maxHeight: 100),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4.0),

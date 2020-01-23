@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
@@ -26,49 +28,47 @@ class ScheduleWeekNavigator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           _buildRoundButton(context, '第${scheduleProvider.selectedWeek}周',
-              () => _openPicker(context)),
-          _buildArrowButton(
-              context, CupertinoIcons.back, scheduleProvider.gotoPrevWeek),
-          _buildArrowButton(
-              context, CupertinoIcons.forward, scheduleProvider.gotoNextWeek),
+              onPressed: () => _openPicker(context),
+              onLongPress: scheduleProvider.gotoCurrentWeek),
+          _ArrowButton(
+              icon: CupertinoIcons.back,
+              onPressed: scheduleProvider.gotoPrevWeek),
+          _ArrowButton(
+              icon: CupertinoIcons.forward,
+              onPressed: scheduleProvider.gotoNextWeek),
         ],
       ),
     );
   }
 
-  Widget _buildRoundButton(BuildContext context, String text, onPressed()) {
+  Widget _buildRoundButton(
+    BuildContext context,
+    String text, {
+    onPressed(),
+    onLongPress(),
+  }) {
     final theme = AppTheme.of(context);
 
-    return SizedBox(
-      height: 35,
-      width: 100,
-      child: CupertinoButton(
-        onPressed: onPressed,
-        color: theme.scheduleButtonColor,
-        borderRadius: BorderRadius.all(Radius.circular(100)),
-        padding: EdgeInsets.zero,
-        child: Text(
-          text,
-          style: TextStyle(
-            color: theme.scheduleButtonTextColor,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onLongPress: onLongPress,
+      child: SizedBox(
+        height: 35,
+        width: 100,
+        child: CupertinoButton(
+          onPressed: onPressed,
+          color: theme.scheduleButtonColor,
+          borderRadius: BorderRadius.all(Radius.circular(100)),
+          padding: EdgeInsets.zero,
+          child: Text(
+            text,
+            style: TextStyle(
+              color: theme.scheduleButtonTextColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildArrowButton(BuildContext context, IconData icon, onPressed()) {
-    final theme = AppTheme.of(context);
-
-    return CupertinoButton(
-      child: Icon(
-        icon,
-        color: theme.scheduleTextColor,
-      ),
-      onPressed: onPressed, //this.incrWeek,
-      padding: EdgeInsets.all(0),
     );
   }
 
@@ -82,7 +82,7 @@ class ScheduleWeekNavigator extends StatelessWidget {
     await showCupertinoModalPopup(
       context: context,
       builder: (context) => ScheduleWeekPicker(
-        currentWeek: 1, // TODO: calculate current week
+        currentWeek: scheduleProvider.currentWeek,
         selectedWeek: scheduleProvider.selectedWeek,
         maxWeek: scheduleProvider.maxWeek,
         onChange: (n) => week = n,
@@ -91,4 +91,40 @@ class ScheduleWeekNavigator extends StatelessWidget {
     print('Week: $week');
     scheduleProvider.selectWeek(week);
   }
+}
+
+class _ArrowButton extends StatefulWidget {
+  _ArrowButton({this.icon, this.onPressed});
+
+  final IconData icon;
+  final Function() onPressed;
+
+  @override
+  __ArrowButtonState createState() => __ArrowButtonState();
+}
+
+class __ArrowButtonState extends State<_ArrowButton> {
+  Timer longPressTimer;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
+
+    return GestureDetector(
+      onLongPressStart: (_) => activateTimer(),
+      onLongPressEnd: (_) => cancelTimer(),
+      child: CupertinoButton(
+        onPressed: widget.onPressed,
+        padding: EdgeInsets.all(0),
+        child: Icon(widget.icon, color: theme.scheduleTextColor),
+      ),
+    );
+  }
+
+  void activateTimer() {
+    longPressTimer =
+        Timer.periodic(Duration(milliseconds: 200), (_) => widget.onPressed());
+  }
+
+  void cancelTimer() => longPressTimer?.cancel();
 }
