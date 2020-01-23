@@ -5,7 +5,6 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '';
 
 class HttpCommand extends TTYCommand {
   @override
