@@ -1,9 +1,6 @@
 import 'package:custed2/core/provider/busy_provider.dart';
-import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/core/user/user.dart';
-import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/user_profile.dart';
-import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 

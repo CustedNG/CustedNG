@@ -1,13 +1,7 @@
 import 'package:custed2/core/tty/command.dart';
-import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/service/jw_service.dart';
-import 'package:custed2/service/portal_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
-import 'package:custed2/data/providers/debug_provider.dart';
-import 'package:custed2/locator.dart';
-import 'package:custed2/service/mysso_service.dart';
-import 'package:custed2/service/webvpn_service.dart';
 
 class TestCommand extends TTYCommand {
   @override

@@ -36,7 +36,6 @@ class UserTab extends StatelessWidget {
   }
 
   Widget _buildUserTab(BuildContext context, UserProfile profile) {
-    print(DefaultTextStyle.of(context).style.fontFamily);
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(),
       child: DefaultTextStyle(

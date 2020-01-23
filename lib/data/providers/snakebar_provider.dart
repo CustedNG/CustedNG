@@ -23,6 +23,7 @@ class SnakebarProvider extends ProviderBase {
   bool get isActive => _isActive;
   SnakeBarContent get content => _content;
 
+  // ignore: close_sinks
   StreamController<SnakeBarContent> _contentQueue;
   int _index = 0;
 

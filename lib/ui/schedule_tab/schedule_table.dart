@@ -1,8 +1,6 @@
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/data/models/schedule.dart';
-import 'package:custed2/data/models/schedule_lesson.dart';
-import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/schedule_tab/schedule_lesson.dart';
 import 'package:flutter/cupertino.dart';
 

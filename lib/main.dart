@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:custed2/app.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
+import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -21,6 +22,7 @@ Future<void> initApp() async {
   Hive.registerAdapter(ScheduleAdapter());
   Hive.registerAdapter(ScheduleLessonAdapter());
   Hive.registerAdapter(ScheduleLessonTypeAdapter());
+  Hive.registerAdapter(UserProfileAdapter());
   setupLocator(docDir);
 }
 

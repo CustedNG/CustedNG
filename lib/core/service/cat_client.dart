@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';

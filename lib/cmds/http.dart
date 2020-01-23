@@ -2,7 +2,6 @@ import 'package:alice/alice.dart';
 import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 

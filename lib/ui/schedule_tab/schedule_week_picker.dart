@@ -1,7 +1,4 @@
-import 'package:custed2/data/providers/schedule_provider.dart';
-import 'package:custed2/locator.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 class ScheduleWeekPicker extends StatelessWidget {
   ScheduleWeekPicker({

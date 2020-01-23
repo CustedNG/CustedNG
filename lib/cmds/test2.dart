@@ -1,11 +1,6 @@
-import 'package:custed2/core/service/cat_client.dart';
 import 'package:custed2/core/tty/command.dart';
-import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
-import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/service/cas_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
 

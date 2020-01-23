@@ -1,4 +1,3 @@
-import 'package:custed2/data/models/jw_schedule_for_day.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'jw_schedule_lesson_prop.g.dart';

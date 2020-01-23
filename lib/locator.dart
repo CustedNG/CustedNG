@@ -1,17 +1,6 @@
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:custed2/cmds/box.dart';
-import 'package:custed2/cmds/cbs.dart';
-import 'package:custed2/cmds/clear.dart';
-import 'package:custed2/cmds/cookies.dart';
-import 'package:custed2/cmds/echo.dart';
-import 'package:custed2/cmds/help.dart';
-import 'package:custed2/cmds/http.dart';
-import 'package:custed2/cmds/ls.dart';
-import 'package:custed2/cmds/new_year.dart';
-import 'package:custed2/cmds/snake.dart';
-import 'package:custed2/cmds/test.dart';
-import 'package:custed2/cmds/test2.dart';
+import 'package:custed2/config/commands.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -51,20 +40,10 @@ void setupLocator(String docDir) {
   });
 
   locator.registerLazySingleton(() {
-    return TTYExecuter()
-      ..cd(docDir)
-      ..register(BoxCommand())
-      ..register(EchoCommand())
-      ..register(HelpCommand())
-      ..register(SnakeCommand())
-      ..register(TestCommand())
-      ..register(Test2Command())
-      ..register(ClearCommand())
-      ..register(CookiesCommand())
-      ..register(LsCommand())
-      ..register(HttpCommand())
-      ..register(NewYearCommand())
-      ..register(CbsCommand());
+    final instance = TTYExecuter();
+    instance.cd(docDir);
+    commands.forEach((c) => instance.register(c));
+    return instance;
   });
 
   locator.registerLazySingleton(

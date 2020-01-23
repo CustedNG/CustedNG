@@ -1,5 +1,4 @@
 import 'package:custed2/data/models/jw_schedule_class.dart';
-import 'package:custed2/data/models/jw_schedule_for_day.dart';
 import 'package:custed2/data/models/jw_schedule_lesson_prop.dart';
 import 'package:json_annotation/json_annotation.dart';
 
