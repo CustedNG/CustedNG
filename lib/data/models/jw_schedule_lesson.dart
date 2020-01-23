@@ -40,7 +40,9 @@ class JwScheduleLesson {
   List<int> parseWeeks() {
     final result = <int>[];
 
-    final weeks = getWeeks().replaceAll(RegExp(r'[^0-9,-]'), '');
+    final rawWeeks = getWeeks();
+    final weeks = rawWeeks.replaceAll(RegExp(r'[^0-9,-]'), '');
+    
     for (var part in weeks.split(',')) {
       if (weeks.contains('-')) {
         final splited = weeks.split('-');
@@ -52,8 +54,14 @@ class JwScheduleLesson {
       }
     }
 
+    if (rawWeeks.contains('单周')) result.retainWhere(oddWeekFilter);
+    if (rawWeeks.contains('双周')) result.retainWhere(evenWeekFilter);
+
     return result;
   }
+
+  static bool oddWeekFilter(int week) => (week % 2) != 0;
+  static bool evenWeekFilter(int week) => (week % 2) == 0;
 
   @override
   String toString() {
