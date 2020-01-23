@@ -2,7 +2,7 @@ import 'package:custed2/config/theme.dart';
 import 'package:flutter/cupertino.dart';
 
 class PlaceholderWidget extends StatelessWidget {
-  PlaceholderWidget([this.message = '无内容...']);
+  PlaceholderWidget([this.message = '施工中...']);
 
   final String message;
 

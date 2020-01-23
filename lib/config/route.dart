@@ -1,4 +1,5 @@
 import 'package:custed2/core/route.dart';
+import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
 
@@ -10,4 +11,9 @@ final loginPage = AppRoute(
 final debugPage = AppRoute(
   title: 'Terminal',
   page: DebugPage(),
+);
+
+final cbsPage = AppRoute(
+  title: 'CBS',
+  page: CbsPage(),
 );

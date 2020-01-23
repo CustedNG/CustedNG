@@ -1,6 +1,7 @@
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/cmds/box.dart';
+import 'package:custed2/cmds/cbs.dart';
 import 'package:custed2/cmds/clear.dart';
 import 'package:custed2/cmds/cookies.dart';
 import 'package:custed2/cmds/echo.dart';
@@ -62,7 +63,8 @@ void setupLocator(String docDir) {
       ..register(CookiesCommand())
       ..register(LsCommand())
       ..register(HttpCommand())
-      ..register(NewYearCommand());
+      ..register(NewYearCommand())
+      ..register(CbsCommand());
   });
 
   locator.registerLazySingleton(

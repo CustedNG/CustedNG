@@ -1,4 +1,6 @@
 import 'package:custed2/core/tty/command.dart';
+import 'package:custed2/data/providers/debug_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
 
@@ -13,13 +15,23 @@ class HelpCommand extends TTYCommand {
   final alias = 'h';
 
   @override
-  main(TTYExecuter executer, BuildContext context,  List<String> args) {
+  main(TTYExecuter executer, BuildContext context, List<String> args) {
     final builder = StringBuffer();
-    builder.writeln('AVALIABLE COMMANDS:');
+
     builder.writeln('');
+    builder.writeln('  AVALIABLE COMMANDS:');
+    builder.writeln('');
+
     for (var cmd in executer.commands) {
-      builder.writeln('  ' + cmd.name.padRight(10) + cmd.help);
+      builder.writeln('  ' +
+          cmd.name.padRight(10) +
+          (cmd.alias ?? '').padRight(6) +
+          cmd.help);
     }
-    print(builder.toString());
+
+    locator<DebugProvider>().addMultiline(
+      builder.toString(),
+      CupertinoColors.white,
+    );
   }
 }
