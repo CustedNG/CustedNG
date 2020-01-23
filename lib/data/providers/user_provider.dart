@@ -31,4 +31,11 @@ class UserProvider extends BusyProvider {
     final userData = await locator.getAsync<UserDataStore>();
     userData.profile.put(_profile);
   }
+
+  Future<void> clearProfileData() async {
+    _profile = null;
+    final userData = await locator.getAsync<UserDataStore>();
+    userData.profile.delete();
+    notifyListeners();
+  }
 }

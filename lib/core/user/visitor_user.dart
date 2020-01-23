@@ -7,10 +7,9 @@ import 'package:flutter/painting.dart';
 class UndergraduateUser implements User {
   Future<Schedule> getSchdeule() => null;
 
-  Future<UserProfile> getProfile() async => UserProfile(
-    displayName: '游客',
-    department: null,
-  );
+  Future<UserProfile> getProfile() async => UserProfile()
+    ..displayName = '游客'
+    ..department = null;
 
   Future<ImageProvider> getAvatar() async => ImageRes.defaultAvatar;
 }

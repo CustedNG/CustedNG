@@ -8,6 +8,7 @@ import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/pages/init_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,7 +52,7 @@ void runInZone(Function body) {
 
 void main() async {
   setupLocatorForProviders();
-
+  
   runInZone(() {
     runApp(
       MultiProvider(
@@ -59,6 +60,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => locator<DebugProvider>()),
           ChangeNotifierProvider(create: (_) => locator<SnakebarProvider>()),
           ChangeNotifierProvider(create: (_) => locator<ScheduleProvider>()),
+          ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
         ],
         child: FutureBuilder(
           future: initApp(),

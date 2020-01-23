@@ -23,15 +23,12 @@ class UndergraduateUser implements User {
 
   Future<UserProfile> getProfile() async {
     final rawProfile = await _jw.getStudentInfo();
-
-    return UserProfile(
-      displayName: rawProfile.XM,
-      department: 'Null 学院',
-    );
+    return UserProfile()
+      ..displayName = rawProfile.XM
+      ..department = 'Null 学院';
   }
 
   Future<ImageProvider> getAvatar() async => ImageRes.defaultAvatar;
-
 
   static Future<Schedule> normalizeSchedule(JwSchedule raw) async {
     final result = Schedule()

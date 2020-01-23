@@ -3,6 +3,7 @@ import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   
     ''');
 
-    final schedule = locator<ScheduleProvider>();
-    schedule.getInitData();
+    locator<ScheduleProvider>().getInitData();
+    locator<UserProvider>().getInitData();
   }
 }

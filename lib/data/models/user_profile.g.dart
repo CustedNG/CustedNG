@@ -16,10 +16,9 @@ class UserProfileAdapter extends TypeAdapter<UserProfile> {
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return UserProfile(
-      displayName: fields[0] as String,
-      department: fields[1] as String,
-    );
+    return UserProfile()
+      ..displayName = fields[0] as String
+      ..department = fields[1] as String;
   }
 
   @override

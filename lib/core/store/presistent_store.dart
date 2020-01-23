@@ -34,4 +34,8 @@ class Property<T> {
   Future<void> put(T value) {
     return _box.put(_key, value);
   }
+
+  Future<void> delete() {
+    return _box.delete(_key);
+  }
 }

@@ -2,16 +2,16 @@ import 'package:custed2/config/route.dart';
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/user_provider.dart';
-import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
+import 'package:provider/provider.dart';
 
 class UserTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = locator<UserProvider>();
+    final user = Provider.of<UserProvider>(context);
 
     if (user.isBusy) {
       return PlaceholderWidget(isActive: true);
@@ -28,9 +28,7 @@ class UserTab extends StatelessWidget {
       child: CupertinoButton(
         child: Text('点我登录'),
         color: AppTheme.of(context).btnPrimaryColor,
-        onPressed: () {
-          loginPage.go(context);
-        },
+        onPressed: () => _login(context),
       ),
     );
   }
@@ -38,20 +36,33 @@ class UserTab extends StatelessWidget {
   Widget _buildUserTab(BuildContext context, UserProfile profile) {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(),
-      child: DefaultTextStyle(
-        style: TextStyle(fontFamily: 'Roboto'),
-        child: CupertinoSettings(
-          items: <Widget>[
-            CSHeader('用户'),
-            CSWidget(_buildUserInfo(context, profile)),
-            CSControl('四六级照片', Icon(CupertinoIcons.right_chevron)),
-          ],
-        ),
+      child: CupertinoSettings(
+        items: <Widget>[
+          CSHeader('用户'),
+          CSWidget(_buildUserInfo(context, profile)),
+          CSControl('四六级照片', Icon(CupertinoIcons.right_chevron)),
+          CSHeader(''),
+          CSButton(CSButtonType.DEFAULT_CENTER, "重新登录", () => _login(context)),
+          CSButton(CSButtonType.DESTRUCTIVE, "退出登录", () => _logout(context))
+        ],
       ),
     );
   }
 
   Widget _buildUserInfo(BuildContext context, UserProfile profile) {
-    return Text(profile.displayName);
+    return Row(
+      children: <Widget>[
+        Text(profile.displayName),
+      ],
+    );
+  }
+
+  void _login(BuildContext context) {
+    loginPage.go(context);
+  }
+
+  void _logout(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
+    user.clearProfileData();
   }
 }
