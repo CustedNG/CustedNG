@@ -1,9 +1,11 @@
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/ui/grade_tab/grade_tab.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class AppFrame extends StatefulWidget {
   @override
@@ -25,7 +27,7 @@ class _AppFrameState extends State<AppFrame> {
       onWillPop: () async {
         return !await _currentNavigatorKey().currentState.maybePop();
       },
-      child: _buildFrame(),
+      child: _buildFrame(context),
     );
   }
 
@@ -43,22 +45,25 @@ class _AppFrameState extends State<AppFrame> {
     throw 'unreachable';
   }
 
-  Widget _buildFrame() {
+  Widget _buildFrame(BuildContext context) {
     return Column(
       children: <Widget>[
         Flexible(
-          child: _buildScaffold(),
+          child: _buildScaffold(context),
         ),
         Snakebar(),
       ],
     );
   }
 
-  Widget _buildScaffold() {
+  Widget _buildScaffold(BuildContext context) {
+    final app = Provider.of<AppProvider>(context);
+    _tabController.index = app.tabIndex;
+    
     return CupertinoTabScaffold(
       controller: _tabController,
       tabBar: CupertinoTabBar(
-        // currentIndex: currentPage,
+        currentIndex: app.tabIndex,
         // onTap: (n) {
         //   return _setPage(n);
         // },

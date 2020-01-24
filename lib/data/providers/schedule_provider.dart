@@ -30,7 +30,7 @@ class ScheduleProvider extends ProviderBase {
     notifyListeners();
   }
 
-  Future<void> getInitData() async {
+  Future<void> loadLocalData() async {
     final scheduleStore = await locator.getAsync<ScheduleStore>();
     _schedule = scheduleStore.head;
 

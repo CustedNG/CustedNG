@@ -1,6 +1,7 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
@@ -23,9 +24,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     );
     final theme = ThemeData(cupertinoOverrideTheme: cupertinoTheme);
 
-    // return MaterialApp(
-    //   navigatorKey: locator<Alice>().getNavigatorKey(),
-    /*home:  */ return Theme(
+    return Theme(
       data: theme,
       child: CupertinoApp(
         navigatorKey: locator<GlobalKey<NavigatorState>>(),
@@ -54,7 +53,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   
     ''');
 
-    locator<ScheduleProvider>().getInitData();
-    locator<UserProvider>().getInitData();
+    locator<ScheduleProvider>().loadLocalData();
+    locator<UserProvider>().loadLocalData();
   }
 }

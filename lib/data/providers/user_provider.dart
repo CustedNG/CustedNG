@@ -8,7 +8,7 @@ class UserProvider extends BusyProvider {
   UserProfile _profile;
   UserProfile get profile => _profile;
 
-  Future<void> getInitData() async {
+  Future<void> loadLocalData() async {
     final userData = await locator.getAsync<UserDataStore>();
     _profile = userData.profile.fetch();
 

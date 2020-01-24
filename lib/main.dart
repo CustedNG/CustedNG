@@ -4,13 +4,13 @@ import 'package:custed2/app.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/models/user_profile.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/ui/pages/init_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -24,7 +24,8 @@ Future<void> initApp() async {
   Hive.registerAdapter(ScheduleLessonAdapter());
   Hive.registerAdapter(ScheduleLessonTypeAdapter());
   Hive.registerAdapter(UserProfileAdapter());
-  setupLocator(docDir);
+  await setupLocator(docDir);
+  locator<AppProvider>().loadLocalData();
 }
 
 void runInZone(Function body) {
@@ -51,8 +52,8 @@ void runInZone(Function body) {
 }
 
 void main() async {
-  setupLocatorForProviders();
-  
+  await initApp();
+
   runInZone(() {
     runApp(
       MultiProvider(
@@ -61,16 +62,9 @@ void main() async {
           ChangeNotifierProvider(create: (_) => locator<SnakebarProvider>()),
           ChangeNotifierProvider(create: (_) => locator<ScheduleProvider>()),
           ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
+          ChangeNotifierProvider(create: (_) => locator<AppProvider>()),
         ],
-        child: FutureBuilder(
-          future: initApp(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Custed();
-            }
-            return InitPage();
-          },
-        ),
+        child: Custed(),
       ),
     );
   });
