@@ -5,7 +5,7 @@ class UserDataStore with PresistentStore {
   @override
   final boxName = 'user';
 
-  Property<String> get username => property('username');
-  Property<String> get password => property('password');
-  Property<UserProfile> get profile => property('profile');
+  StoreProperty<String> get username => property('username');
+  StoreProperty<String> get password => property('password');
+  StoreProperty<UserProfile> get profile => property('profile');
 }

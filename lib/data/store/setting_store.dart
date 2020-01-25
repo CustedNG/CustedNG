@@ -4,6 +4,9 @@ class SettingStore with PresistentStore {
   @override
   final boxName = 'setting';
 
-  Property<bool> get useScheduleAsHome =>
+  StoreProperty<bool> get useScheduleAsHome =>
       property('useScheduleAsHome', defaultValue: false);
+
+  StoreProperty<bool> get showInactiveLessons =>
+      property('showInactiveLessons', defaultValue: true);
 }

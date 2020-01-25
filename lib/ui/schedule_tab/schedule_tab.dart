@@ -1,6 +1,8 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_menu.dart';
 import 'package:custed2/ui/schedule_tab/schedule_table.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_navigator.dart';
@@ -81,10 +83,15 @@ class _ScheduleTabState extends State<ScheduleTab>
     if (scheduleProvider.schedule == null) {
       return Center(
         child: Column(
-          children: <Widget>[SizedBox(height: 150), PlaceholderWidget(text: '无课表信息')],
+          children: <Widget>[
+            SizedBox(height: 150),
+            PlaceholderWidget(text: '无课表信息')
+          ],
         ),
       );
     }
+
+    final setting = locator<SettingStore>();
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) {
@@ -98,6 +105,7 @@ class _ScheduleTabState extends State<ScheduleTab>
         child: ScheduleTable(
           scheduleProvider.schedule,
           week: scheduleProvider.selectedWeek,
+          showInactive: setting.showInactiveLessons.fetch(),
         ),
       ),
     );

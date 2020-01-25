@@ -17,7 +17,7 @@ class ScheduleTable extends StatelessWidget {
   final bool showInactive;
   final bool highLightToday;
 
-  final placeHolder = Container();
+  final placeHolder = ScheduleLessonWidget(null);
 
   @override
   Widget build(BuildContext context) {

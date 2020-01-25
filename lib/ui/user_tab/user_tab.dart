@@ -1,5 +1,6 @@
 import 'package:custed2/config/route.dart';
 import 'package:custed2/config/theme.dart';
+import 'package:custed2/core/store/presistent_store.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
@@ -36,6 +37,8 @@ class UserTab extends StatelessWidget {
   }
 
   Widget _buildUserTab(BuildContext context, UserProfile profile) {
+    final setting = locator<SettingStore>();
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(),
       child: CupertinoSettings(
@@ -44,7 +47,10 @@ class UserTab extends StatelessWidget {
           CSWidget(_buildUserInfo(context, profile)),
           CSControl('四六级照片', Icon(CupertinoIcons.right_chevron)),
           CSHeader('课表'),
-          CSControl('将课表设为首页', _buildDefaultTabSwitch(context)),
+          CSControl(
+              '将课表设为首页', _buildSwitch(context, setting.useScheduleAsHome)),
+          CSControl(
+              '显示非当前周课程', _buildSwitch(context, setting.showInactiveLessons)),
           CSHeader(''),
           CSButton(CSButtonType.DEFAULT_CENTER, "重新登录", () => _login(context)),
           CSButton(CSButtonType.DESTRUCTIVE, "退出登录", () => _logout(context))
@@ -61,15 +67,12 @@ class UserTab extends StatelessWidget {
     );
   }
 
-  Widget _buildDefaultTabSwitch(BuildContext context) {
-    final setting = locator<SettingStore>();
+  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop) {
     return ValueListenableBuilder(
-      valueListenable: setting.useScheduleAsHome.listenable(),
+      valueListenable: prop.listenable(),
       builder: (context, value, widget) {
         return CupertinoSwitch(
-          value: value,
-          onChanged: (value) => setting.useScheduleAsHome.put(value),
-        );
+            value: value, onChanged: (value) => prop.put(value));
       },
     );
   }

@@ -17,6 +17,10 @@ class ScheduleLessonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (lesson == null) {
+      return _buildLessonCell(context);
+    }
+
     return GestureDetector(
       onTap: () => _showLessonPreview(context),
       child: _buildLessonCell(context),
@@ -37,6 +41,10 @@ class ScheduleLessonWidget extends StatelessWidget {
   }
 
   Widget _buildCellContent(BuildContext context) {
+    if (lesson == null) {
+      return null;
+    }
+    
     final textStyle = TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.bold,

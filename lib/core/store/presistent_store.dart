@@ -14,13 +14,13 @@ class PresistentStore<E> {
     return this;
   }
 
-  Property<T> property<T>(String key, {T defaultValue}) {
-    return Property<T>(box, key, defaultValue);
+  StoreProperty<T> property<T>(String key, {T defaultValue}) {
+    return StoreProperty<T>(box, key, defaultValue);
   }
 }
 
-class Property<T> {
-  Property(this._box, this._key, this.defaultValue);
+class StoreProperty<T> {
+  StoreProperty(this._box, this._key, this.defaultValue);
 
   Box _box;
   String _key;

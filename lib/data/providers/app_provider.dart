@@ -24,8 +24,8 @@ class AppProvider extends ProviderBase {
     }
   }
 
-  void setTab(int index) {
+  void setTab(int index, {bool refresh = true}) {
     _tabIndex = index;
-    notifyListeners();
+    if(refresh) notifyListeners();
   }
 }

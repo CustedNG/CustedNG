@@ -64,9 +64,9 @@ class _AppFrameState extends State<AppFrame> {
       controller: _tabController,
       tabBar: CupertinoTabBar(
         currentIndex: app.tabIndex,
-        // onTap: (n) {
-        //   return _setPage(n);
-        // },
+        onTap: (n) {
+          app.setTab(n, refresh: false);
+        },
         items: [
           BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.home),

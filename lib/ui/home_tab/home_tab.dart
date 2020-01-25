@@ -16,7 +16,7 @@ class HomeTab extends StatelessWidget {
         leading: NavBarTitle(
           child: GestureDetector(
             child: Text('Custed'),
-            onTap: () => print('1'),
+            onTap: () => aboutPage.go(context),
             onLongPress: () => debugPage.go(context),
           ),
         ),
