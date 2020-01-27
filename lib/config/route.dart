@@ -3,6 +3,7 @@ import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
+import 'package:custed2/ui/update/update_notice_page.dart';
 
 final loginPage = AppRoute(
   title: '登录',

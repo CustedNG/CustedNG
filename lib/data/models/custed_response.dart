@@ -10,9 +10,12 @@ class CustedResponse {
   
   bool ok;
   dynamic data;
+  String error;
 
   factory CustedResponse.fromJson(Map<String, dynamic> json) =>
       _$CustedResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$CustedResponseToJson(this);
+
+  bool get hasError => error != null;
 }

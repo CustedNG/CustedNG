@@ -1,3 +1,5 @@
+import 'package:after_layout/after_layout.dart';
+import 'package:custed2/core/update.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/ui/grade_tab/grade_tab.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
@@ -12,7 +14,7 @@ class AppFrame extends StatefulWidget {
   _AppFrameState createState() => _AppFrameState();
 }
 
-class _AppFrameState extends State<AppFrame> {
+class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   // 处理多 Navigator 情况下安卓返回键行为
   // See: https://github.com/flutter/flutter/issues/24105#issuecomment-530222677
   final _tabController = CupertinoTabController();
@@ -59,7 +61,7 @@ class _AppFrameState extends State<AppFrame> {
   Widget _buildScaffold(BuildContext context) {
     final app = Provider.of<AppProvider>(context);
     _tabController.index = app.tabIndex;
-    
+
     return CupertinoTabScaffold(
       controller: _tabController,
       tabBar: CupertinoTabBar(
@@ -124,5 +126,11 @@ class _AppFrameState extends State<AppFrame> {
         throw 'unreachable';
       },
     );
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    // call updateCheck to ensure navigator exists in context
+    updateCheck(context);
   }
 }

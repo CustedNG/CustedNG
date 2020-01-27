@@ -1,3 +1,4 @@
+import 'package:custed2/cmds/update.dart';
 import 'package:custed2/core/tty/command.dart';
 
 import 'package:custed2/cmds/box.dart';
@@ -28,4 +29,5 @@ final commands = <TTYCommand>[
   NewYearCommand(),
   CbsCommand(),
   RmrfCommand(),
+  UpdateCommand(),
 ];

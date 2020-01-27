@@ -1,6 +1,7 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/core/update.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
