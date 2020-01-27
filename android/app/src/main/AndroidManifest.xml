@@ -47,7 +47,7 @@
         <!-- See: https://pub.dev/packages/open_file -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileProvider"
+            android:authorities="${applicationId}.fileProvider.install"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">

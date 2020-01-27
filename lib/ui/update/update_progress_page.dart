@@ -22,8 +22,8 @@ class UpdateProgressPage extends StatefulWidget {
 class _UpdateProgressPageState extends State<UpdateProgressPage>
     with AfterLayoutMixin<UpdateProgressPage> {
   String msg = '更新中';
-  double progress = 0.0;
   String outputPath;
+  double progress = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
           Image(height: 40, width: 40, image: ImageRes.updateIndicator),
           SizedBox(height: 20),
           Text(msg),
-          Text('${(progress * 100).floor()}% 已完成'),
+          Text('${(progress * 100).ceil()}% 已完成'),
         ],
       ),
     );
