@@ -1,3 +1,4 @@
+import 'package:custed2/core/util/time_point.dart';
 import 'package:hive/hive.dart';
 
 part 'schedule_lesson.g.dart';
@@ -65,6 +66,14 @@ class ScheduleLesson {
   String endTime;
 
   bool isActiveInWeek(int week) => weeks.contains(week);
+
+  TimePoint parseStart() => TimePoint.fromString(startTime);
+  TimePoint parseEnd() => TimePoint.fromString(endTime);
+
+  @override
+  String toString() {
+    return '$startTime ~ $endTime $room $name';
+  }
 }
 
 @HiveType(typeId: 1)

@@ -27,7 +27,27 @@ class Schedule extends HiveObject {
 
   int calculateWeekSinceStart(DateTime dateTime) {
     final weeks = dateTime.difference(startDate).inDays ~/ 7;
-    return dateTime.isAfter(startDate) ? weeks + 1 : weeks;
+    return dateTime.compareTo(startDate) >= 0 ? weeks + 1 : weeks;
+  }
+
+  Iterable<ScheduleLesson> activeLessonsIn(DateTime day) {
+    final week = calculateWeekSinceStart(day);
+    return lessons.where((lesson) =>
+        lesson.isActiveInWeek(week) && lesson.weekday == day.weekday);
+  }
+
+  Iterable<ScheduleLesson> lessonsSince(DateTime date, int maxWeek) sync* {
+    int week;
+    while (true) {
+      final lessons = activeLessonsIn(date).toList();
+      lessons.removeWhere((lesson) => lesson.parseStart().isBefore(date));
+      lessons.sort((a, b) => a.startTime.compareTo(b.startTime));
+      yield* lessons;
+
+      date = DateTime(date.year, date.month, date.day + 1, 0, 0);
+      week = calculateWeekSinceStart(date);
+      if (week > maxWeek) break;
+    }
   }
 
   @override

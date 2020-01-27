@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/schedule.dart';
+import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/locator.dart';
 
@@ -80,5 +81,9 @@ class ScheduleProvider extends ProviderBase {
   void gotoCurrentWeek() {
     _selectedWeek = currentWeek;
     notifyListeners();
+  }
+
+  Iterable<ScheduleLesson> lessonsSince(DateTime dateTime) {
+    return _schedule?.lessonsSince(dateTime, maxWeek);
   }
 }

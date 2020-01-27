@@ -17,6 +17,6 @@ class Test2Command extends TTYCommand {
   @override
   main(TTYExecuter executer, BuildContext context, List<String> args) async {
     final schedule = locator<ScheduleProvider>();
-    print('Current week: ${schedule.currentWeek}');
+    print(schedule.lessonsSince(DateTime.now()).take(30).join('\n'));
   }
 }

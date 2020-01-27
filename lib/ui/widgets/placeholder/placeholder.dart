@@ -5,10 +5,12 @@ class PlaceholderWidget extends StatelessWidget {
   PlaceholderWidget({
     this.text,
     this.isActive = false,
+    this.light = false,
   });
 
   final String text;
   final bool isActive;
+  final bool light;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class PlaceholderWidget extends StatelessWidget {
 
     final textStyle = TextStyle(
       fontSize: 14,
-      fontWeight: FontWeight.bold,
+      fontWeight: light ? FontWeight.normal : FontWeight.bold,
       color: theme.lightTextColor,
     );
 

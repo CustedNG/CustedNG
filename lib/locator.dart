@@ -27,7 +27,6 @@ void setupLocatorForServices() {
 }
 
 void setupLocatorForProviders() {
-  locator.registerSingleton(DebugProvider());
   locator.registerSingleton(SnakebarProvider());
   locator.registerSingleton(ScheduleProvider());
   locator.registerSingleton(UserProvider());

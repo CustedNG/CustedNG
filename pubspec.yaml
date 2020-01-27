@@ -114,3 +114,5 @@ flutter:
   assets:
     - assets/map/simple/
     - assets/avatar/
+    - assets/icon/
+    - assets/banner.jpg

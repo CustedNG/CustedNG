@@ -1,5 +1,6 @@
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/extension/datetimex.dart';
+import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/ui/schedule_tab/schedule_lesson.dart';
 import 'package:flutter/cupertino.dart';
@@ -103,20 +104,12 @@ class ScheduleTable extends StatelessWidget {
         child: Column(children: <Widget>[
           Text(displayDate,
               style: shouldHighlight ? dateStyleHighlight : dateStyle),
-          Text(weekdayInChinese(date.weekday),
+          Text(date.weekday.weekdayInChinese(),
               style: shouldHighlight ? chsDateStyleHighlight : chsDateStyle),
         ]),
       ));
     }
 
     return TableRow(children: items);
-  }
-
-  static String weekdayInChinese(int i, [String prefix = '星期']) {
-    assert(i != null);
-    assert(i >= 1);
-    assert(i <= 7);
-    final arr = '一二三四五六日';
-    return "$prefix${arr[i - 1]}";
   }
 }

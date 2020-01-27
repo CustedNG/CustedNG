@@ -24,7 +24,7 @@ Future<void> initApp() async {
   final docDir = await getAppDocDir.invoke();
 
   Analytics.init();
-  Analytics.isDebug  = BuildMode.isDebug;
+  Analytics.isDebug = BuildMode.isDebug;
 
   Hive.init(docDir);
   Hive.registerAdapter(ScheduleAdapter());
@@ -60,9 +60,10 @@ void runInZone(Function body) {
 }
 
 void main() async {
-  await initApp();
+  locator.registerSingleton(DebugProvider());
 
-  runInZone(() {
+  runInZone(() async {
+    await initApp();
     runApp(
       MultiProvider(
         providers: [
