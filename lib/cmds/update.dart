@@ -8,10 +8,11 @@ class UpdateCommand extends TTYCommand {
   final name = 'update';
 
   @override
-  final help = 'Force update';
+  final help = 'update [force]';
 
   @override
   main(TTYExecuter executer, BuildContext context,  List<String> args) {
-    updateCheck(context, force: true);
+    final force = args.isNotEmpty && args.first == 'force';
+    updateCheck(context, force: force);
   }
 }

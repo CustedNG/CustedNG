@@ -8,7 +8,7 @@ part 'custed_update.g.dart';
 @JsonSerializable()
 class CustedUpdate {
   CustedUpdate();
-  
+
   int build;
   String name;
   String changelog;
@@ -21,6 +21,6 @@ class CustedUpdate {
 
   @override
   String toString() {
-    return '$name-$build';
+    return '${name}_$build';
   }
 }

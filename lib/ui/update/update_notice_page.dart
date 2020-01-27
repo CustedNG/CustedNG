@@ -56,8 +56,8 @@ class UpdateNoticePage extends StatelessWidget {
         CupertinoButton(
           child: Text('我不'),
           onPressed: () {
-            // final settings = locator<SettingStore>();
-            // settings.ignoreUpdate =
+            final settings = locator<SettingStore>();
+            settings.ignoreUpdate.put(update.build);
             Navigator.pop(context);
           },
         )
