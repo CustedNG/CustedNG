@@ -11,6 +11,7 @@ import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
+import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,7 @@ Future<void> initApp() async {
 
 void runInZone(Function body) {
   final zoneSpec = ZoneSpecification(
-    print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
+    print: (Zone self, ZoneDelegate parent, Zone zone, String line) async {
       final debugProvider = locator<DebugProvider>();
       parent.print(zone, line);
       debugProvider.addText(line);
@@ -70,6 +71,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => locator<ScheduleProvider>()),
           ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
           ChangeNotifierProvider(create: (_) => locator<AppProvider>()),
+          ChangeNotifierProvider(create: (_) => locator<WeatherProvider>()),
         ],
         child: Custed(),
       ),

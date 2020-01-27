@@ -46,12 +46,14 @@ class CatClient {
     String url, {
     Map<String, String> headers = const {},
     int maxRedirects = kDefaultMaxRedirects,
+    Duration timeout = kDefaultTimeout,
   }) {
     return rawRequest(
       'GET',
       Uri.parse(url),
       headers: headers,
       maxRedirects: maxRedirects,
+      timeout: timeout,
     );
   }
 
