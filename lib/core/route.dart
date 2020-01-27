@@ -1,3 +1,4 @@
+import 'package:custed2/core/analytics.dart';
 import 'package:flutter/cupertino.dart';
 
 
@@ -8,6 +9,7 @@ class AppRoute {
   AppRoute({this.title, this.page});
 
   void go(BuildContext context, [bool rootNavigator = false]) {
+    Analytics.recordView(title);
     Navigator.of(context, rootNavigator: rootNavigator).push(
       CupertinoPageRoute(
         title: title,

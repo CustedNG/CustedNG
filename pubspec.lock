@@ -178,6 +178,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
+  countly_flutter:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "9e9f4df047d6a83ff0076f24d141c6e5b4154546"
+      url: "https://github.com/Countly/countly-sdk-flutter-bridge.git"
+    source: git
+    version: "19.02.3"
   crypto:
     dependency: "direct main"
     description:
