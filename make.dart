@@ -67,23 +67,26 @@ void flutterRun() {
       mode: ProcessStartMode.inheritStdio, runInShell: true);
 }
 
-void flutterBuildAndriod() {
-  final build = getGitCommitCount();
-  final filename = 'CustedNG_${build}_arm.apk';
-  Process.start(
-    'flutter',
-    [
-      'build',
-      'apk',
-      '--target-platform=android-arm',
-      '--target=$filename',
-      '--build-number=$build',
-      '--build-name=1.0.$build',
-      '-v'
-    ],
-    mode: ProcessStartMode.inheritStdio,
-    runInShell: true,
-  );
+void flutterBuildAndriod() async {
+  final build = await getGitCommitCount();
+
+  final args = [
+    'build',
+    'apk',
+    '--target-platform=android-arm',
+    '--build-number=$build',
+    '--build-name=1.0.$build',
+    '-v'
+  ];
+  print('Building with args: ${args.join(' ')}');
+  await Process.run('flutter', args, runInShell: true);
+
+  final copySource = './build/app/outputs/apk/release/app-release.apk';
+  final copyTarget = './CustedNG_${build}_arm.apk';
+  print('Copying from $copySource to $copyTarget');
+
+  await File(copySource).copy(copyTarget);
+  print('Done.');
 }
 
 void main(List<String> args) async {
