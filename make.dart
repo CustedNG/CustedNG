@@ -68,9 +68,22 @@ void flutterRun() {
 }
 
 void flutterBuildAndriod() {
+  final build = getGitCommitCount();
+  final filename = 'CustedNG_${build}_arm.apk';
   Process.start(
-      'flutter', ['build', 'apk', '--target-platform', 'android-arm', '-v'],
-      mode: ProcessStartMode.inheritStdio, runInShell: true);
+    'flutter',
+    [
+      'build',
+      'apk',
+      '--target-platform=android-arm',
+      '--target=$filename',
+      '--build-number=$build',
+      '--build-name=1.0.$build',
+      '-v'
+    ],
+    mode: ProcessStartMode.inheritStdio,
+    runInShell: true,
+  );
 }
 
 void main(List<String> args) async {

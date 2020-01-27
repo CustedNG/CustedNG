@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="site.tusi.custed2">
+    package="cc.xuty.custed2">
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -22,7 +22,7 @@
         android:usesCleartextTraffic="true"
         android:allowBackup="false">
         <activity
-            android:name="site.tusi.custed2.SplashActivity"
+            android:name="cc.xuty.custed2.SplashActivity"
             android:launchMode="singleTop"
             android:theme="@style/SplashTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

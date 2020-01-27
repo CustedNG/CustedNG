@@ -1,4 +1,4 @@
-package site.tusi.custed2
+package cc.xuty.custed2
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

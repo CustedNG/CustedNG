@@ -1,4 +1,4 @@
-package site.tusi.custed2
+package cc.xuty.custed2
 
 import android.content.Intent
 import android.os.Build
