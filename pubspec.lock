@@ -255,6 +255,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.0"
+  flutter_inappwebview:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "9c7ac0da8f01ceb40430da58397bdb31968ca5b1"
+      url: "https://github.com/pichillilorenzo/flutter_inappwebview.git"
+    source: git
+    version: "3.0.0"
   flutter_local_notifications:
     dependency: transitive
     description:
@@ -713,6 +722,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.6"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.4"
   vector_math:
     dependency: transitive
     description:
@@ -737,10 +753,12 @@ packages:
   webview_flutter:
     dependency: "direct main"
     description:
-      name: webview_flutter
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.3.19+5"
+      path: "packages/webview_flutter"
+      ref: cookie-set-get
+      resolved-ref: "1e6407af250dac2d8030de3811690c665b465c00"
+      url: "https://github.com/wwwdata/plugins.git"
+    source: git
+    version: "0.3.20"
   xml:
     dependency: transitive
     description:

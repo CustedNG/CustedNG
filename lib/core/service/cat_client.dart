@@ -3,12 +3,9 @@ import 'dart:io';
 
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:custed2/core/util/cookie.dart';
 import 'package:custed2/locator.dart';
 import 'package:http/http.dart';
-
-String formatCookies(List<Cookie> cookies) {
-  return cookies.map((cookie) => "${cookie.name}=${cookie.value}").join('; ');
-}
 
 class CatClient {
   static const kDefaultMaxRedirects = 10;

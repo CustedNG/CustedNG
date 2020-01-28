@@ -1,3 +1,4 @@
+import 'package:custed2/config/routes.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
@@ -13,9 +14,7 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('我的教务'),
             icon: Image(image: ImageRes.manageIcon),
-            // action: () =>
-            //     route.CustedRoute(title: '我的教务', page: Sys8TeacherEval())
-            //         .go(context),
+            action: () => jwWebPage.go(context),
           ),
           HomeEntry(
             name: Text('一卡通'),

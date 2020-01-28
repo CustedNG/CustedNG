@@ -7,6 +7,7 @@ import 'package:html/parser.dart' show parse;
 
 class MyssoService extends CatService {
   static const baseUrl = 'http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118';
+  static const loginUrl = '$baseUrl/cas/login';
 
   final Pattern sessionExpirationTest = '用户登录';
 
@@ -24,7 +25,7 @@ class MyssoService extends CatService {
         .querySelector('input[name=execution]')
         .attributes['value'];
 
-    final resp = await post('$baseUrl/cas/login', body: {
+    final resp = await post(loginUrl, body: {
       'username': userData.username.fetch(),
       'password': userData.password.fetch(),
       'execution': execution,
@@ -42,7 +43,7 @@ class MyssoService extends CatService {
   }
 
   Future<String> getFrontPage() async {
-    final resp = await this.get('$baseUrl/cas/login');
+    final resp = await this.get(loginUrl);
     return resp.body;
   }
 

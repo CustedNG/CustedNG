@@ -1,4 +1,4 @@
-import 'package:custed2/config/route.dart';
+import 'package:custed2/config/routes.dart';
 import 'package:custed2/ui/home_tab/home_banner.dart';
 import 'package:custed2/ui/home_tab/home_entries.dart';
 import 'package:custed2/ui/home_tab/home_iecard.dart';

@@ -1,4 +1,4 @@
-import 'package:custed2/config/route.dart';
+import 'package:custed2/config/routes.dart';
 import 'package:custed2/core/tty/command.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
