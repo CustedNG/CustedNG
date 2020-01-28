@@ -3,6 +3,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/config/commands.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/app_provider.dart';
+import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
@@ -32,6 +33,7 @@ void setupLocatorForProviders() {
   locator.registerSingleton(UserProvider());
   locator.registerSingleton(AppProvider());
   locator.registerSingleton(WeatherProvider());
+  locator.registerSingleton(CetAvatarProvider());
 }
 
 Future<void> setupLocatorForStores() async {

@@ -82,7 +82,7 @@ void flutterBuildAndriod() async {
   await Process.run('flutter', args, runInShell: true);
 
   final copySource = './build/app/outputs/apk/release/app-release.apk';
-  final copyTarget = './CustedNG_${build}_arm.apk';
+  final copyTarget = './CustedNG_${build}_Arm.apk';
   print('Copying from $copySource to $copyTarget');
 
   await File(copySource).copy(copyTarget);

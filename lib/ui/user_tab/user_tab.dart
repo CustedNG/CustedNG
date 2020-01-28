@@ -2,6 +2,7 @@ import 'package:custed2/config/route.dart';
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/store/presistent_store.dart';
 import 'package:custed2/data/models/user_profile.dart';
+import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -45,7 +46,10 @@ class UserTab extends StatelessWidget {
         items: <Widget>[
           CSHeader('用户'),
           CSWidget(_buildUserInfo(context, profile)),
-          CSControl('四六级照片', Icon(CupertinoIcons.right_chevron)),
+          _buildLink(context, '四六级照片', () {
+            locator<CetAvatarProvider>().getAvatar();
+            cetAvatarPage.go(context);
+          }),
           CSHeader('课表'),
           CSControl(
               '将课表设为首页', _buildSwitch(context, setting.useScheduleAsHome)),
@@ -74,6 +78,15 @@ class UserTab extends StatelessWidget {
         return CupertinoSwitch(
             value: value, onChanged: (value) => prop.put(value));
       },
+    );
+  }
+
+  Widget _buildLink(BuildContext context, String name, void onPressed()) {
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      minSize: 0,
+      child: CSControl(name,  Icon(CupertinoIcons.right_chevron)),
+      onPressed: onPressed,
     );
   }
 

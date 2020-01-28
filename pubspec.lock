@@ -582,6 +582,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.23.1"
+  save_in_gallery:
+    dependency: "direct main"
+    description:
+      name: save_in_gallery
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.3"
   sensors:
     dependency: transitive
     description:

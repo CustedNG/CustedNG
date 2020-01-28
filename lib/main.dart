@@ -6,6 +6,7 @@ import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/app_provider.dart';
+import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -73,6 +74,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
           ChangeNotifierProvider(create: (_) => locator<AppProvider>()),
           ChangeNotifierProvider(create: (_) => locator<WeatherProvider>()),
+          ChangeNotifierProvider(create: (_) => locator<CetAvatarProvider>()),
         ],
         child: Custed(),
       ),

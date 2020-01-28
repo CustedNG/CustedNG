@@ -1,6 +1,7 @@
 import 'package:custed2/core/route.dart';
 import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
+import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
 import 'package:custed2/ui/update/update_notice_page.dart';
@@ -23,4 +24,9 @@ final cbsPage = AppRoute(
 final aboutPage = AppRoute(
   title: '关于',
   page: AboutPage(),
+);
+
+final cetAvatarPage = AppRoute(
+  title: '四六级照片',
+  page: CetAvatarPage(),
 );
