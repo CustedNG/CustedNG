@@ -8,4 +8,5 @@ class UserDataStore with PresistentStore {
   StoreProperty<String> get username => property('username');
   StoreProperty<String> get password => property('password');
   StoreProperty<UserProfile> get profile => property('profile');
+  StoreProperty<bool> get loggedIn => property('loggedIn', defaultValue: false);
 }

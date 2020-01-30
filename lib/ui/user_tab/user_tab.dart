@@ -21,8 +21,7 @@ class UserTab extends StatelessWidget {
       return PlaceholderWidget(isActive: true);
     }
 
-    final hasProfile = user.profile != null;
-    return hasProfile
+    return user.loggedIn
         ? _buildUserTab(context, user.profile)
         : _buildLoginButton(context);
   }
@@ -96,6 +95,6 @@ class UserTab extends StatelessWidget {
 
   void _logout(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
-    user.clearProfileData();
+    user.logout();
   }
 }

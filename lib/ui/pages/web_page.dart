@@ -12,10 +12,8 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WebPage extends StatefulWidget {
-  WebPage({this.canGoBack = true});
-
   final title = '';
-  final bool canGoBack;
+  final canGoBack = true;
 
   @override
   WebPageState createState() => WebPageState();
@@ -27,6 +25,7 @@ class WebPageState extends State<WebPage> {
 
   List<Widget> addonWidgets = [];
   bool isBusy = false;
+  Widget replace;
 
   final addons = <WebviewAddon>[];
   void onCreated() {}
@@ -55,6 +54,8 @@ class WebPageState extends State<WebPage> {
 
   Widget _buildWebviewWithAddons(BuildContext context) {
     final theme = AppTheme.of(context);
+
+    if(replace != null) return replace;
 
     Widget result = _buildWebview(context);
 
@@ -173,6 +174,10 @@ class WebPageState extends State<WebPage> {
         isSecure: cookie.secure,
       );
     }
+  }
+
+  void replaceWith(Widget widget) {
+    setState(() => replace = widget);
   }
 
   static String generateInitPage() {

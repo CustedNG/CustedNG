@@ -1,6 +1,7 @@
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/user_profile.dart';
+import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 
@@ -8,9 +9,13 @@ class UserProvider extends BusyProvider {
   UserProfile _profile;
   UserProfile get profile => _profile;
 
+  bool _loggedIn = false;
+  bool get loggedIn => _loggedIn;
+
   Future<void> loadLocalData() async {
     final userData = await locator.getAsync<UserDataStore>();
     _profile = userData.profile.fetch();
+    _loggedIn = _profile != null && userData.loggedIn.fetch();
 
     if (_profile != null) {
       print('use cached profile: $_profile');
@@ -18,12 +23,17 @@ class UserProvider extends BusyProvider {
     }
   }
 
-  Future<void> updateProfileData() async {
-    try {
-      await busyRun(_updateProfileData);
-    } catch (e) {
-      rethrow;
-    }
+  Future<void> login() async {
+    await busyRun(() async {
+      _updateProfileData();
+      _setLoginState(true);
+      _afterLogin();
+    });
+  }
+
+  Future<void> logout() async {
+    _setLoginState(false);
+    notifyListeners();
   }
 
   Future<void> _updateProfileData() async {
@@ -32,10 +42,14 @@ class UserProvider extends BusyProvider {
     userData.profile.put(_profile);
   }
 
-  Future<void> clearProfileData() async {
-    _profile = null;
+  Future<void> _setLoginState(bool state) async {
+    _loggedIn = state;
     final userData = await locator.getAsync<UserDataStore>();
-    userData.profile.delete();
-    notifyListeners();
+    userData.loggedIn.put(state);
+  }
+
+  void _afterLogin() {
+    final schedule = locator<ScheduleProvider>();
+    schedule.updateScheduleData();
   }
 }

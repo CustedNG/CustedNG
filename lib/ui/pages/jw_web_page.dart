@@ -1,11 +1,11 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/extension/stringx.dart';
+import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/jw_service.dart';
-import 'package:custed2/service/mysso_service.dart';
-import 'package:custed2/service/webvpn_service.dart';
 import 'package:custed2/ui/pages/web_page.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 
 class JwWebPage extends WebPage {
   final title = '教务系统';
@@ -17,6 +17,12 @@ class JwWebPage extends WebPage {
 class _JwWebPageState extends WebPageState {
   @override
   void onCreated() async {
+    final user = locator<UserProvider>();
+    if (!user.loggedIn) {
+      this.replaceWith(PlaceholderWidget(text: '需要登录'));
+      return;
+    }
+
     final url = JwService.baseUrl + '/Student';
     await locator<JwService>().login();
     await loadCookieFor(url);

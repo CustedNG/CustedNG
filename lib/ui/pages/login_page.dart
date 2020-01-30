@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
     userData.password.put(this.password);
 
     final user = locator<UserProvider>();
-    user.updateProfileData();
+    user.login();
 
     final snake = locator<SnakebarProvider>();
     snake.info('登录成功');

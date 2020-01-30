@@ -46,15 +46,7 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('考场查询'),
             icon: Image(image: ImageRes.mapIcon),
-            // action: () => route.CustedRoute(
-            //   title: '考场查询',
-            //   page: NtSite(
-            //     url: classId != null
-            //         ? 'https://nt.toast.ac.cn/exams?ios=true&keyword=$classId'
-            //         : 'https://nt.toast.ac.cn/exams?ios=true',
-            //     title: '考场查询',
-            //   ),
-            // ).go(context),
+            action: () => examRoomWebPage.go(context),
           ),
           HomeEntry(
             name: Text('校园网'),

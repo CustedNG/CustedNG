@@ -1,6 +1,7 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_menu.dart';
@@ -45,7 +46,12 @@ class _ScheduleTabState extends State<ScheduleTab>
 
   @override
   void afterFirstLayout(BuildContext context) {
+    final user = locator<UserProvider>();
+    if (!user.loggedIn) return;
+
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    if (scheduleProvider.isBusy) return;
+    
     scheduleProvider.updateScheduleData().timeout(Duration(seconds: 10));
   }
 
