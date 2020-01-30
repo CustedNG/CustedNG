@@ -10,12 +10,12 @@ class UserProvider extends BusyProvider {
   UserProfile get profile => _profile;
 
   bool _loggedIn = false;
-  bool get loggedIn => _loggedIn;
+  bool get loggedIn => _profile != null &&_loggedIn;
 
   Future<void> loadLocalData() async {
     final userData = await locator.getAsync<UserDataStore>();
     _profile = userData.profile.fetch();
-    _loggedIn = _profile != null && userData.loggedIn.fetch();
+    _loggedIn =  userData.loggedIn.fetch();
 
     if (_profile != null) {
       print('use cached profile: $_profile');
@@ -25,8 +25,8 @@ class UserProvider extends BusyProvider {
 
   Future<void> login() async {
     await busyRun(() async {
-      _updateProfileData();
-      _setLoginState(true);
+      await _updateProfileData();
+      await _setLoginState(true);
       _afterLogin();
     });
   }
