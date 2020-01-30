@@ -6,7 +6,6 @@ import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/iecard_web_page.dart';
 import 'package:custed2/ui/pages/jw_web_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
-import 'package:custed2/ui/update/update_notice_page.dart';
 
 final loginPage = AppRoute(
   title: '登录',

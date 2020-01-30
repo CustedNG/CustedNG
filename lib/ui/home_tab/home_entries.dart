@@ -35,13 +35,7 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('充网费'),
             icon: Image(image: ImageRes.networkIcon),
-            // action: () => route.CustedRoute(
-            //   title: '充网费',
-            //   page: AppSite(
-            //     url: 'https://app.cust.edu.cn/netfee?isIOS=true',
-            //     title: '充网费',
-            //   ),
-            // ).go(context),
+            // action: () => ecardWebPage.go(context),
           ),
         ]),
         TableRow(children: [

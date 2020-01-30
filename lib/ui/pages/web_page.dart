@@ -76,7 +76,12 @@ class WebPageState extends State<WebPage> {
                   color: CupertinoColors.white,
                   size: 30,
                 ),
-                onPressed: () => controller?.goBack(),
+                onPressed: () async {
+                  // Prevent user from go back to the 'loading...' page.
+                  final history = await controller.getCopyBackForwardList();
+                  if (history.currentIndex <= 1) return;
+                  controller?.goBack();
+                },
               ),
             ),
           )
