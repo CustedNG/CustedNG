@@ -21,14 +21,14 @@ class IecardService extends WebvpnBasedService {
   Future<bool> login() async {
     final ticket = await _mysso.getTicketForIecard();
     final prelogin =
-        await xRequest('GET', '$preloginUrl&ticket=$ticket'.toUri());
+        await request('GET', '$preloginUrl&ticket=$ticket'.toUri());
 
     final ssoticketid = html
         .parse(prelogin.body)
         .querySelector('#ssoticketid')
         .attributes['value'];
 
-    final response = await xRequest('POST', loginUrl.toUri(), body: {
+    final response = await request('POST', loginUrl.toUri(), body: {
       'errorcode': '1',
       'continueurl': '',
       'ssoticketid': ssoticketid

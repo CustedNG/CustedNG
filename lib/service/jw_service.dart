@@ -21,7 +21,7 @@ class JwService extends WebvpnBasedService {
   @override
   Future<bool> login() async {
     final ticket = await _mysso.getTicketForJw();
-    final response = await xRequest(
+    final response = await request(
       'POST',
       '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
       body: encodeParams({
