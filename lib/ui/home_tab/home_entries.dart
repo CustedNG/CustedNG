@@ -19,7 +19,7 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('一卡通'),
             icon: Image(image: ImageRes.ecardIcon),
-            // action: () => route.ecard.go(context),
+            action: () => iecardWebPage.go(context),
           ),
           HomeEntry(
             name: Text('体测成绩'),

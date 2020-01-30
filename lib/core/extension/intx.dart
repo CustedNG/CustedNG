@@ -7,4 +7,8 @@ extension IntX on int {
     final arr = '一二三四五六日';
     return "$prefix${arr[this - 1]}";
   }
+
+  Duration get ms {
+    return Duration(milliseconds: this);
+  }
 }

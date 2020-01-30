@@ -17,7 +17,7 @@ class WebvpnService extends CatService {
       maxRedirects: 0,
     );
 
-    if (resp.body.contains('success')) {
+    if (resp.body.contains(RegExp(r'(success|logged in)'))) {
       return true;
     }
     

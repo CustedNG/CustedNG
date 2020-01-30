@@ -3,6 +3,7 @@ import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
+import 'package:custed2/ui/pages/iecard_web_page.dart';
 import 'package:custed2/ui/pages/jw_web_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
 import 'package:custed2/ui/update/update_notice_page.dart';
@@ -35,4 +36,9 @@ final cetAvatarPage = AppRoute(
 final jwWebPage = AppRoute(
   title: '教务系统',
   page: JwWebPage(),
+);
+
+final iecardWebPage = AppRoute(
+  title: '一卡通',
+  page: IecardWebPage(),
 );

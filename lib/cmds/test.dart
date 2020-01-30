@@ -1,4 +1,5 @@
 import 'package:custed2/core/tty/command.dart';
+import 'package:custed2/service/iecard_service.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
@@ -31,9 +32,10 @@ class TestCommand extends TTYCommand {
     // print(await MyssoService().getTicketForPortal());
     // print(await MyssoService().getTicketForWebvpn());
 
-    print(await JwService().getSchedule());
-    print(await JwService().getWeekTime());
+    // print(await JwService().getSchedule());
+    // print(await JwService().getWeekTime());
     // print(await JwService().isSessionExpired(null));
     // print(await JwService().isSessionExpired(await JwService().get('http://qq.com')));
+    print(await IecardService().login());
   }
 }

@@ -9,7 +9,7 @@ import 'package:http/http.dart';
 
 class CatClient {
   static const kDefaultMaxRedirects = 10;
-  static const kDefaultTimeout = Duration(seconds: 10);
+  static const kDefaultTimeout = Duration(seconds: 20);
 
   final Client _client = Client();
   final PersistCookieJar _cookieJar = locator<PersistCookieJar>();

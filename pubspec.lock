@@ -229,6 +229,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.8"
+  expandable_bottom_sheet:
+    dependency: "direct main"
+    description:
+      name: expandable_bottom_sheet
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.1+1"
   fixnum:
     dependency: transitive
     description:
