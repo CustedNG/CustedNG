@@ -26,6 +26,5 @@ class ImageRes {
   static const testPaperIcon = AssetImage('assets/icon/test_paper.png');
 
   static const updateIndicator = AssetImage('assets/updating.gif');
-
-
+  static const miscSchoolCalendar = AssetImage('assets/calendar/cust-schedule-2019-2020.png');
 }

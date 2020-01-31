@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:custed2/config/routes.dart';
 
 class HomeMenu extends StatelessWidget {
   @override
@@ -10,6 +11,7 @@ class HomeMenu extends StatelessWidget {
           child: Text('查看校历'),
           onPressed: () {
             Navigator.of(context).pop();
+            schoolCalendar.go(context);
           },
         ),
         CupertinoActionSheetAction(

@@ -7,6 +7,7 @@ import 'package:custed2/ui/pages/exam_room_web_page.dart';
 import 'package:custed2/ui/pages/iecard_web_page.dart';
 import 'package:custed2/ui/pages/jw_web_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
+import 'package:custed2/ui/pages/school_calendar.dart';
 
 final loginPage = AppRoute(
   title: '登录',
@@ -46,4 +47,9 @@ final iecardWebPage = AppRoute(
 final examRoomWebPage = AppRoute(
   title: '考场查询',
   page: ExamRoomWebPage(),
+);
+
+final schoolCalendar = AppRoute(
+  title: '校历',
+  page: SchoolCalendar(),
 );
