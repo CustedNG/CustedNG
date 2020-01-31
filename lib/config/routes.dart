@@ -3,7 +3,7 @@ import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
-import 'package:custed2/ui/pages/school_calendar.dart';
+import 'package:custed2/ui/pages/school_calendar_page.dart';
 import 'package:custed2/ui/web/exam_room_web_page.dart';
 import 'package:custed2/ui/web/iecard_web_page.dart';
 import 'package:custed2/ui/web/jw_web_page.dart';
@@ -57,5 +57,5 @@ final tikuWebPage = AppRoute(
 
 final schoolCalendar = AppRoute(
   title: '校历',
-  page: SchoolCalendar(),
+  page: SchoolCalendarPage(),
 );
