@@ -24,6 +24,7 @@ class ImageRes {
   static const runningReportIcon = AssetImage('assets/icon/running_report.png');
   static const custedLiteIcon = AssetImage('assets/icon/custed_lite.png');
   static const testPaperIcon = AssetImage('assets/icon/test_paper.png');
+  static const tikuIcon = AssetImage('assets/icon/tiku.png');
 
   static const updateIndicator = AssetImage('assets/updating.gif');
 

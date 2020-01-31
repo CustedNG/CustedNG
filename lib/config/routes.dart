@@ -7,6 +7,7 @@ import 'package:custed2/ui/web/exam_room_web_page.dart';
 import 'package:custed2/ui/web/iecard_web_page.dart';
 import 'package:custed2/ui/web/jw_web_page.dart';
 import 'package:custed2/ui/web/login_web_page.dart';
+import 'package:custed2/ui/web/tiku_web_page.dart';
 
 final loginPage = AppRoute(
   title: '登录',
@@ -46,4 +47,9 @@ final iecardWebPage = AppRoute(
 final examRoomWebPage = AppRoute(
   title: '考场查询',
   page: ExamRoomWebPage(),
+);
+
+final tikuWebPage = AppRoute(
+  title: '考试题库',
+  page: TikuWebPage(),
 );

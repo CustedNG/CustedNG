@@ -33,9 +33,9 @@ class HomeEntries extends StatelessWidget {
             // ).go(context),
           ),
           HomeEntry(
-            name: Text('充网费'),
-            icon: Image(image: ImageRes.networkIcon),
-            // action: () => ecardWebPage.go(context),
+            name: Text('题库'),
+            icon: Image(image: ImageRes.tikuIcon),
+            action: () => tikuWebPage.go(context, rootNavigator: true),
           ),
         ]),
         TableRow(children: [
