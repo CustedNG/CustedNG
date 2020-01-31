@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';

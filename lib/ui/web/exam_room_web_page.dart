@@ -1,7 +1,4 @@
-import 'package:custed2/service/iecard_service.dart';
 import 'package:custed2/ui/web/web_page.dart';
-import 'package:custed2/web/iecard_addon.dart';
-import 'package:custed2/web/iecard_netfee_addon.dart';
 
 class ExamRoomWebPage extends WebPage {
   @override

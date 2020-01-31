@@ -1,16 +1,11 @@
 import 'dart:async';
 
 import 'package:custed2/core/provider/busy_provider.dart';
-import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/custed_weather.dart';
-import 'package:custed2/data/models/user_profile.dart';
-import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
 
 class WeatherProvider extends BusyProvider {
-  WeatherProvider() {}
-
   WeatherData _data;
   WeatherData get data => _data;
 

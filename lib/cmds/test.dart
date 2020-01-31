@@ -1,6 +1,5 @@
 import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/service/iecard_service.dart';
-import 'package:custed2/service/jw_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
 

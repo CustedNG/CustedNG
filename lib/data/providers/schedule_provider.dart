@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 
 import 'package:custed2/core/provider/busy_provider.dart';
-import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
