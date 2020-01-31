@@ -21,7 +21,7 @@ packages:
       path: "."
       ref: master
       resolved-ref: "7d9229fe6024b9c32b9b5316e8468dd2d046a846"
-      url: "git@e.coding.net:toast/custed/alice.git"
+      url: "https://github.com/xtyxtyx/alice.git"
     source: git
     version: "0.0.21"
   analyzer:
@@ -184,7 +184,7 @@ packages:
       path: "."
       ref: master
       resolved-ref: "9e9f4df047d6a83ff0076f24d141c6e5b4154546"
-      url: "git@e.coding.net:toast/custed/countly-sdk-flutter-bridge.git"
+      url: "https://github.com/Countly/countly-sdk-flutter-bridge.git"
     source: git
     version: "19.02.3"
   crypto:
@@ -268,7 +268,7 @@ packages:
       path: "."
       ref: master
       resolved-ref: "9c7ac0da8f01ceb40430da58397bdb31968ca5b1"
-      url: "git@e.coding.net:toast/custed/flutter_inappwebview.git"
+      url: "https://github.com/pichillilorenzo/flutter_inappwebview.git"
     source: git
     version: "3.0.0"
   flutter_local_notifications:

@@ -38,8 +38,9 @@ dependencies:
   
   alice:
     git:
-      url: git@e.coding.net:toast/custed/alice.git
-      # url: https://github.com/xtyxtyx/alice.git
+      url: https://github.com/xtyxtyx/alice.git
+      # Alternate address
+      # url: git@e.coding.net:toast/custed/alice.git
       ref: master
   
   after_layout: ^1.0.7+2
@@ -52,8 +53,9 @@ dependencies:
 
   flutter_inappwebview:
     git:
-      url: git@e.coding.net:toast/custed/flutter_inappwebview.git
-      # url: https://github.com/pichillilorenzo/flutter_inappwebview.git
+      url: https://github.com/pichillilorenzo/flutter_inappwebview.git
+      # Alternate address
+      # url: git@e.coding.net:toast/custed/flutter_inappwebview.git
       ref: master
 
   otp: ^1.0.3
@@ -66,9 +68,9 @@ dependencies:
 
   countly_flutter:
     git: 
+      url: https://github.com/Countly/countly-sdk-flutter-bridge.git
+      # Alternate address
       # url: git@e.coding.net:toast/custed/countly-sdk-flutter-bridge.git
-      # url: https://github.com/Countly/countly-sdk-flutter-bridge.git
-      url: git@e.coding.net:toast/custed/countly-sdk-flutter-bridge.git
       ref: master
   
 
