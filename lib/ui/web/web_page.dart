@@ -28,9 +28,16 @@ class WebPageState extends State<WebPage> {
   Widget replace;
 
   final addons = <WebviewAddon>[];
+
   void onCreated() {}
+
   void onPageStarted(String url) {}
+
   void onPageFinished(String url) {}
+
+  Future<bool> onNavigate(ShouldOverrideUrlLoadingRequest request) {
+    return Future.value(true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +62,7 @@ class WebPageState extends State<WebPage> {
   Widget _buildWebviewWithAddons(BuildContext context) {
     final theme = AppTheme.of(context);
 
-    if(replace != null) return replace;
+    if (replace != null) return replace;
 
     Widget result = _buildWebview(context);
 
@@ -129,7 +136,13 @@ class WebPageState extends State<WebPage> {
       },
       shouldOverrideUrlLoading: (controller, request) async {
         print('INCAT redirect: ${request.url}');
-        return ShouldOverrideUrlLoadingAction.ALLOW;
+        final allow = await onNavigate(request);
+        return allow
+            ? ShouldOverrideUrlLoadingAction.ALLOW
+            : ShouldOverrideUrlLoadingAction.CANCEL;
+      },
+      onConsoleMessage: (controller, message) {
+        print('|WEBVIEW|: ' + message.message);
       },
     );
   }

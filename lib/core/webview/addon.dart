@@ -15,4 +15,10 @@ abstract class WebviewAddon {
   void onPageFinished(InAppWebViewController controller, String url) {}
 
   void onPageStarted(InAppWebViewController controller, String url) {}
+
+  static String callHandler(String name, String data) {
+    return '''
+      window.flutter_inappwebview._callHandler('$name', setTimeout(function(){}), JSON.stringify($data))
+    ''';
+  }
 }

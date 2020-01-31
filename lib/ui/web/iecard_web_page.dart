@@ -1,7 +1,7 @@
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/iecard_service.dart';
-import 'package:custed2/ui/pages/web_page.dart';
+import 'package:custed2/ui/web/web_page.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:custed2/web/iecard_addon.dart';
 import 'package:custed2/web/iecard_netfee_addon.dart';
