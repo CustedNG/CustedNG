@@ -3,6 +3,7 @@ import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
+import 'package:custed2/ui/pages/school_calendar.dart';
 import 'package:custed2/ui/web/exam_room_web_page.dart';
 import 'package:custed2/ui/web/iecard_web_page.dart';
 import 'package:custed2/ui/web/jw_web_page.dart';
@@ -52,4 +53,9 @@ final examRoomWebPage = AppRoute(
 final tikuWebPage = AppRoute(
   title: '考试题库',
   page: TikuWebPage(),
+);
+
+final schoolCalendar = AppRoute(
+  title: '校历',
+  page: SchoolCalendar(),
 );
