@@ -3,6 +3,7 @@ import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
+import 'package:custed2/ui/pages/login_page.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
 import 'package:custed2/ui/web/exam_room_web_page.dart';
 import 'package:custed2/ui/web/iecard_web_page.dart';
@@ -10,9 +11,15 @@ import 'package:custed2/ui/web/jw_web_page.dart';
 import 'package:custed2/ui/web/login_web_page.dart';
 import 'package:custed2/ui/web/tiku_web_page.dart';
 
-final loginPage = AppRoute(
+final loginWebPage = AppRoute(
   title: '登录',
   page: LoginWebPage(),
+);
+
+// 因inappwebview问题 暂时使用旧版登录
+final loginPage = AppRoute(
+  title: '登录',
+  page: LoginPage(),
 );
 
 final debugPage = AppRoute(

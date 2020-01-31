@@ -104,8 +104,11 @@ class CatClient {
     final cookieString = response.headers[HttpHeaders.setCookieHeader];
     if (cookieString == null) return;
 
-    final cookies = Cookie.fromSetCookieValue(cookieString);
-    _cookieJar.saveFromResponse(response.request.url, [cookies]);
+    final cookies = cookieString
+        .split(',')
+        .map((c) => Cookie.fromSetCookieValue(c))
+        .toList();
+    _cookieJar.saveFromResponse(response.request.url, cookies);
   }
 
   List<Cookie> findCookies(Uri uri) {

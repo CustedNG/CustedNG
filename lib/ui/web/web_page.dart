@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/extension/stringx.dart';
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/webview/addon.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/bottom_sheet.dart';
@@ -142,7 +143,7 @@ class WebPageState extends State<WebPage> {
             : ShouldOverrideUrlLoadingAction.CANCEL;
       },
       onConsoleMessage: (controller, message) {
-        print('|WEBVIEW|: ' + message.message);
+        if (BuildMode.isDebug) print('|WEBVIEW|: ' + message.message);
       },
     );
   }
@@ -176,6 +177,7 @@ class WebPageState extends State<WebPage> {
 
   Future<void> loadCookieFor(String url) async {
     final cookies = locator<PersistCookieJar>().loadForRequest(url.toUri());
+    print(cookies);
     for (var cookie in cookies) {
       await CookieManager.instance().setCookie(
         url: url,

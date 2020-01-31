@@ -32,6 +32,8 @@ class _LoginWebPageState extends WebPageState {
     await controller.loadUrl(url: 'http://webvpn.cust.edu.cn/');
   }
 
+  // unfortunately this is not working in release mode.
+  // See: https://github.com/pichillilorenzo/flutter_inappwebview/issues/237
   @override
   Future<bool> onNavigate(ShouldOverrideUrlLoadingRequest request) async {
     if (request.url.contains('webvpn.cust.edu.cn/portal/#!/service')) {
