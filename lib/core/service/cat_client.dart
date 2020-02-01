@@ -101,13 +101,16 @@ class CatClient {
   }
 
   void saveCookies(Response response) {
-    final cookieString = response.headers[HttpHeaders.setCookieHeader];
+    var cookieString = response.headers[HttpHeaders.setCookieHeader];
     if (cookieString == null) return;
 
+    cookieString = cookieString.replaceAll(', ', '__custed_comma_space__');
     final cookies = cookieString
         .split(',')
+        .map((c) => c.replaceAll('__custed_comma_space__', ', '))
         .map((c) => Cookie.fromSetCookieValue(c))
         .toList();
+        
     _cookieJar.saveFromResponse(response.request.url, cookies);
   }
 
