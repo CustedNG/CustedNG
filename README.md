@@ -1,4 +1,16 @@
-### custed2
+<p align="center">
+<img src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/CustedNG.png">
+</p>
+
+<p align="center">
+    <img alt="Build Status" src="https://api.codemagic.io/apps/5e34f30dcb13955d9f85f43f/5e34f30dcb13955d9f85f43e/status_badge.svg">
+    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/xtyxtyx/custed">
+    <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/xtyxtyx/custed">
+    <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/xtyxtyx/custed">
+</p>
+
+## CustedNG
+
 
 ### 架构
 
