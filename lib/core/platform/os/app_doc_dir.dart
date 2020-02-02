@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:custed2/core/platform/platform_api.dart';
 import 'package:path_provider/path_provider.dart';
 
-class AppDocDir extends PlatformApi<Future<String>> {
-  const AppDocDir();
+class GetAppDocDir extends PlatformApi<Future<String>> {
+  const GetAppDocDir();
 
   @override
   Future<String> andriod() async {
@@ -23,4 +23,4 @@ class AppDocDir extends PlatformApi<Future<String>> {
   }
 }
 
-const getAppDocDir = AppDocDir();
+const getAppDocDir = GetAppDocDir();

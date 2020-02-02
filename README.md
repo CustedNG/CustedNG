@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/CustedNG.png">
+  <img src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/CustedNG.png">
 </p>
 
 <p align="center">
@@ -11,27 +11,63 @@
 
 ## CustedNG
 
+<table>
+  <tr>
+    <td>
+		<img width="250px" src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/home.png">
+    </td>
+    <td>
+       <img width="250px" src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/schedule.png">
+    </td>
+    <td>
+       <img width="250px" src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/lesson.png">
+    </td>
+    <td>
+       <img width="250px" src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/tiku.png">
+    </td>
+  </tr>
+</table>
 
-### 架构
+**功能:**  
+✔️ 查课表  
+✔️ 充网费  
+✔️ 一卡通  
+✔️ 教务快速登录  
+✔️ 一键评教  
+✔️ 四六级照片  
+✔️ 考试题库  
+✔️ 实时天气  
+✔️ 校历  
+✔️ ...  
 
-```       
-+--------------------------------------------------------------+                  
-|                              UI                              |                  
-+--------------------------------------------------------------+                  
-+--------------------------------------------------------------+                  
-|                     View Model (provider)                    |                  
-+--------------------------------------------------------------+                  
-+-----------------------+ +---------------+ +------------------+                  
-| Service (http client) | |     User      | |                  |                  
-+-----------------------+ +---------------+ |                  |                  
-+-------------------------------------------+                  |                  
-|                        Database (store)                      |                  
-+--------------------------------------------------------------+   
+> 由于教务尚未开放相关功能 暂时无法查询成绩
+
+## 安装
+
+**Andriod**
+
+[Github Release](https://github.com/xtyxtyx/custed/releases) | [二维码](https://cust.xuty.cc/CustedNG.svg)
+
+<img width="250px" src="https://cust.xuty.cc/CustedNG.svg">
+
+
+**iOS / 桌面客户端**
+
+*会有的
+
+## 反馈
+
+[Github Issues](https://github.com/xtyxtyx/custed/issues) | QQ群: <待添加>
+
+## 已知问题
+
+- [ ] 当前仅支持本科生使用
+- [ ] 由于教务尚未开放相关功能 无法查询成绩
+
+
+## Licence
+
 ```
-
-### 设计原则
-
-- **拥抱变化**: 以最小代价应对上游变更
-- **跨平台**: 用 PlatformApi 封装平台接口, 保持对ios, andriod, web, osx (以及之后的 linux, etc) 的兼容性
-- **性能**: 将运算量大的函数放入 isolate 中执行
-- _More_
+CustedNG is licensed under the
+Apache License 2.0
+```

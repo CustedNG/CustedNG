@@ -14,7 +14,6 @@ import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/core/util/build_mode.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -23,9 +22,6 @@ import 'package:provider/provider.dart';
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   final docDir = await getAppDocDir.invoke();
-
-  Analytics.init();
-  Analytics.isDebug = BuildMode.isDebug;
 
   Hive.init(docDir);
   Hive.registerAdapter(ScheduleAdapter());
@@ -47,8 +43,9 @@ void runInZone(Function body) {
   );
 
   final onError = (Object obj, StackTrace stack) {
-    final debugProvider = locator<DebugProvider>();
     print('error: $obj');
+    Analytics.recordException(obj);
+    final debugProvider = locator<DebugProvider>();
     debugProvider.addError(obj);
     debugProvider.addError(stack);
   };
