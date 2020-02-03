@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/CustedNG.png">
+  <img src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/CustedNG.png">
 </p>
 
 <p align="center">
     <img alt="Build Status" src="https://api.codemagic.io/apps/5e34f30dcb13955d9f85f43f/5e34f30dcb13955d9f85f43e/status_badge.svg">
-    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/xtyxtyx/custed">
-    <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/xtyxtyx/custed">
-    <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/xtyxtyx/custed">
+    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/CustedNG/CustedNG">
+    <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/CustedNG/CustedNG">
+    <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/CustedNG/CustedNG">
 </p>
 
 ## CustedNG
@@ -14,16 +14,16 @@
 <table>
   <tr>
     <td>
-		<img width="250px" src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/home.png">
+		<img width="250px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/home.png">
     </td>
     <td>
-       <img width="250px" src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/schedule.png">
+       <img width="250px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/schedule.png">
     </td>
     <td>
-       <img width="250px" src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/lesson.png">
+       <img width="250px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/lesson.png">
     </td>
     <td>
-       <img width="250px" src="https://raw.githubusercontent.com/xtyxtyx/custed/master/screenshot/tiku.png">
+       <img width="250px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/tiku.png">
     </td>
   </tr>
 </table>
@@ -46,7 +46,7 @@
 
 **Andriod**
 
-[Github Release](https://github.com/xtyxtyx/custed/releases) | [二维码](https://cust.xuty.cc/CustedNG.svg)
+[Github Release](https://github.com/CustedNG/CustedNG/releases) | [二维码](https://cust.xuty.cc/CustedNG.svg)
 
 <img width="250px" src="https://cust.xuty.cc/CustedNG.svg">
 
@@ -57,7 +57,7 @@
 
 ## 反馈
 
-[Github Issues](https://github.com/xtyxtyx/custed/issues) | QQ群: <待添加>
+[Github Issues](https://github.com/CustedNG/CustedNG/issues) | QQ群: <待添加>
 
 ## 已知问题
 
