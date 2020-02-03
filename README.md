@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/CustedNG.png">
+  <img width="500px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/CustedNG.png">
 </p>
 
 <p align="center">
@@ -14,16 +14,16 @@
 <table>
   <tr>
     <td>
-		<img width="250px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/home.png">
+		<img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/home.png">
     </td>
     <td>
-       <img width="250px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/schedule.png">
+       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/schedule.png">
     </td>
     <td>
-       <img width="250px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/lesson.png">
+       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/lesson.png">
     </td>
     <td>
-       <img width="250px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/tiku.png">
+       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/tiku.png">
     </td>
   </tr>
 </table>
