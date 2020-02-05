@@ -20,7 +20,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "7d9229fe6024b9c32b9b5316e8468dd2d046a846"
+      resolved-ref: "48ee7fd62eb26238e6e4cc62e351ba2d2047c63c"
       url: "https://github.com/xtyxtyx/alice.git"
     source: git
     version: "0.0.21"
@@ -352,7 +352,7 @@ packages:
       name: http_multi_server
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   http_parser:
     dependency: transitive
     description:
@@ -444,13 +444,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1+2"
-  open_file:
-    dependency: transitive
-    description:
-      name: open_file
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.1.1"
   otp:
     dependency: "direct main"
     description:
@@ -465,13 +458,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.0"
-  package_info:
-    dependency: transitive
-    description:
-      name: package_info
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.4.0+13"
   package_resolver:
     dependency: transitive
     description:
@@ -514,13 +500,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.8.0+1"
-  permission_handler:
-    dependency: transitive
-    description:
-      name: permission_handler
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "4.2.0+hotfix.3"
   petitparser:
     dependency: transitive
     description:
@@ -590,14 +569,14 @@ packages:
       name: retrofit
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.1+1"
+    version: "1.1.0+1"
   retrofit_generator:
     dependency: "direct dev"
     description:
       name: retrofit_generator
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.2+2"
+    version: "1.1.0+1"
   rxdart:
     dependency: transitive
     description:
