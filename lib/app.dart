@@ -28,6 +28,8 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     return Theme(
       data: theme,
       child: CupertinoApp(
+        //防止ios自动适配黑暗模式
+        theme: CupertinoThemeData(brightness:Brightness.light),
         navigatorKey: locator<GlobalKey<NavigatorState>>(),
         title: 'Custed',
         home: AppFrame(),
