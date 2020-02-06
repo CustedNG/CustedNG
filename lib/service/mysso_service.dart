@@ -9,7 +9,7 @@ class MyssoService extends CatService {
   static const baseUrl = 'http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118';
   static const loginUrl = '$baseUrl/cas/login';
 
-  final Pattern sessionExpirationTest = '用户登录';
+  final Pattern sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
 
   Future<bool> login() async {
     final loginPage = await getFrontPage();

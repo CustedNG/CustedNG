@@ -61,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
         },
         onPageFinished: (url) async {
           controller.evaluateJavascript(rmHeader);
+          controller.evaluateJavascript(rmWxLogin);
           controller.evaluateJavascript(loginHook);
 
           final userData = await locator.getAsync<UserDataStore>();
@@ -89,8 +90,15 @@ class _LoginPageState extends State<LoginPage> {
   String get rmHeader => '''
     (function() {
       var header = document.querySelector('nav.navbar');
-      header.parentNode.removeChild(header);
-      document.querySelector('main').classList.add('pt-3')
+      if (header) header.parentNode.removeChild(header);
+      document.querySelector('main').style = "padding-top: 0;";
+    })();
+  ''';
+
+  String get rmWxLogin => r'''
+    (function() {
+      var wxLogin = document.querySelector('.card-header.text-center');
+      if (wxLogin) wxLogin.parentNode.removeChild(wxLogin);
     })();
   ''';
 
