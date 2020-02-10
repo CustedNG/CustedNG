@@ -7,7 +7,7 @@ class HomeNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     return HomeCard(
       title: Text('通知'),
-      content: Text('<内部版本 TechnicalPreview#${BuildData.build}>'),
+      content: Text('<版本号 TechnicalPreview#${BuildData.build}>'),
     );
   }
 }

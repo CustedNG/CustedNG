@@ -99,6 +99,8 @@ class _LoginPageState extends State<LoginPage> {
     (function() {
       var wxLogin = document.querySelector('.card-header.text-center');
       if (wxLogin) wxLogin.parentNode.removeChild(wxLogin);
+      var wxLogin2 = document.querySelector('#notices');
+      if (wxLogin2) wxLogin2.parentNode.removeChild(wxLogin2);
     })();
   ''';
 

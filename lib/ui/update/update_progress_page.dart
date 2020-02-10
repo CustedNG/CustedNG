@@ -1,5 +1,5 @@
 import 'package:after_layout/after_layout.dart';
-import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/core/platform/os/app_tmp_dir.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
@@ -82,7 +82,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
 
   Future<void> init() async {
     updateMsg('正在初始化');
-    final docDir = await getAppDocDir.invoke();
+    final docDir = await getAppTmpDir.invoke();
     outputPath = path.join(docDir, './output.apk');
   }
 
