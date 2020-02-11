@@ -12,15 +12,17 @@ class LispArg {
 
   /// Sets a value [x] to the location corresponding to the variable in [env].
   void setValue(x, LispCell env) {
-    for (int i = 0; i < level; i++)
+    for (int i = 0; i < level; i++) {
       env = env.cdr;
+    }
     env.car[offset] = x;
   }
 
   /// Gets a value from the location corresponding to the variable in [env].
   getValue(LispCell env) {
-    for (int i = 0; i < level; i++)
+    for (int i = 0; i < level; i++) {
       env = env.cdr;
+    }
     return env.car[offset];
   }
 }

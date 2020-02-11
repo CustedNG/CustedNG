@@ -14,13 +14,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 
 class UndergraduateUser implements User {
-  JwService _jw = locator<JwService>();
+  final _jw = locator<JwService>();
 
+  @override
   Future<Schedule> getSchdeule() async {
     final rawSchedule = await _jw.getSchedule();
     return normalizeSchedule(rawSchedule);
   }
 
+  @override
   Future<UserProfile> getProfile() async {
     final rawProfile = await _jw.getStudentInfo();
     return UserProfile()
@@ -28,6 +30,7 @@ class UndergraduateUser implements User {
       ..department = 'Null 学院';
   }
 
+  @override
   Future<ImageProvider> getAvatar() async => ImageRes.defaultAvatar;
 
   static Future<Schedule> normalizeSchedule(JwSchedule raw) async {

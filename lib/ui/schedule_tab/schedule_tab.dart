@@ -101,10 +101,12 @@ class _ScheduleTabState extends State<ScheduleTab>
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) {
-        if (details.primaryVelocity > 50)
+        if (details.primaryVelocity > 50) {
           return scheduleProvider.gotoPrevWeek();
-        if (details.primaryVelocity < -50)
+        }
+        if (details.primaryVelocity < -50) {
           return scheduleProvider.gotoNextWeek();
+        }
       },
       child: Container(
         color: CupertinoColors.white,

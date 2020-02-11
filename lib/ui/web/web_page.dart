@@ -152,11 +152,15 @@ class WebPageState extends State<WebPage> {
     final uri = url.toUri();
     activeAddons = addons.where((addon) => addon.shouldActivate(uri)).toList();
     addonBuildWidgets(controller, url);
-    for (var addon in activeAddons) addon.onPageStarted(controller, url);
+    for (var addon in activeAddons) {
+      addon.onPageStarted(controller, url);
+    }
   }
 
   void addonOnLoadStop(InAppWebViewController controller, String url) {
-    for (var addon in activeAddons) addon.onPageFinished(controller, url);
+    for (var addon in activeAddons) {
+      addon.onPageFinished(controller, url);
+    }
   }
 
   void addonBuildWidgets(InAppWebViewController controller, String url) {

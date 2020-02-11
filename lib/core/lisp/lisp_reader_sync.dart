@@ -39,13 +39,11 @@ class LispReaderSync {
     } else if (_token == Symbols.backQuote) {
       // `a => (quasiquote a)
       _readToken();
-      return LispCell(
-          Symbols.quasiquote, LispCell(_parseExpression(), null));
+      return LispCell(Symbols.quasiquote, LispCell(_parseExpression(), null));
     } else if (_token == Symbols.comma) {
       // ,a => (unquote a)
       _readToken();
-      return LispCell(
-          Symbols.unquote, LispCell(_parseExpression(), null));
+      return LispCell(Symbols.unquote, LispCell(_parseExpression(), null));
     } else if (_token == Symbols.commaAt) {
       // ,@a => (unquote-splicing a)
       _readToken();
@@ -72,8 +70,9 @@ class LispReaderSync {
         _readToken();
         e2 = _parseExpression();
         _readToken();
-        if (_token != Symbols.rightParen)
+        if (_token != Symbols.rightParen) {
           throw FormatException('")" expected: $_token');
+        }
       } else {
         e2 = _parseListBody();
       }

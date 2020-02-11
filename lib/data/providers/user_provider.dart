@@ -4,6 +4,7 @@ import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:pedantic/pedantic.dart';
 
 class UserProvider extends BusyProvider {
   UserProfile _profile;
@@ -32,20 +33,20 @@ class UserProvider extends BusyProvider {
   }
 
   Future<void> logout() async {
-    _setLoginState(false);
+    unawaited(_setLoginState(false));
     notifyListeners();
   }
 
   Future<void> _updateProfileData() async {
     _profile = await User().getProfile();
     final userData = await locator.getAsync<UserDataStore>();
-    userData.profile.put(_profile);
+    unawaited(userData.profile.put(_profile));
   }
 
   Future<void> _setLoginState(bool state) async {
     _loggedIn = state;
     final userData = await locator.getAsync<UserDataStore>();
-    userData.loggedIn.put(state);
+    unawaited(userData.loggedIn.put(state));
   }
 
   void _afterLogin() {

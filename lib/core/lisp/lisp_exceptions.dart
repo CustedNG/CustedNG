@@ -10,8 +10,9 @@ class LispEvalException implements Exception {
 
   @override String toString() {
     var s = "EvalException: $message";
-    for (String line in trace)
+    for (String line in trace) {
       s += "\n\t$line";
+    }
     return s;
   }
 }

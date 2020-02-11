@@ -18,7 +18,7 @@ class LispSym {
     var result = table[name];
     assert(result == null || ! isKeyword);
     if (result == null) {
-      result = isKeyword ? new LispKeyword.internal(name) : new LispSym.internal(name);
+      result = isKeyword ? LispKeyword.internal(name) : LispSym.internal(name);
       table[name] = result;
     }
     return result;

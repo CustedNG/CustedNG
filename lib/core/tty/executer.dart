@@ -1,5 +1,3 @@
-import 'package:custed2/core/lisp/lisp.dart';
-import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp/lisp_util.dart';
 import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/core/tty/engine.dart';

@@ -1,6 +1,7 @@
 import 'package:alice/alice.dart';
 import 'package:custed2/core/lisp/lisp.dart';
 import 'package:custed2/core/lisp/lisp_cell.dart';
+import 'package:custed2/core/tty/exception.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/store/lisp_store.dart';
@@ -9,6 +10,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TTYEngine {
   // 1. notice banner update (presistence)
@@ -23,6 +25,7 @@ class TTYEngine {
     _lisp.def('custed-get', 1, _custedGet);
     _lisp.def('custed-wait', 1, _custedWait);
     _lisp.def('custed-notify', 1, _custedNotify);
+    _lisp.def('custed-launch-url', 1, _custedLaunchUrl);
 
     _lisp.def('-', -1, _custedLegacy);
     _lisp.def('new-year', 0, _newYear);
@@ -79,6 +82,14 @@ class TTYEngine {
     final settings = locator<SettingStore>();
     settings.notification.put(notification);
     return notification;
+  }
+
+  _custedLaunchUrl(List args) async {
+    final url = args[0];
+    if (!await canLaunch(url)) {
+      throw TTYException('can not launch url: $url');
+    }
+    return launch(url);
   }
 
   _newYear(args) {

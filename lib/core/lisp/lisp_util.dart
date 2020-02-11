@@ -1,7 +1,6 @@
 import 'package:custed2/core/lisp/lisp_arg.dart';
 import 'package:custed2/core/lisp/lisp_cell.dart';
 import 'package:custed2/core/lisp/lisp_exceptions.dart';
-import 'package:custed2/core/lisp/lisp_keyword.dart';
 import 'package:custed2/core/lisp/lisp_sym.dart';
 import 'package:custed2/core/lisp/symbols.dart';
 
@@ -238,14 +237,15 @@ class LispUtil {
       return "t";
     } else if (x is LispCell) {
       if (_quotes.containsKey(x.car) && x.cdr is LispCell) {
-        if (x.cdr.cdr == null)
+        if (x.cdr.cdr == null) {
           return _quotes[x.car] + str(x.cdr.car, true, count, printed);
+        }
       }
       return "(" + strListBody(x, count, printed) + ")";
     } else if (x is String) {
       if (!quoteString) return x;
       var bf = StringBuffer('"');
-      for (int ch in x.runes)
+      for (int ch in x.runes) {
         switch (ch) {
           case 0x08:
             bf.write(r"\b");
@@ -275,6 +275,7 @@ class LispUtil {
             bf.writeCharCode(ch);
             break;
         }
+      }
       bf.write('"');
       return bf.toString();
     } else if (x is List) {
@@ -290,9 +291,9 @@ class LispUtil {
 
   /// Makes a string representation of a list omitting its "(" and ")".
   static String strListBody(LispCell x, int count, Set<LispCell> printed) {
-    printed ??= Set<LispCell>();
+    printed ??= <LispCell>{};
     count ??= 4; // threshold of ellipsis for circular lists
-    var s = List<String>();
+    var s = <String>[];
     var y;
     for (y = x; y is LispCell; y = y.cdr) {
       if (printed.add(y)) {
@@ -310,7 +311,9 @@ class LispUtil {
       s.add(".");
       s.add(str(y, true, count, printed));
     }
-    for (y = x; y is LispCell; y = y.cdr) printed.remove(y);
+    for (y = x; y is LispCell; y = y.cdr) {
+      printed.remove(y);
+    }
     return s.join(" ");
   }
 
@@ -336,12 +339,13 @@ class LispUtil {
   /// Gets cdr of list [x] as a Cell or null.
   static LispCell cdrCell(LispCell x) {
     var k = x.cdr;
-    if (k is LispCell)
+    if (k is LispCell) {
       return k;
-    else if (k == null)
+    } else if (k == null) {
       return null;
-    else
+    } else {
       throw LispEvalException("proper list expected", x);
+    }
   }
 
   /// Expands [x] of any quasi-quotation `x into the equivalent S-expression.
@@ -461,8 +465,9 @@ class LispUtil {
         LispSym sym = (j is LispSym)
             ? j
             : (j is LispArg) ? j.symbol : throw LispNotVariableException(j);
-        if (table.containsKey(sym))
+        if (table.containsKey(sym)) {
           throw LispEvalException("duplicated argument name", sym);
+        }
         table[sym] = LispArg(0, offset, sym);
         offset++;
       }

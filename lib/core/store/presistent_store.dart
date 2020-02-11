@@ -21,8 +21,8 @@ class PresistentStore<E> {
 class StoreProperty<T> {
   StoreProperty(this._box, this._key, this.defaultValue);
 
-  Box _box;
-  String _key;
+  final Box _box;
+  final String _key;
   T defaultValue;
 
   ValueListenable<T> listenable() {
@@ -55,15 +55,13 @@ class PropertyListenable<T> extends ValueListenable<T> {
 
   @override
   void addListener(VoidCallback listener) {
-    if (_subscription == null) {
-      _subscription = box.watch().listen((event) {
-        if (key == event.key) {
-          for (var listener in _listeners) {
-            listener();
-          }
+    _subscription ??= box.watch().listen((event) {
+      if (key == event.key) {
+        for (var listener in _listeners) {
+          listener();
         }
-      });
-    }
+      }
+    });
 
     _listeners.add(listener);
   }
