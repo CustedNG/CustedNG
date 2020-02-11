@@ -8,3 +8,14 @@ class TTYException implements Exception {
     return 'TTYException: $message';
   }
 }
+
+class TTYInterrupt implements Exception {
+  final String message;
+
+  TTYInterrupt(this.message);
+
+  @override
+  String toString() {
+    return 'TTYInterrupt: $message';
+  }
+}

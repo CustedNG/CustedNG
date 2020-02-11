@@ -17,7 +17,7 @@ class EvalCommand extends TTYCommand {
   @override
   main(TTYExecuter executer, BuildContext context, List<String> args) async {
     try {
-      final engine = TTYEngine(executer, context);
+      final engine = TTYEngine();
       await engine.init();
       final result = await engine.eval(args.join(' '));
       print('-> ${LispUtil.str(result)}');

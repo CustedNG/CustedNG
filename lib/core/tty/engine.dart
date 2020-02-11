@@ -1,6 +1,8 @@
 import 'package:alice/alice.dart';
 import 'package:custed2/core/lisp/lisp.dart';
 import 'package:custed2/core/lisp/lisp_cell.dart';
+import 'package:custed2/core/lisp/lisp_interp.dart';
+import 'package:custed2/core/lisp/lisp_sym.dart';
 import 'package:custed2/core/tty/exception.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
@@ -13,19 +15,32 @@ import 'package:custed2/core/tty/executer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TTYEngine {
-  // 1. notice banner update (presistence)
-  // 2. async support
-  // 3. (alice) -> alice (alias: simple form)
-  // 4. set boot script
+  TTYEngine();
 
-  TTYEngine(this.executer, this.context) {
+  final _store = LispStore();
+  LispInterp _lisp;
+  BuildContext _context;
+  bool _inited = false;
+
+  Future<void> init() async {
+    if (_inited) {
+      return;
+    }
+
+    await _store.init();
+    _lisp = await lispMakeInterp();
+    _setupFunctions();
+    _inited = true;
+  }
+
+  void _setupFunctions() {
     // Reference: https://docs.racket-lang.org/racket-cheat/index.html
-    
+
     _lisp.def('custed-build', 0, _custedBuild);
     _lisp.def('custed-name', 0, _custedName);
 
     _lisp.def('custed-min-build', 1, _custedMinBuild);
-    _lisp.def('custed-max-build', 0, _custedMaxBuild);
+    _lisp.def('custed-max-build', 1, _custedMaxBuild);
 
     _lisp.def('custed-set', 2, _custedSet);
     _lisp.def('custed-get', 1, _custedGet);
@@ -33,10 +48,8 @@ class TTYEngine {
     _lisp.def('custed-wait', 1, _custedWait);
     _lisp.def('custed-notify', 1, _custedNotify);
     _lisp.def('custed-launch-url', 1, _custedLaunchUrl);
+    _lisp.def('custed-legacy', -1, _custedLegacy);
 
-    _lisp.def('custed-launch-url', 1, _custedLaunchUrl);
-
-    _lisp.def('-', -1, _custedLegacy);
     _lisp.def('new-year', 0, _newYear);
 
     _lisp.def('clear', 0, _clear);
@@ -48,30 +61,27 @@ class TTYEngine {
     _lisp.def('print', 1, _print);
   }
 
-  final TTYExecuter executer;
-  final BuildContext context;
-  final _store = LispStore();
-  final _lisp = lispMakeInterp();
-
-  Future<void> init() async {
-    await _store.init();
-  }
-
   Future eval(String source) async {
     return _lisp.evalString(source, null);
+  }
+
+  void setContext(BuildContext context) {
+    final sym = LispSym('custed-context');
+    _lisp.globals[sym] = context;
+    _context = context;
   }
 
   _custedMinBuild(List args) {
     final minBuild = args[0];
     if (BuildData.build < minBuild) {
-      throw TTYException('min build: $minBuild');
+      throw TTYInterrupt('min build: $minBuild');
     }
   }
 
   _custedMaxBuild(List args) {
     final minBuild = args[0];
     if (BuildData.build > minBuild) {
-      throw TTYException('max build: $minBuild');
+      throw TTYInterrupt('max build: $minBuild');
     }
   }
 
@@ -99,7 +109,8 @@ class TTYEngine {
 
   _custedLegacy(List args) {
     final cmd = (args[0] as LispCell).car;
-    return executer.executeLegacy(cmd, context);
+    final executer = locator<TTYExecuter>();
+    return executer.executeLegacy(cmd, _context);
   }
 
   _custedNotify(List args) {
@@ -136,7 +147,7 @@ class TTYEngine {
 
   _openAlice(args) {
     final alice = locator<Alice>();
-    Navigator.of(context).push(
+    Navigator.of(_context).push(
       CupertinoPageRoute(builder: (_) => alice.buildInspector()),
     );
   }

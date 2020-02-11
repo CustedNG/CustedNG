@@ -156,7 +156,7 @@ const String _prelude = """
 """;
 
 /// Makes a Lisp interpreter initialized with [_prelude].
-LispInterp lispMakeInterp() {
+Future<LispInterp> lispMakeInterp() async {
   // Dart initializes static variables lazily.  Therefore, all keywords are
   // referred explicitly here so that they are initialized as keywords
   // before any occurrences of symbols of their names.
@@ -171,6 +171,6 @@ LispInterp lispMakeInterp() {
   ];
 
   var interp = LispInterp();
-  interp.evalString(_prelude, null);
+  await interp.evalString(_prelude, null);
   return interp;
 }

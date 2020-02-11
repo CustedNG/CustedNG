@@ -1,6 +1,9 @@
 import 'package:custed2/core/lisp/lisp_util.dart';
 import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/core/tty/engine.dart';
+import 'package:custed2/core/tty/exception.dart';
+import 'package:custed2/data/providers/debug_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
@@ -27,12 +30,18 @@ class TTYExecuter {
 
   void execute(String cmd, BuildContext context) async {
     try {
-      final engine = TTYEngine(this, context);
+      final engine = locator<TTYEngine>();
       await engine.init();
+      await engine.setContext(context);
+      print(cmd);
       final result = await engine.eval(cmd);
       print('-> ${LispUtil.str(result)}');
-    } catch (e) {
-      print('-> $e');
+    } on TTYInterrupt catch (i) {
+      print('-> $i');
+    } catch (e, stacktrace) {
+      final debugProvider = locator<DebugProvider>();
+      debugProvider.addError('-> $e');
+      debugProvider.addError('-> $stacktrace');
     }
   }
 
