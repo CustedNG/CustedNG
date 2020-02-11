@@ -2,6 +2,7 @@ import 'package:custed2/core/lisp/lisp.dart';
 import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp/lisp_util.dart';
 import 'package:custed2/core/tty/command.dart';
+import 'package:custed2/core/tty/engine.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
@@ -26,7 +27,18 @@ class TTYExecuter {
     }
   }
 
-  void execute(String cmd, BuildContext context) {
+  void execute(String cmd, BuildContext context) async {
+    try {
+      final engine = TTYEngine(this, context);
+      await engine.init();
+      final result = await engine.eval(cmd);
+      print('-> ${LispUtil.str(result)}');
+    } catch (e) {
+      print('-> $e');
+    }
+  }
+
+  void executeLegacy(String cmd, BuildContext context) {
     final tokens = cmd.split(RegExp(r'\s+'));
 
     if (tokens.isEmpty) {
