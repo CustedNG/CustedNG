@@ -11,4 +11,6 @@ class SettingStore with PresistentStore {
       property('showInactiveLessons', defaultValue: true);
 
   StoreProperty<int> get ignoreUpdate => property('ignoreUpdate');
+
+  StoreProperty<String> get notification => property('notification');
 }

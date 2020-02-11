@@ -1,12 +1,10 @@
 import 'package:alice/alice.dart';
 import 'package:custed2/core/lisp/lisp.dart';
 import 'package:custed2/core/lisp/lisp_cell.dart';
-import 'package:custed2/core/lisp/lisp_interp.dart';
-import 'package:custed2/core/lisp/lisp_util.dart';
-import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/store/lisp_store.dart';
+import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +22,7 @@ class TTYEngine {
     _lisp.def('custed-set', 2, _custedSet);
     _lisp.def('custed-get', 1, _custedGet);
     _lisp.def('custed-wait', 1, _custedWait);
+    _lisp.def('custed-notify', 1, _custedNotify);
 
     _lisp.def('-', -1, _custedLegacy);
     _lisp.def('new-year', 0, _newYear);
@@ -73,6 +72,13 @@ class TTYEngine {
   _custedLegacy(List args) {
     final cmd = (args[0] as LispCell).car;
     return executer.executeLegacy(cmd, context);
+  }
+
+  _custedNotify(List args) {
+    final notification = args[0];
+    final settings = locator<SettingStore>();
+    settings.notification.put(notification);
+    return notification;
   }
 
   _newYear(args) {
