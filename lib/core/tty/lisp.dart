@@ -302,20 +302,20 @@ class LispKeyword extends LispSym {
 }
 
 
-final LispSym backQuoteSym = LispSym("`");
-final LispSym commaAtSym = LispSym(",@");
-final LispSym commaSym = LispSym(",");
-final LispSym dotSym = LispSym(".");
-final LispSym leftParenSym = LispSym("(");
-final LispSym rightParenSym = LispSym(")");
-final LispSym singleQuoteSym = LispSym("'");
+final LispSym _backQuoteSym = LispSym("`");
+final LispSym _commaAtSym = LispSym(",@");
+final LispSym _commaSym = LispSym(",");
+final LispSym _dotSym = LispSym(".");
+final LispSym _leftParenSym = LispSym("(");
+final LispSym _rightParenSym = LispSym(")");
+final LispSym _singleQuoteSym = LispSym("'");
 
-final LispSym appendSym = LispSym("append");
-final LispSym consSym = LispSym("cons");
-final LispSym listSym = LispSym("list");
-final LispSym restSym = LispSym("&rest");
-final LispSym unquoteSym = LispSym("unquote");
-final LispSym unquoteSplicingSym = LispSym("unquote-splicing");
+final LispSym _appendSym = LispSym("append");
+final LispSym _consSym = LispSym("cons");
+final LispSym _listSym = LispSym("list");
+final LispSym _restSym = LispSym("&rest");
+final LispSym _unquoteSym = LispSym("unquote");
+final LispSym _unquoteSplicingSym = LispSym("unquote-splicing");
 
 //----------------------------------------------------------------------
 
@@ -797,12 +797,12 @@ bool _makeArgTable(arg, Map<LispSym, LispArg> table) {
       var j = arg.car;
       if (hasRest)
         throw LispEvalException("2nd rest", j);
-      if (j == restSym) {       // &rest var
+      if (j == _restSym) {       // &rest var
         arg = cdrCell(arg);
         if (arg == null)
           throw LispNotVariableException(arg);
         j = arg.car;
-        if (j == restSym)
+        if (j == _restSym)
           throw LispNotVariableException(j);
         hasRest = true;
       }
@@ -847,7 +847,7 @@ _scanForQQ(j, Map<LispSym, LispArg> table, int level) {
     var k = j.car;
     if (k == _quasiquoteSym) {
       return LispCell(k, _scanForQQ(j.cdr, table, level + 1));
-    } else if (k == unquoteSym || k == unquoteSplicingSym) {
+    } else if (k == _unquoteSym || k == _unquoteSplicingSym) {
       var d = (level == 0) ? _scanForArgs(j.cdr, table) :
                              _scanForQQ(j.cdr, table, level - 1);
       if (identical(d, j.cdr))
@@ -882,17 +882,17 @@ qqExpand(x) {
 
 _qqExpand0(x, int level) {
   if (x is LispCell) {
-    if (x.car == unquoteSym) {  // ,a
+    if (x.car == _unquoteSym) {  // ,a
       if (level == 0)
         return x.cdr.car;       // ,a => a
     }
     LispCell t = _qqExpand1(x, level);
     if (t.car is LispCell && t.cdr == null) {
       LispCell k = t.car;
-      if (k.car == listSym || k.car == consSym)
+      if (k.car == _listSym || k.car == _consSym)
         return k;
     }
-    return LispCell(appendSym, t);
+    return LispCell(_appendSym, t);
   } else {
     return qqQuote(x);
   }
@@ -908,7 +908,7 @@ qqQuote(x) =>
 //                              => ((cons a (cons 2 3)))
 LispCell _qqExpand1(x, int level) {
   if (x is LispCell) {
-    if (x.car == unquoteSym) {  // ,a
+    if (x.car == _unquoteSym) {  // ,a
       if (level == 0)
         return x.cdr;           // ,a => (a)
       level--;
@@ -920,10 +920,10 @@ LispCell _qqExpand1(x, int level) {
     if (t.car == null && t.cdr == null) {
       return LispCell(h, null);
     } else if (h is LispCell) {
-      if (h.car == listSym) {
+      if (h.car == _listSym) {
         if (t.car is LispCell) {
           LispCell tcar = t.car;
-          if (tcar.car == listSym) {
+          if (tcar.car == _listSym) {
             var hh = _qqConcat(h, tcar.cdr);
             return LispCell(hh, t.cdr);
           }
@@ -947,17 +947,17 @@ _qqConcat(LispCell x, Object y) =>
 // (1 2 3), "a" => (cons 1 (cons 2 (cons 3 "a")))
 _qqConsCons(LispCell x, Object y) =>
   (x == null) ? y :
-  LispCell(consSym, LispCell(x.car, LispCell(_qqConsCons(x.cdr, y), null)));
+  LispCell(_consSym, LispCell(x.car, LispCell(_qqConsCons(x.cdr, y), null)));
 
 // Expands [y] = x.car of `x so that result can be used as an arg of append.
 // Example: ,a => (list a); ,@(foo 1 2) => (foo 1 2); b => (list 'b)
 _qqExpand2(y, int level) {
   if (y is LispCell) {
-    if (y.car == unquoteSym) {  // ,a
+    if (y.car == _unquoteSym) {  // ,a
       if (level == 0)
-        return LispCell(listSym, y.cdr); // ,a => (list a)
+        return LispCell(_listSym, y.cdr); // ,a => (list a)
       level--;
-    } else if (y.car == unquoteSplicingSym) { // ,@a
+    } else if (y.car == _unquoteSplicingSym) { // ,@a
       if (level == 0)
         return y.cdr.car;       // ,@a => a
       level--;
@@ -965,7 +965,7 @@ _qqExpand2(y, int level) {
       level++;
     }
   }
-  return LispCell(listSym, LispCell(_qqExpand0(y, level), null));
+  return LispCell(_listSym, LispCell(_qqExpand0(y, level), null));
 }
 
 //----------------------------------------------------------------------
@@ -994,22 +994,22 @@ class LispReader {
   }
 
   Future<Object> _parseExpression() async {
-    if (_token == leftParenSym) { // (a b c)
+    if (_token == _leftParenSym) { // (a b c)
       await _readToken();
       return await _parseListBody();
-    } else if (_token == singleQuoteSym) { // 'a => (quote a)
+    } else if (_token == _singleQuoteSym) { // 'a => (quote a)
       await _readToken();
       return LispCell(_quoteSym, LispCell(await _parseExpression(), null));
-    } else if (_token == backQuoteSym) { // `a => (quasiquote a)
+    } else if (_token == _backQuoteSym) { // `a => (quasiquote a)
       await _readToken();
       return LispCell(_quasiquoteSym, LispCell(await _parseExpression(), null));
-    } else if (_token == commaSym) { // ,a => (unquote a)
+    } else if (_token == _commaSym) { // ,a => (unquote a)
       await _readToken();
-      return LispCell(unquoteSym, LispCell(await _parseExpression(), null));
-    } else if (_token == commaAtSym) { // ,@a => (unquote-splicing a)
+      return LispCell(_unquoteSym, LispCell(await _parseExpression(), null));
+    } else if (_token == _commaAtSym) { // ,@a => (unquote-splicing a)
       await _readToken();
-      return LispCell(unquoteSplicingSym, LispCell(await _parseExpression(), null));
-    } else if (_token == dotSym || _token == rightParenSym) {
+      return LispCell(_unquoteSplicingSym, LispCell(await _parseExpression(), null));
+    } else if (_token == _dotSym || _token == _rightParenSym) {
       throw FormatException('unexpected "$_token"');
     } else {
       return _token;
@@ -1019,17 +1019,17 @@ class LispReader {
   Future<LispCell> _parseListBody() async {
     if (_token == #EOF) {
       throw FormatException("unexpected EOF");
-    } else if (_token == rightParenSym) {
+    } else if (_token == _rightParenSym) {
       return null;
     } else {
       var e1 = await _parseExpression();
       await _readToken();
       var e2;
-      if (_token == dotSym) {   // (a . b)
+      if (_token == _dotSym) {   // (a . b)
         await _readToken();
         e2 = await _parseExpression();
         await _readToken();
-        if (_token != rightParenSym)
+        if (_token != _rightParenSym)
           throw FormatException('")" expected: $_token');
       } else {
         e2 = await _parseListBody();
@@ -1097,7 +1097,7 @@ class LispReader {
 
 /// Mapping from a quote symbol to its string representation
 final Map<LispSym, String> _quotes = <LispSym, String>{
-  _quoteSym: "'", _quasiquoteSym: "`", unquoteSym: ",", unquoteSplicingSym: ",@"
+  _quoteSym: "'", _quasiquoteSym: "`", _unquoteSym: ",", _unquoteSplicingSym: ",@"
 };
 
 /// Makes a string representation of a Lisp expression
