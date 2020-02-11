@@ -1,4 +1,5 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:custed2/core/hotfix.dart';
 import 'package:custed2/core/update.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/ui/grade_tab/grade_tab.dart';
@@ -132,5 +133,6 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   void afterFirstLayout(BuildContext context) {
     // call updateCheck to ensure navigator exists in context
     updateCheck(context);
+    doHotfix(context);
   }
 }

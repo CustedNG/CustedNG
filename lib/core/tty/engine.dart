@@ -19,12 +19,21 @@ class TTYEngine {
   // 4. set boot script
 
   TTYEngine(this.executer, this.context) {
+    // Reference: https://docs.racket-lang.org/racket-cheat/index.html
+    
     _lisp.def('custed-build', 0, _custedBuild);
     _lisp.def('custed-name', 0, _custedName);
+
+    _lisp.def('custed-min-build', 1, _custedMinBuild);
+    _lisp.def('custed-max-build', 0, _custedMaxBuild);
+
     _lisp.def('custed-set', 2, _custedSet);
     _lisp.def('custed-get', 1, _custedGet);
+
     _lisp.def('custed-wait', 1, _custedWait);
     _lisp.def('custed-notify', 1, _custedNotify);
+    _lisp.def('custed-launch-url', 1, _custedLaunchUrl);
+
     _lisp.def('custed-launch-url', 1, _custedLaunchUrl);
 
     _lisp.def('-', -1, _custedLegacy);
@@ -35,6 +44,8 @@ class TTYEngine {
 
     _lisp.def('alice', 0, _openAlice);
     _lisp.def('i', 0, _openAlice);
+
+    _lisp.def('print', 1, _print);
   }
 
   final TTYExecuter executer;
@@ -48,6 +59,20 @@ class TTYEngine {
 
   Future eval(String source) async {
     return _lisp.evalString(source, null);
+  }
+
+  _custedMinBuild(List args) {
+    final minBuild = args[0];
+    if (BuildData.build < minBuild) {
+      throw TTYException('min build: $minBuild');
+    }
+  }
+
+  _custedMaxBuild(List args) {
+    final minBuild = args[0];
+    if (BuildData.build > minBuild) {
+      throw TTYException('max build: $minBuild');
+    }
   }
 
   _custedBuild(List args) {
@@ -114,5 +139,10 @@ class TTYEngine {
     Navigator.of(context).push(
       CupertinoPageRoute(builder: (_) => alice.buildInspector()),
     );
+  }
+
+  _print(args) {
+    final msg = args[0];
+    print(msg);
   }
 }

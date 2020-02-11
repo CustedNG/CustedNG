@@ -16,6 +16,13 @@ class CustedService extends CatClient {
     return WeatherData.fromJson(custedResp.data as Map<String, dynamic>);
   }
 
+  Future<List<String>> getHotfix() async {
+    final resp = await get('$baseUrl/app/hotfix', timeout: defaultTimeout);
+    final custedResp = CustedResponse.fromJson(json.decode(resp.body));
+    if (custedResp.hasError) return null;
+    return List<String>.from(custedResp.data);
+  }
+
   Future<CustedUpdate> getUpdate() async {
     final resp = await get('$baseUrl/app/apk/newest', timeout: defaultTimeout);
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
