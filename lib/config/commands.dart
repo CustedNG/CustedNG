@@ -1,3 +1,4 @@
+import 'package:custed2/cmds/eval.dart';
 import 'package:custed2/cmds/update.dart';
 import 'package:custed2/core/tty/command.dart';
 
@@ -30,4 +31,5 @@ final commands = <TTYCommand>[
   CbsCommand(),
   RmrfCommand(),
   UpdateCommand(),
+  EvalCommand(),
 ];
