@@ -5,27 +5,27 @@ import "dart:async";
 import "dart:convert";
 import "dart:io";
 
-const intBits = 63;             // 53 for dart2js
+const _intBits = 63;             // 53 for dart2js
 
 /// Converts [a] into an int if possible.
-normalize(BigInt a) => (a.bitLength <= intBits) ? a.toInt() : a;
+_normalize(BigInt a) => (a.bitLength <= _intBits) ? a.toInt() : a;
 
 /// Is [a] a number?
-bool isNumber(a) => a is num || a is BigInt;
+bool _isNumber(a) => a is num || a is BigInt;
 
 /// Calculates [a] + [b].
-add(a, b) {
+_add(a, b) {
   if (a is int) {
     if (b is int) {
-      if (a.bitLength < intBits && b.bitLength < intBits) {
+      if (a.bitLength < _intBits && b.bitLength < _intBits) {
         return a + b;
       } else {
-        return normalize(BigInt.from(a) + BigInt.from(b));
+        return _normalize(BigInt.from(a) + BigInt.from(b));
       }
     } else if (b is double) {
       return a + b;
     } else if (b is BigInt) {
-      return normalize(BigInt.from(a) + b);
+      return _normalize(BigInt.from(a) + b);
     }
   } else if (a is double) {
     if (b is num) {
@@ -35,29 +35,29 @@ add(a, b) {
     }
   } else if (a is BigInt) {
     if (b is int) {
-      return normalize(a + BigInt.from(b));
+      return _normalize(a + BigInt.from(b));
     } else if (b is double) {
       return a.toDouble() + b;
     } else if (b is BigInt) {
-      return normalize(a + b);
+      return _normalize(a + b);
     }
   }
   throw ArgumentError("$a, $b");
 }
 
 /// Calculates [a] - [b].
-subtract(a, b) {
+_subtract(a, b) {
   if (a is int) {
     if (b is int) {
-      if (a.bitLength < intBits && b.bitLength < intBits) {
+      if (a.bitLength < _intBits && b.bitLength < _intBits) {
         return a - b;
       } else {
-        return normalize(BigInt.from(a) - BigInt.from(b));
+        return _normalize(BigInt.from(a) - BigInt.from(b));
       }
     } else if (b is double) {
       return a - b;
     } else if (b is BigInt) {
-      return normalize(BigInt.from(a) - b);
+      return _normalize(BigInt.from(a) - b);
     }
   } else if (a is double) {
     if (b is num) {
@@ -67,11 +67,11 @@ subtract(a, b) {
     }
   } else if (a is BigInt) {
     if (b is int) {
-      return normalize(a - BigInt.from(b));
+      return _normalize(a - BigInt.from(b));
     } else if (b is double) {
       return a.toDouble() - b;
     } else if (b is BigInt) {
-      return normalize(a - b);
+      return _normalize(a - b);
     }
   }
   throw ArgumentError("$a, $b");
@@ -79,10 +79,10 @@ subtract(a, b) {
 
 /// Compares [a] and [b].
 /// Returns -1, 0 or 1 as [a] is less than, equal to, or greater than [b].
-num compare(a, b) {
+num _compare(a, b) {
   if (a is int) {
     if (b is int) {
-      if (a.bitLength < intBits && b.bitLength < intBits) {
+      if (a.bitLength < _intBits && b.bitLength < _intBits) {
         return (a - b).sign;
       } else {
         return (BigInt.from(a) - BigInt.from(b)).sign;
@@ -111,13 +111,13 @@ num compare(a, b) {
 }
 
 /// Calculates [a] * [b].
-multiply(a, b) {
+_multiply(a, b) {
   if (a is int) {
     if (b is int) {
-      if (a.bitLength + b.bitLength < intBits) {
+      if (a.bitLength + b.bitLength < _intBits) {
         return a * b;
       } else {
-        return normalize(BigInt.from(a) * BigInt.from(b));
+        return _normalize(BigInt.from(a) * BigInt.from(b));
       }
     } else if (b is double) {
       return a * b;
@@ -143,7 +143,7 @@ multiply(a, b) {
 }
 
 /// Calculates [a] / [b] (rounded quotient).
-double divide(a, b) {
+double _divide(a, b) {
   if (a is int) {
     if (b is num) {
       return a / b;
@@ -169,12 +169,12 @@ double divide(a, b) {
 }
 
 /// Calculates the quotient of [a] and [b].
-quotient(a, b) {
+_quotient(a, b) {
   if (a is int) {
     if (b is num) {
       return a ~/ b;
     } else if (b is BigInt) {
-      return normalize(BigInt.from(a) ~/ b);
+      return _normalize(BigInt.from(a) ~/ b);
     }
   } else if (a is double) {
     if (b is num) {
@@ -184,23 +184,23 @@ quotient(a, b) {
     }
   } else if (a is BigInt) {
     if (b is int) {
-      return normalize(a ~/ BigInt.from(b));
+      return _normalize(a ~/ BigInt.from(b));
     } else if (b is double) {
       return a.toDouble() ~/ b;
     } else if (b is BigInt) {
-      return normalize(a ~/ b);
+      return _normalize(a ~/ b);
     }
   }
   throw ArgumentError("$a, $b");
 }
 
 /// Calculates the remainder of the quotient of [a] and [b].
-remainder(a, b) {
+_remainder(a, b) {
   if (a is int) {
     if (b is num) {
       return a.remainder(b);
     } else if (b is BigInt) {
-      return normalize(BigInt.from(a).remainder(b));
+      return _normalize(BigInt.from(a).remainder(b));
     }
   } else if (a is double) {
     if (b is num) {
@@ -210,11 +210,11 @@ remainder(a, b) {
     }
   } else if (a is BigInt) {
     if (b is int) {
-      return normalize(a.remainder(BigInt.from(b)));
+      return _normalize(a.remainder(BigInt.from(b)));
     } else if (b is double) {
       return a.toDouble().remainder(b);
     } else if (b is BigInt) {
-      return normalize(a.remainder(b));
+      return _normalize(a.remainder(b));
     }
   }
   throw ArgumentError("$a, $b");
@@ -222,19 +222,19 @@ remainder(a, b) {
 
 /// Tries to parse a string as an int, a BigInt or a double.
 /// Returns null if [s] was not parsed successfully.
-tryParse(String s) {
+_tryParse(String s) {
   var r = BigInt.tryParse(s);
-  return (r == null) ? double.tryParse(s) : normalize(r);
+  return (r == null) ? double.tryParse(s) : _normalize(r);
 }
 
 //----------------------------------------------------------------------
 
 /// Cons cell
-class Cell {
+class LispCell {
   var car;
   var cdr;
 
-  Cell(this.car, this.cdr);
+  LispCell(this.car, this.cdr);
   @override String toString() => "($car . $cdr)";
 
   /// Length as a list
@@ -243,20 +243,20 @@ class Cell {
 
 
 /// mapcar((a b c), fn) => (fn(a) fn(b) fn(c))
-Cell mapcar(Cell j, fn(x)) {
+LispCell mapcar(LispCell j, fn(x)) {
   if (j == null)
     return null;
   var a = fn(j.car);
   var d = j.cdr;
-  if (d is Cell)
+  if (d is LispCell)
     d = mapcar(d, fn);
   if (identical(j.car, a) && identical(j.cdr, d))
     return j;
-  return Cell(a, d);
+  return LispCell(a, d);
 }
 
 /// foldl(x, (a b c), fn) => fn(fn(fn(x, a), b), c)
-foldl(x, Cell j, fn(y, z)) {
+foldl(x, LispCell j, fn(y, z)) {
   while (j != null) {
     x = fn(x, j.car);
     j = j.cdr;
@@ -266,25 +266,25 @@ foldl(x, Cell j, fn(y, z)) {
 
 
 /// Lisp symbol
-class Sym {
+class LispSym {
   final String name;
 
   /// Constructs a symbol that is not interned.
-  Sym.internal(this.name);
+  LispSym.internal(this.name);
 
   @override String toString() => name;
   @override int get hashCode => name.hashCode; // Key to Speed for Dart
 
   /// The table of interned symbols
-  static final Map<String, Sym> table = {};
+  static final Map<String, LispSym> table = {};
 
   /// Constructs an interned symbol.
-  /// Constructs a [Keyword] if [isKeyword] holds.
-  factory Sym(String name, [bool isKeyword=false]) {
+  /// Constructs a [LispKeyword] if [isKeyword] holds.
+  factory LispSym(String name, [bool isKeyword=false]) {
     var result = table[name];
     assert(result == null || ! isKeyword);
     if (result == null) {
-      result = isKeyword ? new Keyword.internal(name) : new Sym.internal(name);
+      result = isKeyword ? new LispKeyword.internal(name) : new LispSym.internal(name);
       table[name] = result;
     }
     return result;
@@ -296,31 +296,31 @@ class Sym {
 
 
 /// Expression keyword
-class Keyword extends Sym {
-  Keyword.internal(String name): super.internal(name);
-  factory Keyword(String name) => Sym(name, true);
+class LispKeyword extends LispSym {
+  LispKeyword.internal(String name): super.internal(name);
+  factory LispKeyword(String name) => LispSym(name, true);
 }
 
 
-final Sym backQuoteSym = Sym("`");
-final Sym commaAtSym = Sym(",@");
-final Sym commaSym = Sym(",");
-final Sym dotSym = Sym(".");
-final Sym leftParenSym = Sym("(");
-final Sym rightParenSym = Sym(")");
-final Sym singleQuoteSym = Sym("'");
+final LispSym backQuoteSym = LispSym("`");
+final LispSym commaAtSym = LispSym(",@");
+final LispSym commaSym = LispSym(",");
+final LispSym dotSym = LispSym(".");
+final LispSym leftParenSym = LispSym("(");
+final LispSym rightParenSym = LispSym(")");
+final LispSym singleQuoteSym = LispSym("'");
 
-final Sym appendSym = Sym("append");
-final Sym consSym = Sym("cons");
-final Sym listSym = Sym("list");
-final Sym restSym = Sym("&rest");
-final Sym unquoteSym = Sym("unquote");
-final Sym unquoteSplicingSym = Sym("unquote-splicing");
+final LispSym appendSym = LispSym("append");
+final LispSym consSym = LispSym("cons");
+final LispSym listSym = LispSym("list");
+final LispSym restSym = LispSym("&rest");
+final LispSym unquoteSym = LispSym("unquote");
+final LispSym unquoteSplicingSym = LispSym("unquote-splicing");
 
 //----------------------------------------------------------------------
 
 /// Common base class of Lisp functions
-abstract class Func {
+abstract class LispFunc {
   /// Number of arguments, made negative if the function has &rest
   final int carity;
 
@@ -328,10 +328,10 @@ abstract class Func {
   bool get hasRest => (carity < 0);
   int get fixedArgs => (carity < 0) ? -carity - 1 : carity; // # of fixed args.
 
-  Func(this.carity);
+  LispFunc(this.carity);
 
   /// Makes a frame for local variables from a list of actual arguments.
-  List makeFrame(Cell arg) {
+  List makeFrame(LispCell arg) {
     List frame = List(arity);
     int n = fixedArgs;
     int i;
@@ -340,23 +340,23 @@ abstract class Func {
       arg = cdrCell(arg);
     }
     if (i != n || (arg != null && !hasRest))
-      throw EvalException("arity not matched", this);
+      throw LispEvalException("arity not matched", this);
     if (hasRest)
       frame[n] = arg;
     return frame;
   }
 
   /// Evaluates each expression in a frame.
-  void evalFrame(List frame, Interp interp, Cell env) {
+  void evalFrame(List frame, LispInterp interp, LispCell env) {
     int n = fixedArgs;
     for (int i = 0; i < n; i++)
       frame[i] = interp.eval(frame[i], env);
-    if (hasRest && frame[n] is Cell) {
-      Cell z = null;
-      Cell y = null;
-      for (Cell j = frame[n]; j != null; j = cdrCell(j)) {
+    if (hasRest && frame[n] is LispCell) {
+      LispCell z = null;
+      LispCell y = null;
+      for (LispCell j = frame[n]; j != null; j = cdrCell(j)) {
         var e = interp.eval(j.car, env);
-        Cell x = Cell(e, null);
+        LispCell x = LispCell(e, null);
         if (z == null)
           z = x;
         else
@@ -370,117 +370,117 @@ abstract class Func {
 
 
 /// Common base class of functions which are defined with Lisp expressions
-abstract class DefinedFunc extends Func {
+abstract class LispDefinedFunc extends LispFunc {
   /// Lisp list as the function body
-  final Cell body;
+  final LispCell body;
 
-  DefinedFunc(int carity, this.body): super(carity);
+  LispDefinedFunc(int carity, this.body): super(carity);
 }
 
 
 /// Common function type which represents any factory method of DefinedFunc
-typedef DefinedFunc FuncFactory(int cariy, Cell body, Cell env);
+typedef LispDefinedFunc FuncFactory(int cariy, LispCell body, LispCell env);
 
 
 /// Compiled macro expression
-class Macro extends DefinedFunc {
-  Macro(int carity, Cell body): super(carity, body);
-  @override String toString() => "#<macro:$carity:${str(body)}>";
+class LispMacro extends LispDefinedFunc {
+  LispMacro(int carity, LispCell body): super(carity, body);
+  @override String toString() => "#<macro:$carity:${_str(body)}>";
 
   /// Expands the macro with a list of actual arguments.
-  expandWith(Interp interp, Cell arg) {
+  expandWith(LispInterp interp, LispCell arg) {
     List frame = makeFrame(arg);
-    Cell env = Cell(frame, null);
+    LispCell env = LispCell(frame, null);
     var x = null;
-    for (Cell j = body; j != null; j = cdrCell(j))
+    for (LispCell j = body; j != null; j = cdrCell(j))
       x = interp.eval(j.car, env);
     return x;
   }
 
-  static DefinedFunc make(int carity, Cell body, Cell env) {
+  static LispDefinedFunc make(int carity, LispCell body, LispCell env) {
     assert(env == null);
-    return Macro(carity, body);
+    return LispMacro(carity, body);
   }
 }
 
 
 /// Compiled lambda expression (Within another function)
-class Lambda extends DefinedFunc {
-  Lambda(int carity, Cell body): super(carity, body);
-  @override String toString() => "#<lambda:$carity:${str(body)}>";
+class LispLambda extends LispDefinedFunc {
+  LispLambda(int carity, LispCell body): super(carity, body);
+  @override String toString() => "#<lambda:$carity:${_str(body)}>";
 
-  static DefinedFunc make(int carity, Cell body, Cell env) {
+  static LispDefinedFunc make(int carity, LispCell body, LispCell env) {
     assert(env == null);
-    return Lambda(carity, body);
+    return LispLambda(carity, body);
   }
 }
 
 
 /// Compiled lambda expresssion (Closure with environment)
-class Closure extends DefinedFunc {
+class LispClosure extends LispDefinedFunc {
   /// The environment of the closure
-  final Cell env;
+  final LispCell env;
 
-  Closure(int carity, Cell body, this.env): super(carity, body);
-  Closure.from(Lambda x, Cell env): this(x.carity, x.body, env);
-  @override String toString() => "#<closure:$carity:${str(env)}:${str(body)}>";
+  LispClosure(int carity, LispCell body, this.env): super(carity, body);
+  LispClosure.from(LispLambda x, LispCell env): this(x.carity, x.body, env);
+  @override String toString() => "#<closure:$carity:${_str(env)}:${_str(body)}>";
 
   /// Makes an environment to evaluate the body from a list of actual args.
-  Cell makeEnv(Interp interp, Cell arg, Cell interpEnv) {
+  LispCell makeEnv(LispInterp interp, LispCell arg, LispCell interpEnv) {
     List frame = makeFrame(arg);
     evalFrame(frame, interp, interpEnv);
-    return Cell(frame, env);    // Prepends the frame to the closure's env.
+    return LispCell(frame, env);    // Prepends the frame to the closure's env.
   }
 
-  static DefinedFunc make(int carity, Cell body, Cell env) =>
-    Closure(carity, body, env);
+  static LispDefinedFunc make(int carity, LispCell body, LispCell env) =>
+    LispClosure(carity, body, env);
 }
 
 
 /// Function type which represents any built-in function body
-typedef BuiltInFuncBody(List frame);
+typedef LispBuiltInFuncBody(List frame);
 
 /// Built-in function
-class BuiltInFunc extends Func {
+class LispBuiltInFunc extends LispFunc {
   final String name;
-  final BuiltInFuncBody body;
+  final LispBuiltInFuncBody body;
 
-  BuiltInFunc(this.name, int carity, this.body): super(carity);
+  LispBuiltInFunc(this.name, int carity, this.body): super(carity);
   @override String toString() => "#<$name:$carity>";
 
   /// Invokes the built-in function with a list of actual arguments.
-  evalWith(Interp interp, Cell arg, Cell interpEnv) {
+  evalWith(LispInterp interp, LispCell arg, LispCell interpEnv) {
     List frame = makeFrame(arg);
     evalFrame(frame, interp, interpEnv);
     try {
       return body(frame);
-    } on EvalException catch (ex) {
+    } on LispEvalException catch (ex) {
       throw ex;
     } catch (ex) {
-      throw EvalException("$ex -- $name", frame);
+      throw LispEvalException("$ex -- $name", frame);
     }
   }
 }
 
 
 /// Bound variable in a compiled lambda/macro expression
-class Arg {
+class LispArg {
   final int level;
   final int offset;
-  final Sym symbol;
+  final LispSym symbol;
 
-  Arg(this.level, this.offset, this.symbol);
+  LispArg(this.level, this.offset, this.symbol);
   @override String toString() => "#$level:$offset:$symbol";
 
   /// Sets a value [x] to the location corresponding to the variable in [env].
-  void setValue(x, Cell env) {
+  void setValue(x, LispCell env) {
     for (int i = 0; i < level; i++)
       env = env.cdr;
     env.car[offset] = x;
   }
 
   /// Gets a value from the location corresponding to the variable in [env].
-  getValue(Cell env) {
+  getValue(LispCell env) {
     for (int i = 0; i < level; i++)
       env = env.cdr;
     return env.car[offset];
@@ -489,12 +489,12 @@ class Arg {
 
 
 /// Exception in evaluation
-class EvalException implements Exception {
+class LispEvalException implements Exception {
   final String message;
   final List<String> trace = [];
 
-  EvalException(String msg, Object x, [bool quoteString=true])
-    : message = msg + ": " + str(x, quoteString);
+  LispEvalException(String msg, Object x, [bool quoteString=true])
+    : message = msg + ": " + _str(x, quoteString);
 
   @override String toString() {
     var s = "EvalException: $message";
@@ -506,26 +506,26 @@ class EvalException implements Exception {
 
 
 /// Exception which indicates an absence of a variable
-class NotVariableException extends EvalException {
-  NotVariableException(x): super("variable expected", x);
+class LispNotVariableException extends LispEvalException {
+  LispNotVariableException(x): super("variable expected", x);
 }
 
 //----------------------------------------------------------------------
 
 /// Core of the interpreter
-class Interp {
+class LispInterp {
   /// Table of the global values of symbols
-  final Map<Sym, Object> globals = {};
+  final Map<LispSym, Object> globals = {};
 
   /// Standard output of the interpreter
   StringSink cout = stdout;
 
   /// Sets built-in functions etc. as the global values of symbols.
-  Interp() {
-    def("car", 1, (List a) => (a[0] as Cell)?.car);
-    def("cdr", 1, (List a) => (a[0] as Cell)?.cdr);
-    def("cons", 2, (List a) => Cell(a[0], a[1]));
-    def("atom", 1, (List a) => (a[0] is Cell) ? null : true);
+  LispInterp() {
+    def("car", 1, (List a) => (a[0] as LispCell)?.car);
+    def("cdr", 1, (List a) => (a[0] as LispCell)?.cdr);
+    def("cons", 2, (List a) => LispCell(a[0], a[1]));
+    def("atom", 1, (List a) => (a[0] is LispCell) ? null : true);
     def("eq", 2, (List a) => identical(a[0], a[1]) ? true : null);
 
     def("list", -1, (List a) => a[0]);
@@ -533,144 +533,144 @@ class Interp {
     def("rplacd", 2, (List a) { a[0].cdr = a[1]; return a[1]; });
     def("length", 1, (List a) => (a[0] == null) ? 0 : a[0].length);
     def("stringp", 1, (List a) => (a[0] is String) ? true : null);
-    def("numberp", 1, (List a) => isNumber(a[0]) ? true : null);
+    def("numberp", 1, (List a) => _isNumber(a[0]) ? true : null);
     def("eql", 2, (List a) {
       var x = a[0];
       var y = a[1];
       return (x == y) ? true :
-        (isNumber(x) && isNumber(y) && compare(x, y) == 0) ? true : null;
+        (_isNumber(x) && _isNumber(y) && _compare(x, y) == 0) ? true : null;
     });
-    def("<", 2, (List a) => (compare(a[0], a[1]) < 0) ? true : null);
-    def("%", 2, (List a) => remainder(a[0], a[1]));
+    def("<", 2, (List a) => (_compare(a[0], a[1]) < 0) ? true : null);
+    def("%", 2, (List a) => _remainder(a[0], a[1]));
     def("mod", 2, (List a) {
       var x = a[0];
       var y = a[1];
-      var q = remainder(x, y);
-      return (compare(multiply(x, y), 0) < 0) ? add(q, y) : q;
+      var q = _remainder(x, y);
+      return (_compare(_multiply(x, y), 0) < 0) ? _add(q, y) : q;
     });
 
-    def("+", -1, (List a) => foldl(0, a[0], (i, j) => add(i, j)));
-    def("*", -1, (List a) => foldl(1, a[0], (i, j) => multiply(i, j)));
+    def("+", -1, (List a) => foldl(0, a[0], (i, j) => _add(i, j)));
+    def("*", -1, (List a) => foldl(1, a[0], (i, j) => _multiply(i, j)));
     def("-", -2, (List a) {
       var x = a[0];
-      Cell y = a[1];
-      return (y == null) ? -x : foldl(x, y, (i, j) => subtract(i, j));
+      LispCell y = a[1];
+      return (y == null) ? -x : foldl(x, y, (i, j) => _subtract(i, j));
     });
     def("/", -3, (List a) =>
-        foldl(divide(a[0], a[1]), a[2], (i, j) => divide(i, j)));
+        foldl(_divide(a[0], a[1]), a[2], (i, j) => _divide(i, j)));
 
     def("truncate", -2, (List a) {
       var x = a[0];
-      Cell y = a[1];
-      return (y == null) ? quotient(x, 1) :
-        (y.cdr == null) ? quotient(x, y.car) :
+      LispCell y = a[1];
+      return (y == null) ? _quotient(x, 1) :
+        (y.cdr == null) ? _quotient(x, y.car) :
         throw "one or two arguments expected";
     });
 
-    def("prin1", 1, (List a) { cout.write(str(a[0], true)); return a[0]; });
-    def("princ", 1, (List a) { cout.write(str(a[0], false)); return a[0]; });
+    def("prin1", 1, (List a) { cout.write(_str(a[0], true)); return a[0]; });
+    def("princ", 1, (List a) { cout.write(_str(a[0], false)); return a[0]; });
     def("terpri", 0, (List a) { cout.writeln(); return true; });
 
-    var gensymCounterSym = Sym("*gensym-counter*");
+    var gensymCounterSym = LispSym("*gensym-counter*");
     globals[gensymCounterSym] = 1;
     def("gensym", 0, (List a) {
       int i = globals[gensymCounterSym];
       globals[gensymCounterSym] = i + 1;
-      return new Sym.internal("G$i");
+      return new LispSym.internal("G$i");
     });
 
-    def("make-symbol", 1, (List a) => new Sym.internal(a[0]));
-    def("intern", 1, (List a) => Sym(a[0]));
-    def("symbol-name", 1, (List a) => (a[0] as Sym).name);
+    def("make-symbol", 1, (List a) => new LispSym.internal(a[0]));
+    def("intern", 1, (List a) => LispSym(a[0]));
+    def("symbol-name", 1, (List a) => (a[0] as LispSym).name);
 
-    def("apply", 2, (List a) => eval(Cell(a[0], mapcar(a[1], qqQuote)), null));
+    def("apply", 2, (List a) => eval(LispCell(a[0], mapcar(a[1], qqQuote)), null));
 
     def("exit", 1, (List a) => exit(a[0]));
-    def("dump", 0, (List a) => globals.keys.fold(null, (x, y) => Cell(y, x)));
-    globals[Sym("*version*")] =
-      Cell(2.000, Cell("Dart", Cell("Nukata Lisp", null)));
+    def("dump", 0, (List a) => globals.keys.fold(null, (x, y) => LispCell(y, x)));
+    globals[LispSym("*version*")] =
+      LispCell(2.000, LispCell("Dart", LispCell("Nukata Lisp", null)));
     // named after Tōkai-dō Mikawa-koku Nukata-gun (東海道 三河国 額田郡)
   }
 
   /// Defines a built-in function by giving a name, an arity, and a body.
-  void def(String name, int carity, BuiltInFuncBody body) {
-    globals[Sym(name)] = BuiltInFunc(name, carity, body);
+  void def(String name, int carity, LispBuiltInFuncBody body) {
+    globals[LispSym(name)] = LispBuiltInFunc(name, carity, body);
   }
 
   /// Evaluates a Lisp expression in an environment.
-  eval(x, Cell env) {
+  eval(x, LispCell env) {
     try {
       for (;;) {
-        if (x is Arg) {
+        if (x is LispArg) {
           return x.getValue(env);
-        } else if (x is Sym) {
+        } else if (x is LispSym) {
           if (globals.containsKey(x))
             return globals[x];
-          throw EvalException("void variable", x);
-        } else if (x is Cell) {
+          throw LispEvalException("void variable", x);
+        } else if (x is LispCell) {
           var fn = x.car;
-          Cell arg = cdrCell(x);
-          if (fn is Keyword) {
-            if (fn == quoteSym) {
+          LispCell arg = cdrCell(x);
+          if (fn is LispKeyword) {
+            if (fn == _quoteSym) {
               if (arg != null && arg.cdr == null)
                 return arg.car;
-              throw EvalException("bad quote", x);
-            } else if (fn == prognSym) {
+              throw LispEvalException("bad quote", x);
+            } else if (fn == _prognSym) {
               x = _evalProgN(arg, env);
-            } else if (fn == condSym) {
+            } else if (fn == _condSym) {
               x = _evalCond(arg, env);
-            } else if (fn == setqSym) {
+            } else if (fn == _setqSym) {
               return _evalSetQ(arg, env);
-            } else if (fn == lambdaSym) {
-              return _compile(arg, env, Closure.make);
-            } else if (fn == macroSym) {
+            } else if (fn == _lambdaSym) {
+              return _compile(arg, env, LispClosure.make);
+            } else if (fn == _macroSym) {
               if (env != null)
-                throw EvalException("nested macro", x);
-              return _compile(arg, null, Macro.make);
-            } else if (fn == quasiquoteSym) {
+                throw LispEvalException("nested macro", x);
+              return _compile(arg, null, LispMacro.make);
+            } else if (fn == _quasiquoteSym) {
               if (arg != null && arg.cdr == null)
                 x = qqExpand(arg.car);
               else
-                throw EvalException("bad quasiquote", x);
+                throw LispEvalException("bad quasiquote", x);
             } else {
-              throw EvalException("bad keyword", fn);
+              throw LispEvalException("bad keyword", fn);
             }
           } else {      // Application of a function
             // Expands fn = eval(fn, env) here on Sym for speed.
-            if (fn is Sym) {
+            if (fn is LispSym) {
               fn = globals[fn];
               if (fn == null)
-                throw EvalException("undefined", x.car);
+                throw LispEvalException("undefined", x.car);
             } else {
               fn = eval(fn, env);
             }
 
-            if (fn is Closure) {
+            if (fn is LispClosure) {
               env = fn.makeEnv(this, arg, env);
               x = _evalProgN(fn.body, env);
-            } else if (fn is Macro) {
+            } else if (fn is LispMacro) {
               x = fn.expandWith(this, arg);
-            } else if (fn is BuiltInFunc) {
+            } else if (fn is LispBuiltInFunc) {
               return fn.evalWith(this, arg, env);
             } else {
-              throw EvalException("not applicable", fn);
+              throw LispEvalException("not applicable", fn);
             }
           }
-        } else if (x is Lambda) {
-          return new Closure.from(x, env);
+        } else if (x is LispLambda) {
+          return new LispClosure.from(x, env);
         } else {
           return x;             // numbers, strings, null etc.
         }
       }
-    } on EvalException catch (ex) {
+    } on LispEvalException catch (ex) {
       if (ex.trace.length < 10)
-        ex.trace.add(str(x));
+        ex.trace.add(_str(x));
       throw ex;
     }
   }
 
   /// (progn E1 E2.. En) => Evaluates E1, E2, .. except for En and returns it.
-  _evalProgN(Cell j, Cell env) {
+  _evalProgN(LispCell j, LispCell env) {
     if (j == null)
       return null;
     for (;;) {
@@ -683,52 +683,52 @@ class Interp {
   }
 
   /// Evaluates a conditional expression and returns the selection unevaluated.
-  _evalCond(Cell j, Cell env) {
+  _evalCond(LispCell j, LispCell env) {
     for (; j != null; j = cdrCell(j)) {
       var clause = j.car;
-      if (clause is Cell) {
+      if (clause is LispCell) {
         var result = eval(clause.car, env);
         if (result != null) {   // If the condition holds
-          Cell body = cdrCell(clause);
+          LispCell body = cdrCell(clause);
           if (body == null)
             return qqQuote(result);
           else
             return _evalProgN(body, env);
         }
       } else if (clause != null) {
-        throw EvalException("cond test expected", clause);
+        throw LispEvalException("cond test expected", clause);
       }
     }
     return null;                // No clause holds.
   }
 
   /// (setq V1 E1 ..) => Evaluates Ei and assigns it to Vi; returns the last.
-  _evalSetQ(Cell j, Cell env) {
+  _evalSetQ(LispCell j, LispCell env) {
     var result = null;
     for (; j != null; j = cdrCell(j)) {
       var lval = j.car;
       j = cdrCell(j);
       if (j == null)
-        throw EvalException("right value expected", lval);
+        throw LispEvalException("right value expected", lval);
       result = eval(j.car, env);
-      if (lval is Arg)
+      if (lval is LispArg)
         lval.setValue(result, env);
-      else if (lval is Sym && lval is! Keyword)
+      else if (lval is LispSym && lval is! LispKeyword)
         globals[lval] = result;
       else
-        throw NotVariableException(lval);
+        throw LispNotVariableException(lval);
     }
     return result;
   }
 
   /// Compiles a Lisp list (macro ...) or (lambda ...).
-  DefinedFunc _compile(Cell arg, Cell env, FuncFactory make) {
+  LispDefinedFunc _compile(LispCell arg, LispCell env, FuncFactory make) {
     if (arg == null)
-      throw EvalException("arglist and body expected", arg);
-    Map<Sym, Arg> table = {};
+      throw LispEvalException("arglist and body expected", arg);
+    Map<LispSym, LispArg> table = {};
     bool hasRest = _makeArgTable(arg.car, table);
     int arity = table.length;
-    Cell body = cdrCell(arg);
+    LispCell body = cdrCell(arg);
     body = _scanForArgs(body, table);
     body = _expandMacros(body, 20); // Expands ms statically up to 20 nestings.
     body = _compileInners(body);
@@ -737,22 +737,22 @@ class Interp {
 
   /// Expands macros and quasi-quotations in an expression.
   _expandMacros(j, int count) {
-    if (count > 0 && j is Cell) {
+    if (count > 0 && j is LispCell) {
       var k = j.car;
-      if (k == quoteSym || k == lambdaSym || k == macroSym) {
+      if (k == _quoteSym || k == _lambdaSym || k == _macroSym) {
         return j;
-      } else if (k == quasiquoteSym) {
-        Cell d = cdrCell(j);
+      } else if (k == _quasiquoteSym) {
+        LispCell d = cdrCell(j);
         if (d != null && d.cdr == null) {
           var z = qqExpand(d.car);
           return _expandMacros(z, count);
         }
-        throw EvalException("bad quasiquote", j);
+        throw LispEvalException("bad quasiquote", j);
       } else {
-        if (k is Sym)
+        if (k is LispSym)
           k = globals[k];       // null if k does not have a value
-        if (k is Macro) {
-          Cell d = cdrCell(j);
+        if (k is LispMacro) {
+          LispCell d = cdrCell(j);
           var z = k.expandWith(this, d);
           return _expandMacros(z, count - 1);
         } else {
@@ -766,15 +766,15 @@ class Interp {
 
   /// Replaces inner lambda-expressions with Lambda instances.
   _compileInners(j) {
-    if (j is Cell) {
+    if (j is LispCell) {
       var k = j.car;
-      if (k == quoteSym) {
+      if (k == _quoteSym) {
         return j;
-      } else if (k == lambdaSym) {
-        Cell d = cdrCell(j);
-        return _compile(d, null, Lambda.make);
-      } else if (k == macroSym) {
-        throw EvalException("nested macro", j);
+      } else if (k == _lambdaSym) {
+        LispCell d = cdrCell(j);
+        return _compile(d, null, LispLambda.make);
+      } else if (k == _macroSym) {
+        throw LispEvalException("nested macro", j);
       } else {
         return mapcar(j, (x) => _compileInners(x));
       }
@@ -787,51 +787,51 @@ class Interp {
 //----------------------------------------------------------------------
 
 /// Makes an argument-table; returns true if there is a rest argument.
-bool _makeArgTable(arg, Map<Sym, Arg> table) {
+bool _makeArgTable(arg, Map<LispSym, LispArg> table) {
   if (arg == null) {
     return false;
-  } else if (arg is Cell) {
+  } else if (arg is LispCell) {
     int offset = 0;             // offset value within the call-frame
     bool hasRest = false;
     for (; arg != null; arg = cdrCell(arg)) {
       var j = arg.car;
       if (hasRest)
-        throw EvalException("2nd rest", j);
+        throw LispEvalException("2nd rest", j);
       if (j == restSym) {       // &rest var
         arg = cdrCell(arg);
         if (arg == null)
-          throw NotVariableException(arg);
+          throw LispNotVariableException(arg);
         j = arg.car;
         if (j == restSym)
-          throw NotVariableException(j);
+          throw LispNotVariableException(j);
         hasRest = true;
       }
-      Sym sym =
-        (j is Sym) ? j :
-        (j is Arg) ? j.symbol : throw NotVariableException(j);
+      LispSym sym =
+        (j is LispSym) ? j :
+        (j is LispArg) ? j.symbol : throw LispNotVariableException(j);
       if (table.containsKey(sym))
-        throw EvalException("duplicated argument name", sym);
-      table[sym] = Arg(0, offset, sym);
+        throw LispEvalException("duplicated argument name", sym);
+      table[sym] = LispArg(0, offset, sym);
       offset++;
     }
     return hasRest;
   } else {
-    throw EvalException("arglist expected", arg);
+    throw LispEvalException("arglist expected", arg);
   }
 }
 
 /// Scans [j] for formal arguments in [table] and replaces them with Args.
 /// And scans [j] for free Args not in [table] and promotes their levels.
-_scanForArgs(j, Map<Sym, Arg> table) {
-  if (j is Sym) {
+_scanForArgs(j, Map<LispSym, LispArg> table) {
+  if (j is LispSym) {
     return table[j] ?? j;
-  } else if (j is Arg) {
-    return table[j.symbol] ?? Arg(j.level + 1, j.offset, j.symbol);
-  } else if (j is Cell) {
-    if (j.car == quoteSym) {
+  } else if (j is LispArg) {
+    return table[j.symbol] ?? LispArg(j.level + 1, j.offset, j.symbol);
+  } else if (j is LispCell) {
+    if (j.car == _quoteSym) {
       return j;
-    } else if (j.car == quasiquoteSym) {
-      return Cell(quasiquoteSym, _scanForQQ(j.cdr, table, 0));
+    } else if (j.car == _quasiquoteSym) {
+      return LispCell(_quasiquoteSym, _scanForQQ(j.cdr, table, 0));
     } else {
       return mapcar(j, (x) => _scanForArgs(x, table));
     }
@@ -842,17 +842,17 @@ _scanForArgs(j, Map<Sym, Arg> table) {
 
 /// Scans for quasi-quotes.
 /// And does [_scanForArgs] them depending on the nesting level.
-_scanForQQ(j, Map<Sym, Arg> table, int level) {
-  if (j is Cell) {
+_scanForQQ(j, Map<LispSym, LispArg> table, int level) {
+  if (j is LispCell) {
     var k = j.car;
-    if (k == quasiquoteSym) {
-      return Cell(k, _scanForQQ(j.cdr, table, level + 1));
+    if (k == _quasiquoteSym) {
+      return LispCell(k, _scanForQQ(j.cdr, table, level + 1));
     } else if (k == unquoteSym || k == unquoteSplicingSym) {
       var d = (level == 0) ? _scanForArgs(j.cdr, table) :
                              _scanForQQ(j.cdr, table, level - 1);
       if (identical(d, j.cdr))
         return j;
-      return Cell(k, d);
+      return LispCell(k, d);
     } else {
       return mapcar(j, (x) => _scanForQQ(x, table, level));
     }
@@ -862,14 +862,14 @@ _scanForQQ(j, Map<Sym, Arg> table, int level) {
 }
 
 /// Gets cdr of list [x] as a Cell or null.
-Cell cdrCell(Cell x) {
+LispCell cdrCell(LispCell x) {
   var k = x.cdr;
-  if (k is Cell)
+  if (k is LispCell)
     return k;
   else if (k == null)
     return null;
   else
-    throw EvalException("proper list expected", x);
+    throw LispEvalException("proper list expected", x);
 }
 
 //----------------------------------------------------------------------
@@ -881,18 +881,18 @@ qqExpand(x) {
 }
 
 _qqExpand0(x, int level) {
-  if (x is Cell) {
+  if (x is LispCell) {
     if (x.car == unquoteSym) {  // ,a
       if (level == 0)
         return x.cdr.car;       // ,a => a
     }
-    Cell t = _qqExpand1(x, level);
-    if (t.car is Cell && t.cdr == null) {
-      Cell k = t.car;
+    LispCell t = _qqExpand1(x, level);
+    if (t.car is LispCell && t.cdr == null) {
+      LispCell k = t.car;
       if (k.car == listSym || k.car == consSym)
         return k;
     }
-    return Cell(appendSym, t);
+    return LispCell(appendSym, t);
   } else {
     return qqQuote(x);
   }
@@ -900,78 +900,78 @@ _qqExpand0(x, int level) {
 
 /// Quotes [x] so that the result evaluates to [x].
 qqQuote(x) =>
-  (x is Sym || x is Cell) ? Cell(quoteSym, Cell(x, null)) : x;
+  (x is LispSym || x is LispCell) ? LispCell(_quoteSym, LispCell(x, null)) : x;
 
 // Expands [x] of `x so that the result can be used as an argument of append.
 // Example 1: (,a b) => h=(list a) t=((list 'b)) => ((list a 'b))
 // Example 2: (,a ,@(cons 2 3)) => h=(list a) t=((cons 2 3))
 //                              => ((cons a (cons 2 3)))
-Cell _qqExpand1(x, int level) {
-  if (x is Cell) {
+LispCell _qqExpand1(x, int level) {
+  if (x is LispCell) {
     if (x.car == unquoteSym) {  // ,a
       if (level == 0)
         return x.cdr;           // ,a => (a)
       level--;
-    } else if (x.car == quasiquoteSym) { // `a
+    } else if (x.car == _quasiquoteSym) { // `a
       level++;
     }
     var h = _qqExpand2(x.car, level);
-    Cell t = _qqExpand1(x.cdr, level); // != null
+    LispCell t = _qqExpand1(x.cdr, level); // != null
     if (t.car == null && t.cdr == null) {
-      return Cell(h, null);
-    } else if (h is Cell) {
+      return LispCell(h, null);
+    } else if (h is LispCell) {
       if (h.car == listSym) {
-        if (t.car is Cell) {
-          Cell tcar = t.car;
+        if (t.car is LispCell) {
+          LispCell tcar = t.car;
           if (tcar.car == listSym) {
             var hh = _qqConcat(h, tcar.cdr);
-            return Cell(hh, t.cdr);
+            return LispCell(hh, t.cdr);
           }
         }
-        if (h.cdr is Cell) {
+        if (h.cdr is LispCell) {
           var hh = _qqConsCons(h.cdr, t.car);
-          return Cell(hh, t.cdr);
+          return LispCell(hh, t.cdr);
         }
       }
     }
-    return Cell(h, t);
+    return LispCell(h, t);
   } else {
-    return Cell(qqQuote(x), null);
+    return LispCell(qqQuote(x), null);
   }
 }
 
 // (1 2), (3 4) => (1 2 3 4)
-_qqConcat(Cell x, Object y) =>
-  (x == null) ? y : Cell(x.car, _qqConcat(x.cdr, y));
+_qqConcat(LispCell x, Object y) =>
+  (x == null) ? y : LispCell(x.car, _qqConcat(x.cdr, y));
 
 // (1 2 3), "a" => (cons 1 (cons 2 (cons 3 "a")))
-_qqConsCons(Cell x, Object y) =>
+_qqConsCons(LispCell x, Object y) =>
   (x == null) ? y :
-  Cell(consSym, Cell(x.car, Cell(_qqConsCons(x.cdr, y), null)));
+  LispCell(consSym, LispCell(x.car, LispCell(_qqConsCons(x.cdr, y), null)));
 
 // Expands [y] = x.car of `x so that result can be used as an arg of append.
 // Example: ,a => (list a); ,@(foo 1 2) => (foo 1 2); b => (list 'b)
 _qqExpand2(y, int level) {
-  if (y is Cell) {
+  if (y is LispCell) {
     if (y.car == unquoteSym) {  // ,a
       if (level == 0)
-        return Cell(listSym, y.cdr); // ,a => (list a)
+        return LispCell(listSym, y.cdr); // ,a => (list a)
       level--;
     } else if (y.car == unquoteSplicingSym) { // ,@a
       if (level == 0)
         return y.cdr.car;       // ,@a => a
       level--;
-    } else if (y.car == quasiquoteSym) { // `a
+    } else if (y.car == _quasiquoteSym) { // `a
       level++;
     }
   }
-  return Cell(listSym, Cell(_qqExpand0(y, level), null));
+  return LispCell(listSym, LispCell(_qqExpand0(y, level), null));
 }
 
 //----------------------------------------------------------------------
 
 /// Reader of Lisp expressions
-class Reader {
+class LispReader {
   final StreamIterator<String> _rf;
   var _token;
   Iterator<String> _tokens = <String>[].iterator;
@@ -979,7 +979,7 @@ class Reader {
   bool _erred = false;
 
   /// Constructs a Reader which will read Lisp expressions from a given arg.
-  Reader(this._rf);
+  LispReader(this._rf);
 
   /// Reads a Lisp expression; returns #EOF if the input runs out normally.
   Future<Object> read() async {
@@ -988,7 +988,7 @@ class Reader {
       return await _parseExpression();
     } on FormatException catch (ex) {
       _erred = true;
-      throw EvalException("syntax error",
+      throw LispEvalException("syntax error",
           "${ex.message} -- $_lineNo: ${_rf.current}", false);
     }
   }
@@ -999,16 +999,16 @@ class Reader {
       return await _parseListBody();
     } else if (_token == singleQuoteSym) { // 'a => (quote a)
       await _readToken();
-      return Cell(quoteSym, Cell(await _parseExpression(), null));
+      return LispCell(_quoteSym, LispCell(await _parseExpression(), null));
     } else if (_token == backQuoteSym) { // `a => (quasiquote a)
       await _readToken();
-      return Cell(quasiquoteSym, Cell(await _parseExpression(), null));
+      return LispCell(_quasiquoteSym, LispCell(await _parseExpression(), null));
     } else if (_token == commaSym) { // ,a => (unquote a)
       await _readToken();
-      return Cell(unquoteSym, Cell(await _parseExpression(), null));
+      return LispCell(unquoteSym, LispCell(await _parseExpression(), null));
     } else if (_token == commaAtSym) { // ,@a => (unquote-splicing a)
       await _readToken();
-      return Cell(unquoteSplicingSym, Cell(await _parseExpression(), null));
+      return LispCell(unquoteSplicingSym, LispCell(await _parseExpression(), null));
     } else if (_token == dotSym || _token == rightParenSym) {
       throw FormatException('unexpected "$_token"');
     } else {
@@ -1016,7 +1016,7 @@ class Reader {
     }
   }
 
-  Future<Cell> _parseListBody() async {
+  Future<LispCell> _parseListBody() async {
     if (_token == #EOF) {
       throw FormatException("unexpected EOF");
     } else if (_token == rightParenSym) {
@@ -1034,7 +1034,7 @@ class Reader {
       } else {
         e2 = await _parseListBody();
       }
-      return Cell(e1, e2);
+      return LispCell(e1, e2);
     }
   }
 
@@ -1066,7 +1066,7 @@ class Reader {
       _token = s;
       return;
     }
-    var n = tryParse(_token);
+    var n = _tryParse(_token);
     if (n != null) {
       _token = n;
     } else if (_token == "nil") {
@@ -1074,7 +1074,7 @@ class Reader {
     } else if (_token == "t") {
       _token = true;
     } else {
-      _token = Sym(_token);
+      _token = LispSym(_token);
     }
   }
 
@@ -1096,20 +1096,20 @@ class Reader {
 //----------------------------------------------------------------------
 
 /// Mapping from a quote symbol to its string representation
-final Map<Sym, String> _quotes = <Sym, String>{
-  quoteSym: "'", quasiquoteSym: "`", unquoteSym: ",", unquoteSplicingSym: ",@"
+final Map<LispSym, String> _quotes = <LispSym, String>{
+  _quoteSym: "'", _quasiquoteSym: "`", unquoteSym: ",", unquoteSplicingSym: ",@"
 };
 
 /// Makes a string representation of a Lisp expression
-String str(x, [bool quoteString=true, int count, Set<Cell> printed]) {
+String _str(x, [bool quoteString=true, int count, Set<LispCell> printed]) {
   if (x == null) {
     return "nil";
   } else if (x == true) {
     return "t";
-  } else if (x is Cell) {
-    if (_quotes.containsKey(x.car) && x.cdr is Cell) {
+  } else if (x is LispCell) {
+    if (_quotes.containsKey(x.car) && x.cdr is LispCell) {
       if (x.cdr.cdr == null)
-        return _quotes[x.car] + str(x.cdr.car, true, count, printed);
+        return _quotes[x.car] + _str(x.cdr.car, true, count, printed);
     }
     return "(" + _strListBody(x, count, printed) + ")";
   } else if (x is String) {
@@ -1131,9 +1131,9 @@ String str(x, [bool quoteString=true, int count, Set<Cell> printed]) {
     bf.write('"');
     return bf.toString();
   } else if (x is List) {
-    var s = x.map((e) => str(e, true, count, printed)).join(", ");
+    var s = x.map((e) => _str(e, true, count, printed)).join(", ");
     return "[$s]";
-  } else if (x is Sym) {
+  } else if (x is LispSym) {
     if (x.isInterned)
       return x.name;
     return "#:$x";
@@ -1143,12 +1143,12 @@ String str(x, [bool quoteString=true, int count, Set<Cell> printed]) {
 }
 
 /// Makes a string representation of a list omitting its "(" and ")".
-String _strListBody(Cell x, int count, Set<Cell> printed) {
-  printed ??= Set<Cell>();
+String _strListBody(LispCell x, int count, Set<LispCell> printed) {
+  printed ??= Set<LispCell>();
   count ??= 4;                  // threshold of ellipsis for circular lists
   var s = List<String>();
   var y;
-  for (y = x; y is Cell; y = y.cdr) {
+  for (y = x; y is LispCell; y = y.cdr) {
     if (printed.add(y)) {
       count = 4;
     } else {
@@ -1158,13 +1158,13 @@ String _strListBody(Cell x, int count, Set<Cell> printed) {
         return s.join(" ");
       }
     }
-    s.add(str(y.car, true, count, printed));
+    s.add(_str(y.car, true, count, printed));
   }
   if (y != null) {
     s.add(".");
-    s.add(str(y, true, count, printed));
+    s.add(_str(y, true, count, printed));
   }
-  for (y = x; y is Cell; y = y.cdr)
+  for (y = x; y is LispCell; y = y.cdr)
     printed.remove(y);
   return s.join(" ");
 }
@@ -1172,12 +1172,12 @@ String _strListBody(Cell x, int count, Set<Cell> printed) {
 //----------------------------------------------------------------------
 
 /// Runs REPL (Read-Eval-Print Loop).
-Future run(Interp interp, Stream<String> input) async {
+Future lispRepl(LispInterp interp, Stream<String> input) async {
   bool interactive = (input == null);
   input ??= stdin.transform(const Utf8Codec().decoder);
   input = input.transform(const LineSplitter());
   var lines = StreamIterator(input);
-  var reader = Reader(lines);
+  var reader = LispReader(lines);
   for (;;) {
     if (interactive) {
       stdout.write("> ");
@@ -1186,7 +1186,7 @@ Future run(Interp interp, Stream<String> input) async {
         if (sExp == #EOF)
           return;
         var x = interp.eval(sExp, null);
-        print(str(x));
+        print(_str(x));
       } on Exception catch (ex) {
         print(ex);
       }
@@ -1200,25 +1200,25 @@ Future run(Interp interp, Stream<String> input) async {
 }
 
 // Keywords
-final Sym condSym = Keyword("cond");
-final Sym lambdaSym = Keyword("lambda");
-final Sym macroSym = Keyword("macro");
-final Sym prognSym = Keyword("progn");
-final Sym quasiquoteSym = Keyword("quasiquote");
-final Sym quoteSym = Keyword("quote");
-final Sym setqSym = Keyword("setq");
+final LispSym _condSym = LispKeyword("cond");
+final LispSym _lambdaSym = LispKeyword("lambda");
+final LispSym _macroSym = LispKeyword("macro");
+final LispSym _prognSym = LispKeyword("progn");
+final LispSym _quasiquoteSym = LispKeyword("quasiquote");
+final LispSym _quoteSym = LispKeyword("quote");
+final LispSym _setqSym = LispKeyword("setq");
 
 /// Makes a Lisp interpreter initialized with [prelude].
-Future<Interp> makeInterp() async {
+Future<LispInterp> lispMakeInterp() async {
   // Dart initializes static variables lazily.  Therefore, all keywords are
   // referred explicitly here so that they are initialized as keywords
   // before any occurrences of symbols of their names.
-  [condSym, lambdaSym, macroSym, prognSym, quasiquoteSym, quoteSym, setqSym];
+  [_condSym, _lambdaSym, _macroSym, _prognSym, _quasiquoteSym, _quoteSym, _setqSym];
 
-  var interp = Interp();
+  var interp = LispInterp();
   Future<String> fs = new Future.value(prelude);
   Stream<String> ss = new Stream.fromFuture(fs);
-  await run(interp, ss);
+  await lispRepl(interp, ss);
   return interp;
 }
 
@@ -1226,16 +1226,16 @@ Future<Interp> makeInterp() async {
 /// Runs interactively for no arg or -.
 main(List<String> args) async {
   try {
-    Interp interp = await makeInterp();
+    LispInterp interp = await lispMakeInterp();
     for (String fileName in (args.isEmpty) ? ["-"] : args) {
       if (fileName == "-") {
-        await run(interp, null);
+        await lispRepl(interp, null);
         print("Goodbye");
       } else {
         var file = File(fileName);
         Stream<List<int>> bytes = file.openRead();
         Stream<String> input = bytes.transform(const Utf8Codec().decoder);
-        await run(interp, input);
+        await lispRepl(interp, input);
       }
     }
     exit(0);
