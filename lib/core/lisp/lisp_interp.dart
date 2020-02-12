@@ -9,10 +9,13 @@ import 'package:custed2/core/lisp/lisp_exceptions.dart';
 import 'package:custed2/core/lisp/lisp_keyword.dart';
 import 'package:custed2/core/lisp/lisp_lambda.dart';
 import 'package:custed2/core/lisp/lisp_macro.dart';
+import 'package:custed2/core/lisp/lisp_module.dart';
+import 'package:custed2/core/lisp/lisp_output_sink.dart';
 import 'package:custed2/core/lisp/lisp_reader_sync.dart';
 import 'package:custed2/core/lisp/lisp_sym.dart';
 import 'package:custed2/core/lisp/lisp_util.dart';
 import 'package:custed2/core/lisp/symbols.dart';
+import 'package:custed2/core/lisp_module/module.dart';
 
 /// Common function type which represents any factory method of DefinedFunc
 typedef LispDefinedFunc LispFuncFactory(int cariy, LispCell body, LispCell env);
@@ -22,8 +25,11 @@ class LispInterp {
   /// Table of the global values of symbols
   final Map<LispSym, Object> globals = {};
 
+  /// Table of registered modules
+  final Map<String, LispModule> modules = {};
+
   /// Standard output of the interpreter
-  StringSink cout = stdout;
+  StringSink cout = LispOutputSink(print);
 
   /// Sets built-in functions etc. as the global values of symbols.
   LispInterp() {
@@ -134,7 +140,24 @@ class LispInterp {
 
   /// Defines a built-in function by giving a name, an arity, and a body.
   void def(String name, int carity, LispBuiltInFuncBody body) {
+    if (globals.containsKey(LispSym(name))) {
+      cout.writeln('[warning] duplicated define: $name');
+    }
     globals[LispSym(name)] = LispBuiltInFunc(name, carity, body);
+  }
+
+  /// Register a module referred as [name].
+  /// if [autoLoad] is true the module will be immidiately avaliable
+  /// without explicit require
+  LispModule register(String name, LModule Function(LispInterp) builder) {
+    return modules[name] = LispModule(this, builder);
+  }
+
+  Future<bool> require(String name) async {
+    if (name == null) throw LispEvalException('name expected', name);
+    final module = modules[name];
+    if (module == null) throw LispEvalException('no such module', name);
+    return await module.load();
   }
 
   Future evalString(String str, LispCell env) async {
@@ -174,6 +197,8 @@ class LispInterp {
             } else if (fn == Symbols.macro) {
               if (env != null) throw LispEvalException("nested macro", x);
               return _compile(arg, null, LispMacro.make);
+            } else if (fn == Symbols.require) {
+              return await _handleRequire(arg, env);
             } else if (fn == Symbols.quasiquote) {
               if (arg != null && arg.cdr == null) {
                 x = LispUtil.qqExpand(arg.car);
@@ -271,14 +296,16 @@ class LispInterp {
   }
 
   /// Compiles a Lisp list (macro ...) or (lambda ...).
-  Future<LispDefinedFunc> _compile(LispCell arg, LispCell env, LispFuncFactory make) async {
+  Future<LispDefinedFunc> _compile(
+      LispCell arg, LispCell env, LispFuncFactory make) async {
     if (arg == null) throw LispEvalException("arglist and body expected", arg);
     Map<LispSym, LispArg> table = {};
     bool hasRest = LispUtil.makeArgTable(arg.car, table);
     int arity = table.length;
     LispCell body = LispUtil.cdrCell(arg);
     body = await LispUtil.scanForArgs(body, table);
-    body = await _expandMacros(body, 20); // Expands ms statically up to 20 nestings.
+    body = await _expandMacros(
+        body, 20); // Expands ms statically up to 20 nestings.
     body = await _compileInners(body);
     return make((hasRest) ? -arity : arity, body, env);
   }
@@ -328,5 +355,10 @@ class LispInterp {
     } else {
       return j;
     }
+  }
+
+  _handleRequire(LispCell j, LispCell env) async {
+    final name = j?.car?.toString();
+    return require(name);
   }
 }

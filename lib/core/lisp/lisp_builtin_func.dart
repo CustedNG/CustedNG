@@ -11,8 +11,10 @@ class LispBuiltInFunc extends LispFunc {
   final String name;
   final LispBuiltInFuncBody body;
 
-  LispBuiltInFunc(this.name, int carity, this.body): super(carity);
-  @override String toString() => "#<$name:$carity>";
+  LispBuiltInFunc(this.name, int carity, this.body) : super(carity);
+
+  @override
+  String toString() => "#<$name:$carity>";
 
   /// Invokes the built-in function with a list of actual arguments.
   Future evalWith(LispInterp interp, LispCell arg, LispCell interpEnv) async {

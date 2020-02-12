@@ -10,6 +10,7 @@ class Symbols {
   static final LispSym quasiquote = LispKeyword("quasiquote");
   static final LispSym quote = LispKeyword("quote");
   static final LispSym setq = LispKeyword("setq");
+  static final LispSym require = LispKeyword("require");
   
   static final LispSym backQuote = LispSym("`");
   static final LispSym commaAt = LispSym(",@");
@@ -24,4 +25,5 @@ class Symbols {
   static final LispSym rest = LispSym("&rest");
   static final LispSym unquote = LispSym("unquote");
   static final LispSym unquoteSplicing = LispSym("unquote-splicing");
+
 }
