@@ -35,10 +35,15 @@ Future<void> initApp() async {
 
 void runInZone(Function body) {
   final zoneSpec = ZoneSpecification(
-    print: (Zone self, ZoneDelegate parent, Zone zone, String line) async {
-      final debugProvider = locator<DebugProvider>();
+    print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
       parent.print(zone, line);
-      debugProvider.addText(line);
+      // This is a hack to avoid 
+      // `setState() or markNeedsBuild() called during build`
+      // error.
+      Future.delayed(Duration(milliseconds: 1), () {
+        final debugProvider = locator<DebugProvider>();
+        debugProvider.addText(line);
+      });
     },
   );
 
