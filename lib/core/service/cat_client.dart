@@ -110,7 +110,7 @@ class CatClient {
         .map((c) => c.replaceAll('__custed_comma_space__', ', '))
         .map((c) => Cookie.fromSetCookieValue(c))
         .toList();
-        
+
     _cookieJar.saveFromResponse(response.request.url, cookies);
   }
 
@@ -127,8 +127,9 @@ class CatClient {
   }
 
   void setUserAgent(Request request) {
-    final ua =
-        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36';
+    final ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) '
+        'AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 '
+        'Safari/602.2';
     if (request.headers[HttpHeaders.userAgentHeader] == null) {
       request.headers[HttpHeaders.userAgentHeader] = ua;
     }

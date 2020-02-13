@@ -33,15 +33,16 @@ class HomeEntries extends StatelessWidget {
             // ).go(context),
           ),
           HomeEntry(
-            name: Text('题库'),
-            icon: Image(image: ImageRes.tikuIcon),
-            action: () => tikuWebPage.go(context, rootNavigator: true),
+            name: Text('充网费'),
+            icon: Image(image: ImageRes.networkIcon),
+            action: () => ecardWebPage.go(context),
           ),
         ]),
         TableRow(children: [
           HomeEntry(
-            name: Text('文档库'),
-            icon: Image(image: ImageRes.rssIcon),
+            name: Text('题库'),
+            icon: Image(image: ImageRes.tikuIcon),
+            action: () => tikuWebPage.go(context, rootNavigator: true),
           ),
           HomeEntry(
             name: Text('考场查询'),
@@ -51,6 +52,7 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('校园网'),
             icon: Image(image: ImageRes.networkIcon),
+            // action: () => ecardWebPage.go(context),
             // action: () => route.CustedRoute(
             //   title: '校园网',
             //   page: AppSite(

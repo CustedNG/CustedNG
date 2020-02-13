@@ -5,6 +5,7 @@ import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
+import 'package:custed2/ui/web/ecard_web_page.dart';
 import 'package:custed2/ui/web/exam_room_web_page.dart';
 import 'package:custed2/ui/web/iecard_web_page.dart';
 import 'package:custed2/ui/web/jw_web_page.dart';
@@ -50,6 +51,11 @@ final jwWebPage = AppRoute(
 final iecardWebPage = AppRoute(
   title: '一卡通',
   page: IecardWebPage(),
+);
+
+final ecardWebPage = AppRoute(
+  title: '充网费',
+  page: EcardWebPage(),
 );
 
 final examRoomWebPage = AppRoute(
