@@ -28,12 +28,12 @@ class TTYExecuter {
     }
   }
 
-  void execute(String cmd, BuildContext context) async {
+  void execute(String cmd, BuildContext context, {bool quiet = false}) async {
     try {
       final engine = locator<TTYEngine>();
       await engine.init();
       await engine.setContext(context);
-      print(cmd);
+      if (!quiet) print(cmd);
       final result = await engine.eval(cmd);
       print('-> ${LispUtil.str(result)}');
     } on TTYInterrupt catch (i) {

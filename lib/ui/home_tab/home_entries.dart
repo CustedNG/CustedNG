@@ -1,4 +1,5 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/core/script.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
@@ -24,13 +25,7 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('体测成绩'),
             icon: Image(image: ImageRes.runningReportIcon),
-            // action: () => route.CustedRoute(
-            //   title: '体测成绩',
-            //   page: AppSite(
-            //     url: 'https://app.cust.edu.cn/pe?isIOS=true',
-            //     title: '体测成绩',
-            //   ),
-            // ).go(context),
+            action: () => runScript('sport_grade.cl', context),
           ),
           HomeEntry(
             name: Text('充网费'),
@@ -52,19 +47,12 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('校园网'),
             icon: Image(image: ImageRes.networkIcon),
-            // action: () => ecardWebPage.go(context),
-            // action: () => route.CustedRoute(
-            //   title: '校园网',
-            //   page: AppSite(
-            //     url: 'https://app.cust.edu.cn/drcom?isIOS=true',
-            //     title: '校园网',
-            //   ),
-            // ).go(context),
+            action: () => runScript('network_manage.cl', context),
           ),
           HomeEntry(
             name: Text('快速联网'),
             icon: Image(image: ImageRes.wifiIcon),
-            // action: () => route.wifiConnect.go(context),
+            action: () => runScript('wifi_connect.cl', context),
           ),
         ])
       ]),
