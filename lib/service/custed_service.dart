@@ -4,6 +4,7 @@ import 'package:custed2/core/service/cat_client.dart';
 import 'package:custed2/data/models/custed_response.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/models/custed_weather.dart';
+import 'package:custed2/res/build_data.dart';
 
 class CustedService extends CatClient {
   static const baseUrl = 'https://cust.xuty.cc';
@@ -17,7 +18,8 @@ class CustedService extends CatClient {
   }
 
   Future<List<String>> getHotfix() async {
-    final resp = await get('$baseUrl/app/hotfix', timeout: defaultTimeout);
+    final build = BuildData.build;
+    final resp = await get('$baseUrl/app/hotfix?build=$build', timeout: defaultTimeout);
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
     if (custedResp.hasError) return null;
     return List<String>.from(custedResp.data);

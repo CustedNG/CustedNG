@@ -14,3 +14,5 @@
 
 (prin1 (hash-set! ht 'a 3))
 (prin1 ht)
+
+(prin1 #t)

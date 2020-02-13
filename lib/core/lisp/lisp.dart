@@ -1,9 +1,12 @@
 import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp/symbols.dart';
 import 'package:custed2/core/lisp_module/core_base.dart';
+import 'package:custed2/core/lisp_module/core_directory.dart';
 import 'package:custed2/core/lisp_module/core_hash.dart';
 import 'package:custed2/core/lisp_module/core_http.dart';
+import 'package:custed2/core/lisp_module/core_json.dart';
 import 'package:custed2/core/lisp_module/core_scheme.dart';
+import 'package:custed2/core/lisp_module/core_string.dart';
 
 /// Makes a Lisp interpreter.
 Future<LispInterp> lispMakeInterp() async {
@@ -26,6 +29,9 @@ Future<LispInterp> lispMakeInterp() async {
   interp.register('core/scheme', (interp) => LMCoreScheme(interp));
   interp.register('core/http', (interp) => LMCoreHttp(interp));
   interp.register('core/hash', (interp) => LMCoreHash(interp));
-  // await interp.evalString(_prelude, null);
+  interp.register('core/json', (interp) => LMCoreJson(interp));
+  interp.register('core/string', (interp) => LMCoreString(interp));
+  interp.register('core/directory', (interp) => LMCoreDirectory(interp));
+  await interp.require('core/base');
   return interp;
 }

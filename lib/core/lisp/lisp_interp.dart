@@ -28,6 +28,8 @@ class LispInterp {
   /// Table of registered modules
   final Map<String, LispModule> modules = {};
 
+  Directory currentDir = Directory.current;
+
   /// Standard output of the interpreter
   StringSink cout = LispOutputSink(print);
 
@@ -139,11 +141,11 @@ class LispInterp {
   }
 
   /// Defines a built-in function by giving a name, an arity, and a body.
-  void def(String name, int carity, LispBuiltInFuncBody body) {
+  void def(String name, int carity, LispBuiltInFuncBody body, [bool preserveArgs = false]) {
     if (globals.containsKey(LispSym(name))) {
       cout.writeln('[warning] duplicated define: $name');
     }
-    globals[LispSym(name)] = LispBuiltInFunc(name, carity, body);
+    globals[LispSym(name)] = LispBuiltInFunc(name, carity, body, preserveArgs);
   }
 
   /// Register a module referred as [name].
@@ -161,7 +163,8 @@ class LispInterp {
   }
 
   Future evalString(String str, LispCell env) async {
-    var reader = LispReaderSync(str.split('\n').iterator);
+    final source = str.replaceAll('\r\n', '\n');
+    final reader = LispReaderSync(source.split('\n').iterator);
     var result;
     for (;;) {
       var sExp = reader.read();
@@ -213,7 +216,7 @@ class LispInterp {
             // Expands fn = eval(fn, env) here on Sym for speed.
             if (fn is LispSym) {
               fn = globals[fn];
-              if (fn == null) throw LispEvalException("undefined", x.car);
+              if (fn == null) throw LispEvalException("undefined", LispUtil.str(x.car));
             } else {
               fn = await eval(fn, env);
             }

@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:alice/alice.dart';
 import 'package:custed2/core/lisp/lisp.dart';
 import 'package:custed2/core/lisp/lisp_cell.dart';
 import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp/lisp_sym.dart';
+import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/core/tty/exception.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
@@ -10,6 +13,7 @@ import 'package:custed2/data/store/lisp_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
+import 'package:custed2/ui/widgets/lisp_debug_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,6 +33,7 @@ class TTYEngine {
 
     await _store.init();
     _lisp = await lispMakeInterp();
+    _lisp.currentDir = Directory(await getAppDocDir.invoke());
     _setupFunctions();
     _inited = true;
   }
@@ -49,6 +54,8 @@ class TTYEngine {
     _lisp.def('custed-notify', 1, _custedNotify);
     _lisp.def('custed-launch-url', 1, _custedLaunchUrl);
     _lisp.def('custed-legacy', -1, _custedLegacy);
+
+    _lisp.def('debug', 0, _debug);
 
     _lisp.def('new-year', 0, _newYear);
 
@@ -126,6 +133,10 @@ class TTYEngine {
       throw TTYException('can not launch url: $url');
     }
     return launch(url);
+  }
+
+  _debug(args) {
+    locator<DebugProvider>().addWidget(LispDebugWidget(_lisp));
   }
 
   _newYear(args) {

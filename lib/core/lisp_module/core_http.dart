@@ -18,7 +18,7 @@ class LMCoreHttp extends LModule {
     Map<String, String> headers;
 
     if (args[1] is LispCell) {
-      final cell = (args[1] as LispCell);
+      final cell = (args[1].car as LispCell);
       final items = cell.flatten().map((i) => i.toString()).toList();
       headers = items.toMap();
     }

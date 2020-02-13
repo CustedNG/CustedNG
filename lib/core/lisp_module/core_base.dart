@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:custed2/core/lisp/lisp_exceptions.dart';
 import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp_module/module.dart';
+import 'package:path/path.dart' as path;
 
 class LMCoreBase extends LModule {
-  LMCoreBase(LispInterp interp): super(interp);
+  LMCoreBase(LispInterp interp) : super(interp);
 
   static const source = '''
 (setq defmacro
@@ -159,11 +163,27 @@ class LMCoreBase extends LModule {
 
   Future<void> load() async {
     await interp.evalString(source, null);
+
+    interp.def('load', 1, _loadFile, true);
     interp.def('sleep', 1, _sleep);
   }
 
   _sleep(List args) {
     final seconds = args[0];
     return Future.delayed(Duration(seconds: seconds));
+  }
+
+  _loadFile(args) async {
+    final filename = args[0].toString();
+    final filepath = path.join(interp.currentDir.path, filename);
+    File file = File(filepath);
+    if (!await file.exists()) {
+      file = File(filepath + '.cl');
+    }
+    if (!await file.exists()) {
+      throw LispEvalException('no such file', filename);
+    }
+    final code = await file.readAsString();
+    return interp.evalString(code, null);
   }
 }
