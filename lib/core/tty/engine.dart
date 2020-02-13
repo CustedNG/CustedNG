@@ -121,7 +121,7 @@ class TTYEngine {
   }
 
   _custedNotify(List args) {
-    final notification = args[0];
+    final notification = args[0].toString();
     final settings = locator<SettingStore>();
     settings.notification.put(notification);
     return notification;

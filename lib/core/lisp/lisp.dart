@@ -7,6 +7,9 @@ import 'package:custed2/core/lisp_module/core_http.dart';
 import 'package:custed2/core/lisp_module/core_json.dart';
 import 'package:custed2/core/lisp_module/core_scheme.dart';
 import 'package:custed2/core/lisp_module/core_string.dart';
+import 'package:custed2/core/lisp_module/ui.dart';
+import 'package:custed2/core/lisp_module/ui_store.dart';
+import 'package:custed2/core/lisp_module/ui_widget.dart';
 
 /// Makes a Lisp interpreter.
 Future<LispInterp> lispMakeInterp() async {
@@ -32,6 +35,11 @@ Future<LispInterp> lispMakeInterp() async {
   interp.register('core/json', (interp) => LMCoreJson(interp));
   interp.register('core/string', (interp) => LMCoreString(interp));
   interp.register('core/directory', (interp) => LMCoreDirectory(interp));
+  
+  interp.register('ui', (interp) => LMUI(interp));
+  interp.register('ui/store', (interp) => LMUIStore(interp));
+  interp.register('ui/widget', (interp) => LMUIWidget(interp));
+
   await interp.require('core/base');
   return interp;
 }

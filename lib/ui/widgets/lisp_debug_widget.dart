@@ -49,7 +49,7 @@ class _LispDebugWidgetState extends State<LispDebugWidget> {
 
   Widget _buildChild(BuildContext context) {
     return CupertinoButton(
-      child: Text('关闭调试接口'),
+      child: Text('Close Debug Interface'),
       onPressed: () {
         closeServer();
       },
@@ -99,7 +99,7 @@ class _LispDebugWidgetState extends State<LispDebugWidget> {
 </head>
 <body>
     <form action="/eval" method="get">
-        <textarea name="code" id="codeEditor" cols="30" rows="20"></textarea>
+        <textarea name="code" id="codeEditor" cols="70" rows="30" wrap=off></textarea>
         <div><input type="checkbox" name="save" checked><label>Save?</label></div>
         <div><label>SaveAt:</label><input type="text" name="saveAt" value="test.cl"></div>
         <div><input type="submit" value="Eval"></div>
