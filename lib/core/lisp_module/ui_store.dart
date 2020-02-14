@@ -33,7 +33,6 @@ class LMUIStore extends LModule {
     return StreamBuilder(
       stream: store.stream,
       builder: (context, snapshot) {
-        print(snapshot.data);
         return FutureBuilder(
           future: interp.eval(LispCell.from([onData, snapshot.data, null]), null),
           builder: (context, snapshot) {

@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:custed2/core/lisp/lisp_exceptions.dart';
 import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp_module/module.dart';
+import 'package:custed2/core/tty/exception.dart';
+import 'package:custed2/locator.dart';
+import 'package:custed2/service/custed_service.dart';
 import 'package:path/path.dart' as path;
 
 class LMCoreBase extends LModule {
@@ -165,7 +168,9 @@ class LMCoreBase extends LModule {
     await interp.evalString(source, null);
 
     interp.def('load', 1, _loadFile, true);
+    interp.def('hub', 1, _hub, true);
     interp.def('sleep', 1, _sleep);
+    interp.def('interrupt', -1, _interrupt);
   }
 
   _sleep(List args) {
@@ -184,6 +189,17 @@ class LMCoreBase extends LModule {
       throw LispEvalException('no such file', filename);
     }
     final code = await file.readAsString();
+    return interp.evalString(code, null);
+  }
+
+  _interrupt(List args) {
+    final reason = args[0]?.car?.toString() ?? "";
+    throw TTYInterrupt(reason);
+  }
+
+  _hub(List args) async {
+    final name = args[0].toString();
+    final code = await locator<CustedService>().getScript(name);
     return interp.evalString(code, null);
   }
 }

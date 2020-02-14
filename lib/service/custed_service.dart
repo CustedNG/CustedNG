@@ -25,6 +25,11 @@ class CustedService extends CatClient {
     return List<String>.from(custedResp.data);
   }
 
+  Future<String> getScript(String name) async {
+    final resp = await get('$baseUrl/hub/$name.cl', timeout: defaultTimeout);
+    return resp.body;
+  }
+
   Future<CustedUpdate> getUpdate() async {
     final resp = await get('$baseUrl/app/apk/newest', timeout: defaultTimeout);
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
