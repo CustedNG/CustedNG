@@ -1,6 +1,7 @@
 import 'package:custed2/core/lisp/lisp_cell.dart';
 import 'package:custed2/core/lisp/lisp_exceptions.dart';
 import 'package:custed2/core/lisp/lisp_sym.dart';
+import 'package:custed2/core/lisp/lisp_sym_keyword.dart';
 import 'package:custed2/core/lisp/lisp_util.dart';
 import 'package:custed2/core/lisp/symbols.dart';
 
@@ -120,6 +121,8 @@ class LispReaderSync {
       _token = null;
     } else if (_token == "t") {
       _token = true;
+    } else if (_token.startsWith('#:')) {
+      _token = LispSymKeyword(_token.substring(2));
     } else {
       _token = LispSym(_token);
     }

@@ -13,6 +13,7 @@ import 'package:custed2/core/lisp/lisp_module.dart';
 import 'package:custed2/core/lisp/lisp_output_sink.dart';
 import 'package:custed2/core/lisp/lisp_reader_sync.dart';
 import 'package:custed2/core/lisp/lisp_sym.dart';
+import 'package:custed2/core/lisp/lisp_sym_keyword.dart';
 import 'package:custed2/core/lisp/lisp_util.dart';
 import 'package:custed2/core/lisp/symbols.dart';
 import 'package:custed2/core/lisp_module/module.dart';
@@ -182,6 +183,8 @@ class LispInterp {
         } else if (x is LispSym) {
           if (globals.containsKey(x)) return globals[x];
           throw LispEvalException("void variable", x);
+        } if (x is LispSymKeyword) {
+            throw LispEvalException("keyword misused as an expression", x);
         } else if (x is LispCell) {
           var fn = x.car;
           LispCell arg = LispUtil.cdrCell(x);

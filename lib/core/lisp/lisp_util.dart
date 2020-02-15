@@ -283,7 +283,7 @@ class LispUtil {
       return "[$s]";
     } else if (x is LispSym) {
       if (x.isInterned) return x.name;
-      return "#:$x";
+      return "#$x";
     } else {
       return "$x";
     }
