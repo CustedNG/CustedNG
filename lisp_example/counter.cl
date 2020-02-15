@@ -8,9 +8,10 @@
 (setq my-page
   (page "Counter"
     (center
-      (column
+      (column #:align 'center
         `(,(store-listen my-store
-             (lambda (msg) (text accu)))
+             (lambda (msg)
+               (text accu #:size 40 #:weight 'bold)))
           ,(button "Click Me"
              (lambda ()
                (setq accu (+ accu 1))

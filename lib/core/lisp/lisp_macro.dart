@@ -11,8 +11,8 @@ class LispMacro extends LispDefinedFunc {
 
   /// Expands the macro with a list of actual arguments.
   Future expandWith(LispInterp interp, LispCell arg) async {
-    List frame = makeFrame(arg);
-    LispCell env = LispCell(frame, null);
+    final frame = makeFrame(arg);
+    final env = LispCell(frame, null);
     var x;
     for (LispCell j = body; j != null; j = LispUtil.cdrCell(j)) {
       x = await interp.eval(j.car, env);

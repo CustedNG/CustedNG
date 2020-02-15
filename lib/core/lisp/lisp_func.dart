@@ -1,6 +1,8 @@
 import 'package:custed2/core/lisp/lisp_cell.dart';
 import 'package:custed2/core/lisp/lisp_exceptions.dart';
+import 'package:custed2/core/lisp/lisp_frame.dart';
 import 'package:custed2/core/lisp/lisp_interp.dart';
+import 'package:custed2/core/lisp/lisp_sym_keyword.dart';
 import 'package:custed2/core/lisp/lisp_util.dart';
 
 abstract class LispFunc {
@@ -15,27 +17,51 @@ abstract class LispFunc {
 
   /// Makes a frame for local variables from a list of actual arguments.
   /// (1 . (2 . ((+ 1 2) . nil))) -> [1 2 (+ 1 2)]
-  List makeFrame(LispCell arg) {
-    List frame = List(arity);
-    int n = fixedArgs;
-    int i;
-    for (i = 0; i < n && arg != null; i++) {
+  LispFrame makeFrame(LispCell arg) {
+    final keyword = <String, dynamic>{};
+    final positioned = List(arity);
+
+    int collected = 0;
+    while (arg != null) {
+      while (arg.car is LispSymKeyword) {
+        if (arg.cdr == null) {
+          throw LispEvalException("value required", arg.car);
+        }
+        keyword[arg.car.name] = arg.cdr.car;
+        arg = LispUtil.cdrCell(arg.cdr);
+        if (arg == null) break;
+      }
+
       // Sets the list of fixed args.
-      frame[i] = arg.car;
+      if (collected >= fixedArgs) break;
+      positioned[collected] = arg.car;
       arg = LispUtil.cdrCell(arg);
+      collected++;
     }
-    if (i != n || (arg != null && !hasRest)) {
+
+    if (collected != fixedArgs || (arg != null && !hasRest)) {
       throw LispEvalException("arity not matched", this);
     }
-    if (hasRest) frame[n] = arg;
-    return frame;
+
+    if (hasRest) {
+      positioned[fixedArgs] = arg;
+    }
+
+    return LispFrame(positioned: positioned, keyword: keyword);
   }
 
   /// Evaluates each expression in a frame.
   /// [1 (+ 1 2) ...] -> [1 3 ...]
-  Future<void> evalFrame(List frame, LispInterp interp, LispCell env) async {
+  Future<void> evalFrame(
+    LispFrame frame,
+    LispInterp interp,
+    LispCell env,
+  ) async {
+    for (var key in frame.keyword.keys) {
+      frame.keyword[key] = await interp.eval(frame.keyword[key], env);
+    }
     int n = fixedArgs;
-    for (int i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
       frame[i] = await interp.eval(frame[i], env);
     }
     if (hasRest && frame[n] is LispCell) {

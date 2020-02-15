@@ -15,7 +15,7 @@ class LispClosure extends LispDefinedFunc {
 
   /// Makes an environment to evaluate the body from a list of actual args.
   Future<LispCell> makeEnv(LispInterp interp, LispCell arg, LispCell interpEnv) async {
-    List frame = makeFrame(arg);
+    final frame = makeFrame(arg);
     await evalFrame(frame, interp, interpEnv);
     return LispCell(frame, env);    // Prepends the frame to the closure's env.
   }

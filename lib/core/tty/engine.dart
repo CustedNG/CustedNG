@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:alice/alice.dart';
 import 'package:custed2/core/lisp/lisp.dart';
 import 'package:custed2/core/lisp/lisp_cell.dart';
+import 'package:custed2/core/lisp/lisp_frame.dart';
 import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp/lisp_sym.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
@@ -13,7 +14,6 @@ import 'package:custed2/data/store/lisp_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
-import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/ui/widgets/lisp_debug_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
@@ -172,7 +172,7 @@ class TTYEngine {
     print(msg);
   }
 
-  _test(args) {
-    return locator<MyssoService>().getProfile();
+  _test(LispFrame frame) {
+    return frame.keyword;
   }
 }

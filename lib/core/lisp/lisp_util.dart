@@ -483,7 +483,7 @@ class LispUtil {
     if (j is LispSym) {
       return table[j] ?? j;
     } else if (j is LispArg) {
-      return table[j.symbol] ?? LispArg(j.level + 1, j.offset, j.symbol);
+      return table[j.symbol] ?? j.copyWith(level: j.level + 1);
     } else if (j is LispCell) {
       if (j.car == Symbols.quote) {
         return j;
