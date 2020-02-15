@@ -1,6 +1,9 @@
 import 'package:flutter/painting.dart';
 
 class ImageRes {
+  static const bgAbstractDark = AssetImage('assets/bg/abstract-dark.jpg');
+  static const bgPink = AssetImage('assets/bg/pink.jpg');
+
   static const custEMapSimple = AssetImage('assets/map/simple/CustE.png');
   static const custSMapSimple = AssetImage('assets/map/simple/CustS.png');
 

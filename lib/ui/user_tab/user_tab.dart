@@ -28,10 +28,23 @@ class UserTab extends StatelessWidget {
 
   Widget _buildLoginButton(BuildContext context) {
     return Center(
-      child: CupertinoButton(
-        child: Text('点我登录'),
-        color: AppTheme.of(context).btnPrimaryColor,
-        onPressed: () => _login(context),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CupertinoButton.filled(
+            child: Text('统一认证登录'),
+            onPressed: () => loginPage.go(context),
+          ),
+          SizedBox(height: 20),
+          Text(
+            '或',
+            style: TextStyle(color: CupertinoColors.inactiveGray),
+          ),
+          CupertinoButton(
+            child: Text('传统登录'),
+            onPressed: () => loginPageLegacy.go(context),
+          ),
+        ],
       ),
     );
   }
@@ -84,7 +97,7 @@ class UserTab extends StatelessWidget {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       minSize: 0,
-      child: CSControl(name,  Icon(CupertinoIcons.right_chevron)),
+      child: CSControl(name, Icon(CupertinoIcons.right_chevron)),
       onPressed: onPressed,
     );
   }

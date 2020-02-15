@@ -20,8 +20,11 @@ class CetAvatarPage extends StatelessWidget {
                 largeTitle: Text('四六级照片'),
               ),
               SliverToBoxAdapter(
-                child: Center(
-                  child: _buildContent(context),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 40),
+                    _buildContent(context),
+                  ],
                 ),
               )
             ],
@@ -43,7 +46,6 @@ class CetAvatarPage extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        SizedBox(height: 40),
         Container(
           width: 240,
           height: 320,

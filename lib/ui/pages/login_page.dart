@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/extension/intx.dart';
+import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
@@ -39,9 +40,7 @@ class _LoginPageState extends State<LoginPage> {
         trailing: isBusy ? _buildIndicator(context) : null,
       ),
       child: WebView(
-        userAgent: 'Mozilla/5.0 (X11; Linux x86_64) '
-            'AppleWebKit/537.36 (KHTML, like Gecko) '
-            'Chrome/79.0.3945.88 Safari/537.36',
+        userAgent: UserAgent.defaultUA,
         javascriptMode: JavascriptMode.unrestricted,
         javascriptChannels: {
           JavascriptChannel(
@@ -54,10 +53,10 @@ class _LoginPageState extends State<LoginPage> {
             },
           )
         },
-        onWebViewCreated: (controller) {
+        onWebViewCreated: (controller) async {
           this.controller = controller;
-          CookieManager().clearCookies();
-          controller.loadUrl('http://webvpn.cust.edu.cn/');
+          await CookieManager().clearCookies();
+          controller.loadUrl('https://webvpn.cust.edu.cn/');
         },
         onPageStarted: (url) {
           setState(() => isBusy = true);

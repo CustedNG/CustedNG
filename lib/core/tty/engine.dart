@@ -13,6 +13,7 @@ import 'package:custed2/data/store/lisp_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
+import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/ui/widgets/lisp_debug_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
@@ -66,6 +67,9 @@ class TTYEngine {
     _lisp.def('i', 0, _openAlice);
 
     _lisp.def('print', 1, _print);
+
+    _lisp.def('test', 0, _test);
+    _lisp.def('t', 0, _test);
   }
 
   Future eval(String source) async {
@@ -166,5 +170,9 @@ class TTYEngine {
   _print(args) {
     final msg = args[0];
     print(msg);
+  }
+
+  _test(args) {
+    return locator<MyssoService>().getProfile();
   }
 }

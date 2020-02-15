@@ -1,7 +1,10 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/hotfix.dart';
+import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/core/update.dart';
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/app_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/grade_tab.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
@@ -131,8 +134,14 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   @override
   void afterFirstLayout(BuildContext context) {
+    if (BuildMode.isDebug) {
+      print('Debug mode detected, create interface by default.');
+      locator<TTYExecuter>().execute('(debug)', context, quiet: true);
+    }
+    
     // call updateCheck to ensure navigator exists in context
     updateCheck(context);
+
     doHotfix(context);
   }
 }

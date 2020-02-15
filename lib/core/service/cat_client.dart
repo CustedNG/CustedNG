@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/util/cookie.dart';
+import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
 import 'package:http/http.dart';
 
@@ -127,9 +128,7 @@ class CatClient {
   }
 
   void setUserAgent(Request request) {
-    final ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) '
-        'AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 '
-        'Safari/602.2';
+    final ua = UserAgent.defaultUA;
     if (request.headers[HttpHeaders.userAgentHeader] == null) {
       request.headers[HttpHeaders.userAgentHeader] = ua;
     }

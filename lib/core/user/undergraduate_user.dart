@@ -10,11 +10,13 @@ import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/jw_service.dart';
+import 'package:custed2/service/mysso_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 
 class UndergraduateUser implements User {
   final _jw = locator<JwService>();
+  final _mysso = locator<MyssoService>();
 
   @override
   Future<Schedule> getSchdeule() async {
@@ -24,9 +26,9 @@ class UndergraduateUser implements User {
 
   @override
   Future<UserProfile> getProfile() async {
-    final rawProfile = await _jw.getStudentInfo();
+    final profile = await _mysso.getProfile();
     return UserProfile()
-      ..displayName = rawProfile.XM
+      ..displayName = profile.name
       ..department = 'Null 学院';
   }
 

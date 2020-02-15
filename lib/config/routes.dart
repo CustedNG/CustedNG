@@ -4,6 +4,7 @@ import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
+import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
 import 'package:custed2/ui/web/ecard_web_page.dart';
 import 'package:custed2/ui/web/exam_room_web_page.dart';
@@ -21,6 +22,12 @@ final loginWebPage = AppRoute(
 final loginPage = AppRoute(
   title: '登录',
   page: LoginPage(),
+);
+
+// 因webview, 提供传统登录方式
+final loginPageLegacy = AppRoute(
+  title: '登录(Legacy)',
+  page: LoginPageLegacy(),
 );
 
 final debugPage = AppRoute(
