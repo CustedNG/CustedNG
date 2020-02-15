@@ -106,6 +106,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           controller: usernameController,
           placeholder: '一卡通号',
           keyboardType: TextInputType.number,
+          placeholderStyle: TextStyle(color: Color(0x55FFFFFF)),
           style: TextStyle(color: CupertinoColors.white),
           decoration: textFieldBorderDecoration,
         ),
@@ -113,6 +114,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
         CupertinoTextField(
           controller: passwordController,
           placeholder: '统一认证密码',
+          placeholderStyle: TextStyle(color: Color(0x55FFFFFF)),
           style: TextStyle(color: CupertinoColors.white),
           obscureText: true,
           decoration: textFieldBorderDecoration,
