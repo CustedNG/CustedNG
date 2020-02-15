@@ -41,13 +41,13 @@ Future<void> setupLocatorForStores() async {
   await setting.init();
   locator.registerSingleton(setting);
 
-  locator.registerSingletonAsync<UserDataStore>((_) async {
+  locator.registerSingletonAsync<UserDataStore>(() async {
     final store = UserDataStore();
     await store.init();
     return store;
   });
 
-  locator.registerSingletonAsync<ScheduleStore>((_) async {
+  locator.registerSingletonAsync<ScheduleStore>(() async {
     final store = ScheduleStore();
     await store.init();
     return store;

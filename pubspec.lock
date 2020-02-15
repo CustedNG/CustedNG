@@ -308,7 +308,7 @@ packages:
       name: get_it
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.0-beta3"
+    version: "4.0.0-release-candidate"
   glob:
     dependency: transitive
     description:
