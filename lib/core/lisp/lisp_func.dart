@@ -14,6 +14,7 @@ abstract class LispFunc {
   LispFunc(this.carity);
 
   /// Makes a frame for local variables from a list of actual arguments.
+  /// (1 . (2 . ((+ 1 2) . nil))) -> [1 2 (+ 1 2)]
   List makeFrame(LispCell arg) {
     List frame = List(arity);
     int n = fixedArgs;
@@ -31,6 +32,7 @@ abstract class LispFunc {
   }
 
   /// Evaluates each expression in a frame.
+  /// [1 (+ 1 2) ...] -> [1 3 ...]
   Future<void> evalFrame(List frame, LispInterp interp, LispCell env) async {
     int n = fixedArgs;
     for (int i = 0; i < n; i++) {
