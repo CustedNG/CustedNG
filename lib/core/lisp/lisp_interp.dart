@@ -197,14 +197,14 @@ class LispInterp {
             } else if (fn == Symbols.cond) {
               x = await _evalCond(arg, env);
             } else if (fn == Symbols.setq) {
-              return await _evalSetQ(arg, env);
+              return _evalSetQ(arg, env);
             } else if (fn == Symbols.lambda) {
               return _compile(arg, env, LispClosure.make);
             } else if (fn == Symbols.macro) {
               if (env != null) throw LispEvalException("nested macro", x);
               return _compile(arg, null, LispMacro.make);
             } else if (fn == Symbols.require) {
-              return await _handleRequire(arg, env);
+              return _handleRequire(arg, env);
             } else if (fn == Symbols.quasiquote) {
               if (arg != null && arg.cdr == null) {
                 x = LispUtil.qqExpand(arg.car);
