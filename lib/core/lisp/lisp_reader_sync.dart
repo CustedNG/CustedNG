@@ -31,7 +31,11 @@ class LispReaderSync {
     if (_token == Symbols.leftParen) {
       // (a b c)
       _readToken();
-      return _parseListBody();
+      return _parseListBody(Symbols.rightParen);
+    } if (_token == Symbols.leftBracket) {
+      // [a b c]
+      _readToken();
+      return _parseListBody(Symbols.rightBracket);
     } else if (_token == Symbols.singleQuote) {
       // 'a => (quote a)
       _readToken();
@@ -56,10 +60,10 @@ class LispReaderSync {
     }
   }
 
-  LispCell _parseListBody() {
+  LispCell _parseListBody(LispSym right) {
     if (_token == #EOF) {
       throw FormatException("unexpected EOF");
-    } else if (_token == Symbols.rightParen) {
+    } else if (_token == right) {
       return null;
     } else {
       var e1 = _parseExpression();
@@ -70,11 +74,11 @@ class LispReaderSync {
         _readToken();
         e2 = _parseExpression();
         _readToken();
-        if (_token != Symbols.rightParen) {
-          throw FormatException('")" expected: $_token');
+        if (_token != right) {
+          throw FormatException('"${right.name}" expected: $_token');
         }
       } else {
-        e2 = _parseListBody();
+        e2 = _parseListBody(right);
       }
       return LispCell(e1, e2);
     }
@@ -129,8 +133,9 @@ class LispReaderSync {
   }
 
   /// Regular expression to split a line into Lisp tokens
+  /// space | comment | ( string | unquote | identifier | any )
   static final _tokenPat =
-      RegExp('\\s+|;.*\$|("(\\\\.?|.)*?"|,@?|[^()\'`~"; \t]+|.)');
+      RegExp('\\s+|;.*\$|("(\\\\.?|.)*?"|,@?|[^()\\[\\]\'`~"; \t]+|.)');
 
   /// Regular expression to take an escape sequence out of a string
   static final _escapePat = RegExp(r'\\(.)');

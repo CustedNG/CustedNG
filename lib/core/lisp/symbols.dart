@@ -18,6 +18,8 @@ class Symbols {
   static final LispSym dot = LispSym(".");
   static final LispSym leftParen = LispSym("(");
   static final LispSym rightParen = LispSym(")");
+  static final LispSym leftBracket = LispSym("[");
+  static final LispSym rightBracket = LispSym("]");
   static final LispSym singleQuote = LispSym("'");
   static final LispSym append = LispSym("append");
   static final LispSym cons = LispSym("cons");
