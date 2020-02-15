@@ -57,6 +57,7 @@ class _LispDebugWidgetState extends State<LispDebugWidget> {
   }
 
   Future<void> openServer() async {
+    if (server != null) return;
     final addr = await GetIp.ipAddress;
     server = await HttpServer.bind(InternetAddress.anyIPv4, 2587);
     server.listen(onRequest);
