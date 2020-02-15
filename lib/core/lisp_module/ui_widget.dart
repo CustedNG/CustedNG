@@ -68,10 +68,12 @@ class LMUIWidget extends LModule {
     return Center(child: child);
   }
 
-  _button(List args) async {
-    final child = args[0] is Widget ? args[0] : Text(args[0].toString());
-    final onClick = LispCell(args[1], null);
+  _button(LispFrame frame) async {
+    final child = frame[0] is Widget ? frame[0] : Text(frame[0].toString());
+    final onClick = LispCell(frame[1], null);
+    final padding = frame.keyword['padding']?.toDouble();
     return CupertinoButton(
+      padding: padding == null ? null : EdgeInsets.all(padding),
       child: child,
       onPressed: () => interp.eval(onClick, null),
     );
