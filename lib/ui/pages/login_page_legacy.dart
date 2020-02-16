@@ -43,14 +43,14 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
 
     userData.username.put(usernameController.text);
     userData.password.put(passwordController.text);
-    final ok = await mysso.login();
+    final login = await mysso.login(force: true);
 
-    if (ok) {
+    if (login.ok) {
       user.login();
       snake.info('登录成功');
       Navigator.pop(context);
     } else {
-      snake.warning('登录失败');
+      snake.warning('登录失败[${login.data}]');
       setState(() => isBusy = false);
     }
   }
@@ -136,10 +136,14 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
                 borderRadius: BorderRadius.all(Radius.circular(100)),
                 padding: EdgeInsets.all(0),
                 child: Center(
-                  child: Icon(Icons.arrow_forward),
+                  child: isBusy
+                      ? CupertinoActivityIndicator()
+                      : Icon(Icons.arrow_forward),
                 ),
                 color: CupertinoColors.activeBlue,
-                onPressed: tryLogin,
+                onPressed: () {
+                  if (!isBusy) tryLogin();
+                },
               ),
             )
           ],

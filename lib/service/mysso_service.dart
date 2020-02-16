@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:custed2/core/extension/stringx.dart';
+import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/core/service/cat_service.dart';
 import 'package:custed2/data/models/mysso_profile.dart';
 import 'package:custed2/locator.dart';
@@ -20,11 +21,13 @@ class MyssoService extends CatService {
   final Pattern sessionExpirationTest =
       RegExp(r'(用户登录|登录后可|微信扫码|账号密码|Successful)');
 
-  Future<bool> login() async {
+  Future<CatLoginResult<String>> login({bool force = false}) async {
+    if (force) clearCookieFor(baseUrl.toUri());
+
     final loginPage = await getFrontPage();
     if (loginPage.contains('登录成功')) {
       print('Mysso Cookie Login Success');
-      return true;
+      return CatLoginResult.ok();
     }
 
     final userData = await locator.getAsync<UserDataStore>();
@@ -44,11 +47,13 @@ class MyssoService extends CatService {
 
     if (resp.body.contains('登录成功')) {
       print('Mysso Manual Login Success');
-      return true;
+      return CatLoginResult.ok();
     }
 
-    print('Mysso Manual Login Failed');
-    return false;
+    final reason =
+        parse(resp.body).querySelector('.alert-danger')?.text?.trim() ?? '未知原因';
+    print('Mysso Manual Login Failed：$reason');
+    return CatLoginResult.failed(reason);
   }
 
   Future<MyssoProfile> getProfile() async {

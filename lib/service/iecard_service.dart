@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:custed2/core/extension/stringx.dart';
+import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/webvpn_based_service.dart';
@@ -20,7 +21,7 @@ class IecardService extends WebvpnBasedService {
   final MyssoService _mysso = locator<MyssoService>();
 
   @override
-  Future<bool> login() async {
+  Future<CatLoginResult> login() async {
     final ticket = await _mysso.getTicketForIecard();
     final prelogin =
         await request('GET', '$preloginUrl&ticket=$ticket'.toUri());
@@ -36,7 +37,7 @@ class IecardService extends WebvpnBasedService {
       'ssoticketid': ssoticketid
     });
 
-    return response.body.contains('Object moved');
+    return CatLoginResult(ok: response.body.contains('Object moved'));
   }
 
   Future<String> getEcardLoginUrl() async {

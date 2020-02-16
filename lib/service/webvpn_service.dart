@@ -1,3 +1,4 @@
+import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/core/service/cat_service.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
@@ -9,7 +10,7 @@ class WebvpnService extends CatService {
 
   final MyssoService _mysso = locator<MyssoService>();
 
-  Future<bool> login() async {
+  Future<CatLoginResult> login() async {
     final ticket = await _mysso.getTicketForWebvpn();
 
     final resp = await get(
@@ -17,10 +18,8 @@ class WebvpnService extends CatService {
       maxRedirects: 0,
     );
 
-    if (resp.body.contains(RegExp(r'(success|logged in)'))) {
-      return true;
-    }
-    
-    return false;
+    return CatLoginResult(
+      ok: resp.body.contains(RegExp(r'(success|logged in)')),
+    );
   }
 }

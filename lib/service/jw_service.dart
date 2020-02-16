@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:convert/convert.dart';
 import 'package:custed2/core/extension/stringx.dart';
+import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/jw_student_info.dart';
@@ -19,7 +20,7 @@ class JwService extends WebvpnBasedService {
   final Pattern sessionExpirationTest = '过期';
 
   @override
-  Future<bool> login() async {
+  Future<CatLoginResult> login() async {
     final ticket = await _mysso.getTicketForJw();
     final response = await request(
       'POST',
@@ -34,7 +35,7 @@ class JwService extends WebvpnBasedService {
     );
 
     final parsedResponse = JwResponse.fromJson(json.decode(response.body));
-    return parsedResponse.isSuccess;
+    return CatLoginResult(ok: parsedResponse.isSuccess);
   }
 
   Future<JwSchedule> getSchedule() async {

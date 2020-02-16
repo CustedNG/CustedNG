@@ -1,5 +1,6 @@
 import 'package:custed2/core/service/cat_client.dart';
 import 'package:custed2/core/service/cat_error.dart';
+import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:http/http.dart';
 
 // A CatService mimics a remote service and is able to
@@ -14,7 +15,7 @@ abstract class CatService extends CatClient {
     return sessionExpirationTest.allMatches(response.body).isNotEmpty;
   }
 
-  Future<bool> login();
+  Future<CatLoginResult> login();
 
   Future<Response> request(
     String method,
@@ -39,8 +40,8 @@ abstract class CatService extends CatClient {
 
     if (isSessionExpired(response)) {
       print('Session expiration detected');
-      final loginSuccess = await login();
-      if (!loginSuccess) {
+      final loginResult = await login();
+      if (!loginResult.ok) {
         throw CatError('login() failed');
       }
 

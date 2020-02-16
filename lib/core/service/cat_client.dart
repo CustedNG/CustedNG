@@ -123,6 +123,10 @@ class CatClient {
     return cookies;
   }
 
+  void clearCookieFor(Uri uri) {
+    _cookieJar.delete(uri);
+  }
+
   String findCookiesAsString(Uri uri) {
     return formatCookies(findCookies(uri));
   }
