@@ -1,4 +1,5 @@
 import 'package:custed2/core/user/undergraduate_user.dart';
+import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:flutter/painting.dart';
@@ -8,6 +9,8 @@ abstract class User {
   factory User() => UndergraduateUser();
 
   Future<Schedule> getSchdeule();
+
+  Future<Grade> getGrade();
 
   Future<UserProfile> getProfile();
 

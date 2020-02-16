@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:custed2/app.dart';
 import 'package:custed2/core/analytics.dart';
+import 'package:custed2/data/models/grade.dart';
+import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/models/user_profile.dart';
@@ -9,6 +11,7 @@ import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
@@ -28,6 +31,8 @@ Future<void> initApp() async {
   Hive.registerAdapter(ScheduleLessonAdapter());
   Hive.registerAdapter(ScheduleLessonTypeAdapter());
   Hive.registerAdapter(UserProfileAdapter());
+  Hive.registerAdapter(GradeAdapter());
+  Hive.registerAdapter(GradeDetailAdapter());
 
   await setupLocator(docDir);
   locator<AppProvider>().loadLocalData();
@@ -77,6 +82,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => locator<AppProvider>()),
           ChangeNotifierProvider(create: (_) => locator<WeatherProvider>()),
           ChangeNotifierProvider(create: (_) => locator<CetAvatarProvider>()),
+          ChangeNotifierProvider(create: (_) => locator<GradeProvider>()),
         ],
         child: Custed(),
       ),

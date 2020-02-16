@@ -139,12 +139,12 @@ class CatClient {
   }
 }
 
-String encodeFormData(Map<String, String> formData) {
+String encodeFormData(Map<String, dynamic> formData) {
   var pairs = <List<String>>[];
   formData.forEach(
     (key, value) => pairs.add([
       Uri.encodeQueryComponent(key),
-      Uri.encodeQueryComponent(value),
+      Uri.encodeQueryComponent(value.toString()),
     ]),
   );
   return pairs.map((pair) => '${pair[0]}=${pair[1]}').join('&');
@@ -163,13 +163,13 @@ class CatRequest extends Request {
     } else if (body is List) {
       this.bodyBytes = body.cast<int>();
     } else if (body is Map) {
-      this.body = encodeBodyFields(body.cast<String, String>());
+      this.body = encodeBodyFields(body.cast<String, dynamic>());
     } else {
       throw ArgumentError('Invalid request body "$body".');
     }
   }
 
-  String encodeBodyFields(Map<String, String> body) {
+  String encodeBodyFields(Map<String, dynamic> body) {
     if (!headers.containsKey(HttpHeaders.contentTypeHeader)) {
       headers[HttpHeaders.contentTypeHeader] =
           'application/x-www-form-urlencoded';

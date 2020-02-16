@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
+import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/jw_student_info.dart';
@@ -49,6 +50,31 @@ class JwService extends WebvpnBasedService {
 
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
     return JwSchedule.fromJson(parsedResponse.data);
+  }
+
+  Future<JwGradeData> getGrade() async {
+    final resp = await xRequest(
+      'POST',
+      '$baseUrl/api/ClientStudent/QueryService/GradeQueryApi/GetDataByStudent'
+          .toUri(),
+      body: {
+        // {"ShowGradeType":1} -> url -> base64
+        'param': 'JTdCJTIyU2hvd0dyYWRlVHlwZSUyMjoxJTdE',
+        '__log': {
+          'MenuID': '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5',
+          'Logtype': 6,
+          'Context': '查询',
+        },
+        '__permission': {
+          'MenuID': '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5',
+          'Operation': 0
+        },
+      },
+      headers: {'content-type': 'application/json'},
+    );
+
+    final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
+    return JwGradeData.fromJson(parsedResponse.data);
   }
 
   Future<JwStudentInfo> getStudentInfo() async {

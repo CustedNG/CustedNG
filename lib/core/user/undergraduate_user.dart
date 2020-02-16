@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 import 'package:custed2/core/user/user.dart';
+import 'package:custed2/data/models/grade.dart';
+import 'package:custed2/data/models/grade_detail.dart';
+import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
@@ -25,6 +28,12 @@ class UndergraduateUser implements User {
   }
 
   @override
+  Future<Grade> getGrade() async {
+    final rawGrade = await _jw.getGrade();
+    return normalizeGrade(rawGrade);
+  }
+
+  @override
   Future<UserProfile> getProfile() async {
     final profile = await _mysso.getProfile();
     return UserProfile()
@@ -37,8 +46,8 @@ class UndergraduateUser implements User {
 
   static Future<Schedule> normalizeSchedule(JwSchedule raw) async {
     final result = Schedule()
-      ..versionHash = await computeScheduleHashAsync(raw)
       ..createdAt = DateTime.now()
+      ..versionHash = await computeJsonHashAsync(raw)
       ..startDate = getScheduleStartTime()
       ..lessons = [];
 
@@ -67,13 +76,43 @@ class UndergraduateUser implements User {
     return result;
   }
 
-  static String computeScheduleHash(JwSchedule raw) {
+  static Future<Grade> normalizeGrade(JwGradeData raw) async {
+    final grades = raw.GradeList.map((rawGrade) {
+      return GradeDetail()
+        ..year = rawGrade.KSXNXQ
+        ..testStatus = rawGrade.KSZT
+        ..lessonType = rawGrade.KSXNXQ
+        ..schoolHour = rawGrade.XS
+        ..credit = rawGrade.XF
+        ..point = rawGrade.YXCJ
+        ..rawPoint = rawGrade.ShowYXCJ
+        ..lessonName = rawGrade.LessonInfo.KCMC
+        ..testType = rawGrade.KSXZ;
+    }).toList();
+
+    final result = Grade()
+      ..createdAt = DateTime.now()
+      ..versionHash = await computeJsonHashAsync(raw)
+      ..averageGradePoint = raw.GradeStatistics.PJJD
+      ..creditEarned = raw.GradeStatistics.SDXF
+      ..creditUnattained = raw.GradeStatistics.WTGXF
+      ..subjectCount = raw.GradeStatistics.SXMS
+      ..subjectPassed = raw.GradeStatistics.TGMS
+      ..subjectNotPassed = raw.GradeStatistics.WTGMS
+      ..resitCount = raw.GradeStatistics.BKCS
+      ..retakeCount = raw.GradeStatistics.CXCS
+      ..grades = grades;
+
+    return result;
+  }
+
+  static String computeJsonHash(dynamic raw) {
     final hash = sha1.convert(utf8.encode(json.encode(raw))).bytes;
     return hex.encode(hash);
   }
 
-  static Future<String> computeScheduleHashAsync(JwSchedule raw) {
-    return compute(computeScheduleHash, raw);
+  static Future<String> computeJsonHashAsync(dynamic raw) {
+    return compute(computeJsonHash, raw);
   }
 
   static DateTime getScheduleStartTime() {

@@ -5,10 +5,12 @@ import 'package:custed2/core/tty/engine.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
+import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
+import 'package:custed2/data/store/grade_store.dart';
 import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/service/custed_service.dart';
@@ -30,6 +32,7 @@ void setupLocatorForServices() {
 void setupLocatorForProviders() {
   locator.registerSingleton(SnakebarProvider());
   locator.registerSingleton(ScheduleProvider());
+  locator.registerSingleton(GradeProvider());
   locator.registerSingleton(UserProvider());
   locator.registerSingleton(AppProvider());
   locator.registerSingleton(WeatherProvider());
@@ -49,6 +52,12 @@ Future<void> setupLocatorForStores() async {
 
   locator.registerSingletonAsync<ScheduleStore>(() async {
     final store = ScheduleStore();
+    await store.init();
+    return store;
+  });
+
+  locator.registerSingletonAsync<GradeStore>(() async {
+    final store = GradeStore();
     await store.init();
     return store;
   });

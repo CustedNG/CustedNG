@@ -14,6 +14,7 @@ import 'package:custed2/data/store/lisp_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
+import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/widgets/lisp_debug_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
@@ -172,7 +173,8 @@ class TTYEngine {
     print(msg);
   }
 
-  _test(LispFrame frame) {
-    return frame.keyword;
+  _test(LispFrame frame) async {
+    final g = await locator<JwService>().getGrade();
+    return g;
   }
 }
