@@ -29,6 +29,9 @@
           (setq accu (+ accu 1))
           (store-add counter-store))))))
 
+
+(setq qr (image "https://cust.xuty.cc/CustedNG.png"))
+
 (defun link (url)
   (button url #:padding 0
     (lambda () (custed-launch-url url))))
@@ -49,6 +52,7 @@
             (text content)
             (sizedbox #:height 20)
             counter
-            (link "https://cust.xuty.cc/app/apk/download")))))))
+            (link "https://cust.xuty.cc/app/apk/download")
+            qr))))))
 
 (view my-page)

@@ -4,6 +4,7 @@ import 'package:custed2/core/lisp/lisp_func.dart';
 import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp_module/module.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 class LMUIWidget extends LModule {
   LMUIWidget(LispInterp interp) : super(interp);
@@ -30,6 +31,7 @@ class LMUIWidget extends LModule {
     interp.def('sizedbox', 0, _sizedbox);
     interp.def('padding', 1, _padding);
     interp.def('listview', 1, _listview);
+    interp.def('image', 1, _image);
   }
 
   _page(List args) {
@@ -124,5 +126,10 @@ class LMUIWidget extends LModule {
     return single
         ? SingleChildScrollView(child: child)
         : ListView(children: <Widget>[child]);
+  }
+
+  _image(LispFrame frame) {
+    final url = frame.positioned[0].toString();
+    return Image(image: AdvancedNetworkImage(url));
   }
 }
