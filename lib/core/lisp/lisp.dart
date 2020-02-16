@@ -8,6 +8,7 @@ import 'package:custed2/core/lisp_module/core_json.dart';
 import 'package:custed2/core/lisp_module/core_scheme.dart';
 import 'package:custed2/core/lisp_module/core_string.dart';
 import 'package:custed2/core/lisp_module/ui.dart';
+import 'package:custed2/core/lisp_module/ui_cave.dart';
 import 'package:custed2/core/lisp_module/ui_store.dart';
 import 'package:custed2/core/lisp_module/ui_widget.dart';
 
@@ -39,7 +40,8 @@ Future<LispInterp> lispMakeInterp() async {
   interp.register('ui', (interp) => LMUI(interp));
   interp.register('ui/store', (interp) => LMUIStore(interp));
   interp.register('ui/widget', (interp) => LMUIWidget(interp));
-
+  interp.register('ui/cave', (interp) => LMUICave(interp));
+  
   await interp.require('core/base');
   return interp;
 }

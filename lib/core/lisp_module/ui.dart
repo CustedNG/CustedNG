@@ -15,6 +15,7 @@ class LMUI extends LModule {
     await interp.require('core/base');
     await interp.require('ui/store');
     await interp.require('ui/widget');
+    await interp.require('ui/cave');
     interp.def('view', 1, _view);
     interp.def('view-pop', 0, _viewPop);
   }
