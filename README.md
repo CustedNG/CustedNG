@@ -45,7 +45,7 @@
 
 **Andriod**
 
-[Github Release](https://github.com/CustedNG/CustedNG/releases) | [二维码](https://cust.xuty.cc/CustedNG.svg)
+[Github Release](https://github.com/CustedNG/CustedNG/releases) | [二维码](https://cust.xuty.cc/CustedNG.svg) | [直链](https://cust.xuty.cc/app/apk/downloadUrl)
 
 <img width="250px" src="https://cust.xuty.cc/CustedNG.svg">
 
