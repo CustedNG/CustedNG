@@ -3,8 +3,11 @@ import 'package:custed2/core/lisp/lisp_frame.dart';
 import 'package:custed2/core/lisp/lisp_func.dart';
 import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp_module/module.dart';
+import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
 
 class LMUIWidget extends LModule {
   LMUIWidget(LispInterp interp) : super(interp);
@@ -130,6 +133,22 @@ class LMUIWidget extends LModule {
 
   _image(LispFrame frame) {
     final url = frame.positioned[0].toString();
-    return Image(image: AdvancedNetworkImage(url));
+    final width = frame.keyword['width']?.toDouble();
+
+    return TransitionToImage(
+      width: width,
+      loadingWidget: Container(
+        child: Center(child: CupertinoActivityIndicator()),
+        width: 100,
+        height: 100,
+      ),
+      placeholder: Container(
+        child: Center(child: Icon(Icons.refresh)),
+        width: 100,
+        height: 100,
+      ),
+      enableRefresh: true,
+      image: AdvancedNetworkImage(url),
+    );
   }
 }

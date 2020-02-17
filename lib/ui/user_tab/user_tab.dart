@@ -1,5 +1,4 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/store/presistent_store.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
@@ -64,12 +63,16 @@ class UserTab extends StatelessWidget {
           }),
           CSHeader('课表'),
           CSControl(
-              '将课表设为首页', _buildSwitch(context, setting.useScheduleAsHome)),
+            '将课表设为首页',
+            _buildSwitch(context, setting.useScheduleAsHome),
+          ),
           CSControl(
-              '显示非当前周课程', _buildSwitch(context, setting.showInactiveLessons)),
+            '显示非当前周课程',
+            _buildSwitch(context, setting.showInactiveLessons),
+          ),
           CSHeader(''),
           CSButton(CSButtonType.DEFAULT_CENTER, "重新登录", () => _login(context)),
-          CSButton(CSButtonType.DESTRUCTIVE, "退出登录", () => _logout(context))
+          CSButton(CSButtonType.DESTRUCTIVE, "退出登录", () => _logout(context)),
         ],
       ),
     );
