@@ -58,7 +58,7 @@
 
 [Github Issues](https://github.com/CustedNG/CustedNG/issues) | QQ群: 
 
-<img width="150px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/user_group.png">
+<img width="150px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/user_group.jpg">
 
 ## 已知问题
 
