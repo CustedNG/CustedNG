@@ -5,6 +5,7 @@ import 'package:custed2/core/update.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/grade_tab/grade_legacy.dart';
 import 'package:custed2/ui/grade_tab/grade_tab.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
@@ -107,7 +108,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
               navigatorKey: _tab1NavKey,
               defaultTitle: '成绩',
               builder: (context) {
-                return GradeTab();
+                return GradeReportLegacy();
               },
             );
           case 2:

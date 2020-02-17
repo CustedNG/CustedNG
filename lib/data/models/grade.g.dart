@@ -25,9 +25,9 @@ class GradeAdapter extends TypeAdapter<Grade> {
       ..subjectNotPassed = fields[5] as int
       ..resitCount = fields[6] as int
       ..retakeCount = fields[7] as int
-      ..grades = (fields[8] as List)?.cast<GradeDetail>()
       ..createdAt = fields[9] as DateTime
-      ..versionHash = fields[10] as String;
+      ..versionHash = fields[10] as String
+      ..terms = (fields[11] as List)?.cast<GradeTerm>();
   }
 
   @override
@@ -50,11 +50,11 @@ class GradeAdapter extends TypeAdapter<Grade> {
       ..write(obj.resitCount)
       ..writeByte(7)
       ..write(obj.retakeCount)
-      ..writeByte(8)
-      ..write(obj.grades)
       ..writeByte(9)
       ..write(obj.createdAt)
       ..writeByte(10)
-      ..write(obj.versionHash);
+      ..write(obj.versionHash)
+      ..writeByte(11)
+      ..write(obj.terms);
   }
 }

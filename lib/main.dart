@@ -4,6 +4,7 @@ import 'package:custed2/app.dart';
 import 'package:custed2/core/analytics.dart';
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
+import 'package:custed2/data/models/grade_term.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/models/user_profile.dart';
@@ -33,6 +34,7 @@ Future<void> initApp() async {
   Hive.registerAdapter(UserProfileAdapter());
   Hive.registerAdapter(GradeAdapter());
   Hive.registerAdapter(GradeDetailAdapter());
+  Hive.registerAdapter(GradeTermAdapter());
 
   await setupLocator(docDir);
   locator<AppProvider>().loadLocalData();

@@ -20,10 +20,10 @@ class GradeDetail extends HiveObject {
   double credit;
 
   @HiveField(5)
-  double point;
+  double mark;
 
   @HiveField(6)
-  String rawPoint;
+  String rawMark;
 
   @HiveField(7)
   String lessonName;

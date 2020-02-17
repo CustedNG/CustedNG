@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
+import 'package:custed2/data/models/grade_term.dart';
 import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/schedule.dart';
@@ -77,18 +78,53 @@ class UndergraduateUser implements User {
   }
 
   static Future<Grade> normalizeGrade(JwGradeData raw) async {
-    final grades = raw.GradeList.map((rawGrade) {
-      return GradeDetail()
-        ..year = rawGrade.KSXNXQ
-        ..testStatus = rawGrade.KSZT
-        ..lessonType = rawGrade.KSXNXQ
-        ..schoolHour = rawGrade.XS
-        ..credit = rawGrade.XF
-        ..point = rawGrade.YXCJ
-        ..rawPoint = rawGrade.ShowYXCJ
-        ..lessonName = rawGrade.LessonInfo.KCMC
-        ..testType = rawGrade.KSXZ;
+    final termSet = raw.GradeList.map((e) => e.KSXNXQ).toSet();
+    final terms = termSet.map((term) {
+      final grades = <GradeDetail>[];
+      double weightedGradePointSum = 0.0;
+      double creditTotal = 0.0;
+      double creditEarned = 0.0;
+      int subjectCount = 0;
+      int subjectPassed = 0;
+
+      final rawGrades = raw.GradeList.where((g) => g.KSXNXQ == term);
+      for (var rawGrade in rawGrades) {
+        final grade = GradeDetail()
+          ..year = rawGrade.KSXNXQ
+          ..testStatus = rawGrade.KSZT
+          ..lessonType = rawGrade.KCXZ
+          ..schoolHour = rawGrade.XS
+          ..credit = rawGrade.XF
+          ..mark = rawGrade.YXCJ
+          ..rawMark = rawGrade.ShowYXCJ
+          ..lessonName = rawGrade.LessonInfo.KCMC
+          ..testType = rawGrade.KSXZ;
+
+        final passed = grade.testStatus == '正常' && grade.mark >= 60;
+        final gradePoint = markToGradePoint(grade.mark);
+
+        creditTotal += grade.credit;
+        subjectCount += 1;
+        if (passed) {
+          creditEarned += grade.credit;
+          subjectPassed += 1;
+        }
+        weightedGradePointSum += gradePoint * grade.credit;
+        grades.add(grade);
+      }
+
+      final averageGradePoint = weightedGradePointSum / creditTotal;
+      return GradeTerm()
+        ..averageGradePoint = averageGradePoint
+        ..creditTotal = creditTotal
+        ..creditEarned = creditEarned
+        ..subjectCount = subjectCount
+        ..subjectPassed = subjectPassed
+        ..grades = grades
+        ..termName = term;
     }).toList();
+
+    terms.sort((t1, t2) => t1.termName.compareTo(t2.termName));
 
     final result = Grade()
       ..createdAt = DateTime.now()
@@ -101,9 +137,13 @@ class UndergraduateUser implements User {
       ..subjectNotPassed = raw.GradeStatistics.WTGMS
       ..resitCount = raw.GradeStatistics.BKCS
       ..retakeCount = raw.GradeStatistics.CXCS
-      ..grades = grades;
+      ..terms = terms;
 
     return result;
+  }
+
+  static double markToGradePoint(double mark) {
+    return mark >= 60 ? (mark - 50) / 10 : 0;
   }
 
   static String computeJsonHash(dynamic raw) {

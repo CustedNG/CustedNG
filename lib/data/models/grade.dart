@@ -1,4 +1,5 @@
 import 'package:custed2/data/models/grade_detail.dart';
+import 'package:custed2/data/models/grade_term.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:hive/hive.dart';
 
@@ -11,10 +12,10 @@ class Grade extends HiveObject {
 
   @HiveField(1)
   double creditEarned;
-  
+
   @HiveField(2)
   double creditUnattained;
-  
+
   @HiveField(3)
   int subjectCount;
 
@@ -32,8 +33,8 @@ class Grade extends HiveObject {
   @HiveField(7)
   int retakeCount;
 
-  @HiveField(8)
-  List<GradeDetail> grades;
+  // @HiveField(8)
+  // List<GradeDetail> grades;
 
   @HiveField(9)
   DateTime createdAt;
@@ -41,8 +42,15 @@ class Grade extends HiveObject {
   @HiveField(10)
   String versionHash;
 
+  @HiveField(11)
+  List<GradeTerm> terms;
+
   @override
   String toString() {
-    return 'Grade<$averageGradePoint>';
+    final i =
+        terms?.map((e) => '${e.termName}:${e.averageGradePoint}')?.join(', ');
+    return 'Grade<$i>';
   }
+
+  double get creditTotal => creditEarned + creditUnattained;
 }

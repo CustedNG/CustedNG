@@ -22,8 +22,8 @@ class GradeDetailAdapter extends TypeAdapter<GradeDetail> {
       ..lessonType = fields[2] as String
       ..schoolHour = fields[3] as double
       ..credit = fields[4] as double
-      ..point = fields[5] as double
-      ..rawPoint = fields[6] as String
+      ..mark = fields[5] as double
+      ..rawMark = fields[6] as String
       ..lessonName = fields[7] as String
       ..testType = fields[8] as String;
   }
@@ -43,9 +43,9 @@ class GradeDetailAdapter extends TypeAdapter<GradeDetail> {
       ..writeByte(4)
       ..write(obj.credit)
       ..writeByte(5)
-      ..write(obj.point)
+      ..write(obj.mark)
       ..writeByte(6)
-      ..write(obj.rawPoint)
+      ..write(obj.rawMark)
       ..writeByte(7)
       ..write(obj.lessonName)
       ..writeByte(8)

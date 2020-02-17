@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:alice/alice.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/lisp/lisp.dart';
 import 'package:custed2/core/lisp/lisp_cell.dart';
 import 'package:custed2/core/lisp/lisp_frame.dart';
@@ -8,16 +9,17 @@ import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp/lisp_sym.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/core/tty/exception.dart';
+import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/store/lisp_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
-import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/widgets/lisp_debug_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
+import 'package:hive/hive.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TTYEngine {
@@ -71,6 +73,8 @@ class TTYEngine {
 
     _lisp.def('test', 0, _test);
     _lisp.def('t', 0, _test);
+
+    _lisp.def('rmrf', 0, _rmrf);
   }
 
   Future eval(String source) async {
@@ -174,7 +178,15 @@ class TTYEngine {
   }
 
   _test(LispFrame frame) async {
-    final g = await locator<JwService>().getGrade();
+    final g = await User().getGrade();
     return g;
+  }
+
+  _rmrf(LispFrame frame) {
+    print('sudo rm -rf');
+    locator<PersistCookieJar>().deleteAll();
+    Hive.deleteFromDisk();
+    print('done');
+    print('All local data has been wiped out, please restart.');
   }
 }
