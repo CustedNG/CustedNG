@@ -22,7 +22,12 @@
             (image "https://cust.xuty.cc/UserGroup.jpg" #:width 200)
             (sizedbox #:height 40)
             (title "源代码 & 反馈")
-            ;; (sizedbox #:height 20)
-            (link "https://github.com/CustedNG/CustedNG")))))))
+            (link "https://github.com/CustedNG/CustedNG")
+            (sizedbox #:height 25)
+            (title "手动下载最新版本")
+            (button "立即下载(For Android)"  #:padding 0
+              (lambda ()
+                (custed-launch-url
+                  "https://cust.xuty.cc/app/apk/download")))))))))
 
 (view my-page)
