@@ -88,6 +88,8 @@ class UndergraduateUser implements User {
       int subjectPassed = 0;
 
       final rawGrades = raw.GradeList.where((g) => g.KSXNXQ == term);
+      final effectiveGrades = <String, GradeDetail>{};
+
       for (var rawGrade in rawGrades) {
         final grade = GradeDetail()
           ..year = rawGrade.KSXNXQ
@@ -100,9 +102,25 @@ class UndergraduateUser implements User {
           ..lessonName = rawGrade.LessonInfo.KCMC
           ..testType = rawGrade.KSXZ;
 
+        final key = '${grade.year}:'
+            '${grade.lessonName}:'
+            '${grade.lessonType}:'
+            '${grade.credit}:'
+            '${grade.schoolHour}';
+
+        final shouldOverride = effectiveGrades[key] == null ||
+            effectiveGrades[key].mark < grade.mark;
+
+        if (shouldOverride) {
+          effectiveGrades[key] = grade;
+        }
+
+        grades.add(grade);
+      }
+
+      for (var grade in effectiveGrades.values) {
         final passed = grade.testStatus == '正常' && grade.mark >= 60;
         final gradePoint = markToGradePoint(grade.mark);
-
         creditTotal += grade.credit;
         subjectCount += 1;
         if (passed) {
@@ -110,7 +128,6 @@ class UndergraduateUser implements User {
           subjectPassed += 1;
         }
         weightedGradePointSum += gradePoint * grade.credit;
-        grades.add(grade);
       }
 
       final averageGradePoint = weightedGradePointSum / creditTotal;
