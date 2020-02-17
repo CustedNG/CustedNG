@@ -26,7 +26,7 @@ class LessonDetailPage extends StatelessWidget {
               '课程名称': lesson.name,
               '上课地点': lesson.roomRaw,
               '上课时间': '${lesson.startTime}~${lesson.endTime}',
-              '任课教师': lesson.teacherName,
+              '任课教师': lesson.teacherName ?? '',
               '上课周数': lesson.weeks.join(','),
               '上课班级': classes.join('\n'),
             }),

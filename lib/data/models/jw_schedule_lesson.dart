@@ -43,8 +43,8 @@ class JwScheduleLesson {
     final weeks = rawWeeks.replaceAll(RegExp(r'[^0-9,-]'), '');
 
     for (var part in weeks.split(',')) {
-      if (weeks.contains('-')) {
-        final splited = weeks.split('-');
+      if (part.contains('-')) {
+        final splited = part.split('-');
         final start = int.parse(splited[0]);
         final end = int.parse(splited[1]);
         result.addAll(List.generate(end - start + 1, (i) => i + start));
