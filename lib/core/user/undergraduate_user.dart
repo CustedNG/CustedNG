@@ -81,12 +81,6 @@ class UndergraduateUser implements User {
     final termSet = raw.GradeList.map((e) => e.KSXNXQ).toSet();
     final terms = termSet.map((term) {
       final grades = <GradeDetail>[];
-      double weightedGradePointSum = 0.0;
-      double creditTotal = 0.0;
-      double creditEarned = 0.0;
-      int subjectCount = 0;
-      int subjectPassed = 0;
-
       final rawGrades = raw.GradeList.where((g) => g.KSXNXQ == term);
       final effectiveGrades = <String, GradeDetail>{};
 
@@ -117,7 +111,12 @@ class UndergraduateUser implements User {
 
         grades.add(grade);
       }
-
+      
+      double weightedGradePointSum = 0.0;
+      double creditTotal = 0.0;
+      double creditEarned = 0.0;
+      int subjectCount = 0;
+      int subjectPassed = 0;
       for (var grade in effectiveGrades.values) {
         final passed = grade.testStatus == '正常' && grade.mark >= 60;
         final gradePoint = markToGradePoint(grade.mark);
