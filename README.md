@@ -30,6 +30,7 @@
 
 **功能:**  
 ✔️ 查课表  
+✔️ 查成绩
 ✔️ 充网费  
 ✔️ 一卡通  
 ✔️ 教务快速登录  
@@ -39,8 +40,6 @@
 ✔️ 实时天气  
 ✔️ 校历  
 ✔️ ...  
-
-> 由于教务尚未开放相关功能 暂时无法查询成绩
 
 ## 安装
 
@@ -57,12 +56,14 @@
 
 ## 反馈
 
-[Github Issues](https://github.com/CustedNG/CustedNG/issues) | QQ群: <待添加>
+[Github Issues](https://github.com/CustedNG/CustedNG/issues) | QQ群: 
+
+<img width="150px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/user_group.png">
 
 ## 已知问题
 
 - [ ] 当前仅支持本科生使用
-- [ ] 由于教务尚未开放相关功能 无法查询成绩
+- [x] <del>由于教务尚未开放相关功能 无法查询成绩</del>
 
 
 ## Contributers
