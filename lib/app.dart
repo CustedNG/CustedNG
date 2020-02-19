@@ -62,7 +62,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     locator<UserProvider>().loadLocalData();
     locator<WeatherProvider>().startAutoUpdate();
 
-    Analytics.init();
-    Analytics.isDebug = true;
+    // Analytics.init();
+    // Analytics.isDebug = true;
   }
 }

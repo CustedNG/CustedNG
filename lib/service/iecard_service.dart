@@ -62,6 +62,9 @@ class IecardService extends WebvpnBasedService {
         'merpagess': '',
         'webheadhide': '',
       },
+      expireTest: (resp) =>
+          resp.body.contains('/Phone/Login') ||
+          resp.headers[HttpHeaders.locationHeader].contains('Login'),
     );
 
     final resp2 = await xRequest(
