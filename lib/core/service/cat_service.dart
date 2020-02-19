@@ -34,11 +34,15 @@ abstract class CatService extends CatClient {
     Map<String, String> headers = const {},
     dynamic body,
     int maxRedirects = CatClient.kDefaultMaxRedirects,
+    bool expireTest(Response response),
   }) async {
     Response response = await request(method, url,
         headers: headers, maxRedirects: maxRedirects, body: body);
 
-    if (isSessionExpired(response)) {
+    final expired = isSessionExpired(response) ||
+        (expireTest != null && expireTest(response));
+
+    if (expired) {
       print('Session expiration detected');
       final loginResult = await login();
       if (!loginResult.ok) {
