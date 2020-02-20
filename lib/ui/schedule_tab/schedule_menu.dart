@@ -1,4 +1,5 @@
 import 'package:custed2/core/route.dart';
+import 'package:custed2/core/script.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
@@ -66,8 +67,7 @@ class ScheduleMenu extends StatelessWidget {
           child: Text('课表信息错误?'),
           onPressed: () {
             Navigator.of(context).pop();
-            // showCupertinoModalPopup(
-            //     context: context, builder: (context) => ScheduleWrong());
+            runScript('schedule_wrong.cl', context);
           },
         )
       ],
