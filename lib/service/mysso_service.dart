@@ -65,14 +65,14 @@ class MyssoService extends CatService {
     );
     return MyssoProfile(
       custId: custId,
-      name: parseValue(data['CN']),
-      surname: parseValue(data['SN']),
+      name: data['CN'],
+      surname: data['SN'],
       cookie: data['cookie'],
       memberOf: data['MEMBEROF'],
       pass: data['PASS'],
-      college: parseValue(data['college']),
-      grade: int.tryParse(parseValue((data['grade']))),
-      sno: parseValue(data['sno']),
+      college: data['college'],
+      grade: int.tryParse((data['grade'])),
+      sno: data['sno'],
     );
   }
 
