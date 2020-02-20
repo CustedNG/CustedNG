@@ -6,6 +6,9 @@ class MyssoProfile {
     this.cookie,
     this.memberOf,
     this.pass,
+    this.college,
+    this.grade,
+    this.sno,
   });
 
   String custId;
@@ -14,6 +17,13 @@ class MyssoProfile {
   String cookie;
   String memberOf;
   String pass;
+  String college;
+  int grade;
+  String sno;
+
+  bool get isUndergraduate {
+    return memberOf?.contains('BZKS') == true;
+  }
 
   @override
   String toString() {

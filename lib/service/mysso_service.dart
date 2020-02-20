@@ -70,6 +70,9 @@ class MyssoService extends CatService {
       cookie: data['cookie'],
       memberOf: data['MEMBEROF'],
       pass: data['PASS'],
+      college: parseValue(data['college']),
+      grade: int.tryParse(parseValue((data['grade']))),
+      sno: parseValue(data['sno']),
     );
   }
 

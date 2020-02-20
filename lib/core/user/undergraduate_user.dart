@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
+import 'package:custed2/core/user/cust_user.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
@@ -18,9 +19,8 @@ import 'package:custed2/service/mysso_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 
-class UndergraduateUser implements User {
+class UndergraduateUser with CustUser implements User {
   final _jw = locator<JwService>();
-  final _mysso = locator<MyssoService>();
 
   @override
   Future<Schedule> getSchdeule() async {
@@ -33,17 +33,6 @@ class UndergraduateUser implements User {
     final rawGrade = await _jw.getGrade();
     return normalizeGrade(rawGrade);
   }
-
-  @override
-  Future<UserProfile> getProfile() async {
-    final profile = await _mysso.getProfile();
-    return UserProfile()
-      ..displayName = profile.name
-      ..department = 'Null 学院';
-  }
-
-  @override
-  Future<ImageProvider> getAvatar() async => ImageRes.defaultAvatar;
 
   static Future<Schedule> normalizeSchedule(JwSchedule raw) async {
     final result = Schedule()
@@ -111,7 +100,7 @@ class UndergraduateUser implements User {
 
         grades.add(grade);
       }
-      
+
       double weightedGradePointSum = 0.0;
       double creditTotal = 0.0;
       double creditEarned = 0.0;
