@@ -21,6 +21,7 @@ class AppTheme {
   // 根据当前context的亮度，返回应用主题数据
   static AppThemeResolved resolve(Brightness brightness) {
     return AppThemeResolved()
+      ..primaryColor = s(brightness, appTheme.primaryColor)
       ..btnPrimaryColor = s(brightness, appTheme.btnPrimaryColor)
       ..navBarColor = s(brightness, appTheme.navBarColor)
       ..navBarActionsColor = s(brightness, appTheme.navBarActionsColor)
@@ -37,6 +38,11 @@ class AppTheme {
   static Color s(Brightness brightness, CupertinoDynamicColor color) {
     return brightness == Brightness.dark ? color.darkColor : color.color;
   }
+
+  final primaryColor = CupertinoDynamicColor.withBrightness(
+    color: CupertinoColors.activeBlue,
+    darkColor: CupertinoColors.activeBlue,
+  );
 
   final btnPrimaryColor = CupertinoDynamicColor.withBrightness(
     color: CupertinoColors.activeBlue,
@@ -90,6 +96,7 @@ class AppTheme {
 }
 
 class AppThemeResolved {
+  Color primaryColor;
   Color btnPrimaryColor;
   Color navBarColor;
   Color navBarActionsColor;

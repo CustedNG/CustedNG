@@ -51,7 +51,7 @@ class _ScheduleTabState extends State<ScheduleTab>
 
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
     if (scheduleProvider.isBusy) return;
-    
+
     scheduleProvider.updateScheduleData().timeout(Duration(seconds: 10));
   }
 
@@ -59,10 +59,6 @@ class _ScheduleTabState extends State<ScheduleTab>
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
     final text = scheduleProvider.isBusy ? '更新中' : '课表';
     return NavBarTitle(child: Text(text));
-    // return AnimatedSwitcher(
-    //   duration: Duration(milliseconds: 300),
-    //   child: NavBarTitle(key: Key(text), child: Text(text)),
-    // );
   }
 
   void _showMenu(BuildContext context) {

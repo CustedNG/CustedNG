@@ -1,7 +1,6 @@
 import 'package:custed2/core/analytics.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class AppRoute {
   final String title;
   final Widget page;
@@ -18,10 +17,11 @@ class AppRoute {
     );
   }
 
-  void popup(BuildContext context) {
+  void popup(BuildContext context, {bool useRootNavigator = true}) {
     showCupertinoModalPopup(
       context: context,
       builder: (_) => page,
+      useRootNavigator: useRootNavigator,
     );
   }
 

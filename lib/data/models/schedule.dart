@@ -40,7 +40,8 @@ class Schedule extends HiveObject {
     int week;
     while (true) {
       final lessons = activeLessonsIn(date).toList();
-      lessons.removeWhere((lesson) => lesson.parseStart().isBefore(date));
+      lessons.removeWhere((lesson) =>
+          lesson.startTime == null || lesson.parseStart().isBefore(date));
       lessons.sort((a, b) => a.startTime.compareTo(b.startTime));
       yield* lessons;
 
@@ -48,6 +49,14 @@ class Schedule extends HiveObject {
       week = calculateWeekSinceStart(date);
       if (week > maxWeek) break;
     }
+  }
+
+  Schedule safeCopy() {
+    return Schedule()
+      ..createdAt = createdAt
+      ..startDate = startDate
+      ..versionHash = versionHash
+      ..lessons = lessons.toList();
   }
 
   @override

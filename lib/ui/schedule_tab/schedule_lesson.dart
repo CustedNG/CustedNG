@@ -8,11 +8,10 @@ class ScheduleLessonWidget extends StatelessWidget {
   ScheduleLessonWidget(
     this.lesson, {
     this.isActive = true,
-    this.conflict = const [],
   });
 
   final ScheduleLesson lesson;
-  final List<ScheduleLesson> conflict; // TODO: handle conflict
+  final List<ScheduleLesson> conflict = [];
   final bool isActive;
 
   @override
@@ -44,7 +43,25 @@ class ScheduleLessonWidget extends StatelessWidget {
     if (lesson == null) {
       return null;
     }
-    
+
+    final content = <Widget>[];
+    content.add(Text(lesson.name, maxLines: 2));
+
+    if (conflict.isEmpty) {
+      content.add(SizedBox(height: 2));
+      content.add(Text('@' + lesson.roomRaw, maxLines: 3));
+    } else {
+      for (var lesson in conflict) {
+        content.add(SizedBox(height: 5));
+        content.add(material.Divider(
+          height: 1,
+          color: CupertinoColors.white,
+        ));
+        content.add(SizedBox(height: 5));
+        content.add(Text(lesson.name, maxLines: 2));
+      }
+    }
+
     final textStyle = TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.bold,
@@ -55,11 +72,7 @@ class ScheduleLessonWidget extends StatelessWidget {
       style: textStyle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Text(lesson.name, maxLines: 2),
-          SizedBox(height: 2),
-          Text('@' + lesson.roomRaw, maxLines: 3),
-        ],
+        children: content,
       ),
     );
   }
@@ -93,7 +106,7 @@ class ScheduleLessonWidget extends StatelessWidget {
     showCupertinoDialog(
       context: context,
       builder: (context) {
-        return LessonPreview(lesson);
+        return LessonPreview(lesson, conflict: conflict);
       },
     );
   }
