@@ -58,6 +58,19 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     }
   }
 
+  Future<void> forceLogin() async {
+    final userData = await locator.getAsync<UserDataStore>();
+    final snake = locator<SnakebarProvider>();
+    final user = locator<UserProvider>();
+
+    userData.username.put(usernameController.text);
+    userData.password.put(passwordController.text);
+
+    user.login();
+    snake.info('#强制登录');
+    Navigator.pop(context);
+  }
+
   void focusOnPasswordField() {
     FocusScope.of(context).requestFocus(passwordFocusNode);
   }
@@ -142,16 +155,19 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
                 maxWidth: 80,
                 maxHeight: 80,
               ),
-              child: CupertinoButton(
-                borderRadius: BorderRadius.all(Radius.circular(100)),
-                padding: EdgeInsets.all(0),
-                child: Center(
-                  child: isBusy
-                      ? CupertinoActivityIndicator()
-                      : Icon(Icons.arrow_forward),
+              child: GestureDetector(
+                onLongPress: forceLogin,
+                child: CupertinoButton(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  padding: EdgeInsets.all(0),
+                  child: Center(
+                    child: isBusy
+                        ? CupertinoActivityIndicator()
+                        : Icon(Icons.arrow_forward),
+                  ),
+                  color: CupertinoColors.activeBlue,
+                  onPressed: tryLogin,
                 ),
-                color: CupertinoColors.activeBlue,
-                onPressed: tryLogin,
               ),
             )
           ],
