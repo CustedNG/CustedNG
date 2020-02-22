@@ -18,12 +18,13 @@ class CatClient {
 
   Future<Response> rawRequest(
     String method,
-    Uri url, {
+    dynamic url, {
     dynamic body,
     Map<String, String> headers = const {},
     int maxRedirects = kDefaultMaxRedirects,
     Duration timeout = kDefaultTimeout,
   }) async {
+    url = resolveUri(url);
     print('Cat Request: $method $url');
     final request = CatRequest(method, url);
     request.headers.addAll(headers);
@@ -137,6 +138,13 @@ class CatClient {
       request.headers[HttpHeaders.userAgentHeader] = ua;
     }
   }
+}
+
+Uri resolveUri(dynamic raw) {
+  if (raw is Uri) return raw;
+  if (raw is String) return Uri.parse(raw);
+  if (raw is Function) return resolveUri(raw());
+  return Uri.parse(raw.toString());
 }
 
 String encodeFormData(Map<String, dynamic> formData) {

@@ -18,8 +18,7 @@ class MyssoService extends CatService {
     return value.substring(1, value.length - 1);
   }
 
-  final Pattern sessionExpirationTest =
-      RegExp(r'(用户登录|登录后可|微信扫码|账号密码|Successful)');
+  final Pattern sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
 
   Future<CatLoginResult<String>> login({bool force = false}) async {
     if (force) clearCookieFor(baseUrl.toUri());
@@ -107,4 +106,7 @@ class MyssoService extends CatService {
 
   Future<String> getTicketForIecard() =>
       getTicket('http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT');
+
+  Future<String> getTicketForNetdisk() =>
+      getTicket('http://tx.cust.edu.cn/ucsso/shiro-cas');
 }

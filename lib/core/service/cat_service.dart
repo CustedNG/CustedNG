@@ -7,6 +7,7 @@ import 'package:http/http.dart';
 // handle cookie expirations or 5xx responses gracefully
 abstract class CatService extends CatClient {
   Pattern get sessionExpirationTest => null;
+  Pattern get token => '';
 
   bool isSessionExpired(Response response) {
     if (sessionExpirationTest == null) {
@@ -19,7 +20,7 @@ abstract class CatService extends CatClient {
 
   Future<Response> request(
     String method,
-    Uri url, {
+    dynamic url, {
     Map<String, String> headers = const {},
     dynamic body,
     int maxRedirects = CatClient.kDefaultMaxRedirects,
@@ -30,7 +31,7 @@ abstract class CatService extends CatClient {
 
   Future<Response> xRequest(
     String method,
-    Uri url, {
+    dynamic url, {
     Map<String, String> headers = const {},
     dynamic body,
     int maxRedirects = CatClient.kDefaultMaxRedirects,
