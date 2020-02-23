@@ -15,6 +15,10 @@ class TimePoint {
         (dateTime.hour * 60 + dateTime.minute);
   }
 
+  Duration get sinceDayStart {
+    return Duration(hours: hour, minutes: minute);
+  }
+
   @override
   String toString() {
     return '$hour:$minute';

@@ -51,6 +51,11 @@ class Schedule extends HiveObject {
     }
   }
 
+  DateTime weekStartDate(int week) {
+    final dayOffset = (week - 1) * 7;
+    return startDate.add(Duration(days: dayOffset));
+  }
+
   Schedule safeCopy() {
     return Schedule()
       ..createdAt = createdAt

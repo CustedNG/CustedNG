@@ -15,6 +15,10 @@ extension IntX on int {
     return Duration(seconds: this);
   }
 
+  Duration get days {
+    return Duration(days: this);
+  }
+
   String withSizeUnit() {
     const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
     var number = this.toDouble();

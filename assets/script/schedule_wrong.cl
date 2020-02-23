@@ -19,6 +19,10 @@
             (sizedbox #:height 20)
             (text "- Q: 课表缺课")
             (sizedbox #:height 5)
-            (text "- A: CustedNG课表与教务课表保持同步, 请尝试查看教务课表是否缺课")))))))
+            (text "- A: CustedNG课表与教务课表保持同步, 请尝试查看教务课表是否缺课")
+            (sizedbox #:height 20)
+            (text "- Q: 如何将课程加入系统日历")
+            (sizedbox #:height 5)
+            (text "- A: 在课表中长按课程即可")))))))
 
 (view my-page)

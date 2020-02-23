@@ -18,14 +18,16 @@ class ScheduleTable extends StatelessWidget {
   final bool showInactive;
   final bool highLightToday;
 
-  final placeHolder = ScheduleLessonWidget(null);
+  final placeholder = ScheduleLessonWidget(null);
 
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
 
     final rows = List.generate(
-        6, (_) => TableRow(children: List.filled(7, placeHolder)));
+      6,
+      (_) => TableRow(children: List.filled(7, placeholder)),
+    );
 
     _fillActiveLessons(rows);
 
@@ -46,7 +48,7 @@ class ScheduleTable extends StatelessWidget {
       final slotIndex = (lesson.startSection - 1) ~/ 2;
       final weekIndex = lesson.weekday - 1;
       final lessonWidget = rows[slotIndex].children[weekIndex];
-      if (lessonWidget == placeHolder) {
+      if (lessonWidget == placeholder) {
         rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(lesson);
       } else {
         final lw = (lessonWidget as ScheduleLessonWidget);
@@ -61,7 +63,7 @@ class ScheduleTable extends StatelessWidget {
       final slotIndex = (lesson.startSection - 1) ~/ 2;
       final weekIndex = lesson.weekday - 1;
       final lessonWidget = rows[slotIndex].children[weekIndex];
-      if (lessonWidget == placeHolder) {
+      if (lessonWidget == placeholder) {
         rows[slotIndex].children[weekIndex] =
             ScheduleLessonWidget(lesson, isActive: false);
       }

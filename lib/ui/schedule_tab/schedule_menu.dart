@@ -64,7 +64,7 @@ class ScheduleMenu extends StatelessWidget {
         //   },
         // ),
         CupertinoActionSheetAction(
-          child: Text('课表信息错误?'),
+          child: Text('常见问题&Tips'),
           onPressed: () {
             Navigator.of(context).pop();
             runScript('schedule_wrong.cl', context);

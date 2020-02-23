@@ -15,7 +15,10 @@ class MyssoService extends CatService {
   static String parseValue(String value) {
     // just handle string case for now.
     // [xxx] -> xxx
-    return value.substring(1, value.length - 1);
+    if (value.startsWith('[') && value.endsWith(']')) {
+      return value.substring(1, value.length - 1);
+    }
+    return value;
   }
 
   final Pattern sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
@@ -64,14 +67,14 @@ class MyssoService extends CatService {
     );
     return MyssoProfile(
       custId: custId,
-      name: data['CN'],
-      surname: data['SN'],
-      cookie: data['cookie'],
-      memberOf: data['MEMBEROF'],
-      pass: data['PASS'],
-      college: data['college'],
-      grade: int.tryParse((data['grade'])),
-      sno: data['sno'],
+      name: parseValue(data['CN']),
+      surname: parseValue(data['SN']),
+      cookie: parseValue(data['cookie']),
+      memberOf: parseValue(data['MEMBEROF']),
+      pass: parseValue(data['PASS']),
+      college: parseValue(data['college']),
+      grade: int.tryParse(parseValue(data['grade'])),
+      sno: parseValue(data['sno']),
     );
   }
 
