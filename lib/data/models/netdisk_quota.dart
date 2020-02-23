@@ -9,6 +9,6 @@ class NetdiskQuota {
 
   @override
   String toString() {
-    return '$quota/$used';
+    return '$used/$quota';
   }
 }

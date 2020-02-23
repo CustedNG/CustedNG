@@ -178,7 +178,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
         Column(
           children: <Widget>[
             Text(
-              term?.averageGradePoint?.toStringAsPrecision(4) ?? 'N/A',
+              term?.averageGradePoint?.toStringAsFixed(4) ?? 'N/A',
               style: textStyleInfo.copyWith(fontSize: 32),
             ),
             SizedBox(height: 5),
@@ -235,7 +235,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
         _buildSmallInfoItem(
           context,
           tag: '学期绩点',
-          value: term?.averageGradePoint?.toStringAsPrecision(4) ?? 'N/A',
+          value: term?.averageGradePoint?.toStringAsFixed(4) ?? 'N/A',
         ),
         _buildSmallInfoItem(
           context,

@@ -21,4 +21,16 @@ abstract class WebviewAddon {
       window.flutter_inappwebview._callHandler('$name', setTimeout(function(){}), JSON.stringify($data))
     ''';
   }
+
+  static Future injectCss(InAppWebViewController controller, String source) {
+    source = source.split('\n').join(r'\n');
+    return controller.evaluateJavascript(source: '''
+      (function () {
+        var node = document.createElement('style');
+        node.innerHTML = '$source';
+        console.log(node);
+        document.getElementsByTagName("head")[0].appendChild(node);
+      })();
+    ''');
+  }
 }

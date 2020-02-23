@@ -27,12 +27,11 @@ class NetdiskService extends WebvpnBasedService {
       '$authUrl?ticket=$ticket',
       maxRedirects: 0,
     );
-    final redir = resp.headers[HttpHeaders.locationHeader];
-    final tokenid =
-        RegExp('tokenid=([a-z,0-9,-]+)')?.firstMatch(redir)?.group(1);
+    final loginUrl = resp.headers[HttpHeaders.locationHeader];
+    final tokenid = RegExp('tokenid=([a-z,0-9,-]+)')?.firstMatch(loginUrl)?.group(1);
     final ok = tokenid != null;
     this.tokenid = tokenid ?? this.tokenid;
-    return CatLoginResult(ok: ok, data: tokenid);
+    return CatLoginResult(ok: ok, data: loginUrl);
   }
 
   Future<NetdiskQuota> getQuota() async {

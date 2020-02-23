@@ -4,6 +4,7 @@ import 'package:custed2/core/store/presistent_store.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
+import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -63,6 +64,10 @@ class UserTab extends StatelessWidget {
           _buildLink(context, '四六级照片', () {
             locator<CetAvatarProvider>().getAvatar();
             cetAvatarPage.go(context);
+          }),
+          _buildLink(context, '网盘与备份', () {
+            locator<NetdiskProvider>().getQuota();
+            netdiskPage.go(context);
           }),
           CSHeader('课表'),
           CSControl(
