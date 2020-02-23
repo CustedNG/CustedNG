@@ -3,7 +3,6 @@ import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/user_tab/netdisk_percent.dart';
-import 'package:custed2/ui/web/netdisk_web_page.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
@@ -34,7 +33,7 @@ class NetdiskPage extends StatelessWidget {
         CSSpacer(),
         CSWidget(_buildQuota(context), height: 70),
         CSSpacer(),
-        CSButton(CSButtonType.DEFAULT_CENTER, '一键登录网盘', (){
+        CSButton(CSButtonType.DEFAULT_CENTER, '一键登录网盘', () {
           netdiskWebPage.go(context);
         }),
       ],
