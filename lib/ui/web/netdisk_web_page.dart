@@ -52,6 +52,6 @@ class _NetdiskWebPageState extends WebPageState {
   @override
   void onDownloadStart(String url) {
     final snake = locator<SnakebarProvider>();
-    snake.info('暂不支持下载');
+    snake.info('下载功能准备中');
   }
 }
