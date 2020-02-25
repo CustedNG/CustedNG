@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:convert/convert.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
@@ -47,8 +49,8 @@ class DownloadProvider extends ProviderBase {
         onReceiveProgress: controller.update,
       );
       final filenameHeader = response.headers.value('content-disposition');
-      final filename =
-          RegExp(r'filename="(.+?)"').firstMatch(filenameHeader)?.group(1);
+      final filename = utf8.decode(percent.decode(
+          RegExp(r'filename="(.+?)"').firstMatch(filenameHeader)?.group(1)));
 
       if (filename != null) {
         print(filename);
