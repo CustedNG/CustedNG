@@ -41,6 +41,7 @@ class NetdiskService extends WebvpnBasedService {
     );
     final data = json.decode(resp.body);
     return NetdiskQuota(
+      type: data['quotainfos'][0]['typename'],
       quota: data['quotainfos'][0]['quota'],
       used: data['quotainfos'][0]['used'],
     );

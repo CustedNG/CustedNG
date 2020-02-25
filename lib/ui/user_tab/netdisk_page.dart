@@ -52,7 +52,7 @@ class NetdiskPage extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text('NetDisk'),
+        Text(netdisk.quota.type),
         Text(text),
       ],
     );
