@@ -43,6 +43,7 @@ dependencies:
   
   after_layout: ^1.0.7+2
   path_provider: ^1.5.1
+  downloads_path_provider: ^0.1.0
 
   hive: ^1.3.0
   hive_flutter: ^0.3.0+1
@@ -63,6 +64,7 @@ dependencies:
   http: ^0.12.0+4
   cookie_jar: ^1.0.1
   dio: ^3.0.8
+  dio_cookie_manager: ^1.0.0
 
   countly_flutter:
     git: 

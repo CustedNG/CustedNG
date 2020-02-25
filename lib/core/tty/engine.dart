@@ -125,7 +125,7 @@ class TTYEngine {
   }
 
   _custedLegacy(List args) {
-    final cmd = (args[0] as LispCell).car;
+    final cmd = (args[0] as LispCell).car.toString();
     final executer = locator<TTYExecuter>();
     return executer.executeLegacy(cmd, _context);
   }

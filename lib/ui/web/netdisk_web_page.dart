@@ -1,4 +1,5 @@
-import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/core/platform/os/download_dir.dart';
+import 'package:custed2/data/providers/download_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/netdisk_service.dart';
@@ -50,8 +51,9 @@ class _NetdiskWebPageState extends WebPageState {
   void onPageFinished(String url) async {}
 
   @override
-  void onDownloadStart(String url) {
-    final snake = locator<SnakebarProvider>();
-    snake.info('下载功能准备中');
+  void onDownloadStart(String url) async {
+    final download = locator<DownloadProvider>();
+    final docDir = await getDownloadDir.invoke();
+    download.enqueue(url, docDir);
   }
 }

@@ -11,9 +11,9 @@ class SnakebarProvider extends ProviderBase {
     _contentQueue = StreamController<SnakeBarContent>();
     // add a placeholder
     _content = SnakeBarContent(
-        widget: Container(),
-        bgColor: CupertinoColors.activeBlue,
-        duration: Duration.zero);
+      widget: Container(),
+      bgColor: CupertinoColors.activeBlue,
+    );
     _startLoop();
   }
 
@@ -32,7 +32,7 @@ class SnakebarProvider extends ProviderBase {
       _isActive = true;
       _content = content;
       notifyListeners();
-      await Future.delayed(content.duration);
+      if (content.future != null) await content.future;
       _isActive = false;
       notifyListeners();
     }
@@ -43,7 +43,7 @@ class SnakebarProvider extends ProviderBase {
     Color bgColor = CupertinoColors.activeBlue,
     Duration duration = kDefaultDuration,
   }) {
-    final content = SnakeBarContent(
+    final content = SnakeBarContent.duration(
       // set different keys to widget for AnimatedSwitcher to work.
       widget: KeyedSubtree(
         key: ValueKey(_index++),
@@ -79,6 +79,18 @@ class SnakebarProvider extends ProviderBase {
     );
   }
 
+  Future progress(Future callback(SnakeBarProgressController controller)) {
+    final widget = SnakeBarProgress();
+    final future = callback(widget.controller);
+    final content = SnakeBarContent(
+      widget: widget,
+      bgColor: CupertinoColors.activeBlue,
+      future: future,
+    );
+    _contentQueue.sink.add(content);
+    return future;
+  }
+
   clear() {
     _isActive = false;
     notifyListeners();
@@ -93,10 +105,77 @@ class SnakeBarContent {
   SnakeBarContent({
     this.widget,
     this.bgColor,
-    this.duration,
+    this.future,
   });
+
+  SnakeBarContent.duration({
+    this.widget,
+    this.bgColor,
+    Duration duration,
+  }) : future = Future.delayed(duration);
 
   Widget widget;
   Color bgColor;
-  Duration duration;
+  Future future;
+}
+
+class SnakeBarProgress extends StatefulWidget {
+  final controller = SnakeBarProgressController();
+
+  @override
+  _SnakeBarProgressState createState() => _SnakeBarProgressState();
+}
+
+class _SnakeBarProgressState extends State<SnakeBarProgress> {
+  @override
+  void initState() {
+    widget.controller.addListener(onChange);
+    super.initState();
+  }
+
+  void onChange() {
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final left = Container(color: CupertinoColors.activeBlue);
+    final right = Container(color: CupertinoColors.lightBackgroundGray);
+    final bar = Row(
+      children: <Widget>[
+        Flexible(flex: widget.controller.current ?? 0, child: left),
+        Flexible(flex: widget.controller.remaining ?? 1, child: right),
+      ],
+    );
+    return Container(
+      child: bar,
+    );
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(onChange);
+    super.dispose();
+  }
+}
+
+class SnakeBarProgressController extends ChangeNotifier {
+  int current;
+  int total;
+
+  int get remaining {
+    if (current == null || total == null) return null;
+    return total - current;
+  }
+
+  double get progress {
+    if (current == null || total == null) return null;
+    return current / total;
+  }
+
+  update(int current, int total) {
+    this.current = current;
+    this.total = total;
+    notifyListeners();
+  }
 }
