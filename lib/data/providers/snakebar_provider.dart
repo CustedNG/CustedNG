@@ -105,18 +105,24 @@ class SnakeBarContent {
   SnakeBarContent({
     this.widget,
     this.bgColor,
-    this.future,
-  });
+    Future future,
+  }) :_future = future ;
 
   SnakeBarContent.duration({
     this.widget,
     this.bgColor,
     Duration duration,
-  }) : future = Future.delayed(duration);
+  }) : _duration = duration;
+
+  Duration _duration;
+  Future _future;
 
   Widget widget;
   Color bgColor;
-  Future future;
+  Future get future {
+    if (_future != null) return _future;
+    return Future.delayed(_duration);
+  }
 }
 
 class SnakeBarProgress extends StatefulWidget {

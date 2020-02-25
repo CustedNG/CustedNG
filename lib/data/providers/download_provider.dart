@@ -59,6 +59,7 @@ class DownloadProvider extends ProviderBase {
       }
 
       snake.info('"$filename" 下载完成');
+      snake.info('已保存到系统 Download 文件夹下');
     });
 
     _currentTask = null;
