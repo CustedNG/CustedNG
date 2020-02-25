@@ -32,9 +32,16 @@ class SnakebarProvider extends ProviderBase {
       _isActive = true;
       _content = content;
       notifyListeners();
-      if (content.future != null) await content.future;
-      _isActive = false;
-      notifyListeners();
+      try {
+        if (content.future != null) {
+          await content.future;
+        }
+      } catch (e) {
+        rethrow;
+      } finally {
+        _isActive = false;
+        notifyListeners();
+      }
     }
   }
 
@@ -106,7 +113,7 @@ class SnakeBarContent {
     this.widget,
     this.bgColor,
     Future future,
-  }) :_future = future ;
+  }) : _future = future;
 
   SnakeBarContent.duration({
     this.widget,
