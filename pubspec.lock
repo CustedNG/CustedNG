@@ -38,6 +38,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.39.4"
+  android_path_provider:
+    dependency: "direct main"
+    description:
+      name: android_path_provider
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.1"
   archive:
     dependency: transitive
     description:
@@ -243,13 +250,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.0"
-  downloads_path_provider:
-    dependency: "direct main"
-    description:
-      name: downloads_path_provider
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.1.0"
   expandable_bottom_sheet:
     dependency: "direct main"
     description:

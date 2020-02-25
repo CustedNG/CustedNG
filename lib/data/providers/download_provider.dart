@@ -56,8 +56,8 @@ class DownloadProvider extends ProviderBase {
         print(filename);
         final outputFile = path.join(_currentTask.outputDir, filename);
         await File(tempOutputFile).rename(outputFile);
+        print(outputFile);
       }
-
       snake.info('"$filename" 下载完成');
       snake.info('已保存到系统 Download 文件夹下');
     });
