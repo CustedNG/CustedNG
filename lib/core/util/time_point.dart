@@ -1,23 +1,49 @@
 class TimePoint {
-  TimePoint(hour, minute);
+  TimePoint(int hour, int minute) : minutes = hour * 60 + minute;
+
+  TimePoint.minutes(this.minutes);
 
   TimePoint.fromString(String str) {
     final part = str.split(':');
-    hour = int.parse(part[0]);
-    minute = int.parse(part[1]);
+    final hour = int.parse(part[0]);
+    minutes = hour * 60 + int.parse(part[1]);
   }
 
-  int hour;
-  int minute;
+  TimePoint.fromDateTime(DateTime dateTime) {
+    minutes = dateTime.hour * 60 + dateTime.minute;
+  }
+
+  int minutes;
+
+  int get hour => minutes ~/ 60;
+  int get minute => minutes % 60;
 
   bool isBefore(DateTime dateTime) {
-    return (this.hour * 60 + this.minute) <
-        (dateTime.hour * 60 + dateTime.minute);
+    return this.minutes < (dateTime.hour * 60 + dateTime.minute);
+  }
+
+  bool isAfter(DateTime dateTime) {
+    return this.minutes > (dateTime.hour * 60 + dateTime.minute);
+  }
+
+  bool isBeforeOrSameAs(DateTime dateTime) {
+    return this.minutes <= (dateTime.hour * 60 + dateTime.minute);
+  }
+
+  bool isAfterOrSameAs(DateTime dateTime) {
+    return this.minutes >= (dateTime.hour * 60 + dateTime.minute);
+  }
+
+  bool isSame(DateTime dateTime) {
+    return this.minutes == (dateTime.hour * 60 + dateTime.minute);
   }
 
   Duration get sinceDayStart {
-    return Duration(hours: hour, minutes: minute);
+    return Duration(minutes: minutes);
   }
+
+  Duration substract(TimePoint other) =>
+      Duration(minutes: minutes - other.minutes);
 
   @override
   String toString() {

@@ -2,6 +2,7 @@ import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule.dart';
+import 'package:custed2/ui/schedule_tab/schedule_arrow.dart';
 import 'package:custed2/ui/schedule_tab/schedule_lesson.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -35,11 +36,20 @@ class ScheduleTable extends StatelessWidget {
       _fillInactiveLessons(rows);
     }
 
-    rows.insert(0, _buildDate(context));
-
-    return Table(
+    final rawTable = Table(
       border: TableBorder.all(color: theme.scheduleOutlineColor, width: 2),
       children: rows,
+    );
+
+    final showArrow = schedule.calculateWeekSinceStart(DateTime.now()) == week;
+
+    final table = showArrow ? _withArrow(rawTable) : rawTable;
+
+    return Column(
+      children: <Widget>[
+        _buildDate(context),
+        table,
+      ],
     );
   }
 
@@ -70,10 +80,10 @@ class ScheduleTable extends StatelessWidget {
     }
   }
 
-  TableRow _buildDate(BuildContext context) {
-    final items = <Widget>[];
-
+  Widget _buildDate(BuildContext context) {
     final theme = AppTheme.of(context);
+
+    final items = <Widget>[];
 
     final dateStyle = TextStyle(
       color: theme.scheduleTextColor,
@@ -104,14 +114,32 @@ class ScheduleTable extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 5),
         alignment: Alignment.center,
         child: Column(children: <Widget>[
-          Text(displayDate,
-              style: shouldHighlight ? dateStyleHighlight : dateStyle),
-          Text(date.weekday.weekdayInChinese(),
-              style: shouldHighlight ? chsDateStyleHighlight : chsDateStyle),
+          Text(
+            displayDate,
+            style: shouldHighlight ? dateStyleHighlight : dateStyle,
+          ),
+          Text(
+            date.weekday.weekdayInChinese(),
+            style: shouldHighlight ? chsDateStyleHighlight : chsDateStyle,
+          ),
         ]),
       ));
     }
 
-    return TableRow(children: items);
+    final row = TableRow(children: items);
+    final border = BorderSide(color: theme.scheduleOutlineColor, width: 2);
+    return Table(
+      children: [row],
+      border: TableBorder(
+        top: border,
+        left: border,
+        right: border,
+        verticalInside: border,
+      ),
+    );
+  }
+
+  Widget _withArrow(Widget child) {
+    return ScheduleArrow(child: child, schedule: schedule);
   }
 }

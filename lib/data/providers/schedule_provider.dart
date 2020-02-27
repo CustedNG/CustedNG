@@ -16,7 +16,7 @@ class ScheduleProvider extends BusyProvider {
   int get selectedWeek => _selectedWeek;
 
   final int minWeek = 1;
-  final int maxWeek = 24;
+  int get maxWeek => _schedule.weekCount;
 
   int get currentWeek => _schedule?.calculateWeekSinceStart(DateTime.now());
 
@@ -82,6 +82,6 @@ class ScheduleProvider extends BusyProvider {
   }
 
   Iterable<ScheduleLesson> lessonsSince(DateTime dateTime) {
-    return _schedule?.lessonsSince(dateTime, maxWeek);
+    return _schedule?.lessonsSince(dateTime);
   }
 }

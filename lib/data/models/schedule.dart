@@ -17,6 +17,9 @@ class Schedule extends HiveObject {
   @HiveField(3)
   DateTime startDate;
 
+  // @HiveField(4)
+  int weekCount = 24;
+
   Iterable<ScheduleLesson> activeLessons(int week) {
     return lessons.where((lesson) => lesson.isActiveInWeek(week));
   }
@@ -36,7 +39,14 @@ class Schedule extends HiveObject {
         lesson.isActiveInWeek(week) && lesson.weekday == day.weekday);
   }
 
-  Iterable<ScheduleLesson> lessonsSince(DateTime date, int maxWeek) sync* {
+  ScheduleLesson activeLessonIn(DateTime time) {
+    return activeLessonsIn(time).firstWhere((lesson) {
+      return lesson.parseStart()?.isBefore(time) == true &&
+          lesson.parseEnd()?.isAfter(time) == true;
+    }, orElse: () => null);
+  }
+
+  Iterable<ScheduleLesson> lessonsSince(DateTime date) sync* {
     int week;
     while (true) {
       final lessons = activeLessonsIn(date).toList();
@@ -47,7 +57,7 @@ class Schedule extends HiveObject {
 
       date = DateTime(date.year, date.month, date.day + 1, 0, 0);
       week = calculateWeekSinceStart(date);
-      if (week > maxWeek) break;
+      if (week > weekCount) break;
     }
   }
 
