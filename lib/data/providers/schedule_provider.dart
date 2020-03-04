@@ -41,7 +41,7 @@ class ScheduleProvider extends BusyProvider {
     }
   }
 
-  Future<void> updateScheduleData({bool reset}) async {
+  Future<void> updateScheduleData({bool reset = false}) async {
     await busyRun(_updateScheduleData);
     if (reset) resetWeekToCurrentWeek();
   }
