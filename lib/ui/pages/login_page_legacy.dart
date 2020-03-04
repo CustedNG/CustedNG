@@ -15,6 +15,7 @@ class LoginPageLegacy extends StatefulWidget {
 class _LoginPageLegacyState extends State<LoginPageLegacy> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final passwordFocusNode = FocusNode();
   bool isBusy = false;
 
   @override
@@ -34,6 +35,8 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
   }
 
   Future<void> tryLogin() async {
+    if (isBusy) return;
+
     setState(() => isBusy = true);
 
     final userData = await locator.getAsync<UserDataStore>();
@@ -53,6 +56,23 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
       snake.warning('登录失败[${login.data}]');
       setState(() => isBusy = false);
     }
+  }
+
+  Future<void> forceLogin() async {
+    final userData = await locator.getAsync<UserDataStore>();
+    final snake = locator<SnakebarProvider>();
+    final user = locator<UserProvider>();
+
+    userData.username.put(usernameController.text);
+    userData.password.put(passwordController.text);
+
+    user.login();
+    snake.info('#强制登录');
+    Navigator.pop(context);
+  }
+
+  void focusOnPasswordField() {
+    FocusScope.of(context).requestFocus(passwordFocusNode);
   }
 
   @override
@@ -109,15 +129,18 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           placeholderStyle: TextStyle(color: Color(0x55FFFFFF)),
           style: TextStyle(color: CupertinoColors.white),
           decoration: textFieldBorderDecoration,
+          onSubmitted: (_) => focusOnPasswordField(),
         ),
         SizedBox(height: 15),
         CupertinoTextField(
           controller: passwordController,
+          focusNode: passwordFocusNode,
           placeholder: '统一认证密码',
           placeholderStyle: TextStyle(color: Color(0x55FFFFFF)),
           style: TextStyle(color: CupertinoColors.white),
           obscureText: true,
           decoration: textFieldBorderDecoration,
+          onSubmitted: (_) => tryLogin(),
         ),
         SizedBox(height: 90),
         Row(
@@ -132,18 +155,19 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
                 maxWidth: 80,
                 maxHeight: 80,
               ),
-              child: CupertinoButton(
-                borderRadius: BorderRadius.all(Radius.circular(100)),
-                padding: EdgeInsets.all(0),
-                child: Center(
-                  child: isBusy
-                      ? CupertinoActivityIndicator()
-                      : Icon(Icons.arrow_forward),
+              child: GestureDetector(
+                onLongPress: forceLogin,
+                child: CupertinoButton(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  padding: EdgeInsets.all(0),
+                  child: Center(
+                    child: isBusy
+                        ? CupertinoActivityIndicator()
+                        : Icon(Icons.arrow_forward),
+                  ),
+                  color: CupertinoColors.activeBlue,
+                  onPressed: tryLogin,
                 ),
-                color: CupertinoColors.activeBlue,
-                onPressed: () {
-                  if (!isBusy) tryLogin();
-                },
               ),
             )
           ],

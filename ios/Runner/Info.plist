@@ -33,6 +33,10 @@
 	<string>需要写入图片</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>需要读取图片</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>需要添加课程至日历</string>
+	<key>NSContactsUsageDescription</key>
+	<string>需要添加课程至日历</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

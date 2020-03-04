@@ -16,6 +16,7 @@ class IecardService extends WebvpnBasedService {
   static const loginUrl = '$baseUrl/cassyno/index';
   static const homeUrl = '$baseUrl/Category/Page?name=service';
   static const phoneChargeUrl = '$baseUrl/PPage/ComePage';
+  static const userUrl = '$baseUrl/PPage/User';
   static const phoneHomeUrl = '$baseUrl/Phone/Index';
 
   final MyssoService _mysso = locator<MyssoService>();
@@ -61,6 +62,9 @@ class IecardService extends WebvpnBasedService {
         'merpagess': '',
         'webheadhide': '',
       },
+      expireTest: (resp) =>
+          resp.body.contains('/Phone/Login') ||
+          resp.headers[HttpHeaders.locationHeader].contains('Login'),
     );
 
     final resp2 = await xRequest(

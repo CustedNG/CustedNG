@@ -7,4 +7,11 @@ class CatLoginResult<T> {
 
   final bool ok;
   final T data;
+
+  @override
+  String toString() {
+    final status = ok ? 'ok' : 'failed';
+    final extra = data != null ? ',$data' : '';
+    return '$status$extra';
+  }
 }

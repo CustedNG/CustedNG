@@ -47,9 +47,18 @@ class _LoginPageState extends State<LoginPage> {
             name: channel,
             onMessageReceived: (msg) {
               final data = json.decode(msg.message);
-              print(data);
-              username = data['username'];
-              password = data['password'];
+              final username = data['username'];
+              final password = data['password'];
+              if (username != null &&
+                  username is String &&
+                  username.isNotEmpty) {
+                this.username = data['username'];
+              }
+              if (password != null &&
+                  password is String &&
+                  password.isNotEmpty) {
+                this.password = data['password'];
+              }
             },
           )
         },
@@ -99,10 +108,14 @@ class _LoginPageState extends State<LoginPage> {
 
   String get rmWxLogin => r'''
     (function() {
+      var normalLogin = document.querySelector('form[action="login"]');
+      if (normalLogin) normalLogin.parentNode.style = '';
       var wxLogin = document.querySelector('.card-header.text-center');
       if (wxLogin) wxLogin.parentNode.removeChild(wxLogin);
       var wxLogin2 = document.querySelector('#notices');
       if (wxLogin2) wxLogin2.parentNode.removeChild(wxLogin2);
+      var wx3 = document.querySelector('[id*="weixin"]')
+      if (wx3) wx3.parentNode.removeChild(wx3);
     })();
   ''';
 

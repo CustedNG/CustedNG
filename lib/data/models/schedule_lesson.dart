@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 part 'schedule_lesson.g.dart';
 
 @HiveType(typeId: 0)
-class ScheduleLesson {
+class ScheduleLesson extends HiveObject {
   /// e.g. Linux系统
   @HiveField(0)
   String name;
@@ -67,8 +67,12 @@ class ScheduleLesson {
 
   bool isActiveInWeek(int week) => weeks.contains(week);
 
-  TimePoint parseStart() => TimePoint.fromString(startTime);
-  TimePoint parseEnd() => TimePoint.fromString(endTime);
+  TimePoint parseStart() => TimePoint?.fromString(startTime);
+  TimePoint parseEnd() => TimePoint?.fromString(endTime);
+
+  bool get isCustom => type == ScheduleLessonType.custom;
+
+  String get displayName => isCustom ? '$name(自定义)' : name;
 
   @override
   String toString() {
@@ -89,4 +93,8 @@ enum ScheduleLessonType {
   /// 调课
   @HiveField(2)
   madeUp,
+
+  /// 用户自定义课程
+  @HiveField(3)
+  custom,
 }

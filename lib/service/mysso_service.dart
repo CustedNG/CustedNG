@@ -15,11 +15,13 @@ class MyssoService extends CatService {
   static String parseValue(String value) {
     // just handle string case for now.
     // [xxx] -> xxx
-    return value.substring(1, value.length - 1);
+    if (value.startsWith('[') && value.endsWith(']')) {
+      return value.substring(1, value.length - 1);
+    }
+    return value;
   }
 
-  final Pattern sessionExpirationTest =
-      RegExp(r'(用户登录|登录后可|微信扫码|账号密码|Successful)');
+  final Pattern sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
 
   Future<CatLoginResult<String>> login({bool force = false}) async {
     if (force) clearCookieFor(baseUrl.toUri());
@@ -67,9 +69,12 @@ class MyssoService extends CatService {
       custId: custId,
       name: parseValue(data['CN']),
       surname: parseValue(data['SN']),
-      cookie: data['cookie'],
-      memberOf: data['MEMBEROF'],
-      pass: data['PASS'],
+      cookie: parseValue(data['cookie']),
+      memberOf: parseValue(data['MEMBEROF']),
+      pass: parseValue(data['PASS']),
+      college: parseValue(data['college']),
+      grade: int.tryParse(parseValue(data['grade'])),
+      sno: parseValue(data['sno']),
     );
   }
 
@@ -104,4 +109,7 @@ class MyssoService extends CatService {
 
   Future<String> getTicketForIecard() =>
       getTicket('http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT');
+
+  Future<String> getTicketForNetdisk() =>
+      getTicket('http://tx.cust.edu.cn/ucsso/shiro-cas');
 }

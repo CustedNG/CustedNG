@@ -8,7 +8,7 @@ abstract class WebvpnBasedService extends CatService {
 
   Future<Response> request(
     String method,
-    Uri url, {
+    dynamic url, {
     Map<String, String> headers = const {},
     dynamic body,
     int maxRedirects = CatClient.kDefaultMaxRedirects,

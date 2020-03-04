@@ -36,6 +36,8 @@ class WebPageState extends State<WebPage> {
 
   void onPageFinished(String url) {}
 
+  void onDownloadStart(String url) {}
+
   Future<bool> onNavigate(ShouldOverrideUrlLoadingRequest request) {
     return Future.value(true);
   }
@@ -118,6 +120,7 @@ class WebPageState extends State<WebPage> {
         crossPlatform: InAppWebViewOptions(
           debuggingEnabled: true,
           useShouldOverrideUrlLoading: true,
+          useOnDownloadStart: true,
         ),
       ),
       onWebViewCreated: (controller) {
@@ -141,6 +144,10 @@ class WebPageState extends State<WebPage> {
         return allow
             ? ShouldOverrideUrlLoadingAction.ALLOW
             : ShouldOverrideUrlLoadingAction.CANCEL;
+      },
+      onDownloadStart: (controller, url) {
+        print('INCAT download: $url');
+        onDownloadStart(url);
       },
       onConsoleMessage: (controller, message) {
         if (BuildMode.isDebug) print('|WEBVIEW|: ' + message.message);
@@ -183,11 +190,14 @@ class WebPageState extends State<WebPage> {
     final cookies = locator<PersistCookieJar>().loadForRequest(url.toUri());
     print(cookies);
     for (var cookie in cookies) {
+      final domain = cookie.domain == null
+          ? null
+          : cookie.domain.startsWith('.') ? cookie.domain : '.' + cookie.domain;
       await CookieManager.instance().setCookie(
         url: url,
         name: cookie.name,
         value: cookie.value,
-        domain: cookie.domain,
+        domain: domain,
         path: cookie.path,
         maxAge: cookie.maxAge,
         isSecure: cookie.secure,

@@ -16,6 +16,7 @@ import 'package:custed2/data/store/lisp_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
+import 'package:custed2/service/netdisk_service.dart';
 import 'package:custed2/ui/widgets/lisp_debug_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
@@ -124,7 +125,7 @@ class TTYEngine {
   }
 
   _custedLegacy(List args) {
-    final cmd = (args[0] as LispCell).car;
+    final cmd = (args[0] as LispCell).car.toString();
     final executer = locator<TTYExecuter>();
     return executer.executeLegacy(cmd, _context);
   }
@@ -178,8 +179,9 @@ class TTYEngine {
   }
 
   _test(LispFrame frame) async {
-    final g = await User().getGrade();
-    return g;
+    // final g = await User().getGrade();
+    // return g;
+    return NetdiskService().getQuota();
   }
 
   _rmrf(LispFrame frame) {

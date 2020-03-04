@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/analytics.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -63,6 +64,6 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     locator<WeatherProvider>().startAutoUpdate();
 
     Analytics.init();
-    Analytics.isDebug = true;
+    Analytics.isDebug = BuildMode.isDebug;
   }
 }

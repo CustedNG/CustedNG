@@ -57,7 +57,7 @@ class CetAvatarPage extends StatelessWidget {
         SizedBox(height: 40),
         CupertinoButton.filled(
           onPressed: () => saveAvatarToGallery(cetAvatar.avatar),
-          child: Text('保存到本地'),
+          child: Text('保存到相册'),
         )
       ],
     );

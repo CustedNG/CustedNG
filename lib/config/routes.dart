@@ -6,11 +6,13 @@ import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
 import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
+import 'package:custed2/ui/user_tab/netdisk_page.dart';
 import 'package:custed2/ui/web/ecard_web_page.dart';
 import 'package:custed2/ui/web/exam_room_web_page.dart';
 import 'package:custed2/ui/web/iecard_web_page.dart';
 import 'package:custed2/ui/web/jw_web_page.dart';
 import 'package:custed2/ui/web/login_web_page.dart';
+import 'package:custed2/ui/web/netdisk_web_page.dart';
 import 'package:custed2/ui/web/tiku_web_page.dart';
 
 final loginWebPage = AppRoute(
@@ -75,7 +77,18 @@ final tikuWebPage = AppRoute(
   page: TikuWebPage(),
 );
 
-final schoolCalendar = AppRoute(
+final schoolCalendarPage = AppRoute(
   title: '校历',
   page: SchoolCalendarPage(),
+);
+
+final netdiskPage = AppRoute(
+  // title: '网盘与备份',
+  title: '网盘',
+  page: NetdiskPage(),
+);
+
+final netdiskWebPage = AppRoute(
+  title: '长理网盘',
+  page: NetdiskWebPage(),
 );

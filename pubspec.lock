@@ -8,6 +8,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.3"
+  add_2_calendar:
+    dependency: "direct main"
+    description:
+      name: add_2_calendar
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.3.1"
   after_layout:
     dependency: "direct main"
     description:
@@ -31,6 +38,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.39.4"
+  android_path_provider:
+    dependency: "direct main"
+    description:
+      name: android_path_provider
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.1"
   archive:
     dependency: transitive
     description:
@@ -229,6 +243,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.8"
+  dio_cookie_manager:
+    dependency: "direct main"
+    description:
+      name: dio_cookie_manager
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   expandable_bottom_sheet:
     dependency: "direct main"
     description:

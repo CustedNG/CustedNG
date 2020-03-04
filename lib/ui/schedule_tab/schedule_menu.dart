@@ -1,9 +1,14 @@
+import 'package:custed2/core/route.dart';
+import 'package:custed2/core/script.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:flutter/cupertino.dart';
 
 class ScheduleMenu extends StatelessWidget {
+  ScheduleMenu();
+
   @override
   Widget build(BuildContext context) {
     final scheduleProvider = locator<ScheduleProvider>();
@@ -24,8 +29,10 @@ class ScheduleMenu extends StatelessWidget {
           child: Text('添加课程'),
           onPressed: () {
             Navigator.of(context).pop();
-            // showCupertinoModalPopup(
-            //     context: context, builder: (context) => AddingLesson());
+            AppRoute(
+              title: '添加课程',
+              page: AddLessonPage(),
+            ).popup(context);
           },
         ),
         // CupertinoActionSheetAction(
@@ -57,11 +64,10 @@ class ScheduleMenu extends StatelessWidget {
         //   },
         // ),
         CupertinoActionSheetAction(
-          child: Text('课表信息错误?'),
+          child: Text('常见问题&Tips'),
           onPressed: () {
             Navigator.of(context).pop();
-            // showCupertinoModalPopup(
-            //     context: context, builder: (context) => ScheduleWrong());
+            runScript('schedule_wrong.cl', context);
           },
         )
       ],

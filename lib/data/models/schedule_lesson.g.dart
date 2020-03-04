@@ -19,6 +19,8 @@ class ScheduleLessonTypeAdapter extends TypeAdapter<ScheduleLessonType> {
         return ScheduleLessonType.experiment;
       case 2:
         return ScheduleLessonType.madeUp;
+      case 3:
+        return ScheduleLessonType.custom;
       default:
         return null;
     }
@@ -35,6 +37,9 @@ class ScheduleLessonTypeAdapter extends TypeAdapter<ScheduleLessonType> {
         break;
       case ScheduleLessonType.madeUp:
         writer.writeByte(2);
+        break;
+      case ScheduleLessonType.custom:
+        writer.writeByte(3);
         break;
     }
   }

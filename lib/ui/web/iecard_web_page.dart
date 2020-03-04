@@ -1,3 +1,4 @@
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/iecard_service.dart';
@@ -27,8 +28,10 @@ class _IecardWebPageState extends WebPageState {
       return;
     }
 
-    await IecardService().login();
+    await IecardService().xRequest('GET', IecardService.userUrl.toUri(),
+        maxRedirects: 0, expireTest: (resp) => resp.statusCode != 200);
     final url = IecardService.phoneHomeUrl;
+    // await IecardService().login();
     await loadCookieFor(url);
     controller.loadUrl(url: url);
   }

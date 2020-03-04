@@ -5,11 +5,14 @@ import 'package:custed2/core/tty/engine.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
+import 'package:custed2/data/providers/download_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
+import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
+import 'package:custed2/data/store/custom_lesson_store.dart';
 import 'package:custed2/data/store/grade_store.dart';
 import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
@@ -17,6 +20,7 @@ import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/data/store/user_data_store.dart';
+import 'package:custed2/service/netdisk_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as path;
@@ -27,6 +31,7 @@ void setupLocatorForServices() {
   locator.registerLazySingleton(() => MyssoService());
   locator.registerLazySingleton(() => JwService());
   locator.registerLazySingleton(() => CustedService());
+  locator.registerLazySingleton(() => NetdiskService());
 }
 
 void setupLocatorForProviders() {
@@ -37,6 +42,8 @@ void setupLocatorForProviders() {
   locator.registerSingleton(AppProvider());
   locator.registerSingleton(WeatherProvider());
   locator.registerSingleton(CetAvatarProvider());
+  locator.registerSingleton(NetdiskProvider());
+  locator.registerSingleton(DownloadProvider());
 }
 
 Future<void> setupLocatorForStores() async {
@@ -52,6 +59,12 @@ Future<void> setupLocatorForStores() async {
 
   locator.registerSingletonAsync<ScheduleStore>(() async {
     final store = ScheduleStore();
+    await store.init();
+    return store;
+  });
+
+  locator.registerSingletonAsync<CustomLessonStore>(() async {
+    final store = CustomLessonStore();
     await store.init();
     return store;
   });

@@ -11,7 +11,7 @@ class HomeMenu extends StatelessWidget {
           child: Text('查看校历'),
           onPressed: () {
             Navigator.of(context).pop();
-            schoolCalendar.go(context);
+            schoolCalendarPage.go(context);
           },
         ),
         CupertinoActionSheetAction(

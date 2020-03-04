@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
+import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/lesson_detail_page.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/maps.dart';
@@ -14,12 +16,10 @@ class LessonInfo extends StatelessWidget {
     Key key,
     @required this.lesson,
     // this.children,
-    this.isCustomed = false,
   }) : super(key: key);
 
   // final List<Widget> children;
   final ScheduleLesson lesson;
-  final bool isCustomed;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,8 @@ class LessonInfo extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildDataItem('上课时间', '${lesson.startTime}~${lesson.endTime}'),
+            _buildDataItem(
+                '上课时间', '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}'),
             SizedBox(height: 10),
             _buildDataItem('任课教师', lesson.teacherName),
           ],
@@ -82,8 +83,6 @@ class LessonInfo extends StatelessWidget {
       fontWeight: FontWeight.bold,
     );
 
-    final title = isCustomed ? lesson.name + '(自定义)' : lesson.name;
-
     return GestureDetector(
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -92,7 +91,7 @@ class LessonInfo extends StatelessWidget {
         children: <Widget>[
           Flexible(
             child: Text(
-              title,
+              lesson.displayName,
               style: titleText,
               overflow: TextOverflow.fade,
               maxLines: 3,
@@ -121,30 +120,115 @@ class LessonInfo extends StatelessWidget {
 }
 
 class LessonPreview extends StatelessWidget {
-  LessonPreview(this.lesson, {this.isCustomed = false});
+  LessonPreview(
+    this.lesson, {
+    this.isCustomed = false,
+    this.conflict,
+  });
 
   final ScheduleLesson lesson;
   final bool isCustomed;
+  final List<ScheduleLesson> conflict;
+
+  bool get noConflict => conflict == null || conflict.isEmpty;
+
+  Iterable<ScheduleLesson> get customLessons sync* {
+    if (lesson.isCustom) yield lesson;
+    yield* conflict.where((l) => l.isCustom);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final map = Maps.search(lesson.roomRaw);
+    final content = <Widget>[];
+    content.add(LessonInfo(lesson: lesson));
+
+    if (noConflict) {
+      final map = Maps.search(lesson.roomRaw);
+      if (map != null) {
+        content.add(SizedBox(height: 270 * 0.618, child: ClipRect(child: map)));
+      }
+    } else {
+      for (var lesson in conflict) {
+        final div = material.Divider(
+          height: 1,
+          color: CupertinoColors.inactiveGray,
+        );
+        content.add(div);
+        content.add(LessonInfo(lesson: lesson));
+      }
+    }
+
+    content.add(_buildActions(context));
+
     return CardDialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          LessonInfo(lesson: lesson),
-          if (map != null)
-            SizedBox(height: 270 * 0.618, child: ClipRect(child: map)),
-          CupertinoDialogAction(
-            child: Text('确定'),
-            isDefaultAction: true,
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      ),
+      child: Column(mainAxisSize: MainAxisSize.min, children: content),
     );
+  }
+
+  Widget _buildActions(BuildContext context) {
+    final confirm = CupertinoDialogAction(
+      child: Text('确定'),
+      isDefaultAction: true,
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    final delete = CupertinoDialogAction(
+      child: Text('删除'),
+      isDestructiveAction: true,
+      onPressed: () async {
+        Navigator.of(context).pop();
+        await lesson.delete();
+        locator<ScheduleProvider>().loadLocalData();
+      },
+    );
+
+    final deleteCustom = CupertinoDialogAction(
+      child: Text('删除自定义'),
+      isDestructiveAction: true,
+      onPressed: () async {
+        Navigator.of(context).pop();
+        for (var lesson in customLessons) {
+          await lesson.delete();
+        }
+        locator<ScheduleProvider>().loadLocalData();
+      },
+    );
+
+    final helpMe = CupertinoDialogAction(
+      child: Text('我该怎么办?'),
+      isDestructiveAction: true,
+      onPressed: () {},
+    );
+
+    if (noConflict) {
+      if (!lesson.isCustom) {
+        return confirm;
+      } else {
+        return Row(
+          children: <Widget>[
+            Flexible(child: delete),
+            Flexible(child: confirm),
+          ],
+        );
+      }
+    } else {
+      if (customLessons.isEmpty) {
+        return Row(
+          children: <Widget>[
+            Flexible(child: helpMe),
+            Flexible(child: confirm),
+          ],
+        );
+      } else {
+        return Row(
+          children: <Widget>[
+            Flexible(child: deleteCustom),
+            Flexible(child: confirm),
+          ],
+        );
+      }
+    }
   }
 }

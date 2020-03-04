@@ -1,4 +1,8 @@
+import 'package:add_2_calendar/add_2_calendar.dart';
+import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
+import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,11 +12,10 @@ class ScheduleLessonWidget extends StatelessWidget {
   ScheduleLessonWidget(
     this.lesson, {
     this.isActive = true,
-    this.conflict = const [],
   });
 
   final ScheduleLesson lesson;
-  final List<ScheduleLesson> conflict; // TODO: handle conflict
+  final List<ScheduleLesson> conflict = [];
   final bool isActive;
 
   @override
@@ -23,6 +26,7 @@ class ScheduleLessonWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => _showLessonPreview(context),
+      onLongPress: addToCalendar,
       child: _buildLessonCell(context),
     );
   }
@@ -44,7 +48,25 @@ class ScheduleLessonWidget extends StatelessWidget {
     if (lesson == null) {
       return null;
     }
-    
+
+    final content = <Widget>[];
+    content.add(Text(lesson.name, maxLines: 2));
+
+    if (conflict.isEmpty) {
+      content.add(SizedBox(height: 2));
+      content.add(Text('@' + lesson.roomRaw, maxLines: 3));
+    } else {
+      for (var lesson in conflict) {
+        content.add(SizedBox(height: 5));
+        content.add(material.Divider(
+          height: 1,
+          color: CupertinoColors.white,
+        ));
+        content.add(SizedBox(height: 5));
+        content.add(Text(lesson.name, maxLines: 2));
+      }
+    }
+
     final textStyle = TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.bold,
@@ -55,11 +77,7 @@ class ScheduleLessonWidget extends StatelessWidget {
       style: textStyle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Text(lesson.name, maxLines: 2),
-          SizedBox(height: 2),
-          Text('@' + lesson.roomRaw, maxLines: 3),
-        ],
+        children: content,
       ),
     );
   }
@@ -93,8 +111,30 @@ class ScheduleLessonWidget extends StatelessWidget {
     showCupertinoDialog(
       context: context,
       builder: (context) {
-        return LessonPreview(lesson);
+        return LessonPreview(lesson, conflict: conflict);
       },
     );
+  }
+
+  void addToCalendar() {
+    if (!isActive) return;
+    final schedule = locator<ScheduleProvider>();
+    final day = schedule.schedule
+        .weekStartDate(schedule.selectedWeek)
+        .add((lesson.weekday - 1).days);
+
+    final start = day.add(lesson.parseStart().sinceDayStart);
+    final end = day.add(lesson.parseEnd().sinceDayStart);
+
+    final description = '教师: ${lesson.teacherName}';
+
+    final event = Event(
+      title: lesson.displayName,
+      description: description,
+      location: lesson.roomRaw,
+      startDate: start,
+      endDate: end,
+    );
+    Add2Calendar.addEvent2Cal(event);
   }
 }

@@ -4,6 +4,7 @@ import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
+import 'package:custed2/data/store/custom_lesson_store.dart';
 import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/locator.dart';
 
@@ -15,7 +16,7 @@ class ScheduleProvider extends BusyProvider {
   int get selectedWeek => _selectedWeek;
 
   final int minWeek = 1;
-  final int maxWeek = 24;
+  int get maxWeek => _schedule.weekCount;
 
   int get currentWeek => _schedule?.calculateWeekSinceStart(DateTime.now());
 
@@ -30,16 +31,19 @@ class ScheduleProvider extends BusyProvider {
 
   Future<void> loadLocalData() async {
     final scheduleStore = await locator.getAsync<ScheduleStore>();
-    _schedule = scheduleStore.head;
+    final head = scheduleStore.head;
+    await _useSchedule(head);
 
-    if (_schedule != null) {
-      print('use cached schedule: $_schedule');
+    if (head != null) {
+      print('use cached schedule: $head');
+      resetWeekToCurrentWeek();
       notifyListeners();
     }
   }
 
-  Future<void> updateScheduleData() async {
+  Future<void> updateScheduleData({bool reset = false}) async {
     await busyRun(_updateScheduleData);
+    if (reset) resetWeekToCurrentWeek();
   }
 
   Future<void> _updateScheduleData() async {
@@ -47,6 +51,16 @@ class ScheduleProvider extends BusyProvider {
     _schedule = schedule;
     final scheduleStore = await locator.getAsync<ScheduleStore>();
     scheduleStore.checkIn(schedule);
+    _useSchedule(schedule);
+  }
+
+  Future<void> _useSchedule(Schedule schedule) async {
+    if (schedule == null) return;
+
+    final newSchedule = schedule.safeCopy();
+    final customLessonStore = await locator.getAsync<CustomLessonStore>();
+    newSchedule.lessons.addAll(customLessonStore.box.values);
+    _schedule = newSchedule;
   }
 
   void gotoNextWeek() {
@@ -64,12 +78,16 @@ class ScheduleProvider extends BusyProvider {
     }
   }
 
+  void resetWeekToCurrentWeek() {
+    _selectedWeek = currentWeek ?? 1;
+  }
+
   void gotoCurrentWeek() {
     _selectedWeek = currentWeek;
     notifyListeners();
   }
 
   Iterable<ScheduleLesson> lessonsSince(DateTime dateTime) {
-    return _schedule?.lessonsSince(dateTime, maxWeek);
+    return _schedule?.lessonsSince(dateTime);
   }
 }
