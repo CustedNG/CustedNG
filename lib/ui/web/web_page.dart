@@ -190,11 +190,14 @@ class WebPageState extends State<WebPage> {
     final cookies = locator<PersistCookieJar>().loadForRequest(url.toUri());
     print(cookies);
     for (var cookie in cookies) {
+      final domain = cookie.domain == null
+          ? null
+          : cookie.domain.startsWith('.') ? cookie.domain : '.' + cookie.domain;
       await CookieManager.instance().setCookie(
         url: url,
         name: cookie.name,
         value: cookie.value,
-        domain: cookie.domain,
+        domain: domain,
         path: cookie.path,
         maxAge: cookie.maxAge,
         isSecure: cookie.secure,
