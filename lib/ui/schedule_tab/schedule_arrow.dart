@@ -56,7 +56,7 @@ class _ScheduleArrowState extends State<ScheduleArrow> {
           children: <Widget>[
             Positioned(
               bottom: 0,
-              right: 0,
+              right: -13,
               child: _buildArrow(),
             ),
           ],
@@ -73,8 +73,7 @@ class _ScheduleArrowState extends State<ScheduleArrow> {
   double calcWidthFactor() {
     const total = 7;
     final now = DateTime.now().weekday - 1;
-    final offset = 0.035;
-    return now / total + offset;
+    return now / total;
   }
 
   double calcTop() {
