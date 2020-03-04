@@ -83,7 +83,8 @@ final schoolCalendarPage = AppRoute(
 );
 
 final netdiskPage = AppRoute(
-  title: '网盘与备份',
+  // title: '网盘与备份',
+  title: '网盘',
   page: NetdiskPage(),
 );
 
