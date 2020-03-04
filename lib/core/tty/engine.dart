@@ -8,6 +8,7 @@ import 'package:custed2/core/lisp/lisp_frame.dart';
 import 'package:custed2/core/lisp/lisp_interp.dart';
 import 'package:custed2/core/lisp/lisp_sym.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/core/route.dart';
 import 'package:custed2/core/tty/exception.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
@@ -17,6 +18,7 @@ import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/netdisk_service.dart';
+import 'package:custed2/ui/web/common_web_page.dart';
 import 'package:custed2/ui/widgets/lisp_debug_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
@@ -59,6 +61,7 @@ class TTYEngine {
     _lisp.def('custed-notify', 1, _custedNotify);
     _lisp.def('custed-launch-url', 1, _custedLaunchUrl);
     _lisp.def('custed-legacy', -1, _custedLegacy);
+    _lisp.def('custed-webview', 1, _webview);
 
     _lisp.def('debug', 0, _debug);
 
@@ -190,5 +193,13 @@ class TTYEngine {
     Hive.deleteFromDisk();
     print('done');
     print('All local data has been wiped out, please restart.');
+  }
+
+  _webview(LispFrame frame) {
+    final url = frame[0].toString();
+    AppRoute(
+      title: "Common",
+      page: CommonWebPage(url),
+    ).go(_context);
   }
 }
