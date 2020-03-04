@@ -36,6 +36,7 @@ class ScheduleProvider extends BusyProvider {
 
     if (head != null) {
       print('use cached schedule: $head');
+      resetWeekToCurrentWeek();
       notifyListeners();
     }
   }
@@ -74,6 +75,10 @@ class ScheduleProvider extends BusyProvider {
       _selectedWeek--;
       notifyListeners();
     }
+  }
+
+  void resetWeekToCurrentWeek() {
+    _selectedWeek = currentWeek ?? 1;
   }
 
   void gotoCurrentWeek() {
