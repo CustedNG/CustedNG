@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/lisp/lisp.dart';
 import 'package:custed2/core/lisp/lisp_cell.dart';
 import 'package:custed2/core/lisp/lisp_frame.dart';
@@ -61,7 +62,7 @@ class TTYEngine {
     _lisp.def('custed-notify', 1, _custedNotify);
     _lisp.def('custed-launch-url', 1, _custedLaunchUrl);
     _lisp.def('custed-legacy', -1, _custedLegacy);
-    _lisp.def('custed-webview', 1, _webview);
+    _lisp.def('custed-webview', 1, _custedWebview);
 
     _lisp.def('debug', 0, _debug);
 
@@ -79,6 +80,10 @@ class TTYEngine {
     _lisp.def('t', 0, _test);
 
     _lisp.def('rmrf', 0, _rmrf);
+
+    _lisp.def('cookie-set', 3, _cookieSet);
+    // _lisp.def('cookie-delete', 1, _cookieSet);
+    // _lisp.def('cookie-delete-all', 0, _cookieSet);
   }
 
   Future eval(String source) async {
@@ -195,11 +200,47 @@ class TTYEngine {
     print('All local data has been wiped out, please restart.');
   }
 
-  _webview(LispFrame frame) {
+  _custedWebview(LispFrame frame) {
     final url = frame[0].toString();
     AppRoute(
       title: "Common",
       page: CommonWebPage(url),
     ).go(_context);
+  }
+
+  _cookieSet(LispFrame frame) {
+    final uri = frame[0].toString().toUri();
+    final key = frame[1].toString();
+    final value = frame[2].toString();
+
+    final expires = frame.keyword['expires'];
+    final maxAge = frame.keyword['max-age'];
+    final domain = frame.keyword['domain'];
+    final path = frame.keyword['path'] ?? '/';
+    final secure = frame.keyword['secure'] == true;
+    final httpOnly = frame.keyword['http-only'] == true;
+
+    StringBuffer sb = new StringBuffer();
+    sb..write(key)..write("=")..write(value);
+    if (expires != null) {
+      sb..write("; Expires=")..write(HttpDate.format(expires));
+    }
+    if (maxAge != null) {
+      sb..write("; Max-Age=")..write(maxAge);
+    }
+    if (domain != null) {
+      sb..write("; Domain=")..write(domain);
+    }
+    if (path != null) {
+      sb..write("; Path=")..write(path);
+    }
+    if (secure) sb.write("; Secure");
+    if (httpOnly) sb.write("; HttpOnly");
+
+    final setCookie = sb.toString();
+    final cookie = Cookie.fromSetCookieValue(setCookie);
+    final cookieJar = locator<PersistCookieJar>();
+    cookieJar.saveFromResponse(uri, [cookie]);
+    return cookie.toString();
   }
 }
