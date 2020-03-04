@@ -54,7 +54,7 @@ class UserProvider extends BusyProvider {
   void _afterLogin() {
     final schedule = locator<ScheduleProvider>();
     final grade = locator<GradeProvider>();
-    schedule.updateScheduleData();
+    schedule.updateScheduleData(reset: true);
     grade.updateGradeData();
     // call login() here to improve iecard open speed.
     IecardService().login();
