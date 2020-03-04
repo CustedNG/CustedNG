@@ -65,7 +65,8 @@ class UserTab extends StatelessWidget {
             locator<CetAvatarProvider>().getAvatar();
             cetAvatarPage.go(context);
           }),
-          _buildLink(context, '网盘与备份', () {
+          // _buildLink(context, '网盘与备份', () {
+          _buildLink(context, '网盘', () {
             locator<NetdiskProvider>().getQuota();
             netdiskPage.go(context);
           }),
