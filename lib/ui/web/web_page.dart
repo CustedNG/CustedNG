@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/webview/addon.dart';
+import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,8 +15,11 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WebPage extends StatefulWidget {
+  WebPage({this.defaultUrl});
+
   final title = '';
   final canGoBack = true;
+  final String defaultUrl;
 
   @override
   WebPageState createState() => WebPageState();
@@ -121,6 +126,10 @@ class WebPageState extends State<WebPage> {
           debuggingEnabled: true,
           useShouldOverrideUrlLoading: true,
           useOnDownloadStart: true,
+          userAgent: UserAgent.defaultUA,
+        ),
+        ios: IOSInAppWebViewOptions(
+          sharedCookiesEnabled: true,
         ),
       ),
       onWebViewCreated: (controller) {
@@ -150,7 +159,9 @@ class WebPageState extends State<WebPage> {
         onDownloadStart(url);
       },
       onConsoleMessage: (controller, message) {
-        if (BuildMode.isDebug) print('|WEBVIEW|: ' + message.message);
+        if (BuildMode.isDebug || Platform.isIOS) {
+          print('|WEBVIEW|: ' + message.message);
+        }
       },
     );
   }
