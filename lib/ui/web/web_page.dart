@@ -128,9 +128,6 @@ class WebPageState extends State<WebPage> {
           useOnDownloadStart: true,
           userAgent: UserAgent.defaultUA,
         ),
-        ios: IOSInAppWebViewOptions(
-          sharedCookiesEnabled: true,
-        ),
       ),
       onWebViewCreated: (controller) {
         this.controller = controller;
