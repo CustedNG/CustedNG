@@ -20,6 +20,7 @@ class WebPage extends StatefulWidget {
   final title = '';
   final canGoBack = true;
   final String defaultUrl;
+  final String userAgent = null;
 
   @override
   WebPageState createState() => WebPageState();
@@ -126,7 +127,7 @@ class WebPageState extends State<WebPage> {
           debuggingEnabled: true,
           useShouldOverrideUrlLoading: true,
           useOnDownloadStart: true,
-          userAgent: UserAgent.defaultUA,
+          userAgent: widget.userAgent ?? UserAgent.defaultUA,
         ),
       ),
       onWebViewCreated: (controller) {
@@ -208,8 +209,7 @@ class WebPageState extends State<WebPage> {
         domain: domain,
         path: cookie.path,
         maxAge: cookie.maxAge,
-        // isSecure: cookie.secure,
-        isSecure: false,
+        isSecure: cookie.secure,
       );
     }
   }
