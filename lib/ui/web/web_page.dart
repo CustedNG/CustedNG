@@ -6,6 +6,7 @@ import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/webview/addon.dart';
+import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
@@ -121,6 +122,7 @@ class WebPageState extends State<WebPage> {
           debuggingEnabled: true,
           useShouldOverrideUrlLoading: true,
           useOnDownloadStart: true,
+          userAgent: UserAgent.defaultUA,
         ),
       ),
       onWebViewCreated: (controller) {
