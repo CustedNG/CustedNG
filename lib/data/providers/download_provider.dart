@@ -96,6 +96,8 @@ class _IOSBehavior implements _DownloadBehavior {
   }
 
   void saveFile(String tempOutputFile, String filename) async {
-    ShareExtend.share(tempOutputFile, "file", sharePanelTitle: filename);
+    final outputFile = path.join(await getAppDocDir.invoke(), filename);
+    await File(tempOutputFile).rename(outputFile);
+    ShareExtend.share(outputFile, "file", sharePanelTitle: filename);
   }
 }
