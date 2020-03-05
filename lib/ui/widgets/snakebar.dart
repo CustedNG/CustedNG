@@ -18,7 +18,7 @@ class _SnakebarState extends State<Snakebar> {
       height: snakebarData.isActive ? (btmPadding == 0 ? 0.0 : 16.0) + 25.0 : 0,
       color: snakebarData.content.bgColor,
       child: Align(
-        alignment: btmPadding == 0 ? Alignment.center :  Alignment.topCenter,
+        alignment: Alignment(0.0, -0.8),
         child: AnimatedSwitcher(
           duration: Duration(milliseconds: 300),
           child: snakebarData.content.widget,
