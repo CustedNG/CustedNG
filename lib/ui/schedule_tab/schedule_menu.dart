@@ -20,10 +20,9 @@ class ScheduleMenu extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
             final snakebar = locator<SnakebarProvider>();
-            snakebar.info("更新课表成功");
-            // snakebar.catchAll(() async {
-            //   await scheduleProvider.updateScheduleData();
-            // }, message: '教务系统超时 :(', duration: Duration(seconds: 7));
+            snakebar.catchAll(() async {
+              await scheduleProvider.updateScheduleData();
+            }, message: '教务系统超时 :(', duration: Duration(seconds: 7));
           },
         ),
         CupertinoActionSheetAction(

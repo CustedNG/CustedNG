@@ -52,9 +52,12 @@ class SnakebarProvider extends ProviderBase {
   }) {
     final content = SnakeBarContent.duration(
       // set different keys to widget for AnimatedSwitcher to work.
-      widget: KeyedSubtree(
-        key: ValueKey(_index++),
-        child: widget,
+      widget: Container(
+        padding: EdgeInsets.only(top: 5.0),
+        child: KeyedSubtree(
+          key: ValueKey(_index++),
+          child: widget,
+        ),
       ),
       bgColor: bgColor,
       duration: duration,
