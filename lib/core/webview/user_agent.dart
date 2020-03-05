@@ -1,5 +1,5 @@
 class UserAgent {
-  static const defaultUA = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Mobile Safari/537.36';
+  static const defaultUA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36';
       // 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) '
       // 'AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 '
       // 'Safari/602.2';
