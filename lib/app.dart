@@ -9,6 +9,7 @@ import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/service/iecard_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -62,6 +63,9 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     locator<GradeProvider>().loadLocalData();
     locator<UserProvider>().loadLocalData();
     locator<WeatherProvider>().startAutoUpdate();
+
+    // call login() here to improve iecard open speed.
+    IecardService().login();
 
     Analytics.init();
     Analytics.isDebug = BuildMode.isDebug;

@@ -3,18 +3,20 @@ import 'dart:io';
 
 import 'package:convert/convert.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/core/platform/os/download_dir.dart';
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path/path.dart' as path;
+import 'package:share_extend/share_extend.dart';
 
 class _DownloadTask {
-  _DownloadTask({this.url, this.outputDir});
+  _DownloadTask({this.url});
 
   String url;
-  String outputDir;
 }
 
 class DownloadProvider extends ProviderBase {
@@ -23,10 +25,12 @@ class DownloadProvider extends ProviderBase {
   Dio get dio =>
       Dio()..interceptors.add(CookieManager(locator<PersistCookieJar>()));
 
+  final behavior = _DownloadBehavior();
+
   _DownloadTask _currentTask;
 
-  void enqueue(String url, String output) {
-    queue.add(_DownloadTask(url: url, outputDir: output));
+  void enqueue(String url) {
+    queue.add(_DownloadTask(url: url));
     _download();
   }
 
@@ -38,7 +42,8 @@ class DownloadProvider extends ProviderBase {
 
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final tempName = './custed_download_$timestamp.tmp';
-    final tempOutputFile = path.join(_currentTask.outputDir, tempName);
+    final tmepOutputDir = await behavior.getTempDir();
+    final tempOutputFile = path.join(tmepOutputDir, tempName);
 
     final snake = locator<SnakebarProvider>();
     await snake.progress((controller) async {
@@ -49,21 +54,48 @@ class DownloadProvider extends ProviderBase {
         onReceiveProgress: controller.update,
       );
       final filenameHeader = response.headers.value('content-disposition');
-      final filename = utf8.decode(percent.decode(
+      var filename = utf8.decode(percent.decode(
           RegExp(r'filename="(.+?)"').firstMatch(filenameHeader)?.group(1)));
 
-      if (filename != null) {
-        print(filename);
-        final outputFile = path.join(_currentTask.outputDir, filename);
-        await File(tempOutputFile).rename(outputFile);
-        print(outputFile);
-      }
-      snake.info('"$filename" 下载完成');
-      snake.info('已保存到系统 Download 文件夹下');
+      filename ??= tempName;
+      behavior.saveFile(tempOutputFile, filename);
     });
 
     _currentTask = null;
   }
+}
 
-  void updateProgress(int current, int total) {}
+abstract class _DownloadBehavior {
+  factory _DownloadBehavior() {
+    return  Platform.isIOS ? _IOSBehavior() : _GeneralBehavior();
+  }
+
+  Future<String> getTempDir();
+  void saveFile(String tempOutputFile, String filename);
+}
+
+class _GeneralBehavior implements _DownloadBehavior {
+  Future<String> getTempDir() {
+    return getDownloadDir.invoke();
+  }
+
+  void saveFile(String tempOutputFile, String filename) async {
+    final outputDir = await getDownloadDir.invoke();
+    final outputFile = path.join(outputDir, filename);
+    await File(tempOutputFile).rename(outputFile);
+
+    final snake = locator<SnakebarProvider>();
+    snake.info('"$filename" 下载完成');
+    snake.info('已保存至系统 Download 文件夹下');
+  }
+}
+
+class _IOSBehavior implements _DownloadBehavior {
+  Future<String> getTempDir() {
+    return getAppDocDir.invoke();
+  }
+
+  void saveFile(String tempOutputFile, String filename) async {
+    ShareExtend.share(tempOutputFile, "file", sharePanelTitle: filename);
+  }
 }

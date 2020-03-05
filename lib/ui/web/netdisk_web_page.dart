@@ -9,7 +9,7 @@ import 'package:custed2/web/netdisk_addon.dart';
 
 class NetdiskWebPage extends WebPage {
   @override
-  final title = '网盘';
+  final title = '长理网盘';
 
   @override
   final canGoBack = false;
@@ -52,8 +52,6 @@ class _NetdiskWebPageState extends WebPageState {
 
   @override
   void onDownloadStart(String url) async {
-    final download = locator<DownloadProvider>();
-    final docDir = await getDownloadDir.invoke();
-    download.enqueue(url, docDir);
+    locator<DownloadProvider>().enqueue(url);
   }
 }
