@@ -11,7 +11,7 @@ class SnakebarProvider extends ProviderBase {
     _contentQueue = StreamController<SnakeBarContent>();
     // add a placeholder
     _content = SnakeBarContent(
-      widget: Container(),
+      widget: Container(height: 100,),
       bgColor: CupertinoColors.activeBlue,
     );
     _startLoop();
