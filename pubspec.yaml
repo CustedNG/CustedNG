@@ -51,7 +51,7 @@ dependencies:
   webview_flutter: ^0.3.19+5
   flutter_inappwebview:
     git:
-      url: https://github.com/pichillilorenzo/flutter_inappwebview.git
+      url: https://github.com/CustedNG/flutter_inappwebview.git
       ref: master
 
   otp: ^1.0.3

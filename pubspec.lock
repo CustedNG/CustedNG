@@ -288,8 +288,8 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "9c7ac0da8f01ceb40430da58397bdb31968ca5b1"
-      url: "https://github.com/pichillilorenzo/flutter_inappwebview.git"
+      resolved-ref: ea04b17bb09235ad38bd8d563142dc44ab173e93
+      url: "https://github.com/CustedNG/flutter_inappwebview.git"
     source: git
     version: "3.0.0"
   flutter_local_notifications:

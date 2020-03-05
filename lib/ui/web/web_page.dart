@@ -211,7 +211,8 @@ class WebPageState extends State<WebPage> {
         domain: domain,
         path: cookie.path,
         maxAge: cookie.maxAge,
-        isSecure: cookie.secure,
+        // isSecure: cookie.secure,
+        isSecure: false,
       );
     }
   }
