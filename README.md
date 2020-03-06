@@ -49,8 +49,11 @@
 
 <img width="250px" src="https://cust.xuty.cc/CustedNG.svg">
 
+**iOS**
 
-**iOS / 桌面客户端**
+[点击下载(via Testflight)](https://cust.xuty.cc/app/ios)
+
+**桌面客户端**
 
 *会有的
 

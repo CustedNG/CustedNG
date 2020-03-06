@@ -31,9 +31,14 @@
             (link "https://github.com/CustedNG/CustedNG")
             (sizedbox #:height 25)
             (title "手动下载最新版本")
+            (sizedbox #:height 10)
             (button "立即下载(For Android)"  #:padding 0
               (lambda ()
                 (custed-launch-url
-                  "https://cust.xuty.cc/app/apk/download")))))))))
+                  "https://cust.xuty.cc/app/apk/download")))
+            (button "立即下载(For iOS)"  #:padding 0
+              (lambda ()
+                (custed-launch-url
+                  "https://cust.xuty.cc/app/ios")))))))))
 
 (view my-page)

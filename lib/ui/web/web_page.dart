@@ -157,9 +157,7 @@ class WebPageState extends State<WebPage> {
         onDownloadStart(url);
       },
       onConsoleMessage: (controller, message) {
-        if (BuildMode.isDebug || Platform.isIOS) {
-          print('|WEBVIEW|: ' + message.message);
-        }
+        if (BuildMode.isDebug) print('|WEBVIEW|: ' + message.message);
       },
     );
   }

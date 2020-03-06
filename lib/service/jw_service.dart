@@ -21,7 +21,7 @@ class JwService extends WebvpnBasedService {
   final Pattern sessionExpirationTest = '过期';
 
   @override
-  Future<CatLoginResult> login() async {
+  Future<CatLoginResult<String>> login() async {
     final ticket = await _mysso.getTicketForJw();
     final response = await request(
       'POST',
@@ -36,7 +36,7 @@ class JwService extends WebvpnBasedService {
     );
 
     final parsedResponse = JwResponse.fromJson(json.decode(response.body));
-    return CatLoginResult(ok: parsedResponse.isSuccess);
+    return CatLoginResult(ok: parsedResponse.isSuccess, data: ticket);
   }
 
   Future<JwSchedule> getSchedule() async {

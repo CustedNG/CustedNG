@@ -1,4 +1,5 @@
-import 'package:custed2/core/platform/os/download_dir.dart';
+import 'dart:io';
+
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/download_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
@@ -16,7 +17,7 @@ class NetdiskWebPage extends WebPage {
   final canGoBack = false;
 
   @override
-  final userAgent = UserAgent.pcChromeUA;
+  final userAgent = Platform.isIOS ? UserAgent.pcChromeUA : UserAgent.defaultUA;
 
   @override
   _NetdiskWebPageState createState() => _NetdiskWebPageState();
