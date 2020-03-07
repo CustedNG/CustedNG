@@ -60,7 +60,10 @@ class MyssoService extends CatService {
 
   Future<MyssoProfile> getProfile() async {
     final document = parse((await xRequest('GET', loginUrl.toUri())).body);
-    final custId = document.querySelector('strong > span').innerHtml;
+    final custId = document.querySelector('strong > span')?.innerHtml ??
+        document.querySelector('p > strong')?.innerHtml ??
+        '用户';
+
     final data = Map.fromIterables(
       document.querySelectorAll('td > kbd > span').map((e) => e.innerHtml),
       document.querySelectorAll('td > code > span').map((e) => e.innerHtml),
