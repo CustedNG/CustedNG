@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:custed2/core/platform/platform_api.dart';
+import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
 class GetAppDocDir extends PlatformApi<Future<String>> {
@@ -19,7 +20,9 @@ class GetAppDocDir extends PlatformApi<Future<String>> {
 
   @override
   Future<String> fuchsia() async {
-    return Directory.current.path;
+    final dir = path.join(Directory.current.path, './.custed');
+    await Directory(dir).create(recursive: true);
+    return dir;
   }
 }
 
