@@ -46,14 +46,20 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
 
     userData.username.put(usernameController.text);
     userData.password.put(passwordController.text);
-    final login = await mysso.login(force: true);
 
-    if (login.ok) {
-      user.login();
-      snake.info('登录成功');
-      Navigator.pop(context);
-    } else {
-      snake.warning('登录失败[${login.data}]');
+    try {
+      final login =
+          await mysso.login(force: true).timeout(Duration(minutes: 1));
+      if (login.ok) {
+        user.login();
+        snake.info('登录成功');
+        Navigator.pop(context);
+      } else {
+        snake.warning('登录失败[${login.data}]');
+      }
+    } catch (e) {
+      snake.warning('登录失败[认证系统超时]');
+    } finally {
       setState(() => isBusy = false);
     }
   }
