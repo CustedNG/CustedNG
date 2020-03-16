@@ -79,7 +79,6 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     setState(() => this.progress = progress);
   }
 
-
   Future<void> init() async {
     updateMsg('正在初始化');
     final docDir = await getAppTmpDir.invoke();
@@ -91,6 +90,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     final url = CustedService.getUpdateUrl(widget.update);
     final total = widget.update.file.size * 1024;
     await Dio().download(url, outputPath, onReceiveProgress: (current, _) {
+      if (!mounted) return;
       setState(() => updateProgress(current / total));
     });
   }
