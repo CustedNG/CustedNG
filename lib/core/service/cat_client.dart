@@ -28,6 +28,8 @@ class CatClient {
     print('Cat Request: $method $url');
     final request = CatRequest(method, url);
     request.headers.addAll(headers);
+    request.headers.putIfAbsent('Accept-Language',
+        () => 'zh-CN,zh;q=0.9,zh-TW;q=0.8,en-US;q=0.7,en;q=0.6');
     request.setBody(body);
     // Let's handle redirects manually and correctly :)
     request.followRedirects = false;
