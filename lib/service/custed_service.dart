@@ -31,7 +31,8 @@ class CustedService extends CatClient {
   }
 
   Future<CustedUpdate> getUpdate() async {
-    final resp = await get('$baseUrl/app/apk/newest', timeout: defaultTimeout);
+    final build = BuildData.build;
+    final resp = await get('$baseUrl/app/apk/newest?build=$build', timeout: defaultTimeout);
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
     if (custedResp.hasError) return null;
     return CustedUpdate.fromJson(custedResp.data as Map<String, dynamic>);
