@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
           setState(() => isBusy = true);
         },
         onPageFinished: (url) async {
-          controller.evaluateJavascript(rmHeader);
+          controller.evaluateJavascript(rmHeaderFooter);
           controller.evaluateJavascript(rmWxLogin);
           controller.evaluateJavascript(loginHook);
 
@@ -98,11 +98,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  String get rmHeader => '''
+  String get rmHeaderFooter => '''
     (function() {
       var header = document.querySelector('nav.navbar');
       if (header) header.parentNode.removeChild(header);
       document.querySelector('main').style = "padding-top: 0;";
+
+      var footer = document.querySelector('footer.footer');
+      if (footer) footer.parentNode.removeChild(footer);
     })();
   ''';
 
