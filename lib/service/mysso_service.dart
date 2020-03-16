@@ -21,13 +21,14 @@ class MyssoService extends CatService {
     return value;
   }
 
-  final Pattern sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
+  final sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
+  final loginSuccessTest = RegExp(r'(登录成功|Log In Successful|进入校园门户)');
 
   Future<CatLoginResult<String>> login({bool force = false}) async {
     if (force) clearCookieFor(baseUrl.toUri());
 
     final loginPage = await getFrontPage();
-    if (loginPage.contains('登录成功')) {
+    if (loginSuccessTest.hasMatch(loginPage)) {
       print('Mysso Cookie Login Success');
       return CatLoginResult.ok();
     }
@@ -47,7 +48,7 @@ class MyssoService extends CatService {
       'geolocation': '',
     });
 
-    if (resp.body.contains('登录成功')) {
+    if (loginSuccessTest.hasMatch(resp.body)) {
       print('Mysso Manual Login Success');
       return CatLoginResult.ok();
     }
