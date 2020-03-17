@@ -13,6 +13,7 @@ import 'package:custed2/ui/web/iecard_web_page.dart';
 import 'package:custed2/ui/web/jw_web_page.dart';
 import 'package:custed2/ui/web/login_web_page.dart';
 import 'package:custed2/ui/web/netdisk_web_page.dart';
+import 'package:custed2/ui/web/status_web_page.dart';
 import 'package:custed2/ui/web/tiku_web_page.dart';
 
 final loginWebPage = AppRoute(
@@ -92,3 +93,9 @@ final netdiskWebPage = AppRoute(
   title: '长理网盘',
   page: NetdiskWebPage(),
 );
+
+final statusWebPage = AppRoute(
+  title: '状态监测',
+  page: StatusWebPage(),
+);
+
