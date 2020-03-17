@@ -70,7 +70,7 @@ class UserTab extends StatelessWidget {
             locator<NetdiskProvider>().getQuota();
             netdiskPage.go(context);
           }),
-          CSHeader('课表'),
+          CSHeader('设置'),
           CSControl(
             '将课表设为首页',
             _buildSwitch(context, setting.useScheduleAsHome),
@@ -79,9 +79,15 @@ class UserTab extends StatelessWidget {
             '显示非当前周课程',
             _buildSwitch(context, setting.showInactiveLessons),
           ),
+          CSControl(
+            '绩点不计选修',
+            _buildSwitch(context, setting.dontCountElectiveCourseGrade),
+          ),
+          // CSHeader('成绩'),
           CSHeader(''),
           CSButton(CSButtonType.DEFAULT_CENTER, "重新登录", () => _login(context)),
           CSButton(CSButtonType.DESTRUCTIVE, "退出登录", () => _logout(context)),
+          CSSpacer(),
         ],
       ),
     );

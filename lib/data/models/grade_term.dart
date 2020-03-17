@@ -1,5 +1,4 @@
 import 'package:custed2/data/models/grade_detail.dart';
-import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:hive/hive.dart';
 
 part 'grade_term.g.dart';
@@ -11,10 +10,10 @@ class GradeTerm extends HiveObject {
 
   @HiveField(1)
   double creditTotal;
-  
+
   @HiveField(2)
   double creditEarned;
-  
+
   @HiveField(3)
   int subjectCount;
 
@@ -26,6 +25,9 @@ class GradeTerm extends HiveObject {
 
   @HiveField(7)
   String termName;
+
+  @HiveField(8)
+  double averageGradePointNoElectiveCourse;
 
   @override
   String toString() {

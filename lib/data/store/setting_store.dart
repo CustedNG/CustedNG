@@ -10,6 +10,9 @@ class SettingStore with PresistentStore {
   StoreProperty<bool> get showInactiveLessons =>
       property('showInactiveLessons', defaultValue: true);
 
+  StoreProperty<bool> get dontCountElectiveCourseGrade =>
+      property('dontCountElectiveCourseGrade', defaultValue: false);
+
   StoreProperty<int> get ignoreUpdate => property('ignoreUpdate');
 
   StoreProperty<String> get notification => property('notification');

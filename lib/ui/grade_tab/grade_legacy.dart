@@ -3,6 +3,8 @@ import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
+import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/grade_tab/sliver_header_delegate.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
@@ -170,7 +172,32 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     );
   }
 
+  static String gradePoint(int level, GradeTerm term) {
+    final setting = locator<SettingStore>();
+    final dontCountElective = setting.dontCountElectiveCourseGrade.fetch();
+    final gp = dontCountElective
+        ? term?.averageGradePointNoElectiveCourse?.toStringAsFixed(3)
+        : term?.averageGradePoint?.toStringAsFixed(3);
+
+    if (gp != null) {
+      return gp;
+    }
+
+    if (dontCountElective &&
+        term?.averageGradePoint != null &&
+        term?.averageGradePointNoElectiveCourse == null) {
+      return '刷新后计算';
+    }
+
+    return 'N/A';
+  }
+
   Widget _buildFullData(BuildContext context, int level, GradeTerm term) {
+    final setting = locator<SettingStore>();
+
+    final gradePointLabel =
+        setting.dontCountElectiveCourseGrade.fetch() ? '去选修绩点' : '本学期绩点';
+
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -178,11 +205,11 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
         Column(
           children: <Widget>[
             Text(
-              term?.averageGradePoint?.toStringAsFixed(3) ?? 'N/A',
+              gradePoint(level, term),
               style: textStyleInfo.copyWith(fontSize: 32),
             ),
             SizedBox(height: 5),
-            Text('本学期绩点', style: textStyleTag.copyWith(fontSize: 14))
+            Text(gradePointLabel, style: textStyleTag.copyWith(fontSize: 14))
           ],
         ),
         Row(
@@ -218,6 +245,11 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   }
 
   Widget _buildSmallData(BuildContext context, int level, GradeTerm term) {
+    final setting = locator<SettingStore>();
+
+    final gradePointLabel =
+        setting.dontCountElectiveCourseGrade.fetch() ? '去选修绩点' : '学期绩点';
+
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -234,8 +266,8 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
         ),
         _buildSmallInfoItem(
           context,
-          tag: '学期绩点',
-          value: term?.averageGradePoint?.toStringAsFixed(3) ?? 'N/A',
+          tag: gradePointLabel,
+          value: gradePoint(level, term),
         ),
         _buildSmallInfoItem(
           context,

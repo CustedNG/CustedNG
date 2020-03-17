@@ -106,6 +106,10 @@ class UndergraduateUser with CustUser implements User {
       double creditEarned = 0.0;
       int subjectCount = 0;
       int subjectPassed = 0;
+
+      double weightedGradePointSumNoElectiveCourse = 0.0;
+      double creditTotalNoElectiveCourse = 0.0;
+
       for (var grade in effectiveGrades.values) {
         final passed = grade.testStatus == '正常' && grade.mark >= 60;
         final gradePoint = markToGradePoint(grade.mark);
@@ -116,11 +120,19 @@ class UndergraduateUser with CustUser implements User {
           subjectPassed += 1;
         }
         weightedGradePointSum += gradePoint * grade.credit;
+
+        if (grade.lessonType == '必修') {
+          weightedGradePointSumNoElectiveCourse += gradePoint * grade.credit;
+          creditTotalNoElectiveCourse += grade.credit;
+        }
       }
 
       final averageGradePoint = weightedGradePointSum / creditTotal;
+      final averageGradePointNoElectiveCourse =
+          weightedGradePointSumNoElectiveCourse / creditTotalNoElectiveCourse;
       return GradeTerm()
         ..averageGradePoint = averageGradePoint
+        ..averageGradePointNoElectiveCourse = averageGradePointNoElectiveCourse
         ..creditTotal = creditTotal
         ..creditEarned = creditEarned
         ..subjectCount = subjectCount
