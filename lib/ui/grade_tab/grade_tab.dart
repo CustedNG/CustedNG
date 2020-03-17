@@ -32,8 +32,9 @@ class _GradeTabState extends State<GradeTab> with AfterLayoutMixin<GradeTab> {
   }
 
   @override
-  void afterFirstLayout(BuildContext context) {
+  void afterFirstLayout(BuildContext context) async {
     final user = locator<UserProvider>();
+    await user.initialized;
     if (!user.loggedIn) return;
 
     final gradeProvider = Provider.of<GradeProvider>(context);

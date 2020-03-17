@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/user_profile.dart';
@@ -15,6 +17,9 @@ class UserProvider extends BusyProvider {
   bool _loggedIn = false;
   bool get loggedIn => _profile != null && _loggedIn;
 
+  final _initialized = Completer();
+  Future get initialized => _initialized.future;
+
   Future<void> loadLocalData() async {
     final userData = await locator.getAsync<UserDataStore>();
     _profile = userData.profile.fetch();
@@ -24,6 +29,8 @@ class UserProvider extends BusyProvider {
       print('use cached profile: $_profile');
       notifyListeners();
     }
+
+    _initialized.complete(null);
   }
 
   Future<void> login() async {

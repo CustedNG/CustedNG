@@ -45,14 +45,15 @@ class _ScheduleTabState extends State<ScheduleTab>
   }
 
   @override
-  void afterFirstLayout(BuildContext context) {
+  void afterFirstLayout(BuildContext context) async {
     final user = locator<UserProvider>();
+    await user.initialized;
     if (!user.loggedIn) return;
 
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
     if (scheduleProvider.isBusy) return;
 
-    scheduleProvider.updateScheduleData().timeout(Duration(seconds: 10));
+    scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
   }
 
   Widget _buildTitle(BuildContext context) {
