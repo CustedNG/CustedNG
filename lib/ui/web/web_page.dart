@@ -9,6 +9,7 @@ import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/webview/addon.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/web/web_progress.dart';
 import 'package:custed2/ui/widgets/bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as material;
@@ -28,9 +29,12 @@ class WebPage extends StatefulWidget {
 
 class WebPageState extends State<WebPage> {
   InAppWebViewController controller;
-  List<WebviewAddon> activeAddons = [];
+  WebProgressController progressController;
+  Widget overlay;
 
+  List<WebviewAddon> activeAddons = [];
   List<Widget> addonWidgets = [];
+
   bool isBusy = false;
   Widget replace;
 
@@ -75,10 +79,10 @@ class WebPageState extends State<WebPage> {
 
     Widget result = _buildWebview(context);
 
-    if (widget.canGoBack) {
-      result = Stack(
-        children: <Widget>[
-          result,
+    result = Stack(
+      children: <Widget>[
+        result,
+        if (widget.canGoBack)
           Positioned(
             right: 20,
             bottom: 20,
@@ -101,10 +105,10 @@ class WebPageState extends State<WebPage> {
                 },
               ),
             ),
-          )
-        ],
-      );
-    }
+          ),
+        if (overlay != null) overlay,
+      ],
+    );
 
     if (addonWidgets.isNotEmpty) {
       result = BottomSheet(
@@ -121,7 +125,6 @@ class WebPageState extends State<WebPage> {
 
   Widget _buildWebview(BuildContext context) {
     return InAppWebView(
-      initialUrl: generateInitPage(),
       initialOptions: InAppWebViewWidgetOptions(
         crossPlatform: InAppWebViewOptions(
           debuggingEnabled: true,
@@ -138,11 +141,15 @@ class WebPageState extends State<WebPage> {
         print('INCAT load: $url');
         setState(() => isBusy = true);
         addonOnLoadStart(controller, url);
+        final progress = WebProgress();
+        progressController = progress.controller;
+        this.overlayWith(progress);
         onPageStarted(url);
       },
       onLoadStop: (controller, url) {
         setState(() => isBusy = false);
         addonOnLoadStop(controller, url);
+        this.overlayWith(null);
         onPageFinished(url);
       },
       shouldOverrideUrlLoading: (controller, request) async {
@@ -151,6 +158,12 @@ class WebPageState extends State<WebPage> {
         return allow
             ? ShouldOverrideUrlLoadingAction.ALLOW
             : ShouldOverrideUrlLoadingAction.CANCEL;
+      },
+      onProgressChanged: (controller, percent) {
+        print(percent);
+        progressController?.update(percent, 100);
+        // if (percent != 100 && overlay == null) {}
+        // if (percent == 100) this.overlayWith(null);
       },
       onDownloadStart: (controller, url) {
         print('INCAT download: $url');
@@ -214,6 +227,10 @@ class WebPageState extends State<WebPage> {
 
   void replaceWith(Widget widget) {
     setState(() => replace = widget);
+  }
+
+  void overlayWith(Widget widget) {
+    setState(() => overlay = widget);
   }
 
   static String generateInitPage() {

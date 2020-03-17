@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:custed2/core/provider/provider_base.dart';
+import 'package:custed2/ui/widgets/progress_bar.dart';
 import 'package:flutter/cupertino.dart';
 
 class SnakebarProvider extends ProviderBase {
@@ -152,16 +153,9 @@ class _SnakeBarProgressState extends State<SnakeBarProgress> {
 
   @override
   Widget build(BuildContext context) {
-    final left = Container(color: CupertinoColors.activeBlue);
-    final right = Container(color: CupertinoColors.lightBackgroundGray);
-    final bar = Row(
-      children: <Widget>[
-        Flexible(flex: widget.controller.current ?? 0, child: left),
-        Flexible(flex: widget.controller.remaining ?? 1, child: right),
-      ],
-    );
-    return Container(
-      child: bar,
+    return ProgressBar(
+      widget.controller.current,
+      widget.controller.total,
     );
   }
 
@@ -175,16 +169,6 @@ class _SnakeBarProgressState extends State<SnakeBarProgress> {
 class SnakeBarProgressController extends ChangeNotifier {
   int current;
   int total;
-
-  int get remaining {
-    if (current == null || total == null) return null;
-    return total - current;
-  }
-
-  double get progress {
-    if (current == null || total == null) return null;
-    return current / total;
-  }
 
   update(int current, int total) {
     this.current = current;
