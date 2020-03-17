@@ -165,7 +165,8 @@ class UndergraduateUser with CustUser implements User {
 
   static String computeJsonHash(dynamic raw) {
     final hash = sha1.convert(utf8.encode(json.encode(raw))).bytes;
-    return hex.encode(hash);
+    // 当对数据有扩展时 将前缀改为v3, v4...以便与之前的数据区分
+    return 'v2/' + hex.encode(hash);
   }
 
   static Future<String> computeJsonHashAsync(dynamic raw) {

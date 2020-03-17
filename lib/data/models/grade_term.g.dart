@@ -23,13 +23,14 @@ class GradeTermAdapter extends TypeAdapter<GradeTerm> {
       ..subjectCount = fields[3] as int
       ..subjectPassed = fields[4] as int
       ..grades = (fields[6] as List)?.cast<GradeDetail>()
-      ..termName = fields[7] as String;
+      ..termName = fields[7] as String
+      ..averageGradePointNoElectiveCourse = fields[8] as double;
   }
 
   @override
   void write(BinaryWriter writer, GradeTerm obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.averageGradePoint)
       ..writeByte(1)
@@ -43,6 +44,8 @@ class GradeTermAdapter extends TypeAdapter<GradeTerm> {
       ..writeByte(6)
       ..write(obj.grades)
       ..writeByte(7)
-      ..write(obj.termName);
+      ..write(obj.termName)
+      ..writeByte(8)
+      ..write(obj.averageGradePointNoElectiveCourse);
   }
 }

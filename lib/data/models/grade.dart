@@ -1,6 +1,4 @@
-import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
-import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:hive/hive.dart';
 
 part 'grade.g.dart';
@@ -49,7 +47,7 @@ class Grade extends HiveObject {
   String toString() {
     final i =
         terms?.map((e) => '${e.termName}:${e.averageGradePoint}')?.join(', ');
-    return 'Grade<$i>';
+    return 'Grade<$i>($versionHash)';
   }
 
   double get creditTotal => creditEarned + creditUnattained;

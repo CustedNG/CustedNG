@@ -175,6 +175,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   static String gradePoint(int level, GradeTerm term) {
     final setting = locator<SettingStore>();
     final dontCountElective = setting.dontCountElectiveCourseGrade.fetch();
+
     final gp = dontCountElective
         ? term?.averageGradePointNoElectiveCourse?.toStringAsFixed(3)
         : term?.averageGradePoint?.toStringAsFixed(3);
@@ -182,7 +183,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     if (gp != null) {
       return gp;
     }
-
     if (dontCountElective &&
         term?.averageGradePoint != null &&
         term?.averageGradePointNoElectiveCourse == null) {

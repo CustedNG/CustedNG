@@ -32,7 +32,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       data: theme,
       child: CupertinoApp(
         //防止ios自动适配黑暗模式
-        theme: CupertinoThemeData(brightness:Brightness.light),
+        theme: CupertinoThemeData(brightness: Brightness.light),
         navigatorKey: locator<GlobalKey<NavigatorState>>(),
         title: 'Custed',
         home: AppFrame(),
@@ -58,16 +58,20 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       App First Layout Done. 
   
     ''');
-    
-    locator<ScheduleProvider>().loadLocalData();
-    locator<GradeProvider>().loadLocalData();
-    locator<UserProvider>().loadLocalData();
-    locator<WeatherProvider>().startAutoUpdate();
 
-    // call login() here to improve iecard open speed.
-    IecardService().login();
-
+    // 启动外围服务
     Analytics.init();
     Analytics.isDebug = BuildMode.isDebug;
+    locator<WeatherProvider>().startAutoUpdate();
+
+    // 加载核心数据
+    await Future.wait([
+      locator<ScheduleProvider>().loadLocalData(),
+      locator<GradeProvider>().loadLocalData(),
+      locator<UserProvider>().loadLocalData(),
+    ]);
+
+    // 预热 IecardService
+    IecardService().login();
   }
 }
