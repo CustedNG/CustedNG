@@ -121,7 +121,7 @@ class UndergraduateUser with CustUser implements User {
         }
         weightedGradePointSum += gradePoint * grade.credit;
 
-        if (grade.lessonType == '必修') {
+        if (grade.lessonType != '选修') {
           weightedGradePointSumNoElectiveCourse += gradePoint * grade.credit;
           creditTotalNoElectiveCourse += grade.credit;
         }
@@ -166,7 +166,7 @@ class UndergraduateUser with CustUser implements User {
   static String computeJsonHash(dynamic raw) {
     final hash = sha1.convert(utf8.encode(json.encode(raw))).bytes;
     // 当对数据有扩展时 将前缀改为v3, v4...以便与之前的数据区分
-    return 'v2/' + hex.encode(hash);
+    return 'v3/' + hex.encode(hash);
   }
 
   static Future<String> computeJsonHashAsync(dynamic raw) {
