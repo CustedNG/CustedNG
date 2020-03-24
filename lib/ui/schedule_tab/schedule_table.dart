@@ -1,8 +1,12 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule.dart';
+import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_arrow.dart';
+import 'package:custed2/ui/schedule_tab/schedule_dates.dart';
 import 'package:custed2/ui/schedule_tab/schedule_lesson.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -45,9 +49,17 @@ class ScheduleTable extends StatelessWidget {
 
     final table = showArrow ? _withArrow(rawTable) : rawTable;
 
+    final settings = locator<SettingStore>();
+    final date = ValueListenableBuilder(
+      valueListenable: settings.showFestivalAndHoliday.listenable(),
+      builder: (context, value, _) {
+        return _buildDate(context, value);
+      },
+    );
+
     return Column(
       children: <Widget>[
-        _buildDate(context),
+        date,
         table,
       ],
     );
@@ -80,7 +92,7 @@ class ScheduleTable extends StatelessWidget {
     }
   }
 
-  Widget _buildDate(BuildContext context) {
+  Widget _buildDate(BuildContext context, bool showFestivalAndHoliday) {
     final theme = AppTheme.of(context);
 
     final items = <Widget>[];
@@ -110,17 +122,23 @@ class ScheduleTable extends StatelessWidget {
       final shouldHighlight =
           highLightToday ? date.isInSameDayAs(today) : false;
 
+      final dateOverride = showFestivalAndHoliday
+          ? ScheduleDates.getHoliday(date) ?? ScheduleDates.getSolarTerm(date)
+          : null;
+
       items.add(Container(
         padding: EdgeInsets.symmetric(vertical: 5),
         alignment: Alignment.center,
         child: Column(children: <Widget>[
-          Text(
-            displayDate,
+          AutoSizeText(
+            dateOverride ?? displayDate,
             style: shouldHighlight ? dateStyleHighlight : dateStyle,
+            maxLines: 1,
           ),
-          Text(
+          AutoSizeText(
             date.weekday.weekdayInChinese(),
             style: shouldHighlight ? chsDateStyleHighlight : chsDateStyle,
+            maxLines: 1,
           ),
         ]),
       ));

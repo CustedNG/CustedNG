@@ -7,6 +7,9 @@ class SettingStore with PresistentStore {
   StoreProperty<bool> get useScheduleAsHome =>
       property('useScheduleAsHome', defaultValue: false);
 
+  StoreProperty<bool> get showFestivalAndHoliday =>
+      property('showFestivalAndHoliday', defaultValue: true);
+
   StoreProperty<bool> get showInactiveLessons =>
       property('showInactiveLessons', defaultValue: true);
 

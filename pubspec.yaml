@@ -42,6 +42,8 @@ dependencies:
       ref: master
   
   after_layout: ^1.0.7+2
+  auto_size_text: ^2.1.0
+
   path_provider: ^1.5.1
   android_path_provider: ^0.1.1
 

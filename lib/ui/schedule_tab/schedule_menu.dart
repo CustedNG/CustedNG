@@ -2,6 +2,7 @@ import 'package:custed2/core/route.dart';
 import 'package:custed2/core/script.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ class ScheduleMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheduleProvider = locator<ScheduleProvider>();
+    final settings = locator<SettingStore>();
 
     return CupertinoActionSheet(
       actions: <Widget>[
@@ -35,34 +37,19 @@ class ScheduleMenu extends StatelessWidget {
             ).popup(context);
           },
         ),
-        // CupertinoActionSheetAction(
-        //   child: Text(
-        //       (Settings.showInactiveLessons.cachedValue ? "隐藏" : "显示") +
-        //           "非本周课程"),
-        //   onPressed: () {
-        //     material.Navigator.of(context).pop();
-        //     Settings.showInactiveLessons
-        //         .put(!Settings.showInactiveLessons.cachedValue);
-        //   },
-        // ),
-        // Consumer<UserModel>(
-        //   builder: (context, user, widget) {
-        //     return CupertinoActionSheetAction(
-        //       child: material.Text("一键清空改动"),
-        //       onPressed: () async {
-        //         user.schedule.allLessons().forEach((lesson) async {
-        //           if (lesson.type == 32){
-        //             await user.delete(lesson.lessonHash,false);
-        //           }
-        //         });
-        //         Future.delayed(Duration(seconds:1),(){
-        //           user.updateSchedule(force: true);
-        //         });
-        //         material.Navigator.of(context).pop();
-        //       },
-        //     );
-        //   },
-        // ),
+        CupertinoActionSheetAction(
+          child: ValueListenableBuilder(
+            valueListenable: settings.showFestivalAndHoliday.listenable(),
+            builder: (context, value, _) {
+              return Text(value ? "不显示节假日" : "显示节假日");
+            },
+          ),
+          onPressed: () {
+            settings.showFestivalAndHoliday.put(
+              !settings.showFestivalAndHoliday.fetch(),
+            );
+          },
+        ),
         CupertinoActionSheetAction(
           child: Text('常见问题&Tips'),
           onPressed: () {
