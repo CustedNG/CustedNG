@@ -33,7 +33,7 @@ class IecardAddon extends WebviewAddon {
     );
   }
 
-  void onPageFinished(InAppWebViewController controller, String url) async {
+  Future<void> onPageFinished(InAppWebViewController controller, String url) async {
     await controller.evaluateJavascript(source: '''
       (function() {
         // 首页下方导航

@@ -2,7 +2,9 @@ import 'package:custed2/ui/widgets/progress_bar.dart';
 import 'package:flutter/cupertino.dart';
 
 class WebProgress extends StatefulWidget {
-  final controller = WebProgressController();
+  WebProgress(this.controller);
+
+  final WebProgressController controller;
 
   @override
   _WebProgressState createState() => _WebProgressState();
@@ -27,6 +29,21 @@ class _WebProgressState extends State<WebProgress> {
 
   @override
   Widget build(BuildContext context) {
+    return WebProgressLayer(
+      widget.controller.current ?? 0,
+      widget.controller.total ?? 1,
+    );
+  }
+}
+
+class WebProgressLayer extends StatelessWidget {
+  WebProgressLayer(this.current, this.total);
+
+  final int current;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       color: CupertinoColors.white,
       constraints: BoxConstraints.expand(),
@@ -39,11 +56,7 @@ class _WebProgressState extends State<WebProgress> {
       child: SizedBox(
         width: 130,
         height: 10,
-        child: ProgressBar(
-          widget.controller.current,
-          widget.controller.total,
-          borderWidth: 1,
-        ),
+        child: ProgressBar(current, total, borderWidth: 1),
       ),
     );
   }

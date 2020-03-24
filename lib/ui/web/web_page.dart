@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/config/theme.dart';
@@ -11,6 +10,7 @@ import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/web/web_progress.dart';
 import 'package:custed2/ui/widgets/bottom_sheet.dart';
+import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -29,7 +29,8 @@ class WebPage extends StatefulWidget {
 
 class WebPageState extends State<WebPage> {
   InAppWebViewController controller;
-  WebProgressController progressController;
+
+  WebProgressController progressController = WebProgressController();
   Widget overlay;
 
   List<WebviewAddon> activeAddons = [];
@@ -135,22 +136,31 @@ class WebPageState extends State<WebPage> {
       ),
       onWebViewCreated: (controller) {
         this.controller = controller;
+        this.overlayWith(WebProgressLayer(0, 1));
         onCreated();
       },
       onLoadStart: (controller, url) {
         print('INCAT load: $url');
         setState(() => isBusy = true);
         addonOnLoadStart(controller, url);
-        final progress = WebProgress();
-        progressController = progress.controller;
-        this.overlayWith(progress);
+        this.overlayWith(WebProgress(progressController));
         onPageStarted(url);
       },
-      onLoadStop: (controller, url) {
+      onLoadStop: (controller, url) async {
         setState(() => isBusy = false);
-        addonOnLoadStop(controller, url);
-        this.overlayWith(null);
+        await addonOnLoadStop(controller, url);
         onPageFinished(url);
+
+        // 防止多次重定向出现抖动
+        await Future.delayed(Duration(milliseconds: 100));
+        final stillLoading = await controller.isLoading();
+        if (stillLoading) return;
+        if (url == 'about:blank') return;
+        this.overlayWith(null);
+      },
+      onLoadError: (controller, url, code, message) {
+        replaceWith(PlaceholderWidget(text: '加载失败[$code]'));
+        print('INCAT loadError: $url, $code, $message');
       },
       shouldOverrideUrlLoading: (controller, request) async {
         print('INCAT redirect: ${request.url}');
@@ -162,8 +172,6 @@ class WebPageState extends State<WebPage> {
       onProgressChanged: (controller, percent) {
         print(percent);
         progressController?.update(percent, 100);
-        // if (percent != 100 && overlay == null) {}
-        // if (percent == 100) this.overlayWith(null);
       },
       onDownloadStart: (controller, url) {
         print('INCAT download: $url');
@@ -184,9 +192,10 @@ class WebPageState extends State<WebPage> {
     }
   }
 
-  void addonOnLoadStop(InAppWebViewController controller, String url) {
+  Future<void> addonOnLoadStop(
+      InAppWebViewController controller, String url) async {
     for (var addon in activeAddons) {
-      addon.onPageFinished(controller, url);
+      await addon.onPageFinished(controller, url);
     }
   }
 

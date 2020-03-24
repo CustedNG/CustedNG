@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
@@ -12,7 +14,7 @@ abstract class WebviewAddon {
     return null;
   }
 
-  void onPageFinished(InAppWebViewController controller, String url) {}
+  FutureOr<void> onPageFinished(InAppWebViewController controller, String url) async {}
 
   void onPageStarted(InAppWebViewController controller, String url) {}
 
