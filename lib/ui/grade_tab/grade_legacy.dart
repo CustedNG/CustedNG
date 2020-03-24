@@ -393,7 +393,6 @@ class __ReportItemState extends State<_ReportItem> {
             : textStyleName;
     final content = isExpanded
         ? Container(
-            color: bgColor,
             alignment: Alignment.center,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -460,7 +459,6 @@ class __ReportItemState extends State<_ReportItem> {
             ),
           )
         : Container(
-            color: bgColor,
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -478,19 +476,22 @@ class __ReportItemState extends State<_ReportItem> {
             ),
           );
     final item = AnimatedContainer(
-        height: isExpanded ? 115 : 57,
-        curve: Curves.fastLinearToSlowEaseIn,
-        duration: Duration(milliseconds: 500),
-        child: Container(
-          margin: EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
-              color: CupertinoColors.white,
-              border: CupertinoTheme.brightnessOf(context) == Brightness.dark
-                  ? null
-                  : Border.all(color: CupertinoColors.black.withAlpha(50)),
-              borderRadius: BorderRadius.circular(5)),
-          child: content,
-        ));
+      height: isExpanded ? 115 : 57,
+      curve: Curves.fastLinearToSlowEaseIn,
+      duration: Duration(milliseconds: 500),
+      child: Container(
+        margin: EdgeInsets.only(bottom: 10),
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(5),
+          border: CupertinoTheme.brightnessOf(context) == Brightness.dark
+              ? null
+              : Border.all(color: CupertinoColors.black.withAlpha(50)),
+        ),
+        child: content,
+      ),
+    );
     return GestureDetector(
       child: item,
       onTap: toggleExpansion,
