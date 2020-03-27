@@ -18,32 +18,35 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
     <application
-        android:name="io.flutter.app.FlutterApplication"
         android:label="Custed NG"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         android:allowBackup="false">
         <activity
-            android:name="cc.xuty.custed2.SplashActivity"
+            android:name="io.flutter.embedding.android.FlutterActivity"
             android:launchMode="singleTop"
-            android:theme="@style/SplashTheme"
+            android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
+      
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme"
+                />
+
+            <meta-data
+                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+                android:resource="@drawable/normal_background"
+                />
+                
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/FlutterActivityTheme"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize"
-            />
-            
+
         <!-- See: https://pub.dev/packages/open_file -->
         <!-- <provider
             android:name="androidx.core.content.FileProvider"
