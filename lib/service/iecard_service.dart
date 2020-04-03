@@ -50,7 +50,7 @@ class IecardService extends WebvpnBasedService {
         'flowID': '10002',
         'type': '3',
         'apptype': '4',
-        'Url': 'http://192.168.222.176:8988/web/common/check.html',
+        'Url': 'http://iecard.cust.edu.cn:8988/web/common/check.html',
         'MenuName': '交网费',
         'EMenuName': '交网费',
         'parm11': '',

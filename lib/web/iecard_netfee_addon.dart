@@ -8,7 +8,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 class IecardNetFeeAddon extends WebviewAddon {
   bool shouldActivate(Uri uri) {
     return uri.toString().startsWith(
-        'http://192-168-222-176-8988-p.webvpn.cust.edu.cn:8118/web/common/check.html');
+        'http://iecard-cust-edu-cn-8988-p.webvpn.cust.edu.cn:8118/web/common/check.html');
   }
 
   void onPageFinished(InAppWebViewController controller, String url) async {
