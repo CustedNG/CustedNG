@@ -10,10 +10,14 @@ class ScheduleTitle extends StatelessWidget {
     final scheduleTitleProvider = Provider.of<ScheduleTitleProvider>(context);
 
     var title = '课表';
+    var key = title;
+    
     if (scheduleProvider.isBusy) {
       title = '更新中';
+      key = title;
     } else if (scheduleTitleProvider.showWeekInTitle) {
       title = '第${scheduleProvider.selectedWeek}周';
+      key = '第x周';
     }
 
     // return Text(title);
@@ -22,7 +26,7 @@ class ScheduleTitle extends StatelessWidget {
       child: Container(
         child: Text(title),
         alignment: Alignment.centerLeft,
-        key: Key(title),
+        key: Key(key),
       ),
     );
   }
