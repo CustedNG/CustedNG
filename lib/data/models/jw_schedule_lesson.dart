@@ -40,7 +40,9 @@ class JwScheduleLesson {
     final result = <int>[];
 
     final rawWeeks = getWeeks();
-    final weeks = rawWeeks.replaceAll(RegExp(r'[^0-9,-]'), '');
+    final weeks = rawWeeks
+        .replaceAll(RegExp(r'\[\d+-\d+节\]'), '')
+        .replaceAll(RegExp(r'[^0-9,-]'), '');
 
     for (var part in weeks.split(',')) {
       if (part.contains('-')) {
