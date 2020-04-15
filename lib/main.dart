@@ -15,6 +15,7 @@ import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/data/providers/schedule_title_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
@@ -81,6 +82,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => locator<DebugProvider>()),
           ChangeNotifierProvider(create: (_) => locator<SnakebarProvider>()),
           ChangeNotifierProvider(create: (_) => locator<ScheduleProvider>()),
+          ChangeNotifierProvider(create: (_) => locator<ScheduleTitleProvider>()),
           ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
           ChangeNotifierProvider(create: (_) => locator<AppProvider>()),
           ChangeNotifierProvider(create: (_) => locator<WeatherProvider>()),

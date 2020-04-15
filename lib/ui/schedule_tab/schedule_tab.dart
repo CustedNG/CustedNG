@@ -1,11 +1,13 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/data/providers/schedule_title_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_menu.dart';
 import 'package:custed2/ui/schedule_tab/schedule_table.dart';
+import 'package:custed2/ui/schedule_tab/schedule_title.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_navigator.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
@@ -22,6 +24,31 @@ class ScheduleTab extends StatefulWidget {
 
 class _ScheduleTabState extends State<ScheduleTab>
     with AfterLayoutMixin<ScheduleTab> {
+  final scrollController = ScrollController();
+  var showWeekInTitle = false;
+
+  @override
+  void initState() {
+    scrollController.addListener(onScroll);
+    super.initState();
+  }
+
+  void onScroll() {
+    final titleProvider = locator<ScheduleTitleProvider>();
+
+    if (scrollController.offset >= 50 &&
+        titleProvider.showWeekInTitle == false) {
+      titleProvider.setShowWeekInTitle(true);
+      return;
+    }
+
+    if (scrollController.offset < 50 &&
+        titleProvider.showWeekInTitle == true) {
+      titleProvider.setShowWeekInTitle(false);
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
@@ -36,6 +63,7 @@ class _ScheduleTabState extends State<ScheduleTab>
             : NavBarMoreBtn(onTap: () => _showMenu(context)),
       ),
       child: ListView(
+        controller: scrollController,
         children: <Widget>[
           ScheduleWeekNavigator(),
           _buildTable(context),
@@ -57,9 +85,10 @@ class _ScheduleTabState extends State<ScheduleTab>
   }
 
   Widget _buildTitle(BuildContext context) {
-    final scheduleProvider = Provider.of<ScheduleProvider>(context);
-    final text = scheduleProvider.isBusy ? '更新中' : '课表';
-    return NavBarTitle(child: Text(text));
+    // final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    // final text = scheduleProvider.isBusy ? '更新中' : '课表';
+    // final text1 = showWeekInTitle ? 'lalala' : text;
+    return NavBarTitle(child: ScheduleTitle());
   }
 
   void _showMenu(BuildContext context) {
