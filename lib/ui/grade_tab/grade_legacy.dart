@@ -360,7 +360,13 @@ class __ReportItemState extends State<_ReportItem> {
   @override
   Widget build(BuildContext context) {
     TextStyle gradeTextStyle;
-    if (widget.exam.mark >= 60) {
+    if (widget.exam.mark == null) {
+      gradeTextStyle = textStyleMark.copyWith(
+          color: DynamicColor(
+        Color(0xfffcc603),
+        Color(0xffb3ad00),
+      ).resolve(context));
+    } else if (widget.exam.mark >= 60) {
       gradeTextStyle = textStyleMark.copyWith(
           color: DynamicColor(
         Color(0xFF2ACD75),
@@ -422,7 +428,7 @@ class __ReportItemState extends State<_ReportItem> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        '成绩 : ${widget.exam.rawMark}',
+                        '成绩 : ${formatGrade(widget.exam)}',
                         style: gradeTextStyle,
                       ),
                       SizedBox(width: 20),
@@ -503,4 +509,12 @@ class __ReportItemState extends State<_ReportItem> {
       isExpanded = !isExpanded;
     });
   }
+}
+
+String formatGrade(GradeDetail detail) {
+  if (detail.rawMark == null || detail.rawMark.isEmpty) {
+    return '?';
+  }
+
+  return detail.rawMark;
 }

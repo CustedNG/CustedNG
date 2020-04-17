@@ -92,7 +92,8 @@ class UndergraduateUser with CustUser implements User {
             '${grade.schoolHour}';
 
         final shouldOverride = effectiveGrades[key] == null ||
-            effectiveGrades[key].mark < grade.mark;
+            effectiveGrades[key].mark == null ||
+            effectiveGrades[key].mark < (grade.mark ?? 0.0);
 
         if (shouldOverride) {
           effectiveGrades[key] = grade;
