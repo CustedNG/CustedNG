@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/user_profile.dart';
@@ -61,6 +62,7 @@ class UserProvider extends BusyProvider {
   void _afterLogin() {
     final schedule = locator<ScheduleProvider>();
     final grade = locator<GradeProvider>();
+    locator<PersistCookieJar>().deleteAll();
     schedule.updateScheduleData(reset: true);
     grade.updateGradeData();
     // call login() here to improve iecard open speed.
