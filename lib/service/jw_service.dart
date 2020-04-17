@@ -14,7 +14,7 @@ import 'package:custed2/service/webvpn_based_service.dart';
 
 class JwService extends WebvpnBasedService {
   static const baseUrl = 'http://192-168-223-72-8080-p.webvpn.cust.edu.cn:8118';
-
+  
   final MyssoService _mysso = locator<MyssoService>();
 
   @override

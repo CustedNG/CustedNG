@@ -11,7 +11,7 @@ class JwWebPage extends WebPage {
   final title = '教务系统';
 
   @override
-  final String userAgent = UserAgent.pcChromeUA;
+  final String userAgent = UserAgent.chromeUA;
 
   @override
   _JwWebPageState createState() => _JwWebPageState();
