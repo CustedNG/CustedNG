@@ -13,5 +13,9 @@ class NetdiskAddon extends WebviewAddon {
       controller,
       'div[class*=nav-tabs] {  display: none; }',
     );
+    await WebviewAddon.injectCss(
+      controller,
+      'a[href*=home] {  display: none; }',
+    );
   }
 }
