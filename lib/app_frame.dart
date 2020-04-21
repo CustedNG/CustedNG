@@ -6,7 +6,6 @@ import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/grade_legacy.dart';
-import 'package:custed2/ui/grade_tab/grade_tab.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';

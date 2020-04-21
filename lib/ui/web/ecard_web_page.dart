@@ -1,4 +1,3 @@
-import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/iecard_service.dart';

@@ -1,7 +1,6 @@
 import 'package:custed2/config/routes.dart';
 import 'package:custed2/config/theme.dart';
 import 'package:custed2/core/store/presistent_store.dart';
-import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';

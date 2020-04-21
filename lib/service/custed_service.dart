@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:custed2/core/service/cat_client.dart';
+import 'package:custed2/data/models/custed_banner.dart';
+import 'package:custed2/data/models/custed_file.dart';
 import 'package:custed2/data/models/custed_response.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/models/custed_weather.dart';
@@ -40,8 +42,17 @@ class CustedService extends CatClient {
     return CustedUpdate.fromJson(custedResp.data as Map<String, dynamic>);
   }
 
-  static String getUpdateUrl(CustedUpdate update) =>
-      update.file.url.startsWith('/')
-          ? '$baseUrl${update.file.url}'
-          : update.file.url;
+  Future<CustedBanner> getBanner() async {
+    final build = BuildData.build;
+    final resp =
+        await get('$baseUrl/app/banner?build=$build', timeout: defaultTimeout);
+    final custedResp = CustedResponse.fromJson(json.decode(resp.body));
+    if (custedResp.hasError) return null;
+    return CustedBanner.fromJson(custedResp.data as Map<String, dynamic>);
+  }
+
+  static String getFileUrl(CustedFile file) {
+    if (file == null) return null;
+    return file.url.startsWith('/') ? '$baseUrl${file.url}' : file.url;
+  }
 }

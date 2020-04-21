@@ -11,13 +11,10 @@ import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
-import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/res/image_res.dart';
+import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/jw_service.dart';
-import 'package:custed2/service/mysso_service.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/painting.dart';
 
 class UndergraduateUser with CustUser implements User {
   final _jw = locator<JwService>();
@@ -166,8 +163,7 @@ class UndergraduateUser with CustUser implements User {
 
   static String computeJsonHash(dynamic raw) {
     final hash = sha1.convert(utf8.encode(json.encode(raw))).bytes;
-    // 当对数据有扩展时 将前缀改为v3, v4...以便与之前的数据区分
-    return 'v4/' + hex.encode(hash);
+    return 'b${BuildData.build}/' + hex.encode(hash);
   }
 
   static Future<String> computeJsonHashAsync(dynamic raw) {

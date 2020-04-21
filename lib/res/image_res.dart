@@ -8,7 +8,6 @@ class ImageRes {
   static const custSMapSimple = AssetImage('assets/map/simple/CustS.png');
 
   static const defaultAvatar = AssetImage('assets/avatar/default.jpg');
-  static const defaultBanner = AssetImage('assets/banner.jpg');
 
   static const networkIcon = AssetImage('assets/icon/network.png');
   static const timetableIcon = AssetImage('assets/icon/timetable.png');

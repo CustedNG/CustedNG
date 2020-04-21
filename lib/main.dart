@@ -9,6 +9,7 @@ import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/app_provider.dart';
+import 'package:custed2/data/providers/banner_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
@@ -40,13 +41,14 @@ Future<void> initApp() async {
 
   await setupLocator(docDir);
   locator<AppProvider>().loadLocalData();
+  locator<BannerProvider>().init();
 }
 
 void runInZone(Function body) {
   final zoneSpec = ZoneSpecification(
     print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
       parent.print(zone, line);
-      // This is a hack to avoid 
+      // This is a hack to avoid
       // `setState() or markNeedsBuild() called during build`
       // error.
       Future.delayed(Duration(milliseconds: 1), () {
@@ -82,13 +84,15 @@ void main() async {
           ChangeNotifierProvider(create: (_) => locator<DebugProvider>()),
           ChangeNotifierProvider(create: (_) => locator<SnakebarProvider>()),
           ChangeNotifierProvider(create: (_) => locator<ScheduleProvider>()),
-          ChangeNotifierProvider(create: (_) => locator<ScheduleTitleProvider>()),
+          ChangeNotifierProvider(
+              create: (_) => locator<ScheduleTitleProvider>()),
           ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
           ChangeNotifierProvider(create: (_) => locator<AppProvider>()),
           ChangeNotifierProvider(create: (_) => locator<WeatherProvider>()),
           ChangeNotifierProvider(create: (_) => locator<CetAvatarProvider>()),
           ChangeNotifierProvider(create: (_) => locator<GradeProvider>()),
           ChangeNotifierProvider(create: (_) => locator<NetdiskProvider>()),
+          ChangeNotifierProvider(create: (_) => locator<BannerProvider>()),
         ],
         child: Custed(),
       ),

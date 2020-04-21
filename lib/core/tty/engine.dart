@@ -11,7 +11,6 @@ import 'package:custed2/core/lisp/lisp_sym.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/tty/exception.dart';
-import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/store/lisp_store.dart';

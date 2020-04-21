@@ -135,7 +135,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
 
   Future<void> download() async {
     updateMsg('正在准备更新');
-    final url = CustedService.getUpdateUrl(widget.update);
+    final url = CustedService.getFileUrl(widget.update.file);
     final total = widget.update.file.size * 1024;
     await Dio().download(url, outputPath, onReceiveProgress: (current, _) {
       if (!mounted) return;
