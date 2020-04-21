@@ -227,7 +227,7 @@ class WebPageState extends State<WebPage> {
         name: cookie.name,
         value: cookie.value,
         domain: domain,
-        path: cookie.path,
+        path: cookie.path ?? '/',
         maxAge: cookie.maxAge,
         isSecure: cookie.secure,
       );
