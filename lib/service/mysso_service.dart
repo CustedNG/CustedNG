@@ -15,6 +15,7 @@ class MyssoService extends CatService {
   static String parseValue(String value) {
     // just handle string case for now.
     // [xxx] -> xxx
+    if (value == null) return null;
     if (value.startsWith('[') && value.endsWith(']')) {
       return value.substring(1, value.length - 1);
     }
