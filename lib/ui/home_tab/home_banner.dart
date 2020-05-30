@@ -1,5 +1,6 @@
 import 'package:custed2/data/providers/banner_provider.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
+import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Icons;
 import 'package:flutter_advanced_networkimage/provider.dart';
@@ -12,7 +13,9 @@ class HomeBanner extends StatelessWidget {
     return HomeCard(
       content: AspectRatio(
         aspectRatio: 1250 / 540,
-        child: _buildImage(context),
+        child: DarkModeFilter(
+          child: _buildImage(context),
+        ),
       ),
       padding: 0,
     );

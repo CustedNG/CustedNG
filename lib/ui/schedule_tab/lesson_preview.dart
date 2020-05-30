@@ -7,6 +7,7 @@ import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/lesson_detail_page.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
+import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/maps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as material;
@@ -145,7 +146,9 @@ class LessonPreview extends StatelessWidget {
     if (noConflict) {
       final map = Maps.search(lesson.roomRaw);
       if (map != null) {
-        content.add(SizedBox(height: 270 * 0.618, child: ClipRect(child: map)));
+        content.add(SizedBox(
+            height: 270 * 0.618,
+            child: ClipRect(child: DarkModeFilter(child: map))));
       }
     } else {
       for (var lesson in conflict) {

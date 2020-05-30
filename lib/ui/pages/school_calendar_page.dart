@@ -1,4 +1,5 @@
 import 'package:custed2/ui/pages/school_calendar_menu.dart';
+import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/res/image_res.dart';
@@ -16,13 +17,16 @@ class SchoolCalendarPage extends StatelessWidget {
         trailing: NavBarMoreBtn(onTap: () => _showMenu(context)),
       ),
       child: ClipRect(
-          child: SafeArea(
-        child: PhotoView(
-          maxScale: 1.0,
-          minScale: 0.1,
-          imageProvider: ImageRes.miscSchoolCalendar,
+        child: SafeArea(
+          child: DarkModeFilter(
+            child: PhotoView(
+              maxScale: 1.0,
+              minScale: 0.1,
+              imageProvider: ImageRes.miscSchoolCalendar,
+            ),
+          ),
         ),
-      )),
+      ),
     );
   }
 

@@ -7,6 +7,7 @@ import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/grade_tab/sliver_header_delegate.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,10 +96,12 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return CupertinoPageScaffold(
+      backgroundColor: theme.backgroundColor,
       navigationBar: CupertinoNavigationBar(
         automaticallyImplyMiddle: false,
-        backgroundColor: CupertinoColors.activeBlue,
+        backgroundColor: theme.navBarColor,
         actionsForegroundColor: CupertinoColors.white,
         leading: Align(
           alignment: Alignment.centerLeft,
@@ -107,6 +110,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       ),
       child: SafeArea(
         child: Material(
+          color: theme.backgroundColor,
           child: PageView(
             controller: controller,
             children: <Widget>[
@@ -147,6 +151,8 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     final maxHeight = 150.0;
     final minHeight = 50.0;
     final maxOffset = 50.0;
+
+    final theme = AppTheme.of(context);
     return SliverPersistentHeader(
       pinned: true,
       delegate: SliverHeaderDelegate(
@@ -164,7 +170,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
           );
           return Container(
             // height: 150 - offset,
-            color: Color(0xFF3D93F8),
+            color: theme.secondaryHeaderColor,
             child: result,
           );
         },
@@ -337,8 +343,9 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       mainAxisSize: MainAxisSize.min,
       children: items,
     );
+    final theme = AppTheme.of(context);
     return Container(
-      // color: Theme.of(context).backgroundColor,
+      color: theme.backgroundColor,
       padding: EdgeInsets.all(15.0),
       child: report,
     );
@@ -386,9 +393,7 @@ class __ReportItemState extends State<_ReportItem> {
         Color(0xffb3ad00),
       ).resolve(context));
     }
-    final bgColor = CupertinoTheme.brightnessOf(context) == Brightness.dark
-        ? Colors.grey[800]
-        : CupertinoColors.white;
+    final theme = AppTheme.of(context);
     final fieldTextTheme =
         CupertinoTheme.brightnessOf(context) == Brightness.dark
             ? textStyleFieldDark
@@ -489,7 +494,7 @@ class __ReportItemState extends State<_ReportItem> {
         margin: EdgeInsets.only(bottom: 10),
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          color: bgColor,
+          color: theme.cardBackgroundColor,
           borderRadius: BorderRadius.circular(5),
           border: CupertinoTheme.brightnessOf(context) == Brightness.dark
               ? null

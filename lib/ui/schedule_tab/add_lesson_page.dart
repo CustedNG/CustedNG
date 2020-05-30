@@ -54,7 +54,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
     );
 
     return CupertinoPageScaffold(
-      backgroundColor: CupertinoColors.lightBackgroundGray,
+      backgroundColor: theme.textFieldListBackgroundColor,
       navigationBar: NavBar.cupertino(
         context: context,
         leading: NavBarButton.close(onPressed: () => Navigator.pop(context)),

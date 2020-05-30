@@ -66,6 +66,7 @@ class NetdiskPage extends StatelessWidget {
           netdisk.quota.quota,
           height: 15,
         ),
+        SizedBox(height: 12),
       ],
     );
   }

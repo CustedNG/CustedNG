@@ -9,6 +9,7 @@ import 'package:custed2/ui/schedule_tab/schedule_menu.dart';
 import 'package:custed2/ui/schedule_tab/schedule_table.dart';
 import 'package:custed2/ui/schedule_tab/schedule_title.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_navigator.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
@@ -42,8 +43,7 @@ class _ScheduleTabState extends State<ScheduleTab>
       return;
     }
 
-    if (scrollController.offset < 30 &&
-        titleProvider.showWeekInTitle == true) {
+    if (scrollController.offset < 30 && titleProvider.showWeekInTitle == true) {
       titleProvider.setShowWeekInTitle(false);
       return;
     }
@@ -52,8 +52,10 @@ class _ScheduleTabState extends State<ScheduleTab>
   @override
   Widget build(BuildContext context) {
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    final theme = AppTheme.of(context);
 
     return CupertinoPageScaffold(
+      backgroundColor: theme.scheduleBackgroundColor,
       navigationBar: NavBar.cupertino(
         context: context,
         leading: _buildTitle(context),
@@ -124,6 +126,7 @@ class _ScheduleTabState extends State<ScheduleTab>
     }
 
     final setting = locator<SettingStore>();
+    final theme = AppTheme.of(context);
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) {
@@ -135,7 +138,7 @@ class _ScheduleTabState extends State<ScheduleTab>
         }
       },
       child: Container(
-        color: CupertinoColors.white,
+        color: theme.scheduleBackgroundColor,
         child: ScheduleTable(
           scheduleProvider.schedule,
           week: scheduleProvider.selectedWeek,

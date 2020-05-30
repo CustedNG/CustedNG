@@ -1,5 +1,7 @@
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart' show Colors;
 
 class AddLessonWeeksPicker extends StatefulWidget {
   final Map<int, bool> data;
@@ -17,6 +19,8 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
   }
 
   Widget weekItem(int key, {bool active = false}) {
+    final theme = AppTheme.of(context);
+    final isDark = CupertinoTheme.of(context).brightness == Brightness.dark;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -32,9 +36,10 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
             child: Text(
               key.toString(),
               style: TextStyle(
-                fontSize: 15.0,
-                color: active ? CupertinoColors.white : CupertinoColors.black,
-              ),
+                  fontSize: 15.0,
+                  color: active && !isDark
+                      ? theme.textColorInversed
+                      : theme.textColor),
               textAlign: TextAlign.center,
             ),
             decoration: BoxDecoration(
@@ -45,7 +50,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
             alignment: Alignment.centerRight,
             child: Icon(
               CupertinoIcons.check_mark_circled,
-              color: CupertinoColors.white,
+              color: active ? CupertinoColors.white : Colors.transparent,
               size: 23.0,
             ),
           )
@@ -73,10 +78,11 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
       childAspectRatio: 2,
     );
     final allWeekSelected = data.values.every((week) => week == true);
+    final theme = AppTheme.of(context);
     return SafeArea(
       bottom: false,
       child: Container(
-        color: CupertinoColors.white,
+        color: theme.textFieldListBackgroundColor,
         height: (MediaQuery.of(context).size.width - 4.0 * 6) / 5 / 2 * 5 +
             4.0 * 6 +
             60.0 +
@@ -106,7 +112,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
                     onPressed: () {
                       Navigator.pop(context, data);
                     }),
-                backgroundColor: CupertinoColors.white,
+                backgroundColor: theme.textFieldListBackgroundColor,
               ),
             ),
             GridView(

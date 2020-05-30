@@ -1,4 +1,5 @@
 import 'package:custed2/core/store/presistent_store.dart';
+import 'package:custed2/ui/theme.dart';
 
 class SettingStore with PresistentStore {
   @override
@@ -16,8 +17,8 @@ class SettingStore with PresistentStore {
   StoreProperty<bool> get dontCountElectiveCourseGrade =>
       property('dontCountElectiveCourseGrade', defaultValue: false);
 
-  StoreProperty<bool> get useDarkMode =>
-      property('useDarkMode', defaultValue: false);
+  StoreProperty<int> get darkMode =>
+      property('darkMode', defaultValue: DarkMode.auto);
 
   StoreProperty<int> get ignoreUpdate => property('ignoreUpdate');
 

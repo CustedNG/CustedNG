@@ -1,4 +1,5 @@
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/cupertino.dart';
 
 class HomeEntry extends StatelessWidget {
@@ -24,7 +25,7 @@ class HomeEntry extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           SizedBox(height: 10),
-          SizedBox(height: 30, child: icon),
+          SizedBox(height: 30, child: DarkModeFilter(child: icon)),
           SizedBox(height: 10),
           DefaultTextStyle(child: name, style: textStyle),
           SizedBox(height: 10),

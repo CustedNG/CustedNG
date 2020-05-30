@@ -1,5 +1,6 @@
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -19,6 +20,7 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return SafeArea(
       bottom: false,
       child: Container(
@@ -53,7 +55,7 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
                       Navigator.pop(context, data);
                     },
                   ),
-                  backgroundColor: CupertinoColors.lightBackgroundGray),
+                  backgroundColor: theme.textFieldListBackgroundColor),
             ),
             Container(
               height: 200.0,
@@ -61,7 +63,7 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
                 children: <Widget>[
                   Flexible(
                     child: CupertinoPicker(
-                      backgroundColor: CupertinoColors.lightBackgroundGray,
+                      backgroundColor: theme.textFieldListBackgroundColor,
                       scrollController:
                           FixedExtentScrollController(initialItem: weekDay - 1),
                       itemExtent: 30.0,
@@ -75,7 +77,7 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
                   ),
                   Flexible(
                     child: CupertinoPicker(
-                      backgroundColor: CupertinoColors.lightBackgroundGray,
+                      backgroundColor: theme.textFieldListBackgroundColor,
                       scrollController:
                           FixedExtentScrollController(initialItem: lesson ~/ 2),
                       itemExtent: 30.0,

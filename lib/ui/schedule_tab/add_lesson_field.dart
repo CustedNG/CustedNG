@@ -38,10 +38,10 @@ class AddLessonField extends StatelessWidget {
         border: Border(
           bottom: BorderSide(
             width: 1,
-            color: CupertinoColors.lightBackgroundGray,
+            color: theme.textFieldBorderColor,
           ),
         ),
-        color: CupertinoColors.white,
+        color: theme.textFieldBackgroundColor,
       ),
       onTap: onTap,
     );

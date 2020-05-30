@@ -8,10 +8,19 @@ import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
+import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/iecard_service.dart';
+import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/setting_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+bool _shouldEnableDarkMode(BuildContext context, int mode) {
+  if (mode == DarkMode.on) return true;
+  if (mode == DarkMode.off) return false;
+  return MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+}
 
 class Custed extends StatefulWidget {
   @override
@@ -21,6 +30,7 @@ class Custed extends StatefulWidget {
 class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   @override
   Widget build(BuildContext context) {
+    final setting = locator<SettingStore>();
     const isDark = false;
     final cupertinoTheme = CupertinoThemeData(
       // 在这里修改亮度可以决定应用主题，详见 [AppTheme] 类
@@ -30,12 +40,18 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 
     return Theme(
       data: theme,
-      child: CupertinoApp(
-        //防止ios自动适配黑暗模式
-        theme: CupertinoThemeData(brightness: Brightness.light),
-        navigatorKey: locator<GlobalKey<NavigatorState>>(),
-        title: 'Custed',
-        home: AppFrame(),
+      child: SettingBuilder(
+        setting: setting.darkMode,
+        builder: (context, mode) {
+          final isDark = _shouldEnableDarkMode(context, mode);
+          return CupertinoApp(
+            theme: CupertinoThemeData(
+                brightness: isDark ? Brightness.dark : Brightness.light),
+            navigatorKey: locator<GlobalKey<NavigatorState>>(),
+            title: 'Custed',
+            home: AppFrame(),
+          );
+        },
       ),
     ); // ,
     // );

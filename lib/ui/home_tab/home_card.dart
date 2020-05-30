@@ -16,12 +16,12 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = AppTheme.of(context);
+    final theme = AppTheme.of(context);
 
     return Container(
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: CupertinoColors.white,
+        color: theme.cardBackgroundColor,
         borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
@@ -50,10 +50,11 @@ class HomeCard extends StatelessWidget {
   }
 
   _buildContent(BuildContext context) {
+    final theme = AppTheme.of(context);
     final textStyle = TextStyle(
       fontSize: 13,
       fontWeight: FontWeight.normal,
-      color: CupertinoColors.black
+      color: theme.cardTextColor,
     );
 
     return Column(

@@ -1,3 +1,4 @@
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/progress_bar.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -44,8 +45,9 @@ class WebProgressLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return Container(
-      color: CupertinoColors.white,
+      color: theme.backgroundColor,
       constraints: BoxConstraints.expand(),
       child: buildContent(context),
     );

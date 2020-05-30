@@ -10,6 +10,7 @@ import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/web/web_progress.dart';
 import 'package:custed2/ui/widgets/bottom_sheet.dart';
+import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as material;
@@ -78,7 +79,9 @@ class WebPageState extends State<WebPage> {
 
     if (replace != null) return replace;
 
-    Widget result = _buildWebview(context);
+    Widget result = DarkModeFilter(
+      child: _buildWebview(context),
+    );
 
     result = Stack(
       children: <Widget>[

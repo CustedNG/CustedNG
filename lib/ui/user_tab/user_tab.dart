@@ -8,6 +8,7 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
+import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,7 @@ class UserTab extends StatelessWidget {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(),
+      backgroundColor: CupertinoColors.lightBackgroundGray,
       child: CupertinoSettings(
         items: <Widget>[
           CSHeader('用户'),
@@ -68,25 +70,29 @@ class UserTab extends StatelessWidget {
           _buildLink(context, '网盘', () {
             locator<NetdiskProvider>().getQuota();
             netdiskPage.go(context);
-          }),
+          }, isLast: true),
           CSHeader('设置'),
           CSControl(
-            '将课表设为首页',
-            _buildSwitch(context, setting.useScheduleAsHome),
+            nameWidget: Text('将课表设为首页'),
+            contentWidget: _buildSwitch(context, setting.useScheduleAsHome),
           ),
           CSControl(
-            '显示非当前周课程',
-            _buildSwitch(context, setting.showInactiveLessons),
+            nameWidget: Text('显示非当前周课程'),
+            contentWidget: _buildSwitch(context, setting.showInactiveLessons),
           ),
           CSControl(
-            '绩点不计选修',
-            _buildSwitch(context, setting.dontCountElectiveCourseGrade),
+            nameWidget: Text('绩点不计选修'),
+            contentWidget:
+                _buildSwitch(context, setting.dontCountElectiveCourseGrade),
           ),
+          _buildLink(context, '黑暗模式', () {
+            darkModePage.go(context);
+          }, isLast: true),
           // CSHeader('成绩'),
           CSHeader(''),
           CSButton(CSButtonType.DEFAULT_CENTER, "重新登录", () => _login(context)),
           CSButton(CSButtonType.DESTRUCTIVE, "退出登录", () => _logout(context)),
-          CSSpacer(),
+          SizedBox(height: 15)
         ],
       ),
     );
@@ -99,7 +105,9 @@ class UserTab extends StatelessWidget {
       width: 50,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8.0),
-        child: Image(image: ImageRes.defaultAvatar),
+        child: DarkModeFilter(
+          child: Image(image: ImageRes.defaultAvatar),
+        ),
       ),
     );
     final departmentText = TextStyle(
@@ -134,11 +142,23 @@ class UserTab extends StatelessWidget {
     );
   }
 
-  Widget _buildLink(BuildContext context, String name, void onPressed()) {
+  Widget _buildLink(
+    BuildContext context,
+    String name,
+    void onPressed(), {
+    bool isLast = false,
+  }) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
       minSize: 0,
-      child: CSControl(name, Icon(CupertinoIcons.right_chevron)),
+      child: CSControl(
+        nameWidget: Text(name),
+        contentWidget: Icon(
+          CupertinoIcons.right_chevron,
+          color: CupertinoColors.systemGrey2,
+        ),
+        addPaddingToBorder: !isLast,
+      ),
       onPressed: onPressed,
     );
   }

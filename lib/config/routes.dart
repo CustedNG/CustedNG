@@ -6,6 +6,7 @@ import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
 import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
+import 'package:custed2/ui/user_tab/dark_mode.dart';
 import 'package:custed2/ui/user_tab/netdisk_page.dart';
 import 'package:custed2/ui/web/ecard_web_page.dart';
 import 'package:custed2/ui/web/exam_room_web_page.dart';
@@ -99,3 +100,7 @@ final statusWebPage = AppRoute(
   page: StatusWebPage(),
 );
 
+final darkModePage = AppRoute(
+  title: '黑暗模式',
+  page: DarkModePage(),
+);
