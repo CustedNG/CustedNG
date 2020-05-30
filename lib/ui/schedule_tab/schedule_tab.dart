@@ -36,13 +36,13 @@ class _ScheduleTabState extends State<ScheduleTab>
   void onScroll() {
     final titleProvider = locator<ScheduleTitleProvider>();
 
-    if (scrollController.offset >= 50 &&
+    if (scrollController.offset >= 30 &&
         titleProvider.showWeekInTitle == false) {
       titleProvider.setShowWeekInTitle(true);
       return;
     }
 
-    if (scrollController.offset < 50 &&
+    if (scrollController.offset < 30 &&
         titleProvider.showWeekInTitle == true) {
       titleProvider.setShowWeekInTitle(false);
       return;
