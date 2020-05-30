@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:custed2/config/theme.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_picker.dart';

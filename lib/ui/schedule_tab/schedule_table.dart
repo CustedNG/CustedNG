@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:custed2/config/theme.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule.dart';

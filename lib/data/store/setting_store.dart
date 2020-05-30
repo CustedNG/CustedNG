@@ -16,6 +16,9 @@ class SettingStore with PresistentStore {
   StoreProperty<bool> get dontCountElectiveCourseGrade =>
       property('dontCountElectiveCourseGrade', defaultValue: false);
 
+  StoreProperty<bool> get useDarkMode =>
+      property('useDarkMode', defaultValue: false);
+
   StoreProperty<int> get ignoreUpdate => property('ignoreUpdate');
 
   StoreProperty<String> get notification => property('notification');

@@ -1,4 +1,4 @@
-import 'package:custed2/config/theme.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
 
 class HomeCard extends StatelessWidget {

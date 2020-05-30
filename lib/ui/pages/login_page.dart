@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:custed2/config/theme.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';

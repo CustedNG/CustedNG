@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:custed2/config/theme.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/webview/addon.dart';

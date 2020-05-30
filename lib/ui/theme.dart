@@ -4,7 +4,13 @@ import 'package:flutter/material.dart' as material;
 // should be material.Theme.of(context).backgroundColor
 // scheduleButtonColor: Color(0xFFF0EFF3),
 
-final appTheme = AppTheme();
+final _appTheme = AppTheme();
+
+enum DarkMode {
+  on,
+  off,
+  auto,
+}
 
 class AppTheme {
   static AppThemeResolved bright = resolve(Brightness.light);
@@ -21,18 +27,18 @@ class AppTheme {
   // 根据当前context的亮度，返回应用主题数据
   static AppThemeResolved resolve(Brightness brightness) {
     return AppThemeResolved()
-      ..primaryColor = s(brightness, appTheme.primaryColor)
-      ..btnPrimaryColor = s(brightness, appTheme.btnPrimaryColor)
-      ..navBarColor = s(brightness, appTheme.navBarColor)
-      ..navBarActionsColor = s(brightness, appTheme.navBarActionsColor)
-      ..webviewNavBarColor = s(brightness, appTheme.webviewNavBarColor)
-      ..textColor = s(brightness, appTheme.textColor)
-      ..lightTextColor = s(brightness, appTheme.lightTextColor)
-      ..scheduleOutlineColor = s(brightness, appTheme.scheduleOutlineColor)
-      ..scheduleButtonColor = s(brightness, appTheme.scheduleButtonColor)
+      ..primaryColor = s(brightness, _appTheme.primaryColor)
+      ..btnPrimaryColor = s(brightness, _appTheme.btnPrimaryColor)
+      ..navBarColor = s(brightness, _appTheme.navBarColor)
+      ..navBarActionsColor = s(brightness, _appTheme.navBarActionsColor)
+      ..webviewNavBarColor = s(brightness, _appTheme.webviewNavBarColor)
+      ..textColor = s(brightness, _appTheme.textColor)
+      ..lightTextColor = s(brightness, _appTheme.lightTextColor)
+      ..scheduleOutlineColor = s(brightness, _appTheme.scheduleOutlineColor)
+      ..scheduleButtonColor = s(brightness, _appTheme.scheduleButtonColor)
       ..scheduleButtonTextColor =
-          s(brightness, appTheme.scheduleButtonTextColor)
-      ..scheduleTextColor = s(brightness, appTheme.scheduleTextColor);
+          s(brightness, _appTheme.scheduleButtonTextColor)
+      ..scheduleTextColor = s(brightness, _appTheme.scheduleTextColor);
   }
 
   static Color s(Brightness brightness, CupertinoDynamicColor color) {
