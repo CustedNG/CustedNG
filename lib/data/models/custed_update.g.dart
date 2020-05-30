@@ -9,6 +9,7 @@ part of 'custed_update.dart';
 CustedUpdate _$CustedUpdateFromJson(Map<String, dynamic> json) {
   return CustedUpdate()
     ..build = json['build'] as int
+    ..level = json['level'] as int
     ..name = json['name'] as String
     ..changelog = json['changelog'] as String
     ..file = json['file'] == null
@@ -19,6 +20,7 @@ CustedUpdate _$CustedUpdateFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$CustedUpdateToJson(CustedUpdate instance) =>
     <String, dynamic>{
       'build': instance.build,
+      'level': instance.level,
       'name': instance.name,
       'changelog': instance.changelog,
       'file': instance.file,

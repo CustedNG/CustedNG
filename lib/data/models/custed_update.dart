@@ -9,7 +9,12 @@ part 'custed_update.g.dart';
 class CustedUpdate {
   CustedUpdate();
 
+  /// build 号，和git commit对应
   int build;
+
+  /// 更新级别，2表示紧急更新
+  int level;
+  
   String name;
   String changelog;
   CustedFile file;

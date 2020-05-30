@@ -22,7 +22,9 @@ updateCheck(BuildContext context, {bool force = false}) async {
 
   final settings = locator<SettingStore>();
   final ignore = settings.ignoreUpdate.fetch();
-  if (!force && ignore != null && ignore >= update.build) {
+  final urgent = update.level != null && update.level >= 2;
+
+  if (!urgent && !force && ignore != null && ignore >= update.build) {
     print('$ignore is skipped by user.');
     print('Update Skipped.');
     return;
