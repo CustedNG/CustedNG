@@ -1,3 +1,4 @@
+import 'package:custed2/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
 
 class ScheduleWeekPicker extends StatelessWidget {
@@ -32,6 +33,8 @@ class ScheduleWeekPicker extends StatelessWidget {
     final FixedExtentScrollController scrollController =
         FixedExtentScrollController(initialItem: selectedWeek - 1);
 
+    final theme = AppTheme.of(context);
+
     return Column(
       children: <Widget>[
         Flexible(
@@ -45,7 +48,7 @@ class ScheduleWeekPicker extends StatelessWidget {
             scrollController: scrollController,
             onSelectedItemChanged: (n) => onChange(n + 1),
             children: items,
-            backgroundColor: CupertinoColors.white,
+            backgroundColor: theme.backgroundColor,
             itemExtent: 32.0,
           ),
         )
