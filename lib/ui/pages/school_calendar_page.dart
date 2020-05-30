@@ -1,3 +1,5 @@
+import 'package:custed2/ui/pages/school_calendar_menu.dart';
+import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:photo_view/photo_view.dart';
@@ -11,6 +13,7 @@ class SchoolCalendarPage extends StatelessWidget {
         backgroundColor: CupertinoColors.black,
         actionsForegroundColor: CupertinoColors.white,
         middle: Text('校历', style: TextStyle(color: CupertinoColors.white)),
+        trailing: NavBarMoreBtn(onTap: () => _showMenu(context)),
       ),
       child: ClipRect(
           child: SafeArea(
@@ -20,6 +23,13 @@ class SchoolCalendarPage extends StatelessWidget {
           imageProvider: ImageRes.miscSchoolCalendar,
         ),
       )),
+    );
+  }
+
+  void _showMenu(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) => SchoolCalendarMenu(),
     );
   }
 }

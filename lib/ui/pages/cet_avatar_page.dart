@@ -1,16 +1,8 @@
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/core/util/save_image.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
-import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:path/path.dart' show join;
 import 'package:provider/provider.dart';
-import 'package:save_in_gallery/save_in_gallery.dart';
-import 'package:share_extend/share_extend.dart';
 
 class CetAvatarPage extends StatelessWidget {
   @override
@@ -60,27 +52,10 @@ class CetAvatarPage extends StatelessWidget {
         ),
         SizedBox(height: 40),
         CupertinoButton.filled(
-          onPressed: () => saveAvatarToGallery(cetAvatar.avatar),
+          onPressed: () => saveImageToGallery(cetAvatar.avatar),
           child: Text('保存到相册'),
         )
       ],
     );
-  }
-
-  static void saveAvatarToGallery(Uint8List data) {
-    if (Platform.isAndroid) return _saveAvatarInAndroid(data);
-    return _saveAvatarGeneral(data);
-  }
-
-  static void _saveAvatarInAndroid(Uint8List data) async {
-    final path = join(await getAppDocDir.invoke(), "cet.png");
-    await File(path).writeAsBytes(data);
-    ShareExtend.share(path, 'image');
-  }
-
-  static void _saveAvatarGeneral(Uint8List data) async {
-    final ok = await ImageSaver().saveImage(imageBytes: data);
-    final msg = ok ? '保存完成' : '保存失败';
-    locator<SnakebarProvider>().info(msg);
   }
 }
