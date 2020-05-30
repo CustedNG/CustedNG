@@ -4,8 +4,13 @@ class ImageRes {
   static const bgAbstractDark = AssetImage('assets/bg/abstract-dark.jpg');
   static const bgPink = AssetImage('assets/bg/pink.jpg');
 
+  static const custWMapSimple = AssetImage('assets/map/simple/CustW.png');
   static const custEMapSimple = AssetImage('assets/map/simple/CustE.png');
   static const custSMapSimple = AssetImage('assets/map/simple/CustS.png');
+
+  static const custWMapSimpleDark = AssetImage('assets/map/simple/Dark-CustW.png');
+  static const custEMapSimpleDark = AssetImage('assets/map/simple/Dark-CustE.png');
+  static const custSMapSimpleDark = AssetImage('assets/map/simple/Dark-CustS.png');
 
   static const defaultAvatar = AssetImage('assets/avatar/default.jpg');
 

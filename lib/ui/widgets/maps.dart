@@ -11,12 +11,14 @@ class CustCompusMap {
     this.maxScale,
     this.initScale,
     this.image,
+    this.darkImage,
   });
 
   final double minScale;
   final double maxScale;
   final double initScale;
   final ImageProvider image;
+  final ImageProvider darkImage;
 }
 
 class PhotoViewMap extends StatelessWidget {
@@ -30,6 +32,7 @@ class PhotoViewMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final isDark = CupertinoTheme.of(context).brightness == Brightness.dark;
     return ZoomableWidget(
       initialOffset: offset,
       initialScale: map.initScale,
@@ -40,6 +43,7 @@ class PhotoViewMap extends StatelessWidget {
           children: <Widget>[
             TransitionToImage(
               image: map.image,
+              // image: isDark ? map.darkImage : map.image,
               // placeholder: CircularProgressIndicator(),
               placeholder: Container(),
               duration: Duration(milliseconds: 300),
@@ -74,12 +78,13 @@ class PhotoViewMap extends StatelessWidget {
   }
 }
 
-
 class Maps {
   static const custW = CustCompusMap(
     minScale: 1,
     maxScale: 3,
     initScale: 2,
+    image: ImageRes.custWMapSimple,
+    darkImage: ImageRes.custWMapSimpleDark,
   );
 
   static const custE = CustCompusMap(
@@ -87,6 +92,7 @@ class Maps {
     maxScale: 7,
     initScale: 6,
     image: ImageRes.custEMapSimple,
+    darkImage: ImageRes.custEMapSimpleDark,
   );
 
   static const custS = CustCompusMap(
@@ -94,6 +100,7 @@ class Maps {
     maxScale: 7,
     initScale: 6,
     image: ImageRes.custSMapSimple,
+    darkImage: ImageRes.custSMapSimpleDark,
   );
 
   static Widget search(String name) {
@@ -156,5 +163,6 @@ class Maps {
     return null;
   }
 
-  static Widget get defaultMap => PhotoViewMap('默认', custE, Offset.zero, Offset.zero);
+  static Widget get defaultMap =>
+      PhotoViewMap('默认', custE, Offset.zero, Offset.zero);
 }

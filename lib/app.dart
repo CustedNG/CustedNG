@@ -31,30 +31,21 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   @override
   Widget build(BuildContext context) {
     final setting = locator<SettingStore>();
-    const isDark = false;
-    final cupertinoTheme = CupertinoThemeData(
-      // 在这里修改亮度可以决定应用主题，详见 [AppTheme] 类
-      brightness: isDark ? Brightness.dark : Brightness.light,
-    );
-    final theme = ThemeData(cupertinoOverrideTheme: cupertinoTheme);
 
-    return Theme(
-      data: theme,
-      child: SettingBuilder(
-        setting: setting.darkMode,
-        builder: (context, mode) {
-          final isDark = _shouldEnableDarkMode(context, mode);
-          return CupertinoApp(
-            theme: CupertinoThemeData(
-                brightness: isDark ? Brightness.dark : Brightness.light),
-            navigatorKey: locator<GlobalKey<NavigatorState>>(),
-            title: 'Custed',
-            home: AppFrame(),
-          );
-        },
-      ),
-    ); // ,
-    // );
+    return SettingBuilder(
+      setting: setting.darkMode,
+      builder: (context, mode) {
+        final isDark = _shouldEnableDarkMode(context, mode);
+        return CupertinoApp(
+          navigatorKey: locator<GlobalKey<NavigatorState>>(),
+          title: 'Custed',
+          home: AppFrame(),
+          theme: CupertinoThemeData(
+            brightness: isDark ? Brightness.dark : Brightness.light,
+          ),
+        );
+      },
+    );
   }
 
   // 在这里进行初始化，避免启动掉帧

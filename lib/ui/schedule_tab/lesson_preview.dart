@@ -147,8 +147,9 @@ class LessonPreview extends StatelessWidget {
       final map = Maps.search(lesson.roomRaw);
       if (map != null) {
         content.add(SizedBox(
-            height: 270 * 0.618,
-            child: ClipRect(child: DarkModeFilter(child: map))));
+          height: 270 * 0.618,
+          child: ClipRect(child: DarkModeFilter(child: map, level: 170)),
+        ));
       }
     } else {
       for (var lesson in conflict) {

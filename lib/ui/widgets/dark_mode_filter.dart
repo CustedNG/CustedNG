@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class DarkModeFilter extends StatelessWidget {
-  DarkModeFilter({this.child});
+  DarkModeFilter({this.child, this.level = 200});
 
   final Widget child;
+  final int level;
   @override
   Widget build(BuildContext context) {
     final isDark = CupertinoTheme.of(context).brightness == Brightness.dark;
@@ -16,7 +17,10 @@ class DarkModeFilter extends StatelessWidget {
 
     return ColorFiltered(
       child: child,
-      colorFilter: ColorFilter.mode(Color(0xFFcccccc), BlendMode.modulate),
+      colorFilter: ColorFilter.mode(
+        Color.fromARGB(255, level, level, level),
+        BlendMode.modulate,
+      ),
     );
   }
 }
