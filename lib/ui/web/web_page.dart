@@ -81,6 +81,7 @@ class WebPageState extends State<WebPage> {
 
     Widget result = DarkModeFilter(
       child: _buildWebview(context),
+      level: 170,
     );
 
     result = Stack(

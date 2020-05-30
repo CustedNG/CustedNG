@@ -32,7 +32,7 @@ class PhotoViewMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final isDark = CupertinoTheme.of(context).brightness == Brightness.dark;
+    // final isDark = isDark(context);
     return ZoomableWidget(
       initialOffset: offset,
       initialScale: map.initScale,

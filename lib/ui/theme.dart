@@ -7,6 +7,10 @@ import 'package:flutter/material.dart' show Colors;
 
 final _appTheme = AppTheme();
 
+bool isDark(BuildContext context) {
+  return CupertinoTheme.of(context).brightness == Brightness.dark;
+}
+
 class DarkMode {
   static const auto = 0;
   static const on = 1;
@@ -24,9 +28,7 @@ class AppTheme {
       return resolve(CupertinoTheme.of(context).brightness);
     }
 
-    return CupertinoTheme.of(context).brightness == Brightness.dark
-        ? dark
-        : bright;
+    return isDark(context) ? dark : bright;
   }
 
   // 根据当前context的亮度，返回应用主题数据

@@ -1,5 +1,7 @@
 import 'package:custed2/core/util/save_image.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
+import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -45,15 +47,19 @@ class CetAvatarPage extends StatelessWidget {
         Container(
           width: 240,
           height: 320,
-          child: Image.memory(cetAvatar.avatar),
+          child: DarkModeFilter(child: Image.memory(cetAvatar.avatar)),
           decoration: BoxDecoration(
-            border: Border.all(color: Color(0xFFBBBBBB)),
+            border:
+                isDark(context) ? null : Border.all(color: Color(0xFFBBBBBB)),
           ),
         ),
         SizedBox(height: 40),
         CupertinoButton.filled(
           onPressed: () => saveImageToGallery(cetAvatar.avatar),
-          child: Text('保存到相册'),
+          child: Text(
+            '保存到相册',
+            style: TextStyle(color: CupertinoColors.white),
+          ),
         )
       ],
     );

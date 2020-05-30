@@ -54,6 +54,7 @@ class UserTab extends StatelessWidget {
 
   Widget _buildUserTab(BuildContext context, UserProfile profile) {
     final setting = locator<SettingStore>();
+    final darkModeStatus = ['自动', '开', '关'][setting.darkMode.fetch()];
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(),
@@ -87,7 +88,7 @@ class UserTab extends StatelessWidget {
           ),
           _buildLink(context, '黑暗模式', () {
             darkModePage.go(context);
-          }, isLast: true),
+          }, isLast: true, prompt: darkModeStatus),
           // CSHeader('成绩'),
           CSHeader(''),
           CSButton(CSButtonType.DEFAULT_CENTER, "重新登录", () => _login(context)),
@@ -147,16 +148,26 @@ class UserTab extends StatelessWidget {
     String name,
     void onPressed(), {
     bool isLast = false,
+    String prompt,
   }) {
+    final content = prompt != null
+        ? Container(
+            padding: EdgeInsets.only(right: 5),
+            child: Text(
+              prompt,
+              style: TextStyle(color: CupertinoColors.systemGrey2),
+            ),
+          )
+        : Icon(
+            CupertinoIcons.right_chevron,
+            color: CupertinoColors.systemGrey2,
+          );
     return CupertinoButton(
       padding: EdgeInsets.zero,
       minSize: 0,
       child: CSControl(
         nameWidget: Text(name),
-        contentWidget: Icon(
-          CupertinoIcons.right_chevron,
-          color: CupertinoColors.systemGrey2,
-        ),
+        contentWidget: content,
         addPaddingToBorder: !isLast,
       ),
       onPressed: onPressed,

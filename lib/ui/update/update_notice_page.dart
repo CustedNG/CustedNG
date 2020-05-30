@@ -2,6 +2,7 @@ import 'package:custed2/core/route.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/update/update_progress_page.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -12,8 +13,9 @@ class UpdateNoticePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return Container(
-      color: CupertinoColors.white,
+      color: theme.backgroundColor,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,7 +46,10 @@ class UpdateNoticePage extends StatelessWidget {
     return Column(
       children: <Widget>[
         CupertinoButton.filled(
-          child: Text('开始更新'),
+          child: Text(
+            '开始更新',
+            style: TextStyle(color: CupertinoColors.white),
+          ),
           onPressed: () {
             Navigator.pop(context);
             AppRoute(
