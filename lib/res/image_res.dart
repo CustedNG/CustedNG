@@ -29,5 +29,5 @@ class ImageRes {
   static const tikuIcon = AssetImage('assets/icon/tiku.png');
 
   static const updateIndicator = AssetImage('assets/updating.gif');
-  static const miscSchoolCalendar = AssetImage('assets/calendar/cust-schedule-2019-2020.png');
+  static const miscSchoolCalendar = AssetImage('assets/calendar/2019-2.png');
 }
