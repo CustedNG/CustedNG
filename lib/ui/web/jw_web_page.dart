@@ -1,4 +1,3 @@
-import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/jw_service.dart';
