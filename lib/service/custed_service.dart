@@ -9,7 +9,7 @@ import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/res/build_data.dart';
 
 class CustedService extends CatClient {
-  static const baseUrl = 'https://cust.xuty.cc';
+  static const baseUrl = 'https://cust.app';
   static const defaultTimeout = Duration(seconds: 100);
 
   Future<WeatherData> getWeather() async {

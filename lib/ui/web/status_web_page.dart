@@ -14,6 +14,6 @@ class StatusWebPage extends WebPage {
 class _StatusWebPageState extends WebPageState {
   @override
   void onCreated() async {
-    controller.loadUrl(url: 'https://cust.xuty.cc/status');
+    controller.loadUrl(url: 'https://cust.app/status');
   }
 }

@@ -45,13 +45,13 @@
 
 **Andriod**
 
-[Github Release](https://github.com/CustedNG/CustedNG/releases) | [二维码](https://cust.xuty.cc/CustedNG.svg) | [直链](https://cust.xuty.cc/app/apk/downloadUrl)
+[Github Release](https://github.com/CustedNG/CustedNG/releases) | [二维码](https://cust.app/CustedNG.svg) | [直链](https://cust.app/app/apk/downloadUrl)
 
-<img width="250px" src="https://cust.xuty.cc/CustedNG.svg">
+<img width="250px" src="https://cust.app/CustedNG.svg">
 
 **iOS**
 
-[点击下载(via Testflight)](https://cust.xuty.cc/app/ios)
+[点击下载(via Testflight)](https://cust.app/ios)
 
 **桌面客户端**
 

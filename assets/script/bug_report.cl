@@ -25,7 +25,7 @@
             (sizedbox #:height 40)
             (title "加入用户组 获取最新资讯")
             (sizedbox #:height 20)
-            (image "https://cust.xuty.cc/UserGroup.jpg" #:width 200)
+            (image "https://cust.app/UserGroup.jpg" #:width 200)
             (sizedbox #:height 40)
             (title "源代码 & 反馈")
             (link "https://github.com/CustedNG/CustedNG")
@@ -35,10 +35,10 @@
             (button "立即下载(For Android)"  #:padding 0
               (lambda ()
                 (custed-launch-url
-                  "https://cust.xuty.cc/app/apk/download")))
+                  "https://cust.app/apk")))
             (button "立即下载(For iOS)"  #:padding 0
               (lambda ()
                 (custed-launch-url
-                  "https://cust.xuty.cc/app/ios")))))))))
+                  "https://cust.app/ios")))))))))
 
 (view my-page)

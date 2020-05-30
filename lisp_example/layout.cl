@@ -30,7 +30,7 @@
           (store-add counter-store))))))
 
 
-(setq qr (image "https://cust.xuty.cc/CustedNG.png"))
+(setq qr (image "https://cust.app/CustedNG.png"))
 
 (defun link (url)
   (button url #:padding 0
@@ -52,7 +52,7 @@
             (text content)
             (sizedbox #:height 20)
             counter
-            (link "https://cust.xuty.cc/app/apk/download")
+            (link "https://cust.app/apk")
             qr))))))
 
 (view my-page)

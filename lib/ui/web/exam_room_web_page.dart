@@ -16,7 +16,7 @@ class _ExamRoomWebPageState extends WebPageState {
 
   @override
   void onCreated() async {
-    controller.loadUrl(url: 'https://cust.xuty.cc/web/exams?ios=true');
+    controller.loadUrl(url: 'https://cust.app/web/exams?ios=true');
   }
 
   @override
