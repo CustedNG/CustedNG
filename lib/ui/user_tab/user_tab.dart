@@ -137,8 +137,10 @@ class UserTab extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: prop.listenable(),
       builder: (context, value, widget) {
-        return CupertinoSwitch(
-            value: value, onChanged: (value) => prop.put(value));
+        return DarkModeFilter(
+          child: CupertinoSwitch(
+              value: value, onChanged: (value) => prop.put(value)),
+        );
       },
     );
   }
