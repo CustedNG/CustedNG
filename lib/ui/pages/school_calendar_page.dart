@@ -19,6 +19,7 @@ class SchoolCalendarPage extends StatelessWidget {
       child: ClipRect(
         child: SafeArea(
           child: DarkModeFilter(
+            level: 160,
             child: PhotoView(
               maxScale: 1.0,
               minScale: 0.1,
