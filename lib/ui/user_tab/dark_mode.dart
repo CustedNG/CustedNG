@@ -1,5 +1,6 @@
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
 
@@ -24,9 +25,9 @@ class DarkModePage extends StatelessWidget {
         CSHeader('模式'),
         CSSelection<int>(
           items: <CSSelectionItem<int>>[
-            CSSelectionItem<int>(text: '自动', value: 0),
-            CSSelectionItem<int>(text: '开', value: 1),
-            CSSelectionItem<int>(text: '关', value: 2),
+            CSSelectionItem<int>(text: '自动', value: DarkMode.auto),
+            CSSelectionItem<int>(text: '开', value: DarkMode.on),
+            CSSelectionItem<int>(text: '关', value: DarkMode.off),
           ],
           onSelected: _onSelection,
           currentSelection: setting.darkMode.fetch(),

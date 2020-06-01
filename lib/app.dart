@@ -17,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 bool _shouldEnableDarkMode(BuildContext context, int mode) {
+  // print('ddf: ${MediaQuery.platformBrightnessOf(context)}');
   if (mode == DarkMode.on) return true;
   if (mode == DarkMode.off) return false;
   return MediaQuery.platformBrightnessOf(context) == Brightness.dark;
@@ -35,14 +36,24 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     return SettingBuilder(
       setting: setting.darkMode,
       builder: (context, mode) {
-        final isDark = _shouldEnableDarkMode(context, mode);
         return CupertinoApp(
           navigatorKey: locator<GlobalKey<NavigatorState>>(),
           title: 'Custed',
           home: AppFrame(),
-          theme: CupertinoThemeData(
-            brightness: isDark ? Brightness.dark : Brightness.light,
-          ),
+          builder: (context, child) {
+            bool isDarkMode = _shouldEnableDarkMode(context, mode);
+            return CupertinoTheme(
+              data: CupertinoThemeData(
+                brightness: isDarkMode ? Brightness.dark : Brightness.light,
+              ),
+              child: Builder(
+                builder: (context) => DefaultTextStyle(
+                  style: CupertinoTheme.of(context).textTheme.textStyle,
+                  child: child,
+                ),
+              ),
+            );
+          },
         );
       },
     );
