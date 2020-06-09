@@ -13,6 +13,7 @@ class IecardAddon extends WebviewAddon {
   }
 
   Widget build(InAppWebViewController controller, String url) {
+    return null;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -33,7 +34,8 @@ class IecardAddon extends WebviewAddon {
     );
   }
 
-  Future<void> onPageFinished(InAppWebViewController controller, String url) async {
+  Future<void> onPageFinished(
+      InAppWebViewController controller, String url) async {
     await controller.evaluateJavascript(source: '''
       (function() {
         // 首页下方导航
