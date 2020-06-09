@@ -54,10 +54,7 @@ dependencies:
   hive_flutter: ^0.3.0+1
 
   webview_flutter: ^0.3.19+5
-  flutter_inappwebview:
-    git:
-      url: https://github.com/CustedNG/flutter_inappwebview.git
-      ref: master
+  flutter_inappwebview: 3.3.0+3
 
   otp: ^1.0.3
   install_plugin: ^2.0.1

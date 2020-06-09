@@ -4,6 +4,7 @@ import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/ui/web/web_page.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
+import 'package:custed2/web/jw_eval_addon.dart';
 
 class JwWebPage extends WebPage {
   @override
@@ -14,6 +15,10 @@ class JwWebPage extends WebPage {
 }
 
 class _JwWebPageState extends WebPageState {
+  final addons = [
+    JwEvalAddon(),
+  ];
+
   @override
   void onCreated() async {
     final user = locator<UserProvider>();

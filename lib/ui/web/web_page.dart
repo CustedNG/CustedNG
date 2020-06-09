@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/ui/theme.dart';
@@ -8,8 +7,8 @@ import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/webview/addon.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/web/web_page_addon.dart';
 import 'package:custed2/ui/web/web_progress.dart';
-import 'package:custed2/ui/widgets/bottom_sheet.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,16 +30,15 @@ class WebPage extends StatefulWidget {
 class WebPageState extends State<WebPage> {
   InAppWebViewController controller;
 
-  WebProgressController progressController = WebProgressController();
-  Widget overlay;
+  final progressController = WebProgressController();
+  final addonController = WebPageAddonController();
 
-  List<WebviewAddon> activeAddons = [];
-  List<Widget> addonWidgets = [];
+  final addons = <WebviewAddon>[];
+  var activeAddons = <WebviewAddon>[];
 
   bool isBusy = false;
   Widget replace;
-
-  final addons = <WebviewAddon>[];
+  Widget overlay;
 
   void onCreated() {}
 
@@ -52,6 +50,13 @@ class WebPageState extends State<WebPage> {
 
   Future<bool> onNavigate(ShouldOverrideUrlLoadingRequest request) {
     return Future.value(true);
+  }
+
+  void onUrlChange(String url) {
+    print(url);
+    final uri = url.toUri();
+    activeAddons = addons.where((addon) => addon.shouldActivate(uri)).toList();
+    addonBuildWidgets(controller, url);
   }
 
   @override
@@ -115,22 +120,19 @@ class WebPageState extends State<WebPage> {
       ],
     );
 
-    if (addonWidgets.isNotEmpty) {
-      result = BottomSheet(
-        child: result,
-        sheet: Container(
-          padding: EdgeInsets.all(5),
-          child: Column(children: addonWidgets),
-        ),
-      );
-    }
+    result = Column(
+      children: [
+        Flexible(child: result),
+        WebPageAddon(addonController),
+      ],
+    );
 
     return result;
   }
 
   Widget _buildWebview(BuildContext context) {
     return InAppWebView(
-      initialOptions: InAppWebViewWidgetOptions(
+      initialOptions: InAppWebViewGroupOptions(
         crossPlatform: InAppWebViewOptions(
           debuggingEnabled: true,
           useShouldOverrideUrlLoading: true,
@@ -152,6 +154,7 @@ class WebPageState extends State<WebPage> {
       },
       onLoadStop: (controller, url) async {
         setState(() => isBusy = false);
+        await listenInAppUrlChange(controller);
         await addonOnLoadStop(controller, url);
         onPageFinished(url);
 
@@ -188,9 +191,7 @@ class WebPageState extends State<WebPage> {
   }
 
   void addonOnLoadStart(InAppWebViewController controller, String url) {
-    final uri = url.toUri();
-    activeAddons = addons.where((addon) => addon.shouldActivate(uri)).toList();
-    addonBuildWidgets(controller, url);
+    onUrlChange(url);
     for (var addon in activeAddons) {
       addon.onPageStarted(controller, url);
     }
@@ -209,7 +210,7 @@ class WebPageState extends State<WebPage> {
       final widget = addon.build(controller, url);
       if (widget != null) widgets.add(widget);
     }
-    // setState(() => addonWidgets = widgets);
+    addonController.update(widgets);
   }
 
   Widget _buildIndicator(BuildContext context) {
@@ -246,30 +247,38 @@ class WebPageState extends State<WebPage> {
     setState(() => overlay = widget);
   }
 
-  static String generateInitPage() {
-    final template = '''
-      <!DOCTYPE html><html>
-      <head>
-        <title>Loading</title>
-        <script>
-          (function() {
-            var n = 0;
-            var d = ['', '.', '..', '...'];
-            setInterval(function() {
-              document.querySelector('.loading').innerHTML = 'Loading' + d[n % d.length];
-              n++;
-            }, 100);
-          })();
-        </script>
-      </head>
-      <body>
-        <div class="loading">
-          Loading...
-        </div>
-      </body>
-      </html>
-    ''';
-    final contentBase64 = base64.encode(utf8.encode(template));
-    return 'data:text/html;base64,$contentBase64';
+  Future<void> listenInAppUrlChange(InAppWebViewController controller) async {
+    const handlerName = 'eventUrlChange';
+    await controller.addJavaScriptHandler(
+      handlerName: handlerName,
+      callback: (data) {
+        if (data.isEmpty) return;
+        final url = data.first;
+        if (url is String) {
+          onUrlChange(url);
+        }
+      },
+    );
+
+    controller.evaluateJavascript(source: """
+      (function() {
+        window.callHandler = function(handlerName, message) {
+          if (window.flutter_inappwebview.callHandler) {
+            window.flutter_inappwebview.callHandler(handlerName, message);
+          } else {
+            window.flutter_inappwebview._callHandler(handlerName, setTimeout(function(){}), JSON.stringify([message]));
+          }
+        }
+
+        var lastHref = window.location.href;
+        setInterval(function() {
+          var href = window.location.href;
+          if (lastHref != href) {
+            callHandler('$handlerName', href);
+            lastHref = href;
+          }
+        }, 500);
+      })();
+    """);
   }
 }

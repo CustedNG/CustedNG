@@ -281,12 +281,10 @@ packages:
   flutter_inappwebview:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: "544ed45117df684bf6ffc2328293f61a741d59b5"
-      url: "https://github.com/CustedNG/flutter_inappwebview.git"
-    source: git
-    version: "3.0.0"
+      name: flutter_inappwebview
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.3.0+3"
   flutter_local_notifications:
     dependency: transitive
     description:
