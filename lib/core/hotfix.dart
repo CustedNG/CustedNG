@@ -7,6 +7,6 @@ Future<void> doHotfix(BuildContext context) async {
   final hotfixes = await locator<CustedService>().getHotfix();
   final executer = locator<TTYExecuter>();
   for (var hotfix in hotfixes) {
-    executer.execute(hotfix, context, quiet: true);
+    await executer.execute(hotfix, context, quiet: true);
   }
 }

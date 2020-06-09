@@ -28,7 +28,7 @@ class TTYExecuter {
     }
   }
 
-  void execute(String cmd, BuildContext context, {bool quiet = false}) async {
+  Future<void> execute(String cmd, BuildContext context, {bool quiet = false}) async {
     try {
       final engine = locator<TTYEngine>();
       await engine.init();
