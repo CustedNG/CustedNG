@@ -174,10 +174,12 @@ class UndergraduateUser with CustUser implements User {
     // This is hardcoded, don't forget to update this :)
     final table = {
       '20202': DateTime(2020, 2, 24),
+      // '20202': DateTime(2020, 8, 24),
     };
 
     final year = DateTime.now().year.toString();
-    final nth = DateTime.now().month > 6 ? 1 : 2;
+    // final nth = DateTime.now().month > 6 ? 1 : 2;
+    final nth = 2;
 
     return table['$year$nth'];
   }
