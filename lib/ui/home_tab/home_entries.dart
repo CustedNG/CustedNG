@@ -37,7 +37,7 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('题库'),
             icon: Image(image: ImageRes.tikuIcon),
-            action: () => tikuWebPage.go(context, rootNavigator: true),
+            action: () => tiku2WebPage.go(context, rootNavigator: true),
           ),
           HomeEntry(
             name: Text('考场查询'),

@@ -15,6 +15,7 @@ import 'package:custed2/ui/web/jw_web_page.dart';
 import 'package:custed2/ui/web/login_web_page.dart';
 import 'package:custed2/ui/web/netdisk_web_page.dart';
 import 'package:custed2/ui/web/status_web_page.dart';
+import 'package:custed2/ui/web/tiku2_web_page.dart';
 import 'package:custed2/ui/web/tiku_web_page.dart';
 
 final loginWebPage = AppRoute(
@@ -77,6 +78,11 @@ final examRoomWebPage = AppRoute(
 final tikuWebPage = AppRoute(
   title: '考试题库',
   page: TikuWebPage(),
+);
+
+final tiku2WebPage = AppRoute(
+  title: '考试题库',
+  page: Tiku2WebPage(),
 );
 
 final schoolCalendarPage = AppRoute(
