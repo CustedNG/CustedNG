@@ -54,7 +54,7 @@ dependencies:
   hive_flutter: ^0.3.0+1
 
   webview_flutter: ^0.3.19+5
-  flutter_inappwebview: 3.3.0+3
+  flutter_inappwebview: ^4.0.0
 
   otp: ^1.0.3
   install_plugin: ^2.0.1

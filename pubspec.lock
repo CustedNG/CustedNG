@@ -170,7 +170,7 @@ packages:
       name: collection
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.14.12"
+    version: "1.14.11"
   convert:
     dependency: "direct main"
     description:
@@ -284,7 +284,7 @@ packages:
       name: flutter_inappwebview
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.3.0+3"
+    version: "4.0.0"
   flutter_local_notifications:
     dependency: transitive
     description:
