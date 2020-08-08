@@ -7,9 +7,11 @@ import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/webview/addon.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/web/web_page_action.dart';
 import 'package:custed2/ui/web/web_page_addon.dart';
 import 'package:custed2/ui/web/web_progress.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
+import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as material;
@@ -22,6 +24,7 @@ class WebPage extends StatefulWidget {
   final canGoBack = true;
   final String defaultUrl;
   final String userAgent = null;
+  final List<WebPageAction> actions = [];
 
   @override
   WebPageState createState() => WebPageState();
@@ -71,7 +74,8 @@ class WebPageState extends State<WebPage> {
           widget.title,
           style: TextStyle(color: theme.navBarActionsColor),
         ),
-        trailing: isBusy ? _buildIndicator(context) : null,
+        trailing:
+            isBusy ? _buildIndicator(context) : _buildActionButton(context),
       ),
       child: SafeArea(
         child: _buildWebviewWithAddons(context),
@@ -217,6 +221,44 @@ class WebPageState extends State<WebPage> {
     return CupertinoTheme(
       data: CupertinoThemeData(brightness: Brightness.dark),
       child: CupertinoActivityIndicator(),
+    );
+  }
+
+  Widget _buildActionButton(BuildContext context) {
+    if (widget.actions == null || widget.actions.isEmpty) {
+      return null;
+    }
+
+    return NavBarMoreBtn(onTap: () => showActionsMenu(context));
+  }
+
+  void showActionsMenu(BuildContext context) {
+    if (widget.actions == null || widget.actions.isEmpty) {
+      return;
+    }
+
+    showCupertinoModalPopup(
+      context: context,
+      builder: (context) {
+        return CupertinoActionSheet(
+          actions: <Widget>[
+            for (var action in widget.actions)
+              CupertinoActionSheetAction(
+                child: Text(action.name),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  action.handler();
+                },
+              ),
+          ],
+          cancelButton: CupertinoActionSheetAction(
+            child: Text('取消'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        );
+      },
     );
   }
 

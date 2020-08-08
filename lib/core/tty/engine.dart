@@ -17,6 +17,7 @@ import 'package:custed2/data/store/lisp_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
+import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/netdisk_service.dart';
 import 'package:custed2/ui/web/common_web_page.dart';
 import 'package:custed2/ui/widgets/lisp_debug_widget.dart';
@@ -188,7 +189,8 @@ class TTYEngine {
   _test(LispFrame frame) async {
     // final g = await User().getGrade();
     // return g;
-    return NetdiskService().getQuota();
+    // return NetdiskService().getQuota();
+    return MyssoService().getTicketForJwglCustEdnCn();
   }
 
   _rmrf(LispFrame frame) {
