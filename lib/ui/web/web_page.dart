@@ -239,22 +239,22 @@ class WebPageState extends State<WebPage> {
 
     showCupertinoModalPopup(
       context: context,
-      builder: (context) {
+      builder: (modalContext) {
         return CupertinoActionSheet(
           actions: <Widget>[
             for (var action in widget.actions)
               CupertinoActionSheetAction(
                 child: Text(action.name),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  action.handler();
+                  Navigator.of(modalContext).pop();
+                  action.handler(context);
                 },
               ),
           ],
           cancelButton: CupertinoActionSheetAction(
             child: Text('取消'),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(modalContext).pop();
             },
           ),
         );

@@ -14,7 +14,7 @@ class JwWebPage extends WebPage {
   final actions = [
     WebPageAction(
       name: '在浏览器中打开',
-      handler: () async {
+      handler: (context) async {
         final user = locator<UserProvider>();
         if (!user.loggedIn) {
           return openUrl('https://jwgl.cust.edu.cn/');
