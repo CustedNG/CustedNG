@@ -153,6 +153,43 @@ class Maps {
         Offset(81, 72),
         Offset(-30, 10),
       ),
+      // 西区地图位置，小旗子的偏移没加
+      PhotoViewMap(
+        '西1教',
+        custW,
+        Offset(-53, -95),
+        Offset(0, 0),
+      ),
+      PhotoViewMap(
+        '西2教',
+        custW,
+        Offset(-70, -95),
+        Offset(0, 0),
+      ),
+      PhotoViewMap(
+        '西图',
+        custW,
+        Offset(-59, -70),
+        Offset(0, 0),
+      ),
+      PhotoViewMap(
+        '西实',
+        custW,
+        Offset(-39, -95),
+        Offset(0, 0),
+      ),
+      PhotoViewMap(
+        '西区攀岩馆',
+        custW,
+        Offset(-74, -70),
+        Offset(0, 0),
+      ),
+      PhotoViewMap(
+        '西区田径场',
+        custW,
+        Offset(-53, -50),
+        Offset(0, 0),
+      ),
     ];
 
     for (final map in _maps) {
