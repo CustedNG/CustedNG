@@ -264,7 +264,7 @@ class WebPageState extends State<WebPage> {
 
   Future<void> loadCookieFor(String url) async {
     final cookies = locator<PersistCookieJar>().loadForRequest(url.toUri());
-    print(cookies);
+    print('WEBPAGE cookie $url : <$cookies>');
     for (var cookie in cookies) {
       final domain = cookie.domain == null
           ? null

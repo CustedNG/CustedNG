@@ -4,8 +4,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 class NetdiskAddon extends WebviewAddon {
   bool shouldActivate(Uri uri) {
     print(uri.host);
-    return uri.host == '192-168-223-84.webvpn.cust.edu.cn' ||
-        uri.host == 'yun-cust-edu-cn.webvpn.cust.edu.cn';
+    return uri.host == 'yun.cust.edu.cn';
   }
 
   void onPageFinished(InAppWebViewController controller, String url) async {

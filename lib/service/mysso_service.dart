@@ -9,7 +9,7 @@ import 'package:custed2/data/store/user_data_store.dart';
 import 'package:html/parser.dart' show parse;
 
 class MyssoService extends CatService {
-  static const baseUrl = 'http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118';
+  static const baseUrl = 'https://mysso.cust.edu.cn';
   static const loginUrl = '$baseUrl/cas/login';
 
   static String parseValue(String value) {
@@ -109,10 +109,10 @@ class MyssoService extends CatService {
   Future<String> getTicketForWebvpn() =>
       getTicket('https://webvpn.cust.edu.cn/auth/cas_validate?entry_id=1');
 
-  Future<String> getTicketForJw() =>
-      getTicket('http://192.168.223.72:8080/welcome');
+  Future<String> getTicketForWrdvpn() =>
+      getTicket('http://wwwn.cust.edu.cn/wengine-auth/login?cas_login=true');
 
-  Future<String> getTicketForJwglCustEdnCn() =>
+  Future<String> getTicketForJw() =>
       getTicket('https://jwgl.cust.edu.cn/welcome');
 
   Future<String> getTicketForIecard() =>

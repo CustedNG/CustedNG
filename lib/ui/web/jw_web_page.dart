@@ -1,7 +1,9 @@
 import 'package:custed2/core/open.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/service/mysso_service.dart';
+import 'package:custed2/service/wrdvpn_service.dart';
 import 'package:custed2/ui/web/web_page.dart';
 import 'package:custed2/ui/web/web_page_action.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
@@ -20,9 +22,11 @@ class JwWebPage extends WebPage {
           return openUrl('https://jwgl.cust.edu.cn/');
         }
 
-        final ticket = await MyssoService().getTicketForJwglCustEdnCn();
-        final url = 'https://jwgl.cust.edu.cn/welcome?ticket=$ticket';
+        final ticket = await MyssoService().getTicketForJw();
+        final jwUrl = 'https://jwgl.cust.edu.cn/welcome?ticket=$ticket';
+        final url = await WrdvpnService().getBypassUrl(jwUrl);
         openUrl(url);
+        // print(url);
       },
     ),
   ];
@@ -46,9 +50,11 @@ class _JwWebPageState extends WebPageState {
       return;
     }
 
-    final ticket = await MyssoService().getTicketForJwglCustEdnCn();
-    final url = 'https://jwgl.cust.edu.cn/welcome?ticket=$ticket';
-    // await loadCookieFor(MyssoService.loginUrl);
+    // final ticket = await MyssoService().getTicketForJw();
+    final url = 'https://jwgl.cust.edu.cn/welcome';
+    await loadCookieFor(JwService.baseUrl);
+    await loadCookieFor(MyssoService.loginUrl);
+    await loadCookieFor(WrdvpnService.baseUrl);
     // await loadCookieFor(url);
     controller.loadUrl(url: url);
   }

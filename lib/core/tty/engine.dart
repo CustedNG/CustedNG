@@ -81,6 +81,7 @@ class TTYEngine {
     _lisp.def('rmrf', 0, _rmrf);
 
     _lisp.def('cookie-set', 3, _cookieSet);
+    _lisp.def('cookie-get', 1, _cookieGet);
     // _lisp.def('cookie-delete', 1, _cookieSet);
     // _lisp.def('cookie-delete-all', 0, _cookieSet);
   }
@@ -189,7 +190,9 @@ class TTYEngine {
     // final g = await User().getGrade();
     // return g;
     // return NetdiskService().getQuota();
-    return MyssoService().getTicketForJwglCustEdnCn();
+    // return MyssoService().getTicketForJwglCustEdnCn();
+    final path =  await getAppDocDir.invoke() + '/.cookies/ie0_ps1/iecard.cust.edu.cn';
+    print(await File(path).readAsString());
   }
 
   _rmrf(LispFrame frame) {
@@ -242,5 +245,13 @@ class TTYEngine {
     final cookieJar = locator<PersistCookieJar>();
     cookieJar.saveFromResponse(uri, [cookie]);
     return cookie.toString();
+  }
+
+  _cookieGet(LispFrame frame) {
+    final uri = frame[0].toString().toUri();
+
+    final cookieJar = locator<PersistCookieJar>();
+    final cookies = cookieJar.loadForRequest(uri);
+    return cookies.toList();
   }
 }

@@ -16,11 +16,11 @@ class CookiesCommand extends TTYCommand {
   final alias = 'ckl';
 
   @override
-  main(TTYExecuter executer, BuildContext context,  List<String> args) {
+  main(TTYExecuter executer, BuildContext context, List<String> args) {
     if (args.isNotEmpty) {
       return _runSubCommand(args);
     }
-    
+
     final buffer = StringBuffer();
     final domains = locator<PersistCookieJar>().domains;
 

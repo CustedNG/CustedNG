@@ -10,10 +10,10 @@ import 'package:custed2/data/models/jw_student_info.dart';
 import 'package:custed2/data/models/jw_week_time.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
-import 'package:custed2/service/webvpn_based_service.dart';
+import 'package:custed2/service/wrdvpn_based_service.dart';
 
-class JwService extends WebvpnBasedService {
-  static const baseUrl = 'http://192-168-223-72-8080-p.webvpn.cust.edu.cn:8118';
+class JwService extends WrdvpnBasedService {
+  static const baseUrl = 'https://jwgl.cust.edu.cn';
   
   final MyssoService _mysso = locator<MyssoService>();
 
@@ -28,7 +28,7 @@ class JwService extends WebvpnBasedService {
       '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
       body: encodeParams({
         'Ticket': ticket,
-        'Url': 'http://192.168.223.72:8080/welcome',
+        'Url': 'https://jwgl.cust.edu.cn/welcome',
       }),
       headers: {
         'content-type': 'application/json',
