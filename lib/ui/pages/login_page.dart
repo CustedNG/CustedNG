@@ -65,7 +65,9 @@ class _LoginPageState extends State<LoginPage> {
         onWebViewCreated: (controller) async {
           this.controller = controller;
           await CookieManager().clearCookies();
-          controller.loadUrl('https://webvpn.cust.edu.cn/');
+          controller.loadUrl(
+            'https://mysso.cust.edu.cn/cas/login?service=http://test.cust.edu.cn/custp2/shiro-cas',
+          );
         },
         onPageStarted: (url) {
           setState(() => isBusy = true);
@@ -87,7 +89,9 @@ class _LoginPageState extends State<LoginPage> {
         navigationDelegate: (request) async {
           print('Redirect: ${request.url}');
 
-          if (request.url.contains('webvpn.cust.edu.cn/portal/#!/service')) {
+          if (request.url.contains('custp2') ||
+              request.url.contains('test.cust.edu.cn') ||
+              request.url.contains('portal.cust.edu.cn')) {
             Future.delayed(200.ms, _loginSuccessCallback);
             return NavigationDecision.prevent;
           }
@@ -108,6 +112,13 @@ class _LoginPageState extends State<LoginPage> {
       if (footer) footer.parentNode.removeChild(footer);
     })();
   ''';
+
+  // String get rmFooter => '''
+  //   (function() {
+  //     var footer = document.querySelector('footer.footer');
+  //     if (footer) footer.parentNode.removeChild(footer);
+  //   })();
+  // ''';
 
   String get rmWxLogin => r'''
     (function() {
