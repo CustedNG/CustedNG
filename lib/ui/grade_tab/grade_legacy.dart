@@ -6,8 +6,10 @@ import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/dynamic_color.dart';
+import 'package:custed2/ui/grade_tab/grade_picker.dart';
 import 'package:custed2/ui/grade_tab/sliver_header_delegate.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +96,27 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     super.didChangeDependencies();
   }
 
+  void _showSelector(BuildContext context) async {
+    final terms = grade.terms.map((t) => t.termName).toList();
+    final current = currentPage.round().clamp(0, terms.length - 1);
+
+    final selected = await showCupertinoDialog<int>(
+      context: context,
+      builder: (context) => GradePicker(
+        currentIndex: current,
+        terms: terms,
+      ),
+    );
+
+    print('selected grade $selected');
+
+    controller.animateToPage(
+      selected,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
@@ -107,6 +130,9 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
           alignment: Alignment.centerLeft,
           child: Text('成绩查询', style: textStyleInfo.copyWith(fontSize: 17)),
         ),
+        trailing: grade?.terms?.isNotEmpty == true
+            ? NavBarMoreBtn(onTap: () => _showSelector(context))
+            : null,
       ),
       child: SafeArea(
         child: Material(

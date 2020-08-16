@@ -3,9 +3,11 @@ import 'package:flutter/cupertino.dart';
 class NavBarMoreBtn extends StatelessWidget {
   NavBarMoreBtn({
     this.onTap,
+    this.icon = CupertinoIcons.ellipsis,
   });
 
   final Function onTap;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class NavBarMoreBtn extends StatelessWidget {
         minSize: 0,
         padding: EdgeInsets.zero,
         child: Icon(
-          CupertinoIcons.ellipsis,
+          icon,
           size: 32,
         ),
       ),

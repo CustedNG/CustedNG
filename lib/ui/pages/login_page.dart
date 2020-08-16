@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
         trailing: isBusy ? _buildIndicator(context) : null,
       ),
       child: WebView(
-        userAgent: UserAgent.defaultUA,
+        userAgent: UserAgent.pcChromeUA,
         javascriptMode: JavascriptMode.unrestricted,
         javascriptChannels: {
           JavascriptChannel(
