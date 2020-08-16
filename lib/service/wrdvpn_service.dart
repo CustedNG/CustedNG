@@ -24,15 +24,15 @@ class WrdvpnService extends CatService {
   // }
 
   Future<CatLoginResult> login() async {
-    // final tryLogin = await get(
-    //   '$baseUrl/wengine-auth/login',
-    //   maxRedirects: 0,
-    // );
+    final tryLogin = await get(
+      '$baseUrl/wengine-auth/login',
+      maxRedirects: 0,
+    );
 
-    // final redirect = tryLogin.headers[HttpHeaders.locationHeader];
-    // if (redirect != null && !redirect.contains('mysso')) {
-    //   return CatLoginResult.ok();
-    // }
+    final redirect = tryLogin.headers[HttpHeaders.locationHeader];
+    if (redirect != null && !redirect.contains('mysso')) {
+      return CatLoginResult.ok();
+    }
 
     final ticket = await _mysso.getTicketForWrdvpn();
 
@@ -68,6 +68,8 @@ class WrdvpnService extends CatService {
       if (!loginResult.ok) {
         throw CatError('login() failed');
       }
+
+      await followRedirect(response, 2);
 
       response = await request(method, url,
           headers: headers, body: body, maxRedirects: maxRedirects);
