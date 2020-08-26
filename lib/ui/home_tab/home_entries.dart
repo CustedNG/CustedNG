@@ -47,7 +47,8 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('校园网'),
             icon: Image(image: ImageRes.networkIcon),
-            action: () => runScript('network_manage.cl', context),
+            // action: () => runScript('network_manage.cl', context),
+            action: () => selfWebPage.go(context),
           ),
           HomeEntry(
             name: Text('快速联网'),

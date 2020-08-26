@@ -14,6 +14,7 @@ import 'package:custed2/ui/web/iecard_web_page.dart';
 import 'package:custed2/ui/web/jw_web_page.dart';
 import 'package:custed2/ui/web/login_web_page.dart';
 import 'package:custed2/ui/web/netdisk_web_page.dart';
+import 'package:custed2/ui/web/self_web_page.dart';
 import 'package:custed2/ui/web/status_web_page.dart';
 import 'package:custed2/ui/web/tiku2_web_page.dart';
 import 'package:custed2/ui/web/tiku_web_page.dart';
@@ -109,4 +110,9 @@ final statusWebPage = AppRoute(
 final darkModePage = AppRoute(
   title: '黑暗模式',
   page: DarkModePage(),
+);
+
+final selfWebPage = AppRoute(
+  title: '校园网',
+  page: SelfWebPage(),
 );
