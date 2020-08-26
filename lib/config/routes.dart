@@ -16,6 +16,7 @@ import 'package:custed2/ui/web/login_web_page.dart';
 import 'package:custed2/ui/web/netdisk_web_page.dart';
 import 'package:custed2/ui/web/self_web_page.dart';
 import 'package:custed2/ui/web/status_web_page.dart';
+import 'package:custed2/ui/web/tice_web_page.dart';
 import 'package:custed2/ui/web/tiku2_web_page.dart';
 import 'package:custed2/ui/web/tiku_web_page.dart';
 
@@ -115,4 +116,9 @@ final darkModePage = AppRoute(
 final selfWebPage = AppRoute(
   title: '校园网',
   page: SelfWebPage(),
+);
+
+final ticeWebPage = AppRoute(
+  title: '体测成绩',
+  page: TiceWebPage(),
 );

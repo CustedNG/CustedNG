@@ -25,7 +25,8 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('体测成绩'),
             icon: Image(image: ImageRes.runningReportIcon),
-            action: () => runScript('sport_grade.cl', context),
+            // action: () => runScript('sport_grade.cl', context),
+            action: () => ticeWebPage.go(context),
           ),
           HomeEntry(
             name: Text('充网费'),
