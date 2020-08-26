@@ -23,7 +23,7 @@ class MyssoService extends CatService {
   }
 
   final sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
-  final loginSuccessTest = RegExp(r'(登录成功|Log In Successful|进入校园门户)');
+  final loginSuccessTest = RegExp(r'(登录成功|成功登录|Log In Successful|进入校园门户)');
 
   Future<CatLoginResult<String>> login({bool force = false}) async {
     if (force) clearCookieFor(baseUrl.toUri());

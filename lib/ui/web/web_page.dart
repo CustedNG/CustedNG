@@ -204,7 +204,11 @@ class WebPageState extends State<WebPage> {
   Future<void> addonOnLoadStop(
       InAppWebViewController controller, String url) async {
     for (var addon in activeAddons) {
-      await addon.onPageFinished(controller, url);
+      try {
+        await addon.onPageFinished(controller, url);
+      } catch (e) {
+        print('Addon onPageFinished failed: $e');
+      }
     }
   }
 
@@ -262,13 +266,20 @@ class WebPageState extends State<WebPage> {
     );
   }
 
-  Future<void> loadCookieFor(String url) async {
+  Future<void> loadCookieFor(String url, [String name]) async {
     final cookies = locator<PersistCookieJar>().loadForRequest(url.toUri());
-    print('WEBPAGE cookie $url : <$cookies>');
+
     for (var cookie in cookies) {
+      if (name != null && cookie.name != name) {
+        continue;
+      }
+
+      print('WEBPAGE cookie $url : <$cookie>');
+
       final domain = cookie.domain == null
           ? null
           : cookie.domain.startsWith('.') ? cookie.domain : '.' + cookie.domain;
+
       await CookieManager.instance().setCookie(
         url: url,
         name: cookie.name,
