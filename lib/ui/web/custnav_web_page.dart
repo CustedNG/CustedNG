@@ -4,7 +4,11 @@ import 'package:custed2/service/webvpn_service.dart';
 import 'package:custed2/service/wrdvpn_service.dart';
 import 'package:custed2/ui/web/web_page.dart';
 import 'package:custed2/ui/web/web_page_action.dart';
+import 'package:custed2/web/iecard_addon.dart';
+import 'package:custed2/web/iecard_netfee_addon.dart';
+import 'package:custed2/web/mysso_addon.dart';
 import 'package:custed2/web/probe_addon.dart';
+import 'package:custed2/web/self_login_addon.dart';
 // import 'package:custed2/web/login_addon.dart';
 
 class CustNavWebPage extends WebPage {
@@ -30,6 +34,10 @@ class _CustNavWebPageState extends WebPageState {
     // ProbeAddon('document.cookie'),
     // ProbeAddon('navigator.userAgent'),
     // LoginAddon(),
+    MyssoAddon(),
+    SelfLoginAddon(),
+    IecardAddon(),
+    IecardNetFeeAddon(),
   ];
 
   @override
