@@ -266,14 +266,11 @@ class WebPageState extends State<WebPage> {
     );
   }
 
-  Future<void> loadCookieFor(String url, [String name]) async {
+  Future<void> loadCookieFor(String url, {String urlOverride}) async {
     final cookies = locator<PersistCookieJar>().loadForRequest(url.toUri());
+    // final uriOverride = urlOverride?.toUri();
 
     for (var cookie in cookies) {
-      if (name != null && cookie.name != name) {
-        continue;
-      }
-
       print('WEBPAGE cookie $url : <$cookie>');
 
       final domain = cookie.domain == null
@@ -281,13 +278,15 @@ class WebPageState extends State<WebPage> {
           : cookie.domain.startsWith('.') ? cookie.domain : '.' + cookie.domain;
 
       await CookieManager.instance().setCookie(
-        url: url,
+        url: urlOverride ?? url,
         name: cookie.name,
         value: cookie.value,
         domain: domain,
         path: cookie.path ?? '/',
         maxAge: cookie.maxAge,
-        isSecure: cookie.secure,
+        // isSecure:
+        //     uriOverride == null ? cookie.secure : uriOverride.scheme == 'https',
+        isSecure: false,
       );
     }
   }

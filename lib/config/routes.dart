@@ -8,6 +8,7 @@ import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
 import 'package:custed2/ui/user_tab/dark_mode.dart';
 import 'package:custed2/ui/user_tab/netdisk_page.dart';
+import 'package:custed2/ui/web/custnav_web_page.dart';
 import 'package:custed2/ui/web/ecard_web_page.dart';
 import 'package:custed2/ui/web/exam_room_web_page.dart';
 import 'package:custed2/ui/web/iecard_web_page.dart';
@@ -122,3 +123,9 @@ final ticeWebPage = AppRoute(
   title: '体测成绩',
   page: TiceWebPage(),
 );
+
+final custNavWebPage = AppRoute(
+  title: 'Cust+',
+  page: CustNavWebPage(),
+);
+
