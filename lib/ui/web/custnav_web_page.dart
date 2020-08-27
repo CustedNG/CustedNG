@@ -27,8 +27,8 @@ class CustNavWebPage extends WebPage {
 class _CustNavWebPageState extends WebPageState {
   final addons = [
     // SelfLoginAddon(),
-    ProbeAddon('document.cookie'),
-    ProbeAddon('navigator.userAgent'),
+    // ProbeAddon('document.cookie'),
+    // ProbeAddon('navigator.userAgent'),
     // LoginAddon(),
   ];
 
