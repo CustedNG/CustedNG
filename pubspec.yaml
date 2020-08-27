@@ -81,6 +81,8 @@ dependencies:
       url: https://github.com/Countly/countly-sdk-flutter-bridge.git
       ref: master
 
+  flutter_svg: 0.18.0
+
 dev_dependencies:
   # flutter_test:
   #   sdk: flutter

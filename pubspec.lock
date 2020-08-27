@@ -309,7 +309,7 @@ packages:
     source: hosted
     version: "0.9.1+3"
   flutter_svg:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_svg
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
