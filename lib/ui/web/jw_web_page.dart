@@ -9,6 +9,7 @@ import 'package:custed2/ui/web/web_page_action.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 // import 'package:custed2/web/cookie_probe_addon.dart';
 import 'package:custed2/web/jw_eval_addon.dart';
+import 'package:custed2/web/mysso_addon.dart';
 
 Future<String> _getJwPresignedUrl() async {
   final user = locator<UserProvider>();
@@ -43,6 +44,7 @@ class JwWebPage extends WebPage {
 
 class _JwWebPageState extends WebPageState {
   final addons = [
+    MyssoAddon(),
     JwEvalAddon(),
     // CookieProbeAddon(),
   ];
