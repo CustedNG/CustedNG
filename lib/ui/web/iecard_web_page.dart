@@ -6,6 +6,7 @@ import 'package:custed2/ui/web/web_page.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:custed2/web/iecard_addon.dart';
 import 'package:custed2/web/iecard_netfee_addon.dart';
+import 'package:custed2/web/mysso_addon.dart';
 
 class IecardWebPage extends WebPage {
   final title = '一卡通';
@@ -16,6 +17,7 @@ class IecardWebPage extends WebPage {
 
 class _IecardWebPageState extends WebPageState {
   final addons = [
+    MyssoAddon(),
     IecardAddon(),
     IecardNetFeeAddon(),
   ];
@@ -28,11 +30,12 @@ class _IecardWebPageState extends WebPageState {
       return;
     }
 
-    await IecardService().xRequest('GET', IecardService.userUrl.toUri(),
-        maxRedirects: 0, expireTest: (resp) => resp.statusCode != 200);
-    final url = IecardService.phoneHomeUrl;
+    // await IecardService().xRequest('GET', IecardService.userUrl.toUri(),
+    //     maxRedirects: 0, expireTest: (resp) => resp.statusCode != 200);
+    // final url = IecardService.phoneHomeUrl;
+    final url = 'http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT';
     // await IecardService().login();
-    await loadCookieFor(url);
+    // await loadCookieFor(url);
     controller.loadUrl(url: url);
   }
 
