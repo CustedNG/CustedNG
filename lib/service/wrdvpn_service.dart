@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:convert/convert.dart';
 import 'package:custed2/core/service/cat_client.dart';
 import 'package:custed2/core/service/cat_error.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
@@ -83,9 +84,14 @@ class WrdvpnService extends CatService {
     return response;
   }
 
-  Future<String> getBypassUrl(String originalUrl) async {
-    final url = '$baseUrl/wengine-auth/login?id=15&path=/&from=$originalUrl';
-    final resp = await xRequest('GET', url, maxRedirects: 0);
-    return resp.headers[HttpHeaders.locationHeader];
+  Future<String> getBypassUrl(String originalUrl, int id) async {
+    originalUrl = Uri.encodeFull(originalUrl);
+    try {
+      final url = '$baseUrl/wengine-auth/login?id=$id&path=/&from=$originalUrl';
+      final resp = await xRequest('GET', url, maxRedirects: 0);
+      return resp.headers[HttpHeaders.locationHeader] ?? originalUrl;
+    } catch (e) {
+      return originalUrl;
+    }
   }
 }

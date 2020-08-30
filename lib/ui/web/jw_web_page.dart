@@ -20,7 +20,7 @@ Future<String> _getJwPresignedUrl() async {
 
   final ticket = await MyssoService().getTicketForJw();
   final jwUrl = 'https://jwgl.cust.edu.cn/welcome?ticket=$ticket';
-  final url = await WrdvpnService().getBypassUrl(jwUrl);
+  final url = await WrdvpnService().getBypassUrl(jwUrl, 15);
   return url;
 }
 

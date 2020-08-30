@@ -76,6 +76,7 @@ class _OpenIecardDialogState extends State<OpenIecardDialog>
       setState(() {
         _failed = true;
       });
+      print(e);
     }
   }
 
@@ -102,14 +103,23 @@ class _OpenIecardDialogState extends State<OpenIecardDialog>
     final iecardUrl =
         'http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT&ticket=$ticket';
 
-    final url = await WrdvpnService().getBypassUrl(iecardUrl);
+    final url = await WrdvpnService().getBypassUrl(iecardUrl, 27);
 
     // if (_canceled) {
     //   return;
     // }
 
     quit();
-    openUrl(url);
+
+    final ok = await openUrl(url);
+
+    if (!ok) {
+      print('load bypassUrl failed, use raw url');
+
+      openUrl(
+        'http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT',
+      );
+    }
   }
 
   void quit() {
