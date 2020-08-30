@@ -10,6 +10,7 @@ import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 // import 'package:custed2/web/cookie_probe_addon.dart';
 import 'package:custed2/web/jw_eval_addon.dart';
 import 'package:custed2/web/mysso_addon.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 Future<String> _getJwPresignedUrl() async {
   final user = locator<UserProvider>();
@@ -62,9 +63,13 @@ class _JwWebPageState extends WebPageState {
     // await MyssoService().login();
     // final url = 'https://jwgl.cust.edu.cn/welcome';
     final url = await _getJwPresignedUrl();
+
+    await CookieManager.instance().deleteCookies(url: url);
+
     await loadCookieFor(JwService.baseUrl);
     await loadCookieFor(MyssoService.loginUrl);
     await loadCookieFor(WrdvpnService.baseUrl);
+
     // await loadCookieFor(url);
     controller.loadUrl(url: url);
     // controller.loadUrl(url: 'https://mysso.cust.edu.cn/cas/login');
