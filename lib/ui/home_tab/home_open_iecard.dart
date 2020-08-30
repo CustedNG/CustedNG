@@ -7,10 +7,39 @@ import 'package:custed2/service/wrdvpn_service.dart';
 import 'package:flutter/cupertino.dart';
 
 Future<void> openIecard(BuildContext context) async {
+  final open = await showCupertinoDialog(
+    context: context,
+    builder: (context) => OpenOrNotDialog(),
+  );
+
+  if (open != true) {
+    return;
+  }
+
   showCupertinoDialog(
     context: context,
     builder: (context) => OpenIecardDialog(),
   );
+}
+
+class OpenOrNotDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoAlertDialog(
+      content: Text('即将在浏览器中打开'),
+      actions: [
+        CupertinoDialogAction(
+          child: Text('取消'),
+          onPressed: () => Navigator.of(context).pop(false),
+        ),
+        CupertinoDialogAction(
+          isDefaultAction: true,
+          child: Text('确定'),
+          onPressed: () => Navigator.of(context).pop(true),
+        ),
+      ],
+    );
+  }
 }
 
 class OpenIecardDialog extends StatefulWidget {
