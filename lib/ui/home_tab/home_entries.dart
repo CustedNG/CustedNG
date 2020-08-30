@@ -1,9 +1,9 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/core/open.dart';
 import 'package:custed2/core/script.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
+import 'package:custed2/ui/home_tab/home_open_iecard.dart';
 import 'package:flutter/cupertino.dart';
 
 class HomeEntries extends StatelessWidget {
@@ -22,9 +22,7 @@ class HomeEntries extends StatelessWidget {
             name: Text('一卡通'),
             icon: Image(image: ImageRes.ecardIcon),
             // action: () => iecardWebPage.go(context),
-            action: () {
-              openUrl('http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT');
-            },
+            action: () => openIecard(context),
           ),
           HomeEntry(
             name: Text('体测成绩'),
