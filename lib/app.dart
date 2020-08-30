@@ -90,10 +90,10 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     ]);
 
     // 预热 IecardService
-    final user = locator<UserProvider>();
-    await user.initialized;
-    if (user.loggedIn) {
-      IecardService().login();
-    }
+    // final user = locator<UserProvider>();
+    // await user.initialized;
+    // if (user.loggedIn) {
+    //   IecardService().login();
+    // }
   }
 }
