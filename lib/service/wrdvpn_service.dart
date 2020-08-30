@@ -58,7 +58,8 @@ class WrdvpnService extends CatService {
         headers: headers, maxRedirects: 0, body: body);
 
     final expired = response.headers[HttpHeaders.locationHeader]
-        ?.contains(RegExp(r'wwwn|mysso'));
+        // ?.contains(RegExp(r'wwwn|mysso'));
+        ?.contains(RegExp(r'wwwn'));
 
     if (expired == true) {
       print('Wrdvpn expiration detected');

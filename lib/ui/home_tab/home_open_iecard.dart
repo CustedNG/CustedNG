@@ -102,14 +102,14 @@ class _OpenIecardDialogState extends State<OpenIecardDialog>
     final iecardUrl =
         'http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT&ticket=$ticket';
 
-    // final url = await WrdvpnService().getBypassUrl(iecardUrl);
+    final url = await WrdvpnService().getBypassUrl(iecardUrl);
 
     // if (_canceled) {
     //   return;
     // }
 
     quit();
-    openUrl(iecardUrl);
+    openUrl(url);
   }
 
   void quit() {

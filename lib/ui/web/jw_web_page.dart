@@ -12,7 +12,7 @@ import 'package:custed2/web/jw_eval_addon.dart';
 import 'package:custed2/web/mysso_addon.dart';
 // import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-Future<String> _getJwPresignedUrl() async {
+Future<String> _getJwPresignedUrl() async { 
   final user = locator<UserProvider>();
   if (!user.loggedIn) {
     return 'https://jwgl.cust.edu.cn/';
@@ -20,8 +20,8 @@ Future<String> _getJwPresignedUrl() async {
 
   final ticket = await MyssoService().getTicketForJw();
   final jwUrl = 'https://jwgl.cust.edu.cn/welcome?ticket=$ticket';
-  // final url = await WrdvpnService().getBypassUrl(jwUrl);
-  return jwUrl;
+  final url = await WrdvpnService().getBypassUrl(jwUrl);
+  return url;
 }
 
 class JwWebPage extends WebPage {
@@ -30,14 +30,14 @@ class JwWebPage extends WebPage {
 
   final actions = [
     WebPageAction(
-      name: '在浏览器中打开',
-      handler: (context) async {
-        final url = await _getJwPresignedUrl();
-        openUrl(url);
-        // print(url);
-      },
-    ),
-  ];
+        name: '在浏览器中打开',
+        handler: (context) async {
+          final url = await _getJwPresignedUrl();
+          openUrl(url);
+          // print(url);
+        },
+      ),
+    ];
 
   @override
   _JwWebPageState createState() => _JwWebPageState();
