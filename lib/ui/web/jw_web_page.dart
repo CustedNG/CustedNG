@@ -10,7 +10,7 @@ import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 // import 'package:custed2/web/cookie_probe_addon.dart';
 import 'package:custed2/web/jw_eval_addon.dart';
 import 'package:custed2/web/mysso_addon.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+// import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 Future<String> _getJwPresignedUrl() async {
   final user = locator<UserProvider>();
@@ -20,8 +20,8 @@ Future<String> _getJwPresignedUrl() async {
 
   final ticket = await MyssoService().getTicketForJw();
   final jwUrl = 'https://jwgl.cust.edu.cn/welcome?ticket=$ticket';
-  final url = await WrdvpnService().getBypassUrl(jwUrl);
-  return url;
+  // final url = await WrdvpnService().getBypassUrl(jwUrl);
+  return jwUrl;
 }
 
 class JwWebPage extends WebPage {
@@ -64,7 +64,7 @@ class _JwWebPageState extends WebPageState {
     // final url = 'https://jwgl.cust.edu.cn/welcome';
     final url = await _getJwPresignedUrl();
 
-    await CookieManager.instance().deleteCookies(url: url);
+    // await CookieManager.instance().deleteCookies(url: url);
 
     await loadCookieFor(JwService.baseUrl);
     await loadCookieFor(MyssoService.loginUrl);

@@ -21,14 +21,15 @@ class OpenIecardDialog extends StatefulWidget {
 class _OpenIecardDialogState extends State<OpenIecardDialog>
     with AfterLayoutMixin {
   var _canceled = false;
+  var _failed = false;
 
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      content: CupertinoActivityIndicator(),
+      content: _failed ? Text('加载失败') : CupertinoActivityIndicator(),
       actions: [
         CupertinoDialogAction(
-          child: Text('取消'),
+          child: Text(_failed ? '关闭' : '取消'),
           onPressed: () {
             _canceled = true;
             quit();
@@ -39,8 +40,14 @@ class _OpenIecardDialogState extends State<OpenIecardDialog>
   }
 
   @override
-  void afterFirstLayout(BuildContext context) {
-    openIecard();
+  void afterFirstLayout(BuildContext context) async {
+    try {
+      await openIecard();
+    } catch (e) {
+      setState(() {
+        _failed = true;
+      });
+    }
   }
 
   Future<void> openIecard() async {
@@ -66,14 +73,14 @@ class _OpenIecardDialogState extends State<OpenIecardDialog>
     final iecardUrl =
         'http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT&ticket=$ticket';
 
-    final url = await WrdvpnService().getBypassUrl(iecardUrl);
+    // final url = await WrdvpnService().getBypassUrl(iecardUrl);
 
-    if (_canceled) {
-      return;
-    }
+    // if (_canceled) {
+    //   return;
+    // }
 
     quit();
-    openUrl(url);
+    openUrl(iecardUrl);
   }
 
   void quit() {
