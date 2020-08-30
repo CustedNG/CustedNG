@@ -33,6 +33,10 @@ class NavbarMiddle extends StatelessWidget {
       ],
     );
 
-    return content;
+    return Container(
+      width: 100,
+      child: content,
+      alignment: Alignment.center,
+    );
   }
 }
