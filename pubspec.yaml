@@ -76,10 +76,7 @@ dependencies:
   dio: ^3.0.8
   dio_cookie_manager: ^1.0.0
 
-  countly_flutter:
-    git:
-      url: https://github.com/Countly/countly-sdk-flutter-bridge.git
-      ref: master
+  countly_flutter: 20.04.0
 
   flutter_svg: 0.18.0
 
@@ -140,3 +137,4 @@ flutter:
     - assets/calendar/2019-2.png
     - assets/script/
     - assets/bg/
+    - assets/wechat/

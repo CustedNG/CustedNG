@@ -195,11 +195,9 @@ packages:
   countly_flutter:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: ad25252f39409034075517f4dbe627964006c3b8
-      url: "https://github.com/Countly/countly-sdk-flutter-bridge.git"
-    source: git
+      name: countly_flutter
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
+    source: hosted
     version: "20.04.0"
   crypto:
     dependency: "direct main"

@@ -22,7 +22,9 @@ class HomeEntries extends StatelessWidget {
             name: Text('一卡通'),
             icon: Image(image: ImageRes.ecardIcon),
             // action: () => iecardWebPage.go(context),
-            action: () => openIecard(context),
+            // action: () => openIecard(context),
+            action: () => gotoWechat.go(context),
+            longPressAction: () => openIecard(context),
           ),
           HomeEntry(
             name: Text('体测成绩'),
@@ -33,7 +35,9 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('充网费'),
             icon: Image(image: ImageRes.networkIcon),
-            action: () => ecardWebPage.go(context),
+            // action: () => ecardWebPage.go(context),
+            action: () => gotoWechat.go(context),
+            longPressAction: () => ecardWebPage.go(context),
           ),
         ]),
         TableRow(children: [

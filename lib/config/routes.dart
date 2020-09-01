@@ -1,5 +1,6 @@
 import 'package:custed2/core/route.dart';
 import 'package:custed2/ui/home_tab/about_page.dart';
+import 'package:custed2/ui/home_tab/home_go_to_wechat.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
@@ -127,5 +128,10 @@ final ticeWebPage = AppRoute(
 final custNavWebPage = AppRoute(
   title: 'Cust+',
   page: CustNavWebPage(),
+);
+
+final gotoWechat = AppRoute(
+  title: '',
+  page: GoToWechat(),
 );
 
