@@ -1,9 +1,8 @@
+import 'package:custed2/res/image_res.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter_advanced_networkimage/zoomable.dart';
-
-import 'package:custed2/res/image_res.dart';
 
 class CustCompusMap {
   const CustCompusMap({
@@ -103,6 +102,18 @@ class Maps {
     darkImage: ImageRes.custSMapSimpleDark,
   );
 
+  /// @dx positive = right
+  /// @dy positive = down
+  static PhotoViewMap makeMap(String name, CustCompusMap map, double dx,
+      double dy) {
+    return PhotoViewMap(
+      name,
+      map,
+      Offset(dx, dy),
+      Offset(-dx + 57, -dy + 80),
+    );
+  }
+
   static Widget search(String name) {
     final List<PhotoViewMap> _maps = [
       PhotoViewMap(
@@ -110,30 +121,31 @@ class Maps {
         custE,
         Offset(31, 28),
         Offset(30, 53),
-      ),
+      )
+      ,
       PhotoViewMap(
         '东1东',
         custE,
         Offset(68, 28),
         Offset(-8, 53),
       ),
-      PhotoViewMap(
-        '东区田径场',
-        custE,
-        Offset(0, 0),
-        Offset(0, 0),
+      makeMap(
+          '东区田径场',
+          custE,
+          25, 92
       ),
+      makeMap('东2教', custE, 65, 12),
       PhotoViewMap(
-        '东2教',
+        '机实',
         custE,
-        Offset(0, 0),
-        Offset(0, 0),
+        Offset(95, 148),
+        Offset(-30, -65),
       ),
       PhotoViewMap(
         '东3教',
         custE,
-        Offset(0, 0),
-        Offset(0, 0),
+        Offset(35, 12),
+        Offset(15, 65),
       ),
       PhotoViewMap(
         '研',
@@ -141,12 +153,7 @@ class Maps {
         Offset(69, 97),
         Offset(-5, -15),
       ),
-      PhotoViewMap(
-        '南实训',
-        custS,
-        Offset(65, 108),
-        Offset(-5, -25),
-      ),
+      makeMap('南实训', custS, 65, 108),
       PhotoViewMap(
         '南区体育馆',
         custS,
