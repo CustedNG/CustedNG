@@ -1,8 +1,8 @@
 import 'package:custed2/res/build_data.dart';
+import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/kv_table.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,15 +18,9 @@ class AboutPage extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: NavBar.cupertino(
         context: context,
-        leading: NavBarTitle(
-          child: GestureDetector(
-            child: Icon(
-              Icons.arrow_back_sharp,
-              size: 25,
-              color: Colors.white,
-            ),
-            onTap: () => Navigator.pop(context),
-          ),
+        leading: GestureDetector(
+          child: BackIcon(),
+          onTap: () => Navigator.pop(context),
         ),
         middle: NavbarText('关于'),
       ),

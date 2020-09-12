@@ -1,6 +1,7 @@
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,11 +15,7 @@ class DarkModePage extends StatelessWidget {
       navigationBar: NavBar.cupertino(
           context: context,
           leading: GestureDetector(
-              child: Icon(
-                Icons.arrow_back_sharp,
-                size: 25,
-              ),
-              onTap: () => Navigator.pop(context)),
+              child: BackIcon(), onTap: () => Navigator.pop(context)),
           middle: NavbarText('黑暗模式')),
       child: _buildRoot(context),
       backgroundColor: Color(0xFFEEEEF3),
