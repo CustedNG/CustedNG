@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -11,12 +10,15 @@ import 'package:custed2/ui/schedule_tab/add_lesson_field.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time_picker.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_weeks_picker.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddLessonPage extends StatefulWidget {
-  AddLessonPage();
+  AddLessonPage({this.lesson});
+
+  final ScheduleLesson lesson;
 
   @override
   _AddLessonPageState createState() => _AddLessonPageState();
@@ -42,6 +44,18 @@ class _AddLessonPageState extends State<AddLessonPage> {
   @override
   void initState() {
     super.initState();
+    if (widget.lesson != null) {
+      nameController.text = widget.lesson.name;
+      roomController.text = widget.lesson.roomRaw;
+      teacherController.text = widget.lesson.teacherName;
+      weeks = Map<int, bool>.fromIterables(
+        List<int>.generate(24, (idx) => idx + 1),
+        List<bool>.generate(24, (idx) => widget.lesson.weeks.contains(idx + 1)),
+      );
+      weekday = widget.lesson.weekday;
+      startSection = widget.lesson.startSection;
+      endSection = widget.lesson.endSection;
+    }
     updateDisplay();
   }
 
@@ -61,7 +75,12 @@ class _AddLessonPageState extends State<AddLessonPage> {
         middle: Text('添加课程', style: navBarText),
         trailing: NavBarButton.trailing(
           child: Text('提交', style: navBarText),
-          onPressed: _addLesson,
+          onPressed: () {
+            if (widget.lesson != null) {
+              widget.lesson.delete();
+            }
+            _addLesson();
+          },
         ),
       ),
       child: DefaultTextStyle(
@@ -77,6 +96,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
             _buildTeacherField(context),
             _buildWeekField(context),
             _buildTimeField(context),
+            _buildDeleteButton(context)
           ],
         ),
       ),
@@ -142,6 +162,18 @@ class _AddLessonPageState extends State<AddLessonPage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildDeleteButton(BuildContext context) {
+    return CupertinoButton(
+      child:
+          Text('删除', style: TextStyle(color: CupertinoColors.destructiveRed)),
+      onPressed: () {
+        widget.lesson.delete();
+        locator<ScheduleProvider>().loadLocalData();
+        Navigator.pop(context);
+      },
     );
   }
 
