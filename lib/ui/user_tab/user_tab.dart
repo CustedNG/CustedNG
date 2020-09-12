@@ -61,7 +61,7 @@ class UserTab extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: NavBar.cupertino(
         context: context,
-        middle: NavbarText('关于'),
+        middle: NavbarText('账户'),
       ),
       backgroundColor: CupertinoColors.lightBackgroundGray,
       child: CupertinoSettings(
