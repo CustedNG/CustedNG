@@ -24,10 +24,12 @@ class NavbarMiddle extends StatelessWidget {
       children: <Widget>[
         Text(
           textAbove,
+          textScaleFactor: 1.0,
           style: baseFont.copyWith(fontWeight: FontWeight.normal),
         ),
         Text(
           textBelow,
+          textScaleFactor: 1.0,
           style: baseFont.copyWith(fontWeight: FontWeight.bold),
         ),
       ],
