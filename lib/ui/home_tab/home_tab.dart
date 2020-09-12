@@ -9,6 +9,7 @@ import 'package:custed2/ui/home_tab/home_weather.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_title.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -22,7 +23,7 @@ class HomeTab extends StatelessWidget {
         context: context,
         leading: NavBarTitle(
           child: GestureDetector(
-            child: Text('Custed'),
+            child: NavbarText('Custed'),
             onTap: () => aboutPage.go(context),
             onLongPress: () => debugPage.go(context),
           ),

@@ -10,7 +10,6 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/service/iecard_service.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/setting_builder.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,9 +77,11 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     ''');
 
     // 启动外围服务
-    Analytics.init();
-    Analytics.isDebug = BuildMode.isDebug;
-    locator<WeatherProvider>().startAutoUpdate();
+    Future.delayed(Duration(milliseconds: 200), () {
+      Analytics.init();
+      Analytics.isDebug = BuildMode.isDebug;
+      locator<WeatherProvider>().startAutoUpdate();
+    });
 
     // 加载核心数据
     await Future.wait([

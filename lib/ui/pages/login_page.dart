@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
-import 'package:custed2/locator.dart';
 import 'package:custed2/data/store/user_data_store.dart';
+import 'package:custed2/locator.dart';
+import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -33,10 +34,7 @@ class _LoginPageState extends State<LoginPage> {
       navigationBar: CupertinoNavigationBar(
         backgroundColor: theme.webviewNavBarColor,
         actionsForegroundColor: theme.navBarActionsColor,
-        middle: Text(
-          '登录',
-          style: TextStyle(color: theme.navBarActionsColor),
-        ),
+        middle: NavbarText('登录'),
         trailing: isBusy ? _buildIndicator(context) : null,
       ),
       child: WebView(
