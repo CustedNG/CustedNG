@@ -6,7 +6,6 @@ import 'package:custed2/ui/user_tab/netdisk_percent.dart';
 import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_title.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,18 +17,16 @@ class NetdiskPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: NavBar.cupertino(
+    return Scaffold(
+      appBar: NavBar.material(
         context: context,
-        leading: NavBarTitle(
-          child: GestureDetector(
-            child: BackIcon(),
-            onTap: () => Navigator.pop(context),
-          ),
+        leading: GestureDetector(
+          child: BackIcon(),
+          onTap: () => Navigator.pop(context),
         ),
         middle: NavbarText('网盘'),
       ),
-      child: _buildRoot(context),
+      body: _buildRoot(context),
     );
   }
 

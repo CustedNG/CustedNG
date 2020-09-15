@@ -9,7 +9,7 @@ import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/grade_tab/grade_picker.dart';
 import 'package:custed2/ui/grade_tab/sliver_header_delegate.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:custed2/ui/widgets/navbar/more_btn.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -120,21 +120,19 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    return CupertinoPageScaffold(
+    return Scaffold(
       backgroundColor: theme.backgroundColor,
-      navigationBar: CupertinoNavigationBar(
-        automaticallyImplyMiddle: false,
-        backgroundColor: theme.navBarColor,
-        actionsForegroundColor: CupertinoColors.white,
-        leading: Align(
-          alignment: Alignment.centerLeft,
-          child: Text('成绩查询', style: textStyleInfo.copyWith(fontSize: 17)),
-        ),
-        trailing: grade?.terms?.isNotEmpty == true
-            ? NavBarMoreBtn(onTap: () => _showSelector(context))
-            : null,
-      ),
-      child: SafeArea(
+      appBar: AppBar(
+          backgroundColor: theme.navBarColor,
+          title: NavbarText('成绩查询'),
+          actions: [
+            grade?.terms?.isNotEmpty == true
+                ? IconButton(
+                    icon: Icon(Icons.format_list_numbered),
+                    onPressed: () => _showSelector(context))
+                : null
+          ]),
+      body: SafeArea(
         child: Material(
           color: theme.backgroundColor,
           child: PageView(
@@ -321,7 +319,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     BuildContext context, {
     @required String value,
     @required String tag,
-    String unit = '',
   }) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -339,7 +336,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   }
 
   Widget _buildInfoItem(BuildContext context,
-      {@required String value, @required String tag, String unit = ''}) {
+      {@required String value, @required String tag}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -387,131 +384,138 @@ class _ReportItem extends StatefulWidget {
   __ReportItemState createState() => __ReportItemState();
 }
 
-class __ReportItemState extends State<_ReportItem> {
+class __ReportItemState extends State<_ReportItem>
+    with AutomaticKeepAliveClientMixin {
   bool isExpanded = false;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     TextStyle gradeTextStyle;
     if (widget.exam.mark == null) {
       gradeTextStyle = textStyleMark.copyWith(
           color: DynamicColor(
-        Color(0xfffcc603),
-        Color(0xffb3ad00),
-      ).resolve(context));
+            Color(0xfffcc603),
+            Color(0xffb3ad00),
+          ).resolve(context));
     } else if (widget.exam.mark >= 60) {
       gradeTextStyle = textStyleMark.copyWith(
           color: DynamicColor(
-        Color(0xFF2ACD75),
-        Color(0xFF059c0a),
-      ).resolve(context));
+            Color(0xFF2ACD75),
+            Color(0xFF059c0a),
+          ).resolve(context));
     } else if (widget.exam.mark >= 0) {
       gradeTextStyle = textStyleMark.copyWith(
-          //b3ad00
+        //b3ad00
           color: DynamicColor(
-        Color(0xfffc037b),
-        Color(0xFFa6462b),
-      ).resolve(context));
+            Color(0xfffc037b),
+            Color(0xFFa6462b),
+          ).resolve(context));
     } else {
       gradeTextStyle = textStyleMark.copyWith(
           color: DynamicColor(
-        Color(0xfffcc603),
-        Color(0xffb3ad00),
-      ).resolve(context));
+            Color(0xfffcc603),
+            Color(0xffb3ad00),
+          ).resolve(context));
     }
     final theme = AppTheme.of(context);
     final fieldTextTheme =
-        CupertinoTheme.brightnessOf(context) == Brightness.dark
-            ? textStyleFieldDark
-            : textStyleField;
+    CupertinoTheme.brightnessOf(context) == Brightness.dark
+        ? textStyleFieldDark
+        : textStyleField;
     final nameTextTheme =
-        CupertinoTheme.brightnessOf(context) == Brightness.dark
-            ? textStyleNameDark
-            : textStyleName;
+    CupertinoTheme.brightnessOf(context) == Brightness.dark
+        ? textStyleNameDark
+        : textStyleName;
     final content = isExpanded
         ? Container(
-            alignment: Alignment.center,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(widget.exam.lessonName, style: nameTextTheme),
-                      SizedBox(width: 5),
-                      Text(
-                        widget.exam.lessonType,
-                        style: textStyleMark.copyWith(
-                            color: DynamicColor(
-                          Color(0xFF2ACD75),
-                          Color(0xFF059c0a),
-                        ).resolve(context)),
-                      ),
-                    ],
-                  ),
-                ),
-                // SizedBox(height: 10),
-                Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        '成绩 : ${formatGrade(widget.exam)}',
-                        style: gradeTextStyle,
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        '类别 : ${widget.exam.lessonType}',
-                        style: fieldTextTheme,
-                      ),
-                    ],
-                  ),
-                ),
-                // SizedBox(height: 10),
-                Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        '学分 : ${widget.exam.credit}',
-                        style: fieldTextTheme,
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        '学时 : ${widget.exam.schoolHour}',
-                        style: fieldTextTheme,
-                      ),
-                      SizedBox(width: 20),
-                      Text(
-                        '状态 : ${widget.exam.testStatus}',
-                        style: fieldTextTheme,
-                      ),
-                    ],
-                  ),
+                Text(widget.exam.lessonName, style: nameTextTheme),
+                SizedBox(width: 5),
+                Text(
+                  widget.exam.lessonType,
+                  style: textStyleMark.copyWith(
+                      color: DynamicColor(
+                        Color(0xFF2ACD75),
+                        Color(0xFF059c0a),
+                      ).resolve(context)),
                 ),
               ],
             ),
-          )
-        : Container(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+          ),
+          // SizedBox(height: 10),
+          Flexible(
             child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  widget.exam.lessonName,
-                  style: nameTextTheme,
-                ),
-                Text(
-                  widget.exam.rawMark,
+                  '成绩 : ${formatGrade(widget.exam)}',
                   style: gradeTextStyle,
                 ),
+                SizedBox(width: 20),
+                Text(
+                  '类别 : ${widget.exam.lessonType}',
+                  style: fieldTextTheme,
+                ),
               ],
             ),
-          );
+          ),
+          // SizedBox(height: 10),
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '学分 : ${widget.exam.credit}',
+                  style: fieldTextTheme,
+                ),
+                SizedBox(width: 20),
+                Text(
+                  '学时 : ${widget.exam.schoolHour}',
+                  style: fieldTextTheme,
+                ),
+                SizedBox(width: 20),
+                Text(
+                  '状态 : ${widget.exam.testStatus}',
+                  style: fieldTextTheme,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    )
+        : Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            widget.exam.lessonName,
+            style: nameTextTheme,
+          ),
+          Text(
+            widget.exam.rawMark,
+            style: gradeTextStyle,
+          ),
+        ],
+      ),
+    );
     final item = AnimatedContainer(
       height: isExpanded ? 115 : 57,
       curve: Curves.fastLinearToSlowEaseIn,
@@ -540,6 +544,9 @@ class __ReportItemState extends State<_ReportItem> {
       isExpanded = !isExpanded;
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 String formatGrade(GradeDetail detail) {

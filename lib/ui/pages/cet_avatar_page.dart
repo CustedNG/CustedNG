@@ -13,15 +13,15 @@ import 'package:provider/provider.dart';
 class CetAvatarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: NavBar.cupertino(
+    return Scaffold(
+      appBar: NavBar.material(
           context: context,
           leading: GestureDetector(
             child: BackIcon(),
             onTap: () => Navigator.pop(context),
           ),
           middle: NavbarText('四六级照片')),
-      child: Container(
+      body: Container(
         child: SafeArea(
           child: CustomScrollView(
             slivers: <Widget>[

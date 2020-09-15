@@ -5,7 +5,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_title.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GradeTab extends StatefulWidget {
@@ -17,15 +17,14 @@ class _GradeTabState extends State<GradeTab> with AfterLayoutMixin<GradeTab> {
   @override
   Widget build(BuildContext context) {
     final gradeProvider = Provider.of<GradeProvider>(context);
-    return CupertinoPageScaffold(
-      navigationBar: NavBar.cupertino(
+    return Scaffold(
+      appBar: NavBar.material(
         context: context,
-        leading: NavBarTitle(
+        middle: NavBarTitle(
           child: Text('成绩查询'),
         ),
-        middle: Container(),
       ),
-      child: PlaceholderWidget(
+      body: PlaceholderWidget(
         text: gradeProvider.grade?.averageGradePoint?.toString(),
       ),
     );

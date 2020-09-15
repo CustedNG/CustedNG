@@ -1,5 +1,6 @@
 import 'package:custed2/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class GradePicker extends StatelessWidget {
   GradePicker({this.currentIndex, this.terms});
@@ -13,7 +14,9 @@ class GradePicker extends StatelessWidget {
       return Center(
         child: Text(
           term,
-          style: const TextStyle(fontSize: 22.0),
+          style: TextStyle(
+              color: isDark(context) ? Colors.white : Colors.black,
+              fontSize: 22.0),
         ),
       );
     }).toList();

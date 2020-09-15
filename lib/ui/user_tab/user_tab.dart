@@ -12,9 +12,9 @@ import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
+import 'package:custed2/ui/widgets/setting_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
 import 'package:provider/provider.dart';
 
 class UserTab extends StatelessWidget {
@@ -57,129 +57,157 @@ class UserTab extends StatelessWidget {
   Widget _buildUserTab(BuildContext context, UserProfile profile) {
     final setting = locator<SettingStore>();
     final darkModeStatus = ['自动', '开', '关'][setting.darkMode.fetch()];
-
-    return CupertinoPageScaffold(
-      navigationBar: NavBar.cupertino(
-        context: context,
-        middle: NavbarText('账户'),
-      ),
-      backgroundColor: CupertinoColors.lightBackgroundGray,
-      child: CupertinoSettings(
-        items: <Widget>[
-          CSHeader('用户'),
-          CSWidget(_buildUserInfo(context, profile), height: 75),
-          _buildLink(context, '四六级照片', () {
-            locator<CetAvatarProvider>().getAvatar();
-            cetAvatarPage.go(context);
-          }),
-          // _buildLink(context, '网盘与备份', () {
-          _buildLink(context, '网盘', () {
-            locator<NetdiskProvider>().getQuota();
-            netdiskPage.go(context);
-          }, isLast: true),
-          CSHeader('设置'),
-          CSControl(
-            nameWidget: Text('将课表设为首页'),
-            contentWidget: _buildSwitch(context, setting.useScheduleAsHome),
-          ),
-          CSControl(
-            nameWidget: Text('显示非当前周课程'),
-            contentWidget: _buildSwitch(context, setting.showInactiveLessons),
-          ),
-          CSControl(
-            nameWidget: Text('绩点不计选修'),
-            contentWidget:
-                _buildSwitch(context, setting.dontCountElectiveCourseGrade),
-          ),
-          _buildLink(context, '黑暗模式', () {
-            darkModePage.go(context);
-          }, isLast: true, prompt: darkModeStatus),
-          // CSHeader('成绩'),
-          CSHeader(''),
-          CSButton(CSButtonType.DEFAULT_CENTER, "重新登录", () => _login(context)),
-          CSButton(CSButtonType.DESTRUCTIVE, "退出登录", () => _logout(context)),
-          SizedBox(height: 15)
-        ],
-      ),
-    );
-  }
-
-  Widget _buildUserInfo(BuildContext context, UserProfile profile) {
+    final settingTextStyle =
+        TextStyle(color: isDark(context) ? Colors.white : Colors.black);
     final theme = AppTheme.of(context);
-    final avatar = Container(
-      height: 50,
-      width: 50,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: DarkModeFilter(
-          child: Image(image: ImageRes.defaultAvatar),
+
+    return Scaffold(
+        backgroundColor: theme.homeBackgroundColor,
+        appBar: NavBar.material(
+          context: context,
+          middle: NavbarText('账户'),
         ),
-      ),
-    );
-    final departmentText = TextStyle(
-      fontSize: 11,
-      fontWeight: FontWeight.bold,
-      color: theme.textColor.withAlpha(130),
-    );
-    final desc = Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(profile.displayName,
-            style: TextStyle(
-                color: isDark(context) ? Colors.white : Colors.black)),
-        SizedBox(height: 3),
-        Text(profile.department, style: departmentText),
-      ],
-    );
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        children: <Widget>[avatar, SizedBox(width: 10), desc],
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Card(
+                  elevation: 10.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  semanticContainer: false,
+                  child: Stack(
+                    children: <Widget>[
+                      AspectRatio(
+                        aspectRatio: 3 / 1,
+                        child: Image.asset('assets/bg/abstract-dark.jpg',
+                            fit: BoxFit.cover),
+                      ),
+                      Positioned(
+                          top: 30,
+                          left: 30,
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: DarkModeFilter(
+                                    child: Image(
+                                        height: 50,
+                                        width: 50,
+                                        image: ImageRes.defaultAvatar),
+                                  )),
+                              SizedBox(width: 20.0),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    profile.displayName,
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    profile.department,
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 15),
+                                  )
+                                ],
+                              )
+                            ],
+                          ))
+                    ],
+                  ),
+                ),
+              ),
+              Column(
+                children: [
+                  SizedBox(height: 20.0),
+                  Text('用户'),
+                  SizedBox(height: 10.0),
+                  SettingItem(
+                    title: '四六级照片',
+                    titleStyle: settingTextStyle,
+                    onTap: () {
+                      locator<CetAvatarProvider>().getAvatar();
+                      cetAvatarPage.go(context);
+                    },
+                  ),
+                  SettingItem(
+                    title: '网盘',
+                    titleStyle: settingTextStyle,
+                    onTap: () {
+                      locator<NetdiskProvider>().getQuota();
+                      netdiskPage.go(context);
+                    },
+                  ),
+                  SizedBox(height: 20.0),
+                  Text('设置'),
+                  SizedBox(height: 10.0),
+                  SettingItem(
+                    title: '将课表设置为首页',
+                    titleStyle: settingTextStyle,
+                    isShowArrow: false,
+                    rightBtn: _buildSwitch(context, setting.useScheduleAsHome),
+                  ),
+                  SettingItem(
+                    title: '显示非当前周课程',
+                    titleStyle: settingTextStyle,
+                    isShowArrow: false,
+                    rightBtn:
+                        _buildSwitch(context, setting.showInactiveLessons),
+                  ),
+                  SettingItem(
+                    title: '绩点不计选修',
+                    titleStyle: settingTextStyle,
+                    isShowArrow: false,
+                    rightBtn: _buildSwitch(
+                        context, setting.dontCountElectiveCourseGrade),
+                  ),
+                  SettingItem(
+                    title: '黑暗模式',
+                    titleStyle: settingTextStyle,
+                    content: darkModeStatus,
+                    onTap: () => darkModePage.go(context),
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MaterialButton(
+                          child: Text('重新登录'),
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          onPressed: () => _login),
+                      SizedBox(width: 40.0),
+                      MaterialButton(
+                          child: Text('退出登录'),
+                          color: Colors.red,
+                          textColor: Colors.white,
+                          onPressed: () => _logout),
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
+        ));
   }
 
   Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop) {
-    return ValueListenableBuilder(
-      valueListenable: prop.listenable(),
-      builder: (context, value, widget) {
-        return DarkModeFilter(
-          child: CupertinoSwitch(
-              value: value, onChanged: (value) => prop.put(value)),
-        );
-      },
-    );
-  }
-
-  Widget _buildLink(
-    BuildContext context,
-    String name,
-    void onPressed(), {
-    bool isLast = false,
-    String prompt,
-  }) {
-    final content = prompt != null
-        ? Container(
-            padding: EdgeInsets.only(right: 5),
-            child: Text(
-              prompt,
-              style: TextStyle(color: CupertinoColors.systemGrey2),
-            ),
-          )
-        : Icon(
-            CupertinoIcons.right_chevron,
-            color: CupertinoColors.systemGrey2,
-          );
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      minSize: 0,
-      child: CSControl(
-        nameWidget: Text(name),
-        contentWidget: content,
-        addPaddingToBorder: !isLast,
-      ),
-      onPressed: onPressed,
+    return Positioned(
+        right: 0,
+        child: ValueListenableBuilder(
+          valueListenable: prop.listenable(),
+          builder: (context, value, widget) {
+            return DarkModeFilter(
+              child: Switch(
+                  value: value, onChanged: (value) => prop.put(value)),
+            );
+          },
+        )
     );
   }
 

@@ -6,19 +6,20 @@ import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
 
 class DarkModePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: NavBar.cupertino(
+    final theme = AppTheme.of(context);
+
+    return Scaffold(
+      appBar: NavBar.material(
           context: context,
           leading: GestureDetector(
               child: BackIcon(), onTap: () => Navigator.pop(context)),
           middle: NavbarText('黑暗模式')),
-      child: _buildRoot(context),
-      backgroundColor: Color(0xFFEEEEF3),
+      body: _buildRoot(context),
+      backgroundColor: theme.backgroundColor,
     );
   }
 
@@ -28,21 +29,32 @@ class DarkModePage extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     final setting = locator<SettingStore>();
-    return CupertinoSettings(
-      items: <Widget>[
-        CSHeader('模式'),
-        CSSelection<int>(
-          items: <CSSelectionItem<int>>[
-            CSSelectionItem<int>(text: '自动', value: DarkMode.auto),
-            CSSelectionItem<int>(text: '开', value: DarkMode.on),
-            CSSelectionItem<int>(text: '关', value: DarkMode.off),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('自动'),
+            Radio(
+                value: 0,
+                groupValue: setting.darkMode.fetch(),
+                onChanged: _onSelection),
+            Text('开'),
+            Radio(
+                value: 1,
+                groupValue: setting.darkMode.fetch(),
+                onChanged: _onSelection),
+            Text('关'),
+            Radio(
+                value: 2,
+                groupValue: setting.darkMode.fetch(),
+                onChanged: _onSelection)
           ],
-          onSelected: _onSelection,
-          currentSelection: setting.darkMode.fetch(),
         ),
-        CSDescription(
-          '自动模式仅在 iOS 13+ 与 Android 10+ 系统下有效',
-        ),
+        SizedBox(height: 10.0),
+        Center(
+          child: Text('自动模式仅在 iOS 13+ 与 Android 10+ 系统下有效'),
+        )
       ],
     );
   }

@@ -20,6 +20,7 @@ class NavbarText extends StatelessWidget {
       text,
       textScaleFactor: 1.0,
       style: baseFont,
+      softWrap: false,
       overflow: TextOverflow.fade,
     );
   }

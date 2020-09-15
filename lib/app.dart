@@ -12,7 +12,6 @@ import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/setting_builder.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 bool _shouldEnableDarkMode(BuildContext context, int mode) {
@@ -35,19 +34,19 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     return SettingBuilder(
       setting: setting.darkMode,
       builder: (context, mode) {
-        return CupertinoApp(
+        return MaterialApp(
           navigatorKey: locator<GlobalKey<NavigatorState>>(),
           title: 'Custed',
           home: AppFrame(),
           builder: (context, child) {
             bool isDarkMode = _shouldEnableDarkMode(context, mode);
-            return CupertinoTheme(
-              data: CupertinoThemeData(
+            return Theme(
+              data: ThemeData(
                 brightness: isDarkMode ? Brightness.dark : Brightness.light,
               ),
               child: Builder(
                 builder: (context) => DefaultTextStyle(
-                  style: CupertinoTheme.of(context).textTheme.textStyle,
+                  style: Theme.of(context).textTheme.bodyText1,
                   child: child,
                 ),
               ),

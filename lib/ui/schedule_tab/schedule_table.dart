@@ -8,7 +8,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_arrow.dart';
 import 'package:custed2/ui/schedule_tab/schedule_dates.dart';
 import 'package:custed2/ui/schedule_tab/schedule_lesson.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ScheduleTable extends StatelessWidget {
   ScheduleTable(

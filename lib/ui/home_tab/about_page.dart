@@ -15,8 +15,8 @@ class AboutPage extends StatelessWidget {
         ? '${BuildData.build}(+${BuildData.modifications}f)'
         : '${BuildData.build}';
 
-    return CupertinoPageScaffold(
-      navigationBar: NavBar.cupertino(
+    return Scaffold(
+      appBar: NavBar.material(
         context: context,
         leading: GestureDetector(
           child: BackIcon(),
@@ -24,7 +24,7 @@ class AboutPage extends StatelessWidget {
         ),
         middle: NavbarText('关于'),
       ),
-      child: SafeArea(
+      body: SafeArea(
         child: KvTable({
           '名称': BuildData.name,
           '版本': version,

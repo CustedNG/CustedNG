@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -11,9 +10,11 @@ import 'package:custed2/ui/schedule_tab/add_lesson_time.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time_picker.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_weeks_picker.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AddLessonPage extends StatefulWidget {
   AddLessonPage({this.lesson});
@@ -67,23 +68,30 @@ class _AddLessonPageState extends State<AddLessonPage> {
       fontWeight: FontWeight.bold,
     );
 
-    return CupertinoPageScaffold(
+    return Scaffold(
       backgroundColor: theme.textFieldListBackgroundColor,
-      navigationBar: NavBar.cupertino(
-        context: context,
-        leading: NavBarButton.close(onPressed: () => Navigator.pop(context)),
-        middle: Text('添加课程', style: navBarText),
-        trailing: NavBarButton.trailing(
-          child: Text('提交', style: navBarText),
-          onPressed: () {
-            if (widget.lesson != null) {
-              widget.lesson.delete();
-            }
-            _addLesson();
-          },
-        ),
-      ),
-      child: DefaultTextStyle(
+      appBar: NavBar.material(
+          context: context,
+          leading: GestureDetector(
+            child: BackIcon(),
+            onTap: () => Navigator.pop(context),
+          ),
+          middle: Text('添加课程', style: navBarText),
+          trailing: [
+            NavBarButton.trailing(
+              child: Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: Text('提交', style: navBarText),
+              ),
+              onPressed: () {
+                if (widget.lesson != null) {
+                  widget.lesson.delete();
+                }
+                _addLesson();
+              },
+            ),
+          ]),
+      body: DefaultTextStyle(
         style: TextStyle(
           color: theme.textColor,
         ),

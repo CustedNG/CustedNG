@@ -1,6 +1,6 @@
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Colors;
+import 'package:flutter/material.dart' show Colors, Theme;
 
 // should be material.Theme.of(context).backgroundColor
 // scheduleButtonColor: Color(0xFFF0EFF3),
@@ -25,7 +25,7 @@ class AppTheme {
   // 根据当前context的亮度，返回应用主题数据
   static AppThemeResolved of(BuildContext context) {
     if (BuildMode.isDebug) {
-      return resolve(CupertinoTheme.of(context).brightness);
+      return resolve(Theme.of(context).brightness);
     }
 
     return isDark(context) ? dark : bright;

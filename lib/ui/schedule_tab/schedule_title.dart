@@ -11,7 +11,7 @@ class ScheduleTitle extends StatelessWidget {
 
     var title = '课表';
     var key = title;
-    
+
     if (scheduleProvider.isBusy) {
       title = '更新中';
       key = title;
@@ -24,7 +24,11 @@ class ScheduleTitle extends StatelessWidget {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 100),
       child: Container(
-        child: Text(title),
+        child: Text(
+          title,
+          softWrap: false,
+          overflow: TextOverflow.fade,
+        ),
         alignment: Alignment.centerLeft,
         key: Key(key),
       ),

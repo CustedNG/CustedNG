@@ -1,21 +1,24 @@
 import 'package:custed2/ui/theme.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class NavBar {
-  static CupertinoNavigationBar cupertino({
+  static AppBar material({
     BuildContext context,
+    bool needPadding = false,
     Widget leading,
     Widget middle,
-    Widget trailing,
+    List<Widget> trailing,
   }) {
     final theme = AppTheme.of(context);
 
-    return CupertinoNavigationBar(
+    return AppBar(
       backgroundColor: theme.navBarColor,
-      actionsForegroundColor: theme.navBarActionsColor,
-      leading: leading,
-      middle: middle,
-      trailing: trailing,
+      leading: needPadding
+          ? Padding(padding: EdgeInsets.only(left: 10.0), child: leading)
+          : leading,
+      title: middle,
+      centerTitle: true,
+      actions: trailing,
     );
   }
 }
