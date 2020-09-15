@@ -2,11 +2,13 @@ import 'package:custed2/config/routes.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/netdisk_percent.dart';
 import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
+import 'package:custed2/ui/widgets/setting_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_settings/flutter_cupertino_settings.dart';
@@ -39,14 +41,24 @@ class NetdiskPage extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    return CupertinoSettings(
-      items: [
-        CSSpacer(),
-        CSWidget(_buildQuota(context), height: 70),
-        CSSpacer(),
-        CSButton(CSButtonType.DEFAULT_CENTER, '一键登录网盘', () {
-          netdiskWebPage.go(context);
-        }),
+    return Column(
+      children: [
+        SizedBox(height: 20.0),
+        SettingItem(
+          title: '个人文件',
+          titleStyle:
+              TextStyle(color: isDark(context) ? Colors.white : Colors.black),
+          isShowArrow: false,
+          content: '已用 '
+              '${netdisk.quota.used.withSizeUnit()}/'
+              '${netdisk.quota.quota.withSizeUnit()}',
+        ),
+        SizedBox(height: 30.0),
+        MaterialButton(
+            child: Text('一键登录网盘'),
+            color: Colors.blue,
+            textColor: Colors.white,
+            onPressed: () => netdiskWebPage.go(context)),
       ],
     );
   }
