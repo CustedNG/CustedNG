@@ -51,16 +51,16 @@ class ScheduleDates {
 
     DateTime(2020, 9, 10): '教师节',
 
-    DateTime(2020, 9, 27): '班',
+    // DateTime(2020, 9, 27): '班',
     DateTime(2020, 10, 1): '中秋国庆',
-    DateTime(2020, 10, 2): '休',
-    DateTime(2020, 10, 3): '休',
-    DateTime(2020, 10, 4): '休',
-    DateTime(2020, 10, 5): '休',
-    DateTime(2020, 10, 6): '休',
-    DateTime(2020, 10, 7): '休',
-    DateTime(2020, 10, 8): '休',
-    DateTime(2020, 10, 10): '班',
+    // DateTime(2020, 10, 2): '休',
+    // DateTime(2020, 10, 3): '休',
+    // DateTime(2020, 10, 4): '休',
+    // DateTime(2020, 10, 5): '休',
+    // DateTime(2020, 10, 6): '休',
+    // DateTime(2020, 10, 7): '休',
+    // DateTime(2020, 10, 8): '休',
+    // DateTime(2020, 10, 10): '班',
   };
 
   static String getHoliday(DateTime dateTime) {
