@@ -61,7 +61,11 @@ class _ScheduleTabState extends State<ScheduleTab>
         leading: _buildTitle(context),
         middle: _buildNavbarMiddle(context),
         trailing: scheduleProvider.isBusy
-            ? CupertinoActivityIndicator()
+            ? Container(
+                width: 100,
+                alignment: Alignment.centerRight,
+                child: CupertinoActivityIndicator(),
+              )
             : NavBarMoreBtn(onTap: () => _showMenu(context)),
       ),
       child: ListView(

@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:custed2/core/open.dart';
 import 'package:custed2/ui/widgets/missing_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:share_extend/share_extend.dart';
 
 class Webview2Bottom extends StatefulWidget {
   @override
@@ -12,7 +14,7 @@ class Webview2Bottom extends StatefulWidget {
 
 class _Webview2BottomState extends State<Webview2Bottom> {
   final webview = FlutterWebviewPlugin();
-  
+
   StreamSubscription<WebViewStateChanged> _onStateChanged;
   StreamSubscription<String> _onUrlChanged;
 
@@ -81,14 +83,19 @@ class _Webview2BottomState extends State<Webview2Bottom> {
             ),
             IconButton(
               icon: const Icon(Icons.share),
-              onPressed: () {
-                webview.reload();
+              onPressed: () async {
+                var url = await webview.evalJavascript('window.location.href');
+                ShareExtend.share(url, 'text');
               },
             ),
             IconButton(
               icon: const Icon(MissingIcons.earth, size: 26),
-              onPressed: () {
-                webview.evalJavascript('console.log(111)');
+              onPressed: () async {
+                var url = await webview.evalJavascript('window.location.href');
+                if (url.length >= 2) {
+                  url = url.substring(1, url.length - 1);
+                  openUrl(url);
+                }
               },
             ),
           ],

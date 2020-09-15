@@ -65,14 +65,7 @@ class _NavTabState extends State<NavTab> {
                 });
               },
               shouldOverrideUrlLoading: (controller, request) async {
-                print('request ${request.url}');
-                // Navigator.of(context, rootNavigator: true).push(
-                //   MaterialPageRoute(
-                //     builder: (context) {
-                //       return Webview2();
-                //     },
-                //   ),
-                // );
+                print('open ${request.url}');
                 showCupertinoModalPopup(context: context, builder: (context) {
                   return WebviewBrowser(request.url);
                 });
@@ -105,13 +98,13 @@ class _NavTabState extends State<NavTab> {
         return CupertinoActionSheet(
           message: Text('校内资源导航'),
           actions: <Widget>[
-            CupertinoActionSheetAction(
-              child: Text('回到主页'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                goHome();
-              },
-            ),
+            // CupertinoActionSheetAction(
+            //   child: Text('回到主页'),
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //     goHome();
+            //   },
+            // ),
             CupertinoActionSheetAction(
               child: Text('在浏览器中打开'),
               onPressed: () {

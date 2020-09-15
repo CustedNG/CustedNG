@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/ui/webview/webview2_bottom.dart';
 import 'package:custed2/ui/webview/webview2_header.dart';
+import 'package:custed2/ui/webview/webview2_plugin.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,23 +23,50 @@ final Set<JavascriptChannel> jsChannels = [
       }),
 ].toSet();
 
-abstract class Webview2 extends StatefulWidget {
-  String get url;
+class Webview2 extends StatefulWidget {
+  Webview2({
+    this.url = 'about:blank',
+    this.onCreated,
+    this.onDestroy,
+    this.onUrlChanged,
+    this.onStateChanged,
+    this.onHttpError,
+    this.onProgressChanged,
+    this.onScrollYChanged,
+    this.onScrollXChanged,
+    this.plugins = const [],
+  });
 
-  void onDestroy(Null value) {}
-  void onUrlChanged(String value) {}
-  void onStateChanged(WebViewStateChanged value) {}
-  void onHttpError(WebViewHttpError value) {}
-  void onProgressChanged(double value) {}
-  void onScrollYChanged(double value) {}
-  void onScrollXChanged(double value) {}
+  final String url;
+
+  final void Function() onCreated;
+
+  final void Function(Null value) onDestroy;
+  final void Function(String value) onUrlChanged;
+  final void Function(WebViewStateChanged value) onStateChanged;
+  final void Function(WebViewHttpError value) onHttpError;
+  final void Function(double value) onProgressChanged;
+  final void Function(double value) onScrollYChanged;
+  final void Function(double value) onScrollXChanged;
+
+  final List<Webview2Plugin> plugins;
 
   @override
   _Webview2State createState() => _Webview2State();
 }
 
+StreamSubscription<T> listen<T>(Stream<T> source, void Function(T) handler) {
+  if (handler == null) {
+    return null;
+  }
+
+  return source.listen(handler);
+}
+
 class _Webview2State extends State<Webview2> {
   final wp = FlutterWebviewPlugin();
+
+  var activePlugins = <Webview2Plugin>[];
 
   StreamSubscription _onDestroy;
   StreamSubscription<String> _onUrlChanged;
@@ -49,13 +78,16 @@ class _Webview2State extends State<Webview2> {
 
   @override
   void initState() {
-    _onDestroy = wp.onDestroy.listen(widget.onDestroy);
-    _onUrlChanged = wp.onUrlChanged.listen(widget.onUrlChanged);
-    _onStateChanged = wp.onStateChanged.listen(widget.onStateChanged);
-    _onHttpError = wp.onHttpError.listen(widget.onHttpError);
-    _onProgressChanged = wp.onProgressChanged.listen(widget.onProgressChanged);
-    _onScrollXChanged = wp.onScrollXChanged.listen(widget.onScrollXChanged);
-    _onScrollYChanged = wp.onScrollYChanged.listen(widget.onScrollYChanged);
+    _onDestroy = listen(wp.onDestroy, widget.onDestroy);
+    _onUrlChanged = listen(wp.onUrlChanged, widget.onUrlChanged);
+    _onStateChanged = listen(wp.onStateChanged, onStateChangedWrapper);
+    _onHttpError = listen(wp.onHttpError, widget.onHttpError);
+    _onProgressChanged = listen(wp.onProgressChanged, widget.onProgressChanged);
+    _onScrollXChanged = listen(wp.onScrollXChanged, widget.onScrollXChanged);
+    _onScrollYChanged = listen(wp.onScrollYChanged, widget.onScrollYChanged);
+
+    widget?.onCreated();
+
     super.initState();
   }
 
@@ -74,6 +106,37 @@ class _Webview2State extends State<Webview2> {
     super.dispose();
   }
 
+  void onStateChangedWrapper(WebViewStateChanged state) async {
+    if (state.type == WebViewState.startLoad) {
+      final uri = Uri.tryParse(state.url);
+      if (uri != null) {
+        activePlugins = widget.plugins
+            .where((plugin) => plugin.shouldActivate(uri))
+            .toList();
+
+        print('activePlugins $activePlugins');
+      }
+    }
+
+    if (state.type == WebViewState.abortLoad) {
+      activePlugins = <Webview2Plugin>[];
+    }
+
+    if (state.type == WebViewState.startLoad) {
+      for (var plugin in activePlugins) {
+        await plugin.onPageStarted(wp, state.url);
+      }
+    }
+
+    if (state.type == WebViewState.finishLoad) {
+      for (var plugin in activePlugins) {
+        await plugin.onPageFinished(wp, state.url);
+      }
+    }
+
+    widget?.onStateChanged?.call(state);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -85,7 +148,7 @@ class _Webview2State extends State<Webview2> {
         url: widget.url,
         javascriptChannels: jsChannels,
         mediaPlaybackRequiresUserGesture: false,
-        userAgent: 'CustedNG',
+        userAgent: UserAgent.defaultUA,
         ignoreSSLErrors: true,
         appBar: Webview2Header(),
         withZoom: true,
