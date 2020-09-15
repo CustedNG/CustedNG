@@ -471,18 +471,7 @@ packages:
       name: json_serializable
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-<<<<<<< HEAD
-    version: "3.3.0"
-  loading_animations:
-    dependency: "direct main"
-    description:
-      name: loading_animations
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
-    source: hosted
-    version: "2.1.0"
-=======
     version: "3.4.1"
->>>>>>> b176449eba79072bbf805e43019a5cc20beb6525
   logging:
     dependency: transitive
     description:
