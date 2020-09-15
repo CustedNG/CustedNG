@@ -1,12 +1,22 @@
 import 'package:custed2/res/image_res.dart';
-import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
+import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/back_icon.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
 
 class GoToWechat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = AppTheme.of(context);
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(),
+      navigationBar: CupertinoNavigationBar(
+          backgroundColor: theme.webviewNavBarColor,
+          actionsForegroundColor: theme.navBarActionsColor,
+          leading: GestureDetector(
+            child: BackIcon(),
+            onTap: () => Navigator.pop(context),
+          ),
+          middle: NavbarText('一卡通')),
       child: ListView(
         children: [
           Container(

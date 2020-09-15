@@ -21,7 +21,7 @@
         android:label="Custed NG"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
-        android:allowBackup="false">
+        android:allowBackup="true">
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"
             android:launchMode="singleTop"

@@ -26,6 +26,7 @@ class NavbarMiddle extends StatelessWidget {
       children: <Widget>[
         Text(
           textAbove,
+          textScaleFactor: 1.0,
           style: baseFont.copyWith(fontWeight: FontWeight.normal),
           overflow: TextOverflow.fade,
           softWrap: false,
@@ -33,6 +34,7 @@ class NavbarMiddle extends StatelessWidget {
         ),
         Text(
           textBelow,
+          textScaleFactor: 1.0,
           style: baseFont.copyWith(fontWeight: FontWeight.bold),
           overflow: TextOverflow.fade,
           softWrap: false,

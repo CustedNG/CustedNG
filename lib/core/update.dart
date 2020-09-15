@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:custed2/core/route.dart';
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
@@ -16,6 +17,10 @@ updateCheck(BuildContext context, {bool force = false}) async {
     return;
   }
 
+  if (BuildMode.isDebug) {
+    print('Now in debug mode, skip checking updates.');
+    return;
+  }
   final update = await locator<CustedService>().getUpdate();
   if (update == null) return;
   print('Update avaliable: $update');
