@@ -5,10 +5,12 @@ class NavbarMiddle extends StatelessWidget {
   NavbarMiddle({
     this.textAbove,
     this.textBelow,
+    this.colorOverride,
   });
 
   final String textAbove;
   final String textBelow;
+  final Color colorOverride;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class NavbarMiddle extends StatelessWidget {
 
     final baseFont = TextStyle(
       fontSize: 12,
-      color: theme.navBarActionsColor,
+      color: colorOverride ?? theme.navBarActionsColor,
     );
 
     final content = Column(
@@ -25,16 +27,22 @@ class NavbarMiddle extends StatelessWidget {
         Text(
           textAbove,
           style: baseFont.copyWith(fontWeight: FontWeight.normal),
+          overflow: TextOverflow.fade,
+          softWrap: false,
+          maxLines: 1,
         ),
         Text(
           textBelow,
           style: baseFont.copyWith(fontWeight: FontWeight.bold),
+          overflow: TextOverflow.fade,
+          softWrap: false,
+          maxLines: 1,
         ),
       ],
     );
 
     return Container(
-      width: 100,
+      // width: 100,
       child: content,
       alignment: Alignment.center,
     );

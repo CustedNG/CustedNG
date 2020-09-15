@@ -4,15 +4,17 @@ class NavBarMoreBtn extends StatelessWidget {
   NavBarMoreBtn({
     this.onTap,
     this.icon = CupertinoIcons.ellipsis,
+    this.alignment = Alignment.centerRight,
   });
 
   final Function onTap;
   final IconData icon;
+  final Alignment alignment;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.centerRight,
+      alignment: alignment,
       width: 100,
       child: CupertinoButton(
         onPressed: onTap,
