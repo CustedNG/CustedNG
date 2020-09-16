@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:custed2/core/webview/user_agent.dart';
+import 'package:custed2/data/providers/download_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/webview/webview2_bottom.dart';
 import 'package:custed2/ui/webview/webview2_header.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
@@ -11,21 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:loading_animations/loading_animations.dart';
 
-// const kAndroidUserAgent =
-//     'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36';
-
-// ignore: prefer_collection_literals
-final Set<JavascriptChannel> jsChannels = [
-  JavascriptChannel(
-      name: 'Print',
-      onMessageReceived: (JavascriptMessage message) {
-        print(message.message);
-      }),
-].toSet();
-
 class Webview2 extends StatefulWidget {
   Webview2({
     this.url = 'about:blank',
+    this.invalidUrlRegex,
     this.onCreated,
     this.onDestroy,
     this.onUrlChanged,
@@ -38,6 +29,8 @@ class Webview2 extends StatefulWidget {
   });
 
   final String url;
+
+  final String invalidUrlRegex;
 
   final void Function() onCreated;
 
@@ -134,6 +127,11 @@ class _Webview2State extends State<Webview2> {
       }
     }
 
+    if (state.type == WebViewState.shouldStart) {
+      print('shouldStart ${state.url}');
+      locator<DownloadProvider>().enqueue(state.url);
+    }
+
     widget?.onStateChanged?.call(state);
   }
 
@@ -141,12 +139,14 @@ class _Webview2State extends State<Webview2> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        await wp.stopLoading();
         await wp.close();
         return true;
       },
       child: WebviewScaffold(
         url: widget.url,
-        javascriptChannels: jsChannels,
+        invalidUrlRegex: widget.invalidUrlRegex,
+        javascriptChannels: getJsChannels(),
         mediaPlaybackRequiresUserGesture: false,
         userAgent: UserAgent.defaultUA,
         ignoreSSLErrors: true,
@@ -166,5 +166,27 @@ class _Webview2State extends State<Webview2> {
         bottomNavigationBar: Webview2Bottom(),
       ),
     );
+  }
+
+  // ignore: prefer_collection_literals
+  Set<JavascriptChannel> getJsChannels() {
+    final channels = <JavascriptChannel>{};
+
+    for (var plugin in widget.plugins) {
+      if (plugin.jsChannel == null) {
+        continue;
+      }
+
+      final channel = JavascriptChannel(
+        name: plugin.jsChannel,
+        onMessageReceived: (JavascriptMessage message) {
+          plugin.onChannelMessage(message.message);
+        },
+      );
+
+      channels.add(channel);
+    }
+
+    return channels;
   }
 }

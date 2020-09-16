@@ -38,7 +38,7 @@ class UserTab extends StatelessWidget {
         children: <Widget>[
           CupertinoButton.filled(
             child: Text('统一认证登录'),
-            onPressed: () => loginPage.go(context),
+            onPressed: () => loginPage.popup(context),
           ),
           SizedBox(height: 20),
           Text(
@@ -184,7 +184,7 @@ class UserTab extends StatelessWidget {
   }
 
   void _login(BuildContext context) {
-    loginPage.go(context);
+    loginPage.popup(context);
   }
 
   void _logout(BuildContext context) {

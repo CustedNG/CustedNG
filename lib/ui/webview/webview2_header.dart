@@ -128,6 +128,7 @@ class _Webview2HeaderState extends State<Webview2Header> {
           padding: EdgeInsets.zero,
           child: Text('关闭'),
           onPressed: () async {
+            await webview.stopLoading();
             await webview.close();
             webview.dispose();
             Navigator.of(context).pop();

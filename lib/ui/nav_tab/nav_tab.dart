@@ -106,6 +106,13 @@ class _NavTabState extends State<NavTab> {
             //   },
             // ),
             CupertinoActionSheetAction(
+              child: Text('重新加载'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                controller.reload();
+              },
+            ),
+            CupertinoActionSheetAction(
               child: Text('在浏览器中打开'),
               onPressed: () {
                 Navigator.of(context).pop();

@@ -48,7 +48,7 @@ class NetdiskPage extends StatelessWidget {
         CSWidget(_buildQuota(context), height: 70),
         CSSpacer(),
         CSButton(CSButtonType.DEFAULT_CENTER, '一键登录网盘', () {
-          netdiskWebPage.go(context);
+          netdiskWebPage.popup(context);
         }),
       ],
     );
