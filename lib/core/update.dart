@@ -7,6 +7,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/update/update_notice_page.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 updateCheck(BuildContext context, {bool force = false}) async {
@@ -21,6 +22,7 @@ updateCheck(BuildContext context, {bool force = false}) async {
     print('Now in debug mode, skip checking updates.');
     return;
   }
+
   final update = await locator<CustedService>().getUpdate();
   if (update == null) return;
   print('Update avaliable: $update');
@@ -42,8 +44,22 @@ updateCheck(BuildContext context, {bool force = false}) async {
     return;
   }
 
+  if (!await isFileAvaliable(update.file.url)) {
+    return;
+  }
+
   AppRoute(
     title: '更新',
     page: UpdateNoticePage(update),
   ).go(context, rootNavigator: true);
+}
+
+Future<bool> isFileAvaliable(String url) async {
+  try {
+    final resp = await Dio().head(url);
+    return resp.statusCode == 200;
+  } catch (e) {
+    print('update file not avaliable: $e');
+    return false;
+  }
 }
