@@ -130,7 +130,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
                 ? IconButton(
                     icon: Icon(Icons.format_list_numbered),
                     onPressed: () => _showSelector(context))
-                : null
+                : Container()
           ]),
       body: SafeArea(
         child: Material(

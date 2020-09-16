@@ -203,7 +203,7 @@ class UserTab extends StatelessWidget {
   }
 
   void _login(BuildContext context) {
-    loginPage.go(context);
+    loginPage.popup(context);
   }
 
   void _logout(BuildContext context) {

@@ -45,6 +45,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
             child: Scaffold(
           body: SizedBox.expand(
             child: PageView(
+              physics: NeverScrollableScrollPhysics(),
               controller: _pageController,
               children: [
                 HomeTab(),
@@ -53,7 +54,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
                 UserTab(),
               ],
             ),
-          ), //_widgetOptions.elementAt(_selectIndex),
+          ),
           bottomNavigationBar: _buildBottom(context),
         )),
         Snakebar(),
@@ -74,12 +75,12 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       duration: Duration(milliseconds: 377),
       curve: Curves.fastOutSlowIn,
       height: 50,
-      width: isSelected ? 95 : 30,
+      width: isSelected ? 95 : 50,
       padding: isSelected ? EdgeInsets.only(left: 16, right: 16) : null,
       decoration: isSelected
           ? BoxDecoration(
-              color: item.color,
-              borderRadius: BorderRadius.all(Radius.circular(50)))
+          color: item.color,
+          borderRadius: BorderRadius.all(Radius.circular(50)))
           : null,
       child: ListView(
         scrollDirection: Axis.horizontal,
