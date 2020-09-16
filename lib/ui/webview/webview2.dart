@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/download_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/webview/webview2_bottom.dart';
 import 'package:custed2/ui/webview/webview2_header.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
@@ -155,6 +156,7 @@ class _Webview2State extends State<Webview2> {
         withLocalStorage: true,
         hidden: true,
         initialChild: Container(
+          color: AppTheme.of(context).backgroundColor,
           child: Center(
             child: LoadingRotating.square(
               borderColor: CupertinoColors.activeBlue,

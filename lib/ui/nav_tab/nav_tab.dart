@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/ui/nav_tab/nav_tab_toggle.dart';
@@ -12,6 +15,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:loading_animations/loading_animations.dart';
 
 const custcc = 'https://cust.cc/?custed=1';
+const custccDark = 'https://cust.cc/?custed=1&dark=1';
 
 class NavTab extends StatefulWidget {
   @override
@@ -24,17 +28,33 @@ class _NavTabState extends State<NavTab> {
 
   @override
   void initState() {
-    super.initState();
     overlay = Center(
       child: LoadingRotating.square(
         borderColor: CupertinoColors.activeBlue,
         size: 30.0,
       ),
     );
+
+    Timer.periodic(500.ms, (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+
+      syncDarkMode();
+    });
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print('here');
+
+    final url = CupertinoTheme.brightnessOf(context) == Brightness.dark
+        ? custccDark
+        : custcc;
+
     return CupertinoPageScaffold(
       navigationBar: NavBar.cupertino(
         context: context,
@@ -55,7 +75,7 @@ class _NavTabState extends State<NavTab> {
                   overScrollMode: AndroidOverScrollMode.OVER_SCROLL_NEVER,
                 ),
               ),
-              initialUrl: custcc,
+              initialUrl: url,
               onWebViewCreated: (controller) {
                 this.controller = controller;
               },
@@ -66,9 +86,12 @@ class _NavTabState extends State<NavTab> {
               },
               shouldOverrideUrlLoading: (controller, request) async {
                 print('open ${request.url}');
-                showCupertinoModalPopup(context: context, builder: (context) {
-                  return WebviewBrowser(request.url);
-                });
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) {
+                    return WebviewBrowser(request.url);
+                  },
+                );
                 return ShouldOverrideUrlLoadingAction.CANCEL;
               },
             ),
@@ -77,6 +100,15 @@ class _NavTabState extends State<NavTab> {
         ),
       ),
     );
+  }
+
+  void syncDarkMode() {
+    final isDark = CupertinoTheme.brightnessOf(context) == Brightness.dark;
+    if (isDark) {
+      controller?.evaluateJavascript(source: 'switchToDarkMode()');
+    } else {
+      controller?.evaluateJavascript(source: 'switchToLightMode()');
+    }
   }
 
   void toggleSideMenu() {
