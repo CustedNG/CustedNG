@@ -1,12 +1,8 @@
 import 'package:custed2/config/routes.dart';
 import 'package:custed2/core/store/presistent_store.dart';
-import 'package:custed2/data/models/user_profile.dart';
-import 'package:custed2/data/providers/cet_avatar_provider.dart';
-import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
@@ -26,9 +22,7 @@ class UserTab extends StatelessWidget {
       return PlaceholderWidget(isActive: true);
     }
 
-    return user.loggedIn
-        ? _buildUserTab(context, user.profile)
-        : _buildLoginButton(context);
+    return user.loggedIn ? _buildUserTab(context) : _buildLoginButton(context);
   }
 
   Widget _buildLoginButton(BuildContext context) {
@@ -54,7 +48,7 @@ class UserTab extends StatelessWidget {
     );
   }
 
-  Widget _buildUserTab(BuildContext context, UserProfile profile) {
+  Widget _buildUserTab(BuildContext context) {
     final setting = locator<SettingStore>();
     final darkModeStatus = ['自动', '开', '关'][setting.darkMode.fetch()];
     final settingTextStyle =
@@ -65,7 +59,7 @@ class UserTab extends StatelessWidget {
         backgroundColor: theme.homeBackgroundColor,
         appBar: NavBar.material(
           context: context,
-          middle: NavbarText('账户'),
+          middle: NavbarText('设置'),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -82,7 +76,7 @@ class UserTab extends StatelessWidget {
                   child: Stack(
                     children: <Widget>[
                       AspectRatio(
-                        aspectRatio: 3 / 1,
+                        aspectRatio: 60 / 19,
                         child: Image.asset('assets/bg/abstract-dark.jpg',
                             fit: BoxFit.cover),
                       ),
@@ -94,23 +88,24 @@ class UserTab extends StatelessWidget {
                               ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: DarkModeFilter(
-                                    child: Image(
+                                    child: Image.asset(
+                                        'assets/icon/custed_lite.png',
                                         height: 50,
-                                        width: 50,
-                                        image: ImageRes.defaultAvatar),
+                                        width: 50
+                                    ),
                                   )),
                               SizedBox(width: 20.0),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    profile.displayName,
+                                    'Custed NG',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                   ),
                                   SizedBox(height: 10.0),
                                   Text(
-                                    profile.department,
+                                    'Ver: Material 1.0.241',
                                     style: TextStyle(
                                         color: Colors.grey, fontSize: 15),
                                   )
@@ -124,25 +119,6 @@ class UserTab extends StatelessWidget {
               ),
               Column(
                 children: [
-                  SizedBox(height: 20.0),
-                  Text('用户'),
-                  SizedBox(height: 10.0),
-                  SettingItem(
-                    title: '四六级照片',
-                    titleStyle: settingTextStyle,
-                    onTap: () {
-                      locator<CetAvatarProvider>().getAvatar();
-                      cetAvatarPage.go(context);
-                    },
-                  ),
-                  SettingItem(
-                    title: '网盘',
-                    titleStyle: settingTextStyle,
-                    onTap: () {
-                      locator<NetdiskProvider>().getQuota();
-                      netdiskPage.go(context);
-                    },
-                  ),
                   SizedBox(height: 20.0),
                   Text('设置'),
                   SizedBox(height: 10.0),
@@ -176,24 +152,39 @@ class UserTab extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      MaterialButton(
-                          child: Text('重新登录'),
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                          onPressed: () => _login),
+                      _logInOutBtn(context, '重新登录', Colors.lightBlue, () =>
+                          _login(context)),
                       SizedBox(width: 40.0),
-                      MaterialButton(
-                          child: Text('退出登录'),
-                          color: Colors.red,
-                          textColor: Colors.white,
-                          onPressed: () => _logout),
+                      _logInOutBtn(context, '退出登录', Colors.redAccent, () =>
+                          _logout(context))
                     ],
-                  )
+                  ),
+                  SizedBox(height: 40.0)
                 ],
               )
             ],
           ),
         ));
+  }
+
+  Widget _logInOutBtn(BuildContext context, String btnName, Color color,
+      void onTap) {
+    return Container(
+      height: 35.0,
+      child: Material(
+        elevation: 10.0,
+        color: color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(40.0)),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: MaterialButton(
+            child: Text(btnName),
+            textColor: Colors.white,
+            onPressed: () => onTap
+        ),
+      ),
+    );
   }
 
   Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop) {

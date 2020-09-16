@@ -6,6 +6,7 @@ import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/login_page.dart';
 import 'package:custed2/ui/pages/login_page_legacy.dart';
+import 'package:custed2/ui/pages/map_page.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
 import 'package:custed2/ui/user_tab/dark_mode.dart';
 import 'package:custed2/ui/user_tab/netdisk_page.dart';
@@ -92,6 +93,11 @@ final tiku2WebPage = AppRoute(
 final schoolCalendarPage = AppRoute(
   title: '校历',
   page: SchoolCalendarPage(),
+);
+
+final mapPage = AppRoute(
+  title: '地图',
+  page: MapPage(),
 );
 
 final netdiskPage = AppRoute(

@@ -7,7 +7,9 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/grade_legacy.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
+import 'package:custed2/ui/widgets/bottom_navbar.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +21,21 @@ class AppFrame extends StatefulWidget {
 
 class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   int _selectIndex = 0;
+  PageController _pageController;
 
-  final List<Widget> _widgetOptions = <Widget>[
-    HomeTab(),
-    GradeReportLegacy(),
-    ScheduleTab(),
-    UserTab(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  bool isShowNavigator = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,57 +43,95 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       children: <Widget>[
         Flexible(
             child: Scaffold(
-          body: _widgetOptions.elementAt(_selectIndex),
-          bottomNavigationBar: _buildScaffold(context),
+          body: SizedBox.expand(
+            child: PageView(
+              controller: _pageController,
+              children: [
+                HomeTab(),
+                GradeReportLegacy(),
+                ScheduleTab(),
+                UserTab(),
+              ],
+            ),
+          ), //_widgetOptions.elementAt(_selectIndex),
+          bottomNavigationBar: _buildBottom(context),
         )),
         Snakebar(),
       ],
     );
   }
 
-  Widget _buildScaffold(BuildContext context) {
-    void onItemTapped(int index) {
-      setState(() {
-        _selectIndex = index;
-      });
-    }
+  List<NavigationItem> items = [
+    NavigationItem(Icon(Icons.home), Text('主页'), Colors.deepPurpleAccent),
+    NavigationItem(Icon(Icons.leaderboard), Text('成绩'), Colors.pinkAccent),
+    NavigationItem(Icon(Icons.calendar_today), Text('课表'), Colors.amberAccent),
+    NavigationItem(Icon(Icons.settings), Text('设置'), Colors.cyanAccent)
+  ];
 
-    return BottomAppBar(
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                size: 25,
+  Widget _buildItem(NavigationItem item, bool isSelected) {
+    bool isDarkMode = isDark(context);
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 377),
+      curve: Curves.fastOutSlowIn,
+      height: 50,
+      width: isSelected ? 95 : 30,
+      padding: isSelected ? EdgeInsets.only(left: 16, right: 16) : null,
+      decoration: isSelected
+          ? BoxDecoration(
+              color: item.color,
+              borderRadius: BorderRadius.all(Radius.circular(50)))
+          : null,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              IconTheme(
+                data: IconThemeData(
+                    size: 24, color: isDarkMode ? Colors.white : Colors.black),
+                child: item.icon,
               ),
-              title: Text('主页'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.pending_actions,
-                size: 25,
-              ),
-              title: Text('成绩'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.schedule,
-                size: 25,
-              ),
-              title: Text('课表'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.settings,
-                size: 25,
-              ),
-              title: Text('账户'),
-            ),
-          ],
-          currentIndex: _selectIndex,
-          onTap: onItemTapped,
-        ));
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: isSelected
+                    ? DefaultTextStyle.merge(
+                        child: item.title,
+                        style: TextStyle(
+                            color: isDarkMode ? Colors.white : Colors.black))
+                    : null,
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottom(BuildContext context) {
+    return Container(
+      height: 56,
+      padding: EdgeInsets.only(left: 8, top: 4, bottom: 4, right: 8),
+      //decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)]),
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: items.map((item) {
+          var itemIndex = items.indexOf(item);
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                _selectIndex = itemIndex;
+                _pageController.animateToPage(itemIndex,
+                    duration: Duration(milliseconds: 377),
+                    curve: Curves.easeInOutCubic);
+              });
+            },
+            child: _buildItem(item, _selectIndex == itemIndex),
+          );
+        }).toList(),
+      ),
+    );
   }
 
   @override

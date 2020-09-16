@@ -88,8 +88,6 @@ class WebPageState extends State<WebPage> {
   }
 
   Widget _buildWebviewWithAddons(BuildContext context) {
-    final theme = AppTheme.of(context);
-
     if (replace != null) return replace;
 
     Widget result = DarkModeFilter(
@@ -107,9 +105,7 @@ class WebPageState extends State<WebPage> {
             child: Container(
               width: 50,
               height: 50,
-              child: CupertinoButton(
-                padding: EdgeInsets.zero,
-                color: theme.webviewNavBarColor,
+              child: material.FloatingActionButton(
                 child: Icon(
                   material.Icons.arrow_back,
                   color: CupertinoColors.white,
