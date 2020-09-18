@@ -53,6 +53,7 @@ dependencies:
 
   after_layout: ^1.0.7+2
   auto_size_text: ^2.1.0
+  loading_animations: ^2.1.0
 
   path_provider: ^1.5.1
   android_path_provider: ^0.1.1
@@ -62,6 +63,9 @@ dependencies:
 
   webview_flutter: ^0.3.19+5
   flutter_inappwebview: ^4.0.0
+
+  flutter_webview_plugin: ^0.3.11
+  webview_cookie_manager: ^1.0.3
 
   otp: ^1.0.3
   install_plugin: ^2.0.1
@@ -135,7 +139,7 @@ flutter:
     - assets/avatar/
     - assets/icon/
     - assets/updating.gif
-    - assets/calendar/2019-2.png
+    - assets/calendar/2020-2021-1.png
     - assets/script/
     - assets/bg/
     - assets/wechat/

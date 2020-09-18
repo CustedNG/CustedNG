@@ -6,6 +6,7 @@ import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/grade_legacy.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
+import 'package:custed2/ui/nav_tab/nav_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
@@ -49,6 +50,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
               controller: _pageController,
               children: [
                 HomeTab(),
+                NavTab(),
                 GradeReportLegacy(),
                 ScheduleTab(),
                 UserTab(),
@@ -64,6 +66,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   List<NavigationItem> items = [
     NavigationItem(Icon(Icons.home), Text('主页'), Colors.deepPurpleAccent),
+    NavigationItem(Icon(Icons.navigation), Text('导航'), Colors.greenAccent),
     NavigationItem(Icon(Icons.leaderboard), Text('成绩'), Colors.pinkAccent),
     NavigationItem(Icon(Icons.calendar_today), Text('课表'), Colors.amberAccent),
     NavigationItem(Icon(Icons.settings), Text('设置'), Colors.cyanAccent)

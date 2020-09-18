@@ -105,29 +105,39 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
       await install();
     } on UpdateException catch (e) {
       updateMsg(e.message);
-      setState(() => failed = true);
+      if (mounted) {
+        setState(() => failed = true);
+      }
+
       rethrow;
     } catch (e) {
       updateMsg('出现未知错误');
-      setState(() => failed = true);
+      if (mounted) {
+        setState(() => failed = true);
+      }
       rethrow;
     }
   }
 
   void updateMsg(String msg) {
-    if (!mounted) return;
-    setState(() => this.msg = msg);
+    if (mounted) {
+      setState(() => this.msg = msg);
+    }
   }
 
   void updateProgress(double progress) {
-    if (!mounted) return;
-    setState(() => this.progress = progress);
+    if (mounted) {
+      setState(() => this.progress = progress);
+    }
   }
 
   Future<void> init() async {
     updateMsg('正在初始化');
-    setState(() => failed = false);
-    setState(() => updateProgress(0.0));
+
+    if (mounted) {
+      setState(() => failed = false);
+      setState(() => updateProgress(0.0));
+    }
 
     final docDir = await getAppTmpDir.invoke();
     outputPath = path.join(docDir, './output.apk');
@@ -138,15 +148,18 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     final url = CustedService.getFileUrl(widget.update.file);
     final total = widget.update.file.size * 1024;
     await Dio().download(url, outputPath, onReceiveProgress: (current, _) {
-      if (!mounted) return;
-      setState(() => updateProgress(current / total));
+      if (mounted) {
+        setState(() => updateProgress(current / total));
+      }
     });
   }
 
   Future<void> verify() async {
     updateMsg('正在校验');
 
-    setState(() => updateProgress(0.25));
+    if (mounted) {
+      setState(() => updateProgress(0.25));
+    }
     final exists = await File(outputPath).exists();
     if (!exists) {
       throw UpdateException('校验失败[1]');
@@ -159,7 +172,9 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
       throw UpdateException('校验失败[2]');
     }
 
-    setState(() => updateProgress(1.0));
+    if (mounted) {
+      setState(() => updateProgress(1.0));
+    }
   }
 
   Future<void> install() async {

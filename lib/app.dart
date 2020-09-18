@@ -76,11 +76,11 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     ''');
 
     // 启动外围服务
-    Future.delayed(Duration(milliseconds: 200), () {
+    if (BuildMode.isRelease) {
       Analytics.init();
-      Analytics.isDebug = BuildMode.isDebug;
-      locator<WeatherProvider>().startAutoUpdate();
-    });
+      Analytics.isDebug = false;
+    }
+    locator<WeatherProvider>().startAutoUpdate();
 
     // 加载核心数据
     await Future.wait([

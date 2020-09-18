@@ -1,7 +1,6 @@
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class MapPage extends StatefulWidget {
@@ -51,9 +50,6 @@ class _PhotoViewGalleryScreenState extends State<MapPage> {
                           ImageRes.custSMapSimple,
                           ImageRes.custWMapSimple
                         ][index],
-                  heroAttributes: widget.heroTag.isNotEmpty
-                      ? PhotoViewHeroAttributes(tag: widget.heroTag)
-                      : null,
                 );
               },
               itemCount: 3,

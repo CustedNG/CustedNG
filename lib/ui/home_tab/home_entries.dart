@@ -16,7 +16,7 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('我的教务'),
             icon: Image(image: ImageRes.manageIcon),
-            action: () => jwWebPage.go(context),
+            action: () => jwWebPage.popup(context),
           ),
           HomeEntry(
             name: Text('一卡通'),
@@ -30,7 +30,7 @@ class HomeEntries extends StatelessWidget {
             name: Text('体测成绩'),
             icon: Image(image: ImageRes.runningReportIcon),
             // action: () => runScript('sport_grade.cl', context),
-            action: () => ticeWebPage.go(context),
+            action: () => ticeWebPage.popup(context),
           ),
           HomeEntry(
             name: Text('充网费'),
@@ -44,20 +44,21 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('题库'),
             icon: Image(image: ImageRes.tikuIcon),
-            action: () => tiku2WebPage.go(context, rootNavigator: true),
+            action: () => tiku2WebPage.popup(context),
           ),
           HomeEntry(
             // name: Text('考场查询'),
-            name: Text('导航'),
+            name: Text('地图'),
             icon: Image(image: ImageRes.mapIcon),
             // action: () => examRoomWebPage.go(context),
-            action: () => custNavWebPage.go(context),
+            //action: () => custNavWebPage.go(context),
+            action: () => mapPage.popup(context),
           ),
           HomeEntry(
             name: Text('校园网'),
             icon: Image(image: ImageRes.networkIcon),
             // action: () => runScript('network_manage.cl', context),
-            action: () => selfWebPage.go(context),
+            action: () => selfWebPage.popup(context),
           ),
           HomeEntry(
             name: Text('快速联网'),

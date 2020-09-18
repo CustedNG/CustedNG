@@ -18,7 +18,7 @@ class HomeMenu extends StatelessWidget {
           child: Text('状态监测'),
           onPressed: () {
             Navigator.of(context).pop();
-            statusWebPage.go(context);
+            statusWebPage.popup(context);
           },
         ),
         CupertinoActionSheetAction(

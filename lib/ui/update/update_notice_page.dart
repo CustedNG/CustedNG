@@ -64,22 +64,25 @@ class UpdateNoticePage extends StatelessWidget {
             var connectivityResult = await (Connectivity().checkConnectivity());
             if (connectivityResult == ConnectivityResult.mobile) {
               showCupertinoDialog(
-                  context: context,
-                  builder: (context) =>
-                      CupertinoAlertDialog(
-                        content: Text('你正在使用移动数据网络。继续下载将会产生费用'),
-                        actions: [
-                          CupertinoDialogAction(
-                            child: Text('继续'),
-                            onPressed: () => doUpdate(context),
-                          ),
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: Text('取消'),
-                            onPressed: () => Navigator.of(context).pop(true),
-                          ),
-                        ],
-                      ));
+                context: context,
+                builder: (context) => CupertinoAlertDialog(
+                  content: Text('你正在使用移动数据网络。继续下载将会消耗流量'),
+                  actions: [
+                    CupertinoDialogAction(
+                      isDefaultAction: true,
+                      child: Text('继续'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        doUpdate(context);
+                      },
+                    ),
+                    CupertinoDialogAction(
+                      child: Text('取消'),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+              );
             } else {
               doUpdate(context);
             }

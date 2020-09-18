@@ -4,12 +4,14 @@ import 'package:custed2/locator.dart';
 
 class AppProvider extends ProviderBase {
   int _tabIndex = homeTab;
+
   int get tabIndex => _tabIndex;
 
   static const homeTab = 0;
-  static const gradeTab = 1;
-  static const scheduleTab = 2;
-  static const userTab = 3;
+  static const navTab = 1;
+  static const gradeTab = 2;
+  static const scheduleTab = 3;
+  static const userTab = 4;
 
   void loadLocalData() {
     final setting = locator<SettingStore>();
@@ -24,6 +26,6 @@ class AppProvider extends ProviderBase {
 
   void setTab(int index, {bool refresh = true}) {
     _tabIndex = index;
-    if(refresh) notifyListeners();
+    if (refresh) notifyListeners();
   }
 }

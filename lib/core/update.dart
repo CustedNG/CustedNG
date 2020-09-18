@@ -7,6 +7,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/update/update_notice_page.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 updateCheck(BuildContext context, {bool force = false}) async {
@@ -39,6 +40,20 @@ updateCheck(BuildContext context, {bool force = false}) async {
     print('Update build ${update.build}');
     print('However current build is ${BuildData.build}');
     print('Update Ignored.');
+    return;
+  }
+
+  Future<bool> isFileAvailable(String url) async {
+    try {
+      final resp = await Dio().head(url);
+      return resp.statusCode == 200;
+    } catch (e) {
+      print('update file not avaliable: $e');
+      return false;
+    }
+  }
+
+  if (!await isFileAvailable(update.file.url)) {
     return;
   }
 

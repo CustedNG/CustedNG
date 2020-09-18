@@ -32,7 +32,7 @@ class UserTab extends StatelessWidget {
         children: <Widget>[
           CupertinoButton.filled(
             child: Text('统一认证登录'),
-            onPressed: () => loginPage.go(context),
+            onPressed: () => loginPage.popup(context),
           ),
           SizedBox(height: 20),
           Text(
@@ -168,7 +168,7 @@ class UserTab extends StatelessWidget {
   }
 
   Widget _logInOutBtn(BuildContext context, String btnName, Color color,
-      void onTap) {
+      GestureTapCallback onTap) {
     return Container(
       height: 35.0,
       child: Material(
@@ -179,10 +179,7 @@ class UserTab extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: MaterialButton(
-            child: Text(btnName),
-            textColor: Colors.white,
-            onPressed: () => onTap
-        ),
+            child: Text(btnName), textColor: Colors.white, onPressed: onTap),
       ),
     );
   }
