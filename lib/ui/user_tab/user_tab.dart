@@ -168,7 +168,7 @@ class UserTab extends StatelessWidget {
   }
 
   Widget _logInOutBtn(BuildContext context, String btnName, Color color,
-      void onTap) {
+      GestureTapCallback onTap) {
     return Container(
       height: 35.0,
       child: Material(
@@ -181,8 +181,7 @@ class UserTab extends StatelessWidget {
         child: MaterialButton(
             child: Text(btnName),
             textColor: Colors.white,
-            onPressed: () => onTap
-        ),
+            onPressed: onTap),
       ),
     );
   }
@@ -203,7 +202,7 @@ class UserTab extends StatelessWidget {
   }
 
   void _login(BuildContext context) {
-    loginPage.go(context);
+    loginPage.popup(context);
   }
 
   void _logout(BuildContext context) {

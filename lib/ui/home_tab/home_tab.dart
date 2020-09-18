@@ -68,17 +68,17 @@ class HomeTab extends StatelessWidget {
           child: Text("开源"),
           applicationName: "CustedNG",
           applicationVersion: version,
-              applicationIcon: Image.asset(
-                'assets/icon/custed_lite.png',
-                width: 64.0,
-                height: 64.0,
-              ),
-              aboutBoxChildren: <Widget>[
-                RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                          style: my_theme.textTheme.bodyText1,
-                          text: 'By Toast Studio\n开源地址：'),
+          applicationIcon: Image.asset(
+            'assets/icon/custed_lite.png',
+            width: 64.0,
+            height: 64.0,
+          ),
+          aboutBoxChildren: <Widget>[
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                  style: my_theme.textTheme.bodyText1,
+                  text: 'By Toast Studio\n开源地址：'),
                       TextSpan(
                           style: my_theme.textTheme.bodyText1
                               .copyWith(color: my_theme.accentColor),
