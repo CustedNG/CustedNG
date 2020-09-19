@@ -1,6 +1,7 @@
 import 'package:custed2/config/routes.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/back_icon.dart';
@@ -39,6 +40,10 @@ class NetdiskPage extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
+    final user = Provider.of<UserProvider>(context);
+    if (user.isBusy) {
+      return PlaceholderWidget(isActive: true);
+    }
     return Column(
       children: [
         SizedBox(height: 20.0),
@@ -47,9 +52,11 @@ class NetdiskPage extends StatelessWidget {
           titleStyle:
               TextStyle(color: isDark(context) ? Colors.white : Colors.black),
           isShowArrow: false,
-          content: '已用 '
-              '${netdisk.quota.used.withSizeUnit()}/'
-              '${netdisk.quota.quota.withSizeUnit()}',
+          content: user.loggedIn
+              ? '已用 '
+                  '${netdisk.quota.used.withSizeUnit()}/'
+                  '${netdisk.quota.quota.withSizeUnit()}'
+              : '请登录',
         ),
         SizedBox(height: 30.0),
         MaterialButton(
