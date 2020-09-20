@@ -1,8 +1,8 @@
+import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
 
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 String get rmHeaderFooter => '''
     (function() {
@@ -43,7 +43,7 @@ class PluginForMysso extends Webview2Plugin {
   }
 
   @override
-  void onPageFinished(FlutterWebviewPlugin webview, String url) async {
+  void onPageFinished(Webview2Controller webview, String url) async {
     webview.evalJavascript(rmHeaderFooter);
     webview.evalJavascript(rmWxLogin);
 

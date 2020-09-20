@@ -1,19 +1,7 @@
 import 'dart:convert';
 
+import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
-
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-
-final jsAddLoginHook = '''
-    document.querySelector('input[type=submit]').onclick = function() {
-      var username = document.querySelector('input[id=username]').value;
-      var password = document.querySelector('input[id=password]').value;
-      Login.postMessage(JSON.stringify({
-        username: username,
-        password: password,
-      }));
-    }
-  ''';
 
 typedef void LoginCallBack(String username, String password);
 
@@ -28,7 +16,18 @@ class PluginForLogin extends Webview2Plugin {
   }
 
   @override
-  String get jsChannel => 'Login';
+  String get jsChannel => '_custedLogin';
+
+  String get jsAddLoginHook => '''
+    document.querySelector('input[type=submit]').onclick = function() {
+      var username = document.querySelector('input[id=username]').value;
+      var password = document.querySelector('input[id=password]').value;
+      $jsChannel(JSON.stringify({
+        username: username,
+        password: password,
+      }));
+    }
+  ''';
 
   @override
   void onChannelMessage(String message) {
@@ -39,7 +38,7 @@ class PluginForLogin extends Webview2Plugin {
   }
 
   @override
-  void onPageFinished(FlutterWebviewPlugin webview, String url) async {
+  void onPageFinished(Webview2Controller webview, String url) async {
     webview.evalJavascript(jsAddLoginHook);
   }
 }

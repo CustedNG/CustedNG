@@ -6,9 +6,49 @@ import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+
+class Webview2HeaderController with ChangeNotifier {
+  String host = '...';
+  String title = '加载中';
+  bool isLoading = false;
+  double progress = 0;
+
+  void setUrl(String url) {
+    host = Uri?.tryParse(url)?.host ?? url;
+    notifyListeners();
+  }
+
+  void setTitle(String title) {
+    this.title = title;
+    notifyListeners();
+  }
+
+  void startLoad() {
+    isLoading = true;
+    progress = 0;
+    notifyListeners();
+  }
+
+  void stopLoad() {
+    isLoading = false;
+    notifyListeners();
+  }
+
+  void setProgress(double progress) {
+    this.progress = progress;
+    notifyListeners();
+  }
+}
 
 class Webview2Header extends StatefulWidget with PreferredSizeWidget {
+  Webview2Header({this.controller, this.onClose, this.onReload});
+
+  final void Function(BuildContext) onClose;
+
+  final void Function(BuildContext) onReload;
+
+  final Webview2HeaderController controller;
+
   @override
   _Webview2HeaderState createState() => _Webview2HeaderState();
 
@@ -17,87 +57,20 @@ class Webview2Header extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _Webview2HeaderState extends State<Webview2Header> {
-  final webview = FlutterWebviewPlugin();
-
-  StreamSubscription<WebViewStateChanged> _onStateChanged;
-  StreamSubscription<String> _onUrlChanged;
-  StreamSubscription<double> _onProgressChanged;
-
-  String host = '...';
-  String title = '加载中';
-  bool isLoading = false;
-  double progress = 0;
-
   @override
   void initState() {
-    _onStateChanged = webview.onStateChanged.listen(onStateChanged);
-    _onUrlChanged = webview.onUrlChanged.listen(onUrlChanged);
-    _onProgressChanged = webview.onProgressChanged.listen(onProgressChanged);
+    widget.controller.addListener(onChanged);
     super.initState();
   }
 
   @override
   void dispose() {
-    _onStateChanged?.cancel();
-    _onUrlChanged?.cancel();
-    _onProgressChanged?.cancel();
+    widget.controller.removeListener(onChanged);
     super.dispose();
   }
 
-  void onStateChanged(WebViewStateChanged state) async {
-    print('onStateChanged ${state.type}');
-
-    if (state.type == WebViewState.abortLoad) {
-      isLoading = false;
-    }
-
-    if (state.type == WebViewState.startLoad) {
-      isLoading = true;
-      await syncHost(state.url);
-    }
-
-    if (state.type == WebViewState.finishLoad) {
-      isLoading = false;
-      await syncTitle();
-    }
-
+  void onChanged() {
     setState(() {});
-  }
-
-  void onUrlChanged(String url) async {
-    await syncHost(url);
-    await syncTitle();
-    setState(() {});
-  }
-
-  void onProgressChanged(double progress) {
-    setState(() {
-      this.progress = progress;
-    });
-  }
-
-  Future<void> syncHost(String url) async {
-    host = Uri?.tryParse(url)?.host ?? url;
-    print('host $host');
-  }
-
-  Future<void> syncTitle() async {
-    title = await getTitle();
-    print('title $title');
-  }
-
-  Future<String> getTitle() async {
-    var title = await webview.evalJavascript('document.title');
-
-    if (title.startsWith('"')) {
-      title = title.substring(1);
-    }
-
-    if (title.endsWith('"')) {
-      title = title.substring(0, title.length - 1);
-    }
-
-    return title;
   }
 
   @override
@@ -111,7 +84,10 @@ class _Webview2HeaderState extends State<Webview2Header> {
           right: 0,
           child: SizedBox(
             height: 3,
-            child: Webview2Progress(),
+            child: Webview2Progress(
+              isLoading: widget.controller.isLoading,
+              progress: widget.controller.progress,
+            ),
           ),
         ),
       ],
@@ -127,24 +103,17 @@ class _Webview2HeaderState extends State<Webview2Header> {
           minSize: 0,
           padding: EdgeInsets.zero,
           child: Text('关闭'),
-          onPressed: () async {
-            await webview.stopLoading();
-            await webview.close();
-            webview.dispose();
-            Navigator.of(context).pop();
-          },
+          onPressed: () => widget.onClose?.call(context),
         ),
       ),
       middle: NavbarMiddle(
-        textAbove: title ?? '',
-        textBelow: host ?? '',
+        textAbove: widget.controller.title ?? '',
+        textBelow: widget.controller.host ?? '',
         colorOverride: AppTheme.of(context).textColor,
       ),
       trailing: NavBarMoreBtn(
         icon: CupertinoIcons.refresh,
-        onTap: () async {
-          webview.reload();
-        },
+        onTap: () => widget.onReload?.call(context),
       ),
     );
   }

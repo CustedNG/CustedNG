@@ -49,8 +49,6 @@ class _NavTabState extends State<NavTab> {
 
   @override
   Widget build(BuildContext context) {
-    print('here');
-
     final url = CupertinoTheme.brightnessOf(context) == Brightness.dark
         ? custccDark
         : custcc;
