@@ -44,7 +44,7 @@ class NavbarMiddle extends StatelessWidget {
     );
 
     return Container(
-      // width: 100,
+      width: 120,
       child: content,
       alignment: Alignment.center,
     );

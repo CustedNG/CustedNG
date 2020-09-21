@@ -21,14 +21,16 @@ class NavBarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      child: Container(
-        width: 70,
-        child: this.child,
-        alignment: alignment,
+    return Container(
+      width: 70,
+      child: CupertinoButton(
+        child: Container(
+          child: this.child,
+          alignment: alignment,
+        ),
+        padding: EdgeInsets.all(0),
+        onPressed: this.onPressed,
       ),
-      padding: EdgeInsets.all(0),
-      onPressed: this.onPressed,
     );
   }
 }
