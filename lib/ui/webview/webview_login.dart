@@ -52,9 +52,14 @@ class _WebviewLoginState extends State<WebviewLogin> {
     userData.password.put(this.password);
 
     final user = locator<UserProvider>();
-    user.login();
-
     final snake = locator<SnakebarProvider>();
-    snake.info('登录成功');
+
+    try {
+      await user.login();
+      snake.info('登录成功');
+    } catch (e) {
+      snake.info('登录出错啦 等下再试吧');
+      rethrow;
+    }
   }
 }

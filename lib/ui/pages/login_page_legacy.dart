@@ -59,6 +59,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
       }
     } catch (e) {
       snake.warning('登录失败[认证系统超时]');
+      rethrow;
     } finally {
       setState(() => isBusy = false);
     }
