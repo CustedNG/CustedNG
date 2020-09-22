@@ -56,9 +56,6 @@ class MyssoService extends CatService {
         .querySelector('input[name=execution]')
         .attributes['value'];
 
-    print('execution ${execution.length}');
-    print('execution $execution');
-
     final resp = await post(
       loginUrlWithService,
       body: {

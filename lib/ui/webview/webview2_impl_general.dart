@@ -33,12 +33,18 @@ class Webview2ControllerGeneral extends Webview2Controller {
   Future<void> setCookies(List<Cookie> cookies) async {
     for (var cookie in cookies) {
       final url = '${cookie.domain}${cookie.path}';
+
+      var path = '/';
+      if (cookie.path != null && cookie.path.isNotEmpty) {
+        path = cookie.path;
+      }
+
       await CookieManager.instance().setCookie(
         url: url,
         name: cookie.name,
         value: cookie.value,
         domain: cookie.domain,
-        path: cookie.path,
+        path: path,
         isHttpOnly: cookie.httpOnly,
         isSecure: false,
       );
@@ -95,9 +101,10 @@ class Webview2StateGeneral extends Webview2State {
         initialUrl: widget.url,
         initialOptions: InAppWebViewGroupOptions(
           crossPlatform: InAppWebViewOptions(
-              userAgent: UserAgent.defaultUA,
-              useShouldOverrideUrlLoading: true,
-              useOnDownloadStart: true),
+            userAgent: UserAgent.defaultUA,
+            useShouldOverrideUrlLoading: true,
+            useOnDownloadStart: true,
+          ),
         ),
         onWebViewCreated: (controller) {
           this.controller = controller;
@@ -107,13 +114,15 @@ class Webview2StateGeneral extends Webview2State {
           header.startLoad();
           header.setUrl(url);
 
-          pluginActivate(url);
+          // pluginActivate(url);
 
           pluginOnLoadStart(controllerAdaptor, url);
 
           widget.onLoadStart?.call(controllerAdaptor, url);
         },
         onLoadStop: (controller, url) async {
+          pluginActivate(url);
+          
           await addJsChannels(controller);
 
           pluginOnLoadStop(controllerAdaptor, url);
@@ -149,6 +158,9 @@ class Webview2StateGeneral extends Webview2State {
         onDownloadStart: (controller, url) {
           locator<DownloadProvider>().enqueue(url);
         },
+        onConsoleMessage: (controller, message) {
+          print('Console: ${message.message}');
+        },
       ),
     );
   }
@@ -172,7 +184,8 @@ class Webview2StateGeneral extends Webview2State {
 
       await controller.evaluateJavascript(source: '''
         window.${plugin.jsChannel} = function(arg) {
-          window.flutter_inappwebview._callHandler('${plugin.jsChannel}', setTimeout(function(){}), JSON.stringify([arg]));
+          // window.flutter_inappwebview._callHandler('${plugin.jsChannel}', setTimeout(function(){}), JSON.stringify([arg]));
+          window.flutter_inappwebview.callHandler('${plugin.jsChannel}', arg);
         };
       ''');
     }

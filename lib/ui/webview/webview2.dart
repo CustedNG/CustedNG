@@ -48,8 +48,9 @@ class Webview2 extends StatefulWidget {
   final List<Webview2Plugin> plugins;
 
   @override
-  Webview2State createState() => Webview2StateAndroid();
-  // Platform.isAndroid ? Webview2StateAndroid() : Webview2StateGeneral();
+  Webview2State createState() =>
+      // Webview2StateAndroid();
+      Platform.isAndroid ? Webview2StateAndroid() : Webview2StateGeneral();
 }
 
 abstract class Webview2State extends State<Webview2> {

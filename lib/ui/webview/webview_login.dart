@@ -2,6 +2,7 @@ import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/webview/plugin_debug.dart';
 import 'package:custed2/ui/webview/plugin_login.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
 import 'package:custed2/ui/webview/webview2.dart';
@@ -23,7 +24,11 @@ class _WebviewLoginState extends State<WebviewLogin> {
       onCreated: onCreated,
       onLoadAborted: onLoadAborted,
       invalidUrlRegex: r'\/portal\/#!\/service',
-      plugins: [PluginForMysso(), PluginForLogin(onLoginData)],
+      plugins: [
+        PluginForMysso(),
+        PluginForLogin(onLoginData),
+        PluginForDebug(),
+      ],
     );
   }
 
