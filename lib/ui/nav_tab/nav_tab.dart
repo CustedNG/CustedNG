@@ -118,7 +118,7 @@ class _NavTabState extends State<NavTab> {
   }
 
   void openInBrowser() {
-    openUrl(custcc);
+    openUrl('https://cust.cc/');
   }
 
   void openMenu(BuildContext context) {
