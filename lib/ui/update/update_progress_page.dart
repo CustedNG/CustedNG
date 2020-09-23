@@ -105,6 +105,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
       await install();
     } on UpdateException catch (e) {
       updateMsg(e.message);
+
       if (mounted) {
         setState(() => failed = true);
       }
@@ -112,9 +113,11 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
       rethrow;
     } catch (e) {
       updateMsg('出现未知错误');
+
       if (mounted) {
         setState(() => failed = true);
       }
+
       rethrow;
     }
   }
@@ -160,12 +163,16 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     if (mounted) {
       setState(() => updateProgress(0.25));
     }
+    
     final exists = await File(outputPath).exists();
     if (!exists) {
       throw UpdateException('校验失败[1]');
     }
 
-    setState(() => updateProgress(0.50));
+    if (mounted) {
+      setState(() => updateProgress(0.50));
+    }
+
     final hash = base64.decode(base64.normalize(widget.update.file.sha256));
     final computed = await sha256.bind(File(outputPath).openRead()).first;
     if (compareHash(hash, computed.bytes)) {

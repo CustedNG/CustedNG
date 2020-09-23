@@ -22,6 +22,7 @@ updateCheck(BuildContext context, {bool force = false}) async {
     print('Now in debug mode, skip checking updates.');
     return;
   }
+
   final update = await locator<CustedService>().getUpdate();
   if (update == null) return;
   print('Update avaliable: $update');
@@ -43,17 +44,7 @@ updateCheck(BuildContext context, {bool force = false}) async {
     return;
   }
 
-  Future<bool> isFileAvailable(String url) async {
-    try {
-      final resp = await Dio().head(url);
-      return resp.statusCode == 200;
-    } catch (e) {
-      print('update file not avaliable: $e');
-      return false;
-    }
-  }
-
-  if (!await isFileAvailable(update.file.url)) {
+  if (!await isFileAvaliable(update.file.url)) {
     return;
   }
 
@@ -61,4 +52,14 @@ updateCheck(BuildContext context, {bool force = false}) async {
     title: '更新',
     page: UpdateNoticePage(update),
   ).go(context, rootNavigator: true);
+}
+
+Future<bool> isFileAvaliable(String url) async {
+  try {
+    final resp = await Dio().head(url);
+    return resp.statusCode == 200;
+  } catch (e) {
+    print('update file not avaliable: $e');
+    return false;
+  }
 }

@@ -39,7 +39,7 @@ class UpdateNoticePage extends StatelessWidget {
         Text('有更新可用', style: textStyle),
         SizedBox(height: 10),
         Text('使用旧版本可能导致某些功能无法使用'),
-        Text('本次需要下载 ${(update.file.size / 1024).toStringAsFixed(2)} MB')
+        // Text('本次需要下载 ${(update.file.size / 1024).toStringAsFixed(2)} MB')
       ],
     );
   }

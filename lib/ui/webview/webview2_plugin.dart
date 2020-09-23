@@ -8,12 +8,12 @@ abstract class Webview2Plugin {
   String get jsChannel => null;
 
   void onChannelMessage(String message) {}
-
+  
   FutureOr<void> onPageStarted(FlutterWebviewPlugin webview, String url) {}
 
   FutureOr<void> onPageFinished(FlutterWebviewPlugin webview, String url) {}
 
-  static Future injectCss(String source) {
+  static Future injectCss( String source) {
     source = source.split('\n').join(r'\n');
     return FlutterWebviewPlugin().evalJavascript('''
       (function () {
