@@ -46,7 +46,6 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('here');
     super.build(context);
 
     final url = CupertinoTheme.brightnessOf(context) == Brightness.dark
