@@ -1,7 +1,6 @@
 import 'package:custed2/service/iecard_service.dart';
+import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
-
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 String get rmFooter => '''
     (function() {
@@ -39,7 +38,7 @@ class PluginForIecard extends Webview2Plugin {
   }
 
   @override
-  void onPageFinished(FlutterWebviewPlugin webview, String url) async {
+  void onPageFinished(Webview2Controller webview, String url) async {
     webview.evalJavascript(rmFooter);
   }
 }

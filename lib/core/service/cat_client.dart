@@ -111,7 +111,7 @@ class CatClient {
     // }
 
     final cookies = findCookiesAsString(request.url);
-    print('load cookie for ${request.url} : [$cookies]');
+    print('load cookie for ${request.url} : [${cookies.length}]');
     if (cookies.isNotEmpty) {
       request.headers[HttpHeaders.cookieHeader] = cookies;
     }

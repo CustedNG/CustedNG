@@ -1,3 +1,4 @@
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
 
@@ -8,14 +9,14 @@ String get rmFooter => '''
     })();
   ''';
 
-class PluginForPortal extends Webview2Plugin {
+class PluginForDebug extends Webview2Plugin {
   @override
   bool shouldActivate(Uri uri) {
-    return uri.path.startsWith('/custp2/index');
+    return BuildMode.isDebug;
   }
 
   @override
   void onPageFinished(Webview2Controller webview, String url) async {
-    webview.evalJavascript(rmFooter);
+    webview.evalJavascript('_custedLogin');
   }
 }

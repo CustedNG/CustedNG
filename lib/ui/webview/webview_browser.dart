@@ -12,6 +12,7 @@ import 'package:custed2/ui/webview/plugin_mysso.dart';
 import 'package:custed2/ui/webview/plugin_netdisk.dart';
 import 'package:custed2/ui/webview/plugin_portal.dart';
 import 'package:custed2/ui/webview/webview2.dart';
+import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
@@ -34,7 +35,7 @@ class WebviewBrowser extends StatelessWidget {
     );
   }
 
-  void onCreated() async {
+  void onCreated(Webview2Controller controller) async {
     final user = locator<UserProvider>();
     if (!user.loggedIn) {
       return;
@@ -42,19 +43,23 @@ class WebviewBrowser extends StatelessWidget {
 
     await WebvpnService().login();
     await WrdvpnService().login();
-    await loadCookieFor(WrdvpnService.baseUrl);
+    await loadCookieFor(controller, WrdvpnService.baseUrl);
 
-    await loadCookieFor(MyssoService.loginUrl);
-    await loadCookieFor(MyssoService.loginUrl,
+    await loadCookieFor(controller, MyssoService.loginUrl);
+    await loadCookieFor(controller, MyssoService.loginUrl,
         urlOverride:
             'http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118/cas/login');
 
-    await loadCookieFor(WebvpnService.baseUrl);
-    await loadCookieFor(WebvpnService.baseUrl,
+    await loadCookieFor(controller, WebvpnService.baseUrl);
+    await loadCookieFor(controller, WebvpnService.baseUrl,
         urlOverride: WebvpnService.baseUrlInsecure);
   }
 
-  Future<void> loadCookieFor(String url, {String urlOverride}) async {
+  Future<void> loadCookieFor(
+    Webview2Controller controller,
+    String url, {
+    String urlOverride,
+  }) async {
     final rawCookies = locator<PersistCookieJar>().loadForRequest(url.toUri());
     final cookies = <Cookie>[];
 
@@ -79,6 +84,6 @@ class WebviewBrowser extends StatelessWidget {
 
     print('cookies $url $cookies');
     // final uriOverride = urlOverride?.toUri();
-    await WebviewCookieManager().setCookies(cookies);
+    await controller.setCookies(cookies);
   }
 }

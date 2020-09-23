@@ -2,12 +2,12 @@ import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/webview/plugin_debug.dart';
 import 'package:custed2/ui/webview/plugin_login.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
 import 'package:custed2/ui/webview/webview2.dart';
+import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 class WebviewLogin extends StatefulWidget {
   @override
@@ -22,20 +22,24 @@ class _WebviewLoginState extends State<WebviewLogin> {
   Widget build(BuildContext context) {
     return Webview2(
       onCreated: onCreated,
-      onStateChanged: onStateChanged,
+      onLoadAborted: onLoadAborted,
       invalidUrlRegex: r'\/portal\/#!\/service',
-      plugins: [PluginForMysso(), PluginForLogin(onLoginData)],
+      plugins: [
+        PluginForMysso(),
+        PluginForLogin(onLoginData),
+        PluginForDebug(),
+      ],
     );
   }
 
-  void onCreated() async {
-    await WebviewCookieManager().clearCookies();
-    FlutterWebviewPlugin().reloadUrl('http://webvpn.cust.edu.cn/');
+  void onCreated(Webview2Controller controller) async {
+    await controller.clearCookies();
+    controller.loadUrl('http://webvpn.cust.edu.cn/');
   }
 
-  void onStateChanged(WebViewStateChanged state) async {
-    if (state.url.contains('webvpn.cust.edu.cn/portal/#!/service')) {
-      loginSuccessCallback();
+  void onLoadAborted(Webview2Controller controller, String url) async {
+    if (url.contains('webvpn.cust.edu.cn/portal/#!/service')) {
+      loginSuccessCallback(controller);
     }
   }
 
@@ -44,8 +48,8 @@ class _WebviewLoginState extends State<WebviewLogin> {
     this.password = password;
   }
 
-  Future<void> loginSuccessCallback() async {
-    await FlutterWebviewPlugin().close();
+  Future<void> loginSuccessCallback(Webview2Controller controller) async {
+    await controller.close();
     Navigator.of(context).pop();
 
     final userData = await locator.getAsync<UserDataStore>();
@@ -53,9 +57,14 @@ class _WebviewLoginState extends State<WebviewLogin> {
     userData.password.put(this.password);
 
     final user = locator<UserProvider>();
-    user.login();
-
     final snake = locator<SnakebarProvider>();
-    snake.info('登录成功');
+
+    try {
+      await user.login();
+      snake.info('登录成功');
+    } catch (e) {
+      snake.info('登录出错啦 等下再试吧');
+      rethrow;
+    }
   }
 }

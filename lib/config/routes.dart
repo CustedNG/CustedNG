@@ -21,6 +21,7 @@ import 'package:custed2/ui/webview/webview_login.dart';
 final loginPage = AppRoute(
   title: '登录',
   page: WebviewLogin(),
+  // page: LoginWebPage(),
 );
 
 // 因webview, 提供传统登录方式
