@@ -4,8 +4,9 @@ import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/mysso_service.dart';
+import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Icons;
+import 'package:flutter/material.dart' show Icons, Scaffold;
 
 class LoginPageLegacy extends StatefulWidget {
   @override
@@ -84,22 +85,28 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: ImageRes.bgAbstractDark,
+    return Column(
+      children: [
+        Flexible(
+            child: Scaffold(
+          body: DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: ImageRes.bgAbstractDark,
+              ),
+            ),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: _buildLoginForm(context),
+              ),
+            ),
           ),
-        ),
-        child: Align(
-          alignment: Alignment.topLeft,
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: _buildLoginForm(context),
-          ),
-        ),
-      ),
+        )),
+        Snakebar()
+      ],
     );
   }
 

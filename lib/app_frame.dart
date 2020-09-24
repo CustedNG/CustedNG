@@ -3,6 +3,7 @@ import 'package:custed2/core/hotfix.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/core/update.dart';
 import 'package:custed2/core/util/build_mode.dart';
+import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/grade_legacy.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
@@ -21,12 +22,16 @@ class AppFrame extends StatefulWidget {
 }
 
 class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
-  int _selectIndex = 0;
+  final setting = locator<SettingStore>();
+  bool useScheduleAsHome;
+  int _selectIndex;
   PageController _pageController;
 
   @override
   void initState() {
     super.initState();
+    bool useScheduleAsHome = setting.useScheduleAsHome.fetch();
+    _selectIndex = useScheduleAsHome ? 3 : 0;
     _pageController = PageController();
   }
 
@@ -144,6 +149,9 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       print('Debug mode detected, create interface by default.');
       locator<TTYExecuter>().execute('(debug)', context, quiet: true);
     }
+
+    _pageController.animateToPage(_selectIndex,
+        duration: Duration(milliseconds: 377), curve: Curves.easeInOutCubic);
 
     // call updateCheck to ensure navigator exists in context
     updateCheck(context);
