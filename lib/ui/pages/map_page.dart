@@ -26,6 +26,7 @@ class _PhotoViewGalleryScreenState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> area = ['东', '南', '西'];
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -36,7 +37,6 @@ class _PhotoViewGalleryScreenState extends State<MapPage> {
             right: 0,
             child: Container(
                 child: PhotoViewGallery.builder(
-              scrollPhysics: const BouncingScrollPhysics(),
               builder: (BuildContext context, int index) {
                 return PhotoViewGalleryPageOptions(
                   imageProvider: isDark(context)
@@ -64,16 +64,14 @@ class _PhotoViewGalleryScreenState extends State<MapPage> {
             )),
           ),
           Positioned(
-            //图片index显示
             top: MediaQuery.of(context).padding.top + 15,
             width: MediaQuery.of(context).size.width,
             child: Center(
-              child: Text("${currentIndex + 1}/3",
+              child: Text('${area[currentIndex]}区',
                   style: TextStyle(color: Colors.white, fontSize: 16)),
             ),
           ),
           Positioned(
-            //右上角关闭按钮
             right: 10,
             top: MediaQuery.of(context).padding.top,
             child: IconButton(

@@ -151,7 +151,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     }
 
     _pageController.animateToPage(_selectIndex,
-        duration: Duration(milliseconds: 377), curve: Curves.easeInOutCubic);
+        duration: Duration(milliseconds: 2 * 377), curve: Curves.easeInOutCubic);
 
     // call updateCheck to ensure navigator exists in context
     updateCheck(context);
