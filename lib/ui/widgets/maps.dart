@@ -79,9 +79,9 @@ class PhotoViewMap extends StatelessWidget {
 
 class Maps {
   static const custW = CustCompusMap(
-    minScale: 1,
-    maxScale: 3,
-    initScale: 2,
+    minScale: 4,
+    maxScale: 7,
+    initScale: 6,
     image: ImageRes.custWMapSimple,
     darkImage: ImageRes.custWMapSimpleDark,
   );
@@ -159,6 +159,36 @@ class Maps {
         custS,
         Offset(81, 72),
         Offset(-30, 10),
+      ),
+      PhotoViewMap(
+        '西1教',
+        custW,
+        Offset(69, 97),
+        Offset(-5, -15),
+      ),
+      PhotoViewMap(
+        '西区田',
+        custW,
+        Offset(69, 97),
+        Offset(-5, -15),
+      ),
+      PhotoViewMap(
+        '西外',
+        custW,
+        Offset(69, 97),
+        Offset(-5, -15),
+      ),
+      PhotoViewMap(
+        '西实',
+        custW,
+        Offset(69, 97),
+        Offset(-5, -15),
+      ),
+      PhotoViewMap(
+        '西攀岩',
+        custW,
+        Offset(69, 97),
+        Offset(-5, -15),
       ),
     ];
 
