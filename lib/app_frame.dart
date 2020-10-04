@@ -31,7 +31,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   void initState() {
     super.initState();
     bool useScheduleAsHome = setting.useScheduleAsHome.fetch();
-    _selectIndex = useScheduleAsHome ? 3 : 0;
+    _selectIndex = useScheduleAsHome ? 2 : 0;
     _pageController = PageController();
   }
 
@@ -55,9 +55,9 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
               controller: _pageController,
               children: [
                 HomeTab(),
-                NavTab(),
                 GradeReportLegacy(),
                 ScheduleTab(),
+                NavTab(),
                 UserTab(),
               ],
             ),
@@ -71,9 +71,9 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   List<NavigationItem> items = [
     NavigationItem(Icon(Icons.home), Text('主页'), Colors.deepPurpleAccent),
-    NavigationItem(Icon(Icons.navigation), Text('导航'), Colors.greenAccent),
     NavigationItem(Icon(Icons.leaderboard), Text('成绩'), Colors.pinkAccent),
     NavigationItem(Icon(Icons.calendar_today), Text('课表'), Colors.amberAccent),
+    NavigationItem(Icon(Icons.navigation), Text('导航'), Colors.greenAccent),
     NavigationItem(Icon(Icons.settings), Text('设置'), Colors.cyanAccent)
   ];
 

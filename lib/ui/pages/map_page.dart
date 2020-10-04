@@ -17,6 +17,7 @@ class MapPage extends StatefulWidget {
 
 class _PhotoViewGalleryScreenState extends State<MapPage> {
   int currentIndex;
+  static const List<String> area = ['东', '南', '西'];
 
   @override
   void initState() {
@@ -26,7 +27,6 @@ class _PhotoViewGalleryScreenState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> area = ['东', '南', '西'];
     return Scaffold(
       body: Stack(
         children: <Widget>[

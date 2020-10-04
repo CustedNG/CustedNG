@@ -99,7 +99,7 @@ class _Webview2HeaderState extends State<Webview2Header> {
         child: Padding(
           padding: EdgeInsets.only(left: 8.0),
           child: GestureDetector(
-            child: Icon(Icons.arrow_back),
+            child: Icon(Icons.close),
             onTap: () => widget.onClose?.call(context),
           ),
         ),
