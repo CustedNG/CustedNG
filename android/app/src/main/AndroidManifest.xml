@@ -21,7 +21,7 @@
         android:label="Custed NG"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
-        android:allowBackup="false">
+        android:allowBackup="true">
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"
             android:launchMode="singleTop"
@@ -60,12 +60,23 @@
                 tools:replace="android:resource" />
         </provider> -->
 
-        <provider
+        <!-- <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider.install"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_install_paths"/>
+        </provider> -->
+
+        <provider android:name="androidx.core.content.FileProvider"
+            tools:replace="android:authorities"
+            android:authorities="${applicationId}.fileProvider.install"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data 
+                tools:replace="android:resource"
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_install_paths"/>
         </provider>

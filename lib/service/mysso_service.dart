@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/core/service/cat_service.dart';
@@ -9,7 +10,7 @@ import 'package:custed2/data/store/user_data_store.dart';
 import 'package:html/parser.dart' show parse;
 
 class MyssoService extends CatService {
-  static const baseUrl = 'http://mysso-cust-edu-cn-s.webvpn.cust.edu.cn:8118';
+  static const baseUrl = 'https://mysso.cust.edu.cn';
   static const loginUrl = '$baseUrl/cas/login';
 
   static String parseValue(String value) {
@@ -23,33 +24,60 @@ class MyssoService extends CatService {
   }
 
   final sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
-  final loginSuccessTest = RegExp(r'(登录成功|Log In Successful|进入校园门户)');
+  final loginSuccessTest = RegExp(r'(登录成功|成功登录|Log In Successful|进入校园门户)');
 
   Future<CatLoginResult<String>> login({bool force = false}) async {
     if (force) clearCookieFor(baseUrl.toUri());
 
-    final loginPage = await getFrontPage();
-    if (loginSuccessTest.hasMatch(loginPage)) {
-      print('Mysso Cookie Login Success');
+    final loginService = 'http://test.cust.edu.cn/custp2/shiro-cas';
+    final loginUrlWithService = '$loginUrl?service=$loginService';
+
+    // final loginPage = await getFrontPage(loginUrlWithService);
+    // if (loginSuccessTest.hasMatch(loginPage)) {
+    //   print('Mysso Cookie Login Success');
+    //   return CatLoginResult.ok();
+    // }
+
+    final loginPage = await get(
+      loginUrlWithService,
+      maxRedirects: 0,
+    );
+
+    if (loginPage.statusCode.isWithin(300, 399) &&
+        loginPage.headers['location'].contains(loginService)) {
+      print('Mysso Manual Login Success');
       return CatLoginResult.ok();
     }
 
     final userData = await locator.getAsync<UserDataStore>();
 
-    final loginPageParsed = parse(loginPage);
+    final loginPageParsed = parse(loginPage.body);
     final execution = loginPageParsed
         .querySelector('input[name=execution]')
         .attributes['value'];
 
-    final resp = await post(loginUrl, body: {
-      'username': userData.username.fetch(),
-      'password': userData.password.fetch(),
-      'execution': execution,
-      '_eventId': 'submit',
-      'geolocation': '',
-    });
+    final resp = await post(
+      loginUrlWithService,
+      body: {
+        'username': userData.username.fetch(),
+        'password': userData.password.fetch(),
+        'execution': execution,
+        '_eventId': 'submit',
+        'geolocation': '',
+      },
+      maxRedirects: 0,
+    );
 
-    if (loginSuccessTest.hasMatch(resp.body)) {
+    // if (loginSuccessTest.hasMatch(resp.body)) {
+    //   print('Mysso Manual Login Success');
+    //   return CatLoginResult.ok();
+    // }
+
+    print('resp.isRedirect ${resp.isRedirect}');
+    print("resp.headers['location'] ${resp.headers['location']}");
+
+    if (resp.statusCode.isWithin(300, 399) &&
+        resp.headers['location'].contains(loginService)) {
       print('Mysso Manual Login Success');
       return CatLoginResult.ok();
     }
@@ -83,8 +111,8 @@ class MyssoService extends CatService {
     );
   }
 
-  Future<String> getFrontPage() async {
-    final resp = await this.get(loginUrl);
+  Future<String> getFrontPage([String url = loginUrl]) async {
+    final resp = await this.get(url);
     return resp.body;
   }
 
@@ -109,10 +137,10 @@ class MyssoService extends CatService {
   Future<String> getTicketForWebvpn() =>
       getTicket('https://webvpn.cust.edu.cn/auth/cas_validate?entry_id=1');
 
-  Future<String> getTicketForJw() =>
-      getTicket('http://192.168.223.72:8080/welcome');
+  Future<String> getTicketForWrdvpn() =>
+      getTicket('http://wwwn.cust.edu.cn/wengine-auth/login?cas_login=true');
 
-  Future<String> getTicketForJwglCustEdnCn() =>
+  Future<String> getTicketForJw() =>
       getTicket('https://jwgl.cust.edu.cn/welcome');
 
   Future<String> getTicketForIecard() =>

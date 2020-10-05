@@ -1,11 +1,12 @@
 import 'dart:ui';
 
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/lesson_detail_page.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/maps.dart';
@@ -50,11 +51,11 @@ class LessonInfo extends StatelessWidget {
             _buildDataItem(
                 '上课时间', '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}'),
             SizedBox(height: 10),
-            _buildDataItem('任课教师', lesson.teacherName),
+            _buildDataItem('上课地点', lesson.roomRaw),
           ],
         ),
         SizedBox(width: 40),
-        _buildDataItem('上课地点', lesson.roomRaw),
+        _buildDataItem('任课教师', lesson.teacherName),
       ],
     );
   }
@@ -179,23 +180,39 @@ class LessonPreview extends StatelessWidget {
     );
 
     final delete = CupertinoDialogAction(
-      child: Text('删除'),
+      child: Text('编辑'),
       isDestructiveAction: true,
       onPressed: () async {
         Navigator.of(context).pop();
-        await lesson.delete();
+        // await lesson.delete();
+        AppRoute(
+          title: '编辑课程',
+          page: AddLessonPage(lesson: lesson),
+        ).popup(context);
         locator<ScheduleProvider>().loadLocalData();
       },
     );
 
     final deleteCustom = CupertinoDialogAction(
-      child: Text('删除自定义'),
+      child: Text('编辑自定义'),
       isDestructiveAction: true,
       onPressed: () async {
         Navigator.of(context).pop();
-        for (var lesson in customLessons) {
-          await lesson.delete();
-        }
+        showCupertinoModalPopup(
+            context: context,
+            builder: (context) => CupertinoActionSheet(
+                actions: List<Widget>.of(
+                    customLessons.map((selectedLesson) => CupertinoActionSheetAction(
+                          child: Text(selectedLesson.displayName),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            AppRoute(
+                              title: '编辑课程',
+                              page: AddLessonPage(lesson: selectedLesson),
+                            ).popup(context);
+                            locator<ScheduleProvider>().loadLocalData();
+                          },
+                        )))));
         locator<ScheduleProvider>().loadLocalData();
       },
     );

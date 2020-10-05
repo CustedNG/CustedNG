@@ -1,8 +1,9 @@
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/widgets/back_icon.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:otp/otp.dart';
 import 'package:provider/provider.dart';
@@ -28,15 +29,13 @@ class _DebugPageState extends State<DebugPage> {
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        backgroundColor: CupertinoColors.black,
-        actionsForegroundColor: CupertinoColors.white,
-        middle: Text(
-          'Terminal',
-          style: TextStyle(
-            color: CupertinoColors.white,
+          backgroundColor: CupertinoColors.black,
+          actionsForegroundColor: CupertinoColors.white,
+          leading: GestureDetector(
+            child: BackIcon(),
+            onTap: () => Navigator.pop(context),
           ),
-        ),
-      ),
+          middle: NavbarText('Terminal')),
       child: content,
     );
   }

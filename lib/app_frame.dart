@@ -8,6 +8,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/grade_legacy.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
+import 'package:custed2/ui/nav_tab/nav_tab.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,6 +27,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   final _tab1NavKey = GlobalKey<NavigatorState>();
   final _tab2NavKey = GlobalKey<NavigatorState>();
   final _tab3NavKey = GlobalKey<NavigatorState>();
+  final _tab4NavKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,8 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
         return _tab2NavKey;
       case 3:
         return _tab3NavKey;
+      case 4:
+        return _tab4NavKey;
     }
     throw 'unreachable';
   }
@@ -79,6 +83,16 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
             title: Text('主页'),
           ),
           BottomNavigationBarItem(
+            icon: Icon(
+              const IconData(
+                0xf428,
+                fontFamily: 'CupertinoIcons',
+                fontPackage: 'cupertino_icons',
+              ),
+            ),
+            title: Text('导航'),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.tags),
             title: Text('成绩'),
           ),
@@ -105,22 +119,30 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
           case 1:
             return CupertinoTabView(
               navigatorKey: _tab1NavKey,
-              defaultTitle: '成绩',
+              defaultTitle: '导航',
               builder: (context) {
-                return GradeReportLegacy();
+                return NavTab();
               },
             );
           case 2:
             return CupertinoTabView(
               navigatorKey: _tab2NavKey,
-              defaultTitle: '课表',
+              defaultTitle: '成绩',
               builder: (context) {
-                return ScheduleTab();
+                return GradeReportLegacy();
               },
             );
           case 3:
             return CupertinoTabView(
               navigatorKey: _tab3NavKey,
+              defaultTitle: '课表',
+              builder: (context) {
+                return ScheduleTab();
+              },
+            );
+          case 4:
+            return CupertinoTabView(
+              navigatorKey: _tab4NavKey,
               defaultTitle: '账户',
               builder: (context) {
                 return UserTab();
@@ -138,7 +160,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       print('Debug mode detected, create interface by default.');
       locator<TTYExecuter>().execute('(debug)', context, quiet: true);
     }
-    
+
     // call updateCheck to ensure navigator exists in context
     updateCheck(context);
 

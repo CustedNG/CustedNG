@@ -4,15 +4,14 @@ import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
-import 'package:custed2/service/webvpn_based_service.dart';
+import 'package:custed2/service/wrdvpn_based_service.dart';
 import 'package:html/parser.dart' as html;
 
-class IecardService extends WebvpnBasedService {
-  static const authServerUrl =
-      'http://iecard-cust-edu-cn-8080-p.webvpn.cust.edu.cn:8118';
+class IecardService extends WrdvpnBasedService {
+  static const authServerUrl = 'http://iecard.cust.edu.cn:8080';
   static const preloginUrl = '$authServerUrl/ias/prelogin?sysid=FWDT';
 
-  static const baseUrl = 'http://iecard-cust-edu-cn.webvpn.cust.edu.cn:8118';
+  static const baseUrl = 'http://iecard.cust.edu.cn';
   static const loginUrl = '$baseUrl/cassyno/index';
   static const homeUrl = '$baseUrl/Category/Page?name=service';
   static const phoneChargeUrl = '$baseUrl/PPage/ComePage';

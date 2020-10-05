@@ -74,7 +74,10 @@ class CatClient {
   }
 
   Future<Response> followRedirect(Response response, int maxRedirects) async {
-    if (maxRedirects <= 0 || !response.isRedirect) {
+    final isRedirect =
+        response.isRedirect || response.statusCode == HttpStatus.found;
+
+    if (maxRedirects <= 0 || !isRedirect) {
       return response;
     }
 
@@ -82,13 +85,22 @@ class CatClient {
         ? 'GET'
         : response.request.method;
 
-    final url = response.headers[HttpHeaders.locationHeader];
+    var uri = Uri.parse(response.headers[HttpHeaders.locationHeader]);
 
-    print('Cat Redirect: $url');
+    if (uri.host == null || uri.host == '') {
+      uri = uri.replace(host: response.request.url.host);
+    }
+
+    if (uri.scheme == null || uri.scheme == '') {
+      uri = uri.replace(scheme: response.request.url.scheme);
+    }
+
+    print('Cat Redirect: $uri');
+
     return await rawRequest(
       method,
-      Uri.parse(url),
-      headers: response.request.headers,
+      uri,
+      // headers: response.request.headers,
       maxRedirects: maxRedirects - 1,
     );
   }
@@ -99,6 +111,7 @@ class CatClient {
     // }
 
     final cookies = findCookiesAsString(request.url);
+    print('load cookie for ${request.url} : [${cookies.length}]');
     if (cookies.isNotEmpty) {
       request.headers[HttpHeaders.cookieHeader] = cookies;
     }

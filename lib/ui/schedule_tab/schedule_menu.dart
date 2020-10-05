@@ -25,6 +25,9 @@ class ScheduleMenu extends StatelessWidget {
             snakebar.catchAll(() async {
               await scheduleProvider.updateScheduleData();
             }, message: '教务系统超时 :(', duration: Duration(seconds: 7));
+            // Future.sync(() async {
+            //   await scheduleProvider.updateScheduleData();
+            // }).catchError((e) => _showJwTimeoutNewNotice(context));
           },
         ),
         CupertinoActionSheetAction(
@@ -65,5 +68,21 @@ class ScheduleMenu extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _showJwTimeoutNewNotice(context) {
+    showCupertinoDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+              title: Text('更新课表失败'),
+              content: Text('这可能是校园网的连接问题。请尝试使用移动数据。'),
+              actions: [
+                CupertinoDialogAction(
+                  isDefaultAction: true,
+                  child: Text('好'),
+                  onPressed: () => Navigator.of(context).pop(true),
+                ),
+              ],
+            ));
   }
 }

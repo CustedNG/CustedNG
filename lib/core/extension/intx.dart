@@ -29,4 +29,8 @@ extension IntX on int {
     }
     return number.toStringAsFixed(1) + ' ' + units[unitIndex];
   }
+
+  bool isWithin(int min, int max) {
+    return this >= min && this <= max;
+  }
 }

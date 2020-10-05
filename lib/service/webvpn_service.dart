@@ -5,6 +5,7 @@ import 'package:custed2/service/mysso_service.dart';
 
 class WebvpnService extends CatService {
   static const baseUrl = 'https://webvpn.cust.edu.cn';
+  static const baseUrlInsecure = 'http://webvpn.cust.edu.cn';
 
   final Pattern sessionExpirationTest = RegExp(r'g_lines|Sangine');
 

@@ -1,12 +1,13 @@
 import 'dart:convert';
 
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
-import 'package:custed2/locator.dart';
 import 'package:custed2/data/store/user_data_store.dart';
+import 'package:custed2/locator.dart';
+import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -33,14 +34,11 @@ class _LoginPageState extends State<LoginPage> {
       navigationBar: CupertinoNavigationBar(
         backgroundColor: theme.webviewNavBarColor,
         actionsForegroundColor: theme.navBarActionsColor,
-        middle: Text(
-          '登录',
-          style: TextStyle(color: theme.navBarActionsColor),
-        ),
+        middle: NavbarText('登录'),
         trailing: isBusy ? _buildIndicator(context) : null,
       ),
       child: WebView(
-        userAgent: UserAgent.defaultUA,
+        userAgent: UserAgent.pcChromeUA,
         javascriptMode: JavascriptMode.unrestricted,
         javascriptChannels: {
           JavascriptChannel(
@@ -65,7 +63,9 @@ class _LoginPageState extends State<LoginPage> {
         onWebViewCreated: (controller) async {
           this.controller = controller;
           await CookieManager().clearCookies();
-          controller.loadUrl('https://webvpn.cust.edu.cn/');
+          controller.loadUrl(
+            'https://mysso.cust.edu.cn/cas/login?service=http://test.cust.edu.cn/custp2/shiro-cas',
+          );
         },
         onPageStarted: (url) {
           setState(() => isBusy = true);
@@ -87,7 +87,9 @@ class _LoginPageState extends State<LoginPage> {
         navigationDelegate: (request) async {
           print('Redirect: ${request.url}');
 
-          if (request.url.contains('webvpn.cust.edu.cn/portal/#!/service')) {
+          if (request.url.contains('custp2') ||
+              request.url.contains('test.cust.edu.cn') ||
+              request.url.contains('portal.cust.edu.cn')) {
             Future.delayed(200.ms, _loginSuccessCallback);
             return NavigationDecision.prevent;
           }
@@ -108,6 +110,13 @@ class _LoginPageState extends State<LoginPage> {
       if (footer) footer.parentNode.removeChild(footer);
     })();
   ''';
+
+  // String get rmFooter => '''
+  //   (function() {
+  //     var footer = document.querySelector('footer.footer');
+  //     if (footer) footer.parentNode.removeChild(footer);
+  //   })();
+  // ''';
 
   String get rmWxLogin => r'''
     (function() {

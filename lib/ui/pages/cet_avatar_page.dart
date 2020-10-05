@@ -1,22 +1,30 @@
 import 'package:custed2/core/util/save_image.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CetAvatarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+      navigationBar: NavBar.cupertino(
+          context: context,
+          leading: GestureDetector(
+            child: BackIcon(),
+            onTap: () => Navigator.pop(context),
+          ),
+          middle: NavbarText('四六级照片')),
       child: Container(
         child: SafeArea(
           child: CustomScrollView(
             slivers: <Widget>[
-              CupertinoSliverNavigationBar(
-                largeTitle: Text('四六级照片'),
-              ),
               SliverToBoxAdapter(
                 child: Column(
                   children: <Widget>[

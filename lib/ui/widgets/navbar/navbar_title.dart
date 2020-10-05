@@ -13,6 +13,7 @@ class NavBarTitle extends StatelessWidget {
     );
 
     return Container(
+      width: 70,
       alignment: Alignment.centerLeft,
       child: DefaultTextStyle(
         style: style,

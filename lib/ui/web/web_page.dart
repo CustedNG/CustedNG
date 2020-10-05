@@ -1,20 +1,23 @@
 import 'dart:async';
 
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/webview/addon.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/web/web_page_action.dart';
 import 'package:custed2/ui/web/web_page_addon.dart';
 import 'package:custed2/ui/web/web_progress.dart';
+import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class WebPage extends StatefulWidget {
@@ -70,10 +73,11 @@ class WebPageState extends State<WebPage> {
       navigationBar: CupertinoNavigationBar(
         backgroundColor: theme.webviewNavBarColor,
         actionsForegroundColor: theme.navBarActionsColor,
-        middle: Text(
-          widget.title,
-          style: TextStyle(color: theme.navBarActionsColor),
+        leading: GestureDetector(
+          child: BackIcon(),
+          onTap: () => Navigator.pop(context),
         ),
+        middle: NavbarText(widget.title),
         trailing:
             isBusy ? _buildIndicator(context) : _buildActionButton(context),
       ),
@@ -204,7 +208,11 @@ class WebPageState extends State<WebPage> {
   Future<void> addonOnLoadStop(
       InAppWebViewController controller, String url) async {
     for (var addon in activeAddons) {
-      await addon.onPageFinished(controller, url);
+      try {
+        await addon.onPageFinished(controller, url);
+      } catch (e) {
+        print('Addon onPageFinished failed: $e');
+      }
     }
   }
 
@@ -262,21 +270,27 @@ class WebPageState extends State<WebPage> {
     );
   }
 
-  Future<void> loadCookieFor(String url) async {
+  Future<void> loadCookieFor(String url, {String urlOverride}) async {
     final cookies = locator<PersistCookieJar>().loadForRequest(url.toUri());
-    print(cookies);
+    // final uriOverride = urlOverride?.toUri();
+
     for (var cookie in cookies) {
+      print('WEBPAGE cookie $url : <$cookie>');
+
       final domain = cookie.domain == null
           ? null
           : cookie.domain.startsWith('.') ? cookie.domain : '.' + cookie.domain;
+
       await CookieManager.instance().setCookie(
-        url: url,
+        url: urlOverride ?? url,
         name: cookie.name,
         value: cookie.value,
         domain: domain,
         path: cookie.path ?? '/',
         maxAge: cookie.maxAge,
-        isSecure: cookie.secure,
+        // isSecure:
+        //     uriOverride == null ? cookie.secure : uriOverride.scheme == 'https',
+        isSecure: false,
       );
     }
   }

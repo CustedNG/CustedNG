@@ -59,13 +59,13 @@ class UserProvider extends BusyProvider {
     unawaited(userData.loggedIn.put(state));
   }
 
-  void _afterLogin() {
+  void _afterLogin() async {
     final schedule = locator<ScheduleProvider>();
     final grade = locator<GradeProvider>();
     locator<PersistCookieJar>().deleteAll();
-    schedule.updateScheduleData(reset: true);
-    grade.updateGradeData();
+    await schedule.updateScheduleData(reset: true);
+    await grade.updateGradeData();
     // call login() here to improve iecard open speed.
-    IecardService().login();
+    await IecardService().login();
   }
 }

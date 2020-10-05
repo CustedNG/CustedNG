@@ -34,5 +34,9 @@ class ImageRes {
   static const tikuIcon = AssetImage('assets/icon/tiku.png');
 
   static const updateIndicator = AssetImage('assets/updating.gif');
-  static const miscSchoolCalendar = AssetImage('assets/calendar/2019-2.png');
+  static const miscSchoolCalendar = AssetImage('assets/calendar/2020-2021-1.png');
+
+  static const wechatStep1 = AssetImage('assets/wechat/step1.jpg');
+  static const wechatStep2 = AssetImage('assets/wechat/step2.jpg');
+  static const wechatStep3 = AssetImage('assets/wechat/step3.jpg');
 }

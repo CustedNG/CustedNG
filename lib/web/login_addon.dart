@@ -13,13 +13,13 @@ class LoginAddon extends WebviewAddon {
   @override
   final targetPath = '/cas/login';
 
-  final jsRmHeader = '''
-    ;(function() {
-      var header = document.querySelector('nav.navbar');
-      header.parentNode.removeChild(header);
-      document.querySelector('main').classList.add('pt-3')
-    })();
-  ''';
+  // final jsRmHeader = '''
+  //   ;(function() {
+  //     var header = document.querySelector('nav.navbar');
+  //     header.parentNode.removeChild(header);
+  //     document.querySelector('main').classList.add('pt-3')
+  //   })();
+  // ''';
 
   final jsAddLoginHook = '''
     document.querySelector('input[type=submit]').onclick = function() {
@@ -46,10 +46,12 @@ class LoginAddon extends WebviewAddon {
       callback: onLoginData,
     );
 
-    await controller.evaluateJavascript(source: '''
-      $jsRmHeader
-      $jsAddLoginHook
-    ''');
+    // await controller.evaluateJavascript(source: '''
+    //   $jsRmHeader
+    //   $jsAddLoginHook
+    // ''');
+
+    await controller.evaluateJavascript(source: jsAddLoginHook);
 
     final userData = await locator.getAsync<UserDataStore>();
     final username = userData.username.fetch();

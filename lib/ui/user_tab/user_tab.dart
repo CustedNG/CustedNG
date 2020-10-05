@@ -1,5 +1,4 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/store/presistent_store.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
@@ -8,7 +7,10 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +38,7 @@ class UserTab extends StatelessWidget {
         children: <Widget>[
           CupertinoButton.filled(
             child: Text('统一认证登录'),
-            onPressed: () => loginPage.go(context),
+            onPressed: () => loginPage.popup(context),
           ),
           SizedBox(height: 20),
           Text(
@@ -57,7 +59,10 @@ class UserTab extends StatelessWidget {
     final darkModeStatus = ['自动', '开', '关'][setting.darkMode.fetch()];
 
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(),
+      navigationBar: NavBar.cupertino(
+        context: context,
+        middle: NavbarText('账户'),
+      ),
       backgroundColor: CupertinoColors.lightBackgroundGray,
       child: CupertinoSettings(
         items: <Widget>[
@@ -120,7 +125,9 @@ class UserTab extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(profile.displayName),
+        Text(profile.displayName,
+            style: TextStyle(
+                color: isDark(context) ? Colors.white : Colors.black)),
         SizedBox(height: 3),
         Text(profile.department, style: departmentText),
       ],
@@ -177,7 +184,7 @@ class UserTab extends StatelessWidget {
   }
 
   void _login(BuildContext context) {
-    loginPage.go(context);
+    loginPage.popup(context);
   }
 
   void _logout(BuildContext context) {
