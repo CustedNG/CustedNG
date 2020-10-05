@@ -117,7 +117,7 @@ class CatClient {
       request.headers[HttpHeaders.cookieHeader] = cookies;
       return;
     }
-    if(!request.url.toString().startsWith('https://cust.app/app'))throw CatError('empty cookie');
+    if(!request.url.toString().startsWith('https://cust.app/app'))print('empty cookie');
   }
 
   void saveCookies(Response response) {
@@ -125,6 +125,7 @@ class CatClient {
     if (cookieString == null) return;
 
     cookieString = cookieString.replaceAll(', ', '__custed_comma_space__');
+    print('load cookie for ${response.request.url} : ${cookieString.length}');
     final cookies = cookieString
         .split(',')
         .map((c) => c.replaceAll('__custed_comma_space__', ', '))

@@ -232,21 +232,15 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
         setting.dontCountElectiveCourseGrade.fetch() ? '去选修绩点' : '本学期绩点';
 
     return Column(
-      mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Column(
-          children: <Widget>[
-            Text(
-              gradePoint(level, term),
-              style: textStyleInfo.copyWith(fontSize: 32),
-            ),
-            SizedBox(height: 5),
-            Text(gradePointLabel, style: textStyleTag.copyWith(fontSize: 14))
-          ],
+        Text(
+          gradePoint(level, term),
+          style: textStyleInfo.copyWith(fontSize: 32),
         ),
+        SizedBox(height: 5),
+        Text(gradePointLabel, style: textStyleTag.copyWith(fontSize: 14)),
         Row(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             _buildInfoItem(

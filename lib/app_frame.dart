@@ -31,8 +31,8 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   void initState() {
     super.initState();
     bool useScheduleAsHome = setting.useScheduleAsHome.fetch();
-    _selectIndex = useScheduleAsHome ? 2 : 0;
-    _pageController = PageController(initialPage: useScheduleAsHome ? 2 : 0);
+    _selectIndex = useScheduleAsHome ? 1 : 2;
+    _pageController = PageController(initialPage: useScheduleAsHome ? 1 : 2);
   }
 
   @override
@@ -54,9 +54,9 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
               physics: NeverScrollableScrollPhysics(),
               controller: _pageController,
               children: [
-                HomeTab(),
                 GradeReportLegacy(),
                 ScheduleTab(),
+                HomeTab(),
                 NavTab(),
                 UserTab(),
               ],
@@ -70,11 +70,11 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   }
 
   List<NavigationItem> items = [
-    NavigationItem(Icon(Icons.home), Text('主页'), Colors.deepPurpleAccent),
-    NavigationItem(Icon(Icons.leaderboard), Text('成绩'), Colors.pinkAccent),
-    NavigationItem(Icon(Icons.calendar_today), Text('课表'), Colors.amberAccent),
-    NavigationItem(Icon(Icons.navigation), Text('导航'), Colors.greenAccent),
-    NavigationItem(Icon(Icons.settings), Text('设置'), Colors.cyanAccent)
+    NavigationItem(Icon(Icons.leaderboard, size: 27), Text('成绩'), Colors.pinkAccent),
+    NavigationItem(Icon(Icons.calendar_today, size: 25), Text('课表'), Colors.amberAccent),
+    NavigationItem(Icon(Icons.home, size: 29), Text('主页'), Colors.deepPurpleAccent),
+    NavigationItem(Icon(Icons.navigation, size: 27), Text('导航'), Colors.greenAccent),
+    NavigationItem(Icon(Icons.settings, size: 27), Text('设置'), Colors.cyanAccent)
   ];
 
   Widget _buildItem(NavigationItem item, bool isSelected) {
@@ -120,8 +120,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   Widget _buildBottom(BuildContext context) {
     return Container(
       height: 56,
-      padding: EdgeInsets.only(left: 8, top: 4, bottom: 4, right: 8),
-      //decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)]),
+      padding: EdgeInsets.only(left: 17, top: 4, bottom: 4, right: 8),
       width: MediaQuery.of(context).size.width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
