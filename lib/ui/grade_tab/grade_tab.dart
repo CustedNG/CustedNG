@@ -2,8 +2,6 @@ import 'package:after_layout/after_layout.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/ui/widgets/navbar/navbar.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_title.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,16 +15,8 @@ class _GradeTabState extends State<GradeTab> with AfterLayoutMixin<GradeTab> {
   @override
   Widget build(BuildContext context) {
     final gradeProvider = Provider.of<GradeProvider>(context);
-    return Scaffold(
-      appBar: NavBar.material(
-        context: context,
-        middle: NavBarTitle(
-          child: Text('成绩查询'),
-        ),
-      ),
-      body: PlaceholderWidget(
-        text: gradeProvider.grade?.averageGradePoint?.toString(),
-      ),
+    return PlaceholderWidget(
+      text: gradeProvider.grade?.averageGradePoint?.toString(),
     );
   }
 

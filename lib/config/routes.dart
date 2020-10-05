@@ -7,7 +7,6 @@ import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/pages/map_page.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
-import 'package:custed2/ui/user_tab/dark_mode.dart';
 import 'package:custed2/ui/user_tab/netdisk_page.dart';
 import 'package:custed2/ui/web/custnav_web_page.dart';
 import 'package:custed2/ui/web/ecard_web_page.dart';
@@ -107,11 +106,6 @@ final statusWebPage = AppRoute(
   title: '状态监测',
   //page: StatusWebPage(),
   page: WebviewBrowser('https://cust.cc/go/status'),
-);
-
-final darkModePage = AppRoute(
-  title: '黑暗模式',
-  page: DarkModePage(),
 );
 
 final selfWebPage = AppRoute(

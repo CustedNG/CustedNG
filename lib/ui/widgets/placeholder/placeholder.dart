@@ -1,5 +1,5 @@
 import 'package:custed2/ui/theme.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PlaceholderWidget extends StatelessWidget {
   PlaceholderWidget({
@@ -27,7 +27,7 @@ class PlaceholderWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            if (isActive) CupertinoActivityIndicator(),
+            if (isActive) Center(child: CircularProgressIndicator()),
             if (isActive) SizedBox(height: 10),
             Text(
               text ?? defaultText,

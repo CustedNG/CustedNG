@@ -84,6 +84,7 @@ dependencies:
   countly_flutter: 20.04.0
 
   flutter_svg: 0.18.0
+  flutter_banner_swiper: ^0.1.4
 
 dev_dependencies:
   # flutter_test:

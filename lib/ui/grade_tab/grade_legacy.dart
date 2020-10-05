@@ -124,7 +124,15 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       backgroundColor: theme.backgroundColor,
       appBar: AppBar(
           backgroundColor: theme.navBarColor,
-          title: NavbarText('成绩查询'),
+          leading: IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () async {
+                await gradeProvider.updateGradeData();
+                setState(() {});
+              }
+          ),
+          title: NavbarText('成绩'),
+          centerTitle: true,
           actions: [
             grade?.terms?.isNotEmpty == true
                 ? IconButton(
@@ -150,11 +158,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   Widget _buildTermReport(BuildContext context, int year) {
     final report = CustomScrollView(
       slivers: <Widget>[
-        CupertinoSliverRefreshControl(
-          onRefresh: () async {
-            await gradeProvider.updateGradeData();
-          },
-        ),
         _buildInfo(context, year),
         SliverSafeArea(
           sliver: SliverToBoxAdapter(

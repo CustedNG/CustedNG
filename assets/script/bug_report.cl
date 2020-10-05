@@ -8,7 +8,7 @@
     (lambda () (custed-launch-url url))))
 
 (setq my-page
-  (page ""
+  (page "Q&A"
     (listview
       (padding #:all 20
         (column
