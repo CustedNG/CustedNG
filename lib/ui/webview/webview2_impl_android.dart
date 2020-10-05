@@ -183,7 +183,7 @@ class Webview2StateAndroid extends Webview2State {
 
   @override
   Widget build(BuildContext context) {
-    Color iconColor = Theme.of(context).iconTheme.color.withOpacity(0.5);
+    Color iconColor = Theme.of(context).iconTheme.color.withOpacity(0.2);
 
     return WillPopScope(
       onWillPop: () async {

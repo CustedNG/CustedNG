@@ -1,4 +1,5 @@
 import 'package:custed2/res/image_res.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
@@ -41,7 +42,7 @@ class PhotoViewMap extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             TransitionToImage(
-              image: map.image,
+              image: isDark(context) ? map.darkImage : map.image,
               // image: isDark ? map.darkImage : map.image,
               // placeholder: CircularProgressIndicator(),
               placeholder: Container(),
