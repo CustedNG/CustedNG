@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:loading_animations/loading_animations.dart';
 
 class Webview2 extends StatefulWidget {
   Webview2({
@@ -60,10 +59,7 @@ abstract class Webview2State extends State<Webview2> {
     return Container(
       color: AppTheme.of(context).backgroundColor,
       child: Center(
-        child: LoadingRotating.square(
-          borderColor: CupertinoColors.activeBlue,
-          size: 30.0,
-        ),
+        child: CircularProgressIndicator()
       ),
     );
   }

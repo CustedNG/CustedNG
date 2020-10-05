@@ -173,7 +173,7 @@ class Maps {
         Offset(-5, 20),
       ),
       PhotoViewMap(
-        '西外',
+        '西2教',
         custW,
         Offset(87, 115),
         Offset(-15, -25),
@@ -185,7 +185,7 @@ class Maps {
         Offset(-5, -25),
       ),
       PhotoViewMap(
-        '西攀岩',
+        '西区攀岩',
         custW,
         Offset(97, 77),
         Offset(-27, 5),

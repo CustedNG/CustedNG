@@ -32,7 +32,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     super.initState();
     bool useScheduleAsHome = setting.useScheduleAsHome.fetch();
     _selectIndex = useScheduleAsHome ? 2 : 0;
-    _pageController = PageController();
+    _pageController = PageController(initialPage: useScheduleAsHome ? 2 : 0);
   }
 
   @override
@@ -149,9 +149,6 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       print('Debug mode detected, create interface by default.');
       locator<TTYExecuter>().execute('(debug)', context, quiet: true);
     }
-
-    _pageController.animateToPage(_selectIndex,
-        duration: Duration(milliseconds: 2 * 377), curve: Curves.easeInOutCubic);
 
     // call updateCheck to ensure navigator exists in context
     updateCheck(context);

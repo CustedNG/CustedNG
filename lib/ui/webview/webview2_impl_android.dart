@@ -107,6 +107,12 @@ class Webview2StateAndroid extends Webview2State {
     super.dispose();
   }
 
+  @override
+  void reassemble(){
+    wp.dispose();
+    super.reassemble();
+  }
+
   void onUrlChangedWrapper(String url) async {
     widget.onUrlChanged?.call(url);
 
@@ -183,6 +189,8 @@ class Webview2StateAndroid extends Webview2State {
 
   @override
   Widget build(BuildContext context) {
+    Color iconColor = Theme.of(context).iconTheme.color.withOpacity(0.5);
+
     return WillPopScope(
       onWillPop: () async {
         await wp.stopLoading();
@@ -229,7 +237,7 @@ class Webview2StateAndroid extends Webview2State {
                 IconButton(
                     icon: canBack
                         ? const Icon(Icons.arrow_back_ios)
-                        : const Icon(Icons.arrow_back_ios, color: Colors.white54),
+                        : Icon(Icons.arrow_back_ios, color: iconColor),
                     onPressed: () async {
                       wp?.goBack();
                     }
@@ -237,7 +245,7 @@ class Webview2StateAndroid extends Webview2State {
                 IconButton(
                   icon: canForward
                       ? const Icon(Icons.arrow_forward_ios)
-                      : const Icon(Icons.arrow_forward_ios, color: Colors.white54),
+                      : Icon(Icons.arrow_forward_ios, color: iconColor),
                   onPressed: () async {
                     wp?.goForward();
                   } ,
