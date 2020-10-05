@@ -52,11 +52,11 @@ class NetdiskPage extends StatelessWidget {
           titleStyle:
               TextStyle(color: isDark(context) ? Colors.white : Colors.black),
           isShowArrow: false,
-          content: user.loggedIn
+          content: netdisk.quota != null
               ? '已用 '
                   '${netdisk.quota.used.withSizeUnit()}/'
                   '${netdisk.quota.quota.withSizeUnit()}'
-              : '请登录',
+              : (user.loggedIn ? '无数据' : '请登录'),
         ),
         SizedBox(height: 30.0),
         MaterialButton(

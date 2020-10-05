@@ -80,7 +80,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       Analytics.init();
       Analytics.isDebug = false;
     }
-    locator<WeatherProvider>().startAutoUpdate();
+    locator<WeatherProvider>().update();
 
     // 加载核心数据
     await Future.wait([

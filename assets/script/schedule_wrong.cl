@@ -4,7 +4,7 @@
 (defun title (txt) (text txt #:weight 'bold))
 
 (setq my-page
-  (page ""
+  (page "Q&A"
     (listview
       (padding #:all 20
         (column

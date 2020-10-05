@@ -38,9 +38,9 @@ class LMUIWidget extends LModule {
   _page(List args) {
     final title = args[0]?.toString() ?? '';
     final widget = args[1];
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(middle: Text(title)),
-      child: SafeArea(child: widget),
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: SafeArea(child: widget),
     );
   }
 

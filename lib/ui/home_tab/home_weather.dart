@@ -1,3 +1,4 @@
+import 'package:custed2/config/routes.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
@@ -22,12 +23,10 @@ class _HomeWeatherState extends State<HomeWeather> {
         ? _buildCurrent(weather.data?.wendu)
         : _buildWeather(weather.data);
 
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
+    return GestureDetector(
       child: content,
-      onPressed: () {
-        setState(() => showCurrent = !showCurrent);
-      },
+      onTap: () => setState(() => showCurrent = !showCurrent),
+      onLongPress: () => debugPage.go(context),
     );
   }
 
