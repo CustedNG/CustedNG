@@ -90,6 +90,8 @@ class Webview2StateGeneral extends Webview2State {
 
   @override
   Widget build(BuildContext context) {
+    Color iconColor = Theme.of(context).iconTheme.color.withOpacity(0.5);
+
     return Scaffold(
       appBar: Webview2Header(
         controller: header,
@@ -117,7 +119,7 @@ class Webview2StateGeneral extends Webview2State {
               IconButton(
                   icon: canBack
                       ? const Icon(Icons.arrow_back_ios)
-                      : const Icon(Icons.arrow_back_ios, color: Colors.white54),
+                      : Icon(Icons.arrow_back_ios, color: iconColor),
                   onPressed: () async {
                     controller?.goBack();
                   }
@@ -125,7 +127,7 @@ class Webview2StateGeneral extends Webview2State {
               IconButton(
                 icon: canForward
                     ? const Icon(Icons.arrow_forward_ios)
-                    : const Icon(Icons.arrow_forward_ios, color: Colors.white54),
+                    : Icon(Icons.arrow_forward_ios, color: iconColor),
                 onPressed: () async {
                   controller?.goForward();
                 } ,

@@ -51,11 +51,11 @@ class LessonInfo extends StatelessWidget {
             _buildDataItem(
                 '上课时间', '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}'),
             SizedBox(height: 10),
-            _buildDataItem('任课教师', lesson.teacherName),
+            _buildDataItem('上课地点', lesson.roomRaw),
           ],
         ),
         SizedBox(width: 40),
-        _buildDataItem('上课地点', lesson.roomRaw),
+        _buildDataItem('任课教师', lesson.teacherName),
       ],
     );
   }
