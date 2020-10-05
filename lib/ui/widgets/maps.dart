@@ -163,32 +163,32 @@ class Maps {
       PhotoViewMap(
         '西1教',
         custW,
-        Offset(69, 97),
-        Offset(-5, -15),
+        Offset(67, 99),
+        Offset(-9, -20),
       ),
       PhotoViewMap(
         '西区田',
         custW,
-        Offset(69, 97),
-        Offset(-5, -15),
+        Offset(68, 60),
+        Offset(-5, 20),
       ),
       PhotoViewMap(
         '西外',
         custW,
-        Offset(69, 97),
-        Offset(-5, -15),
+        Offset(87, 115),
+        Offset(-15, -25),
       ),
       PhotoViewMap(
-        '西实',
+        '西区实',
         custW,
-        Offset(69, 97),
-        Offset(-5, -15),
+        Offset(49, 105),
+        Offset(-5, -25),
       ),
       PhotoViewMap(
         '西攀岩',
         custW,
-        Offset(69, 97),
-        Offset(-5, -15),
+        Offset(97, 77),
+        Offset(-27, 5),
       ),
     ];
 

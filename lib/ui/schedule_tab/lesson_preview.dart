@@ -51,11 +51,11 @@ class LessonInfo extends StatelessWidget {
             _buildDataItem(
                 '上课时间', '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}'),
             SizedBox(height: 10),
-            _buildDataItem('任课教师', lesson.teacherName),
+            _buildDataItem('上课地点', lesson.roomRaw),
           ],
         ),
         SizedBox(width: 40),
-        _buildDataItem('上课地点', lesson.roomRaw),
+        _buildDataItem('任课教师', lesson.teacherName),
       ],
     );
   }
@@ -145,12 +145,14 @@ class LessonPreview extends StatelessWidget {
     content.add(LessonInfo(lesson: lesson));
 
     if (noConflict) {
-      final map = Maps.search(lesson.roomRaw);
-      if (map != null) {
-        content.add(SizedBox(
-          height: 270 * 0.618,
-          child: ClipRect(child: DarkModeFilter(child: map, level: 170)),
-        ));
+      if(!lesson.roomRaw.contains('线上教学')){
+        final map = Maps.search(lesson.roomRaw);
+        if (map != null) {
+          content.add(SizedBox(
+            height: 270 * 0.618,
+            child: ClipRect(child: DarkModeFilter(child: map, level: 170)),
+          ));
+        }
       }
     } else {
       for (var lesson in conflict) {

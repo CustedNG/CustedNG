@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:custed2/core/service/cat_error.dart';
 import 'package:custed2/core/util/cookie.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
@@ -112,9 +113,11 @@ class CatClient {
 
     final cookies = findCookiesAsString(request.url);
     print('load cookie for ${request.url} : [${cookies.length}]');
-    if (cookies.isNotEmpty) {
+    if (cookies.length > 1) {
       request.headers[HttpHeaders.cookieHeader] = cookies;
+      return;
     }
+    if(!request.url.toString().startsWith('https://cust.app/app'))throw CatError('empty cookie');
   }
 
   void saveCookies(Response response) {
