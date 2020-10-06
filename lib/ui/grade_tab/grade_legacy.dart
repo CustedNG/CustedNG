@@ -236,10 +236,9 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       children: <Widget>[
         Text(
           gradePoint(level, term),
-          style: textStyleInfo.copyWith(fontSize: 32),
+          style: textStyleInfo.copyWith(fontSize: 27),
         ),
-        SizedBox(height: 5),
-        Text(gradePointLabel, style: textStyleTag.copyWith(fontSize: 14)),
+        Text(gradePointLabel, style: textStyleTag.copyWith(fontSize: 12)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -323,11 +322,11 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Text(value, style: textStyleInfo.copyWith(fontSize: 14)),
+            Text(value, style: textStyleInfo.copyWith(fontSize: 12)),
           ],
         ),
         SizedBox(height: 3),
-        Text(tag, style: textStyleTag.copyWith(fontSize: 12)),
+        Text(tag, style: textStyleTag.copyWith(fontSize: 10)),
       ],
     );
   }
