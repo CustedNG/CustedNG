@@ -14,7 +14,7 @@ class WeatherProvider extends BusyProvider {
   void startAutoUpdate() {
     if (_updateTimer != null) return;
     update();
-    _updateTimer = Timer.periodic(Duration(minutes: 10), (_) => update());
+    _updateTimer = Timer.periodic(Duration(hours: 2), (_) => update());
   }
 
   void stopAutoUpdate() {

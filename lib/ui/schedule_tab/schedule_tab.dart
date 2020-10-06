@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/script.dart';
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
 import 'package:custed2/data/providers/snakebar_provider.dart';
@@ -126,6 +127,11 @@ class _ScheduleTabState extends State<ScheduleTab>
     final user = locator<UserProvider>();
     await user.initialized;
     if (!user.loggedIn) return;
+
+    final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    if (scheduleProvider.isBusy || BuildMode.isDebug) return;
+
+    scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
   }
 
   Widget _buildTitle(BuildContext context) {

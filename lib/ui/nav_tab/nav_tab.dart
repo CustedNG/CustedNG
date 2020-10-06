@@ -115,7 +115,7 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   Widget _showMenu(BuildContext context) {
     return PopupMenuButton<String>(
         itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-              this.SelectView(Icons.refresh, '刷新网页', 'A'),
+              this.SelectView(Icons.refresh, '刷新此网页', 'A'),
               this.SelectView(Icons.open_in_browser, '浏览器打开', 'B'),
             ],
         onSelected: (String action) {

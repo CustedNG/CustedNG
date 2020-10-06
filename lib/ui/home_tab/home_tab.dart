@@ -165,7 +165,7 @@ class HomeTab extends StatelessWidget {
         itemBuilder: (BuildContext context) =>
         <PopupMenuItem<String>>[
           this.SelectView(Icons.calendar_today, '查看校历', 'A'),
-          this.SelectView(Icons.feedback, '有bug？', 'B'),
+          this.SelectView(Icons.feedback, '我有问题', 'B'),
           this.SelectView(Icons.monitor, '状态监测', 'C'),
         ],
         onSelected: (String action) {

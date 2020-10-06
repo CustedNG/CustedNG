@@ -72,7 +72,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   List<NavigationItem> items = [
     NavigationItem(Icon(Icons.leaderboard, size: 27), Text('成绩'), Colors.pinkAccent),
     NavigationItem(Icon(Icons.calendar_today, size: 25), Text('课表'), Colors.amberAccent),
-    NavigationItem(Icon(Icons.home, size: 29), Text('主页'), Colors.deepPurpleAccent),
+    NavigationItem(Icon(Icons.home, size: 28), Text('主页'), Colors.deepPurpleAccent),
     NavigationItem(Icon(Icons.navigation, size: 27), Text('导航'), Colors.greenAccent),
     NavigationItem(Icon(Icons.settings, size: 27), Text('设置'), Colors.cyanAccent)
   ];

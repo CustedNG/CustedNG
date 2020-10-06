@@ -5,6 +5,7 @@ import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ScheduleWeekNavigator extends StatelessWidget {
@@ -15,6 +16,7 @@ class ScheduleWeekNavigator extends StatelessWidget {
     final theme = AppTheme.of(context);
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
     final hasSchedule = scheduleProvider.schedule != null;
+    final iconColorWithAlpha = Theme.of(context).iconTheme.color.withOpacity(0.2);
 
     return Container(
       decoration: BoxDecoration(
@@ -31,10 +33,14 @@ class ScheduleWeekNavigator extends StatelessWidget {
               onPressed: () => _openPicker(context),
               onLongPress: scheduleProvider.gotoCurrentWeek),
           _ArrowButton(
-              icon: CupertinoIcons.back,
+              icon: scheduleProvider.selectedWeek > scheduleProvider.minWeek
+                  ? Icon(Icons.arrow_back_ios)
+                  : Icon(Icons.arrow_back_ios, color: iconColorWithAlpha),
               onPressed: scheduleProvider.gotoPrevWeek),
           _ArrowButton(
-              icon: CupertinoIcons.forward,
+              icon: scheduleProvider.selectedWeek < scheduleProvider.maxWeek
+                  ? Icon(Icons.arrow_forward_ios)
+                  : Icon(Icons.arrow_forward_ios, color: iconColorWithAlpha),
               onPressed: scheduleProvider.gotoNextWeek),
         ],
       ),
@@ -96,7 +102,7 @@ class ScheduleWeekNavigator extends StatelessWidget {
 class _ArrowButton extends StatefulWidget {
   _ArrowButton({this.icon, this.onPressed});
 
-  final IconData icon;
+  final Icon icon;
   final Function() onPressed;
 
   @override
@@ -108,15 +114,14 @@ class __ArrowButtonState extends State<_ArrowButton> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
 
     return GestureDetector(
       onLongPressStart: (_) => activateTimer(),
       onLongPressEnd: (_) => cancelTimer(),
-      child: CupertinoButton(
+      child: IconButton(
         onPressed: widget.onPressed,
-        padding: EdgeInsets.all(0),
-        child: Icon(widget.icon, color: theme.scheduleTextColor),
+        padding: EdgeInsets.all(10),
+        icon: widget.icon,
       ),
     );
   }

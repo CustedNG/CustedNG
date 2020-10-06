@@ -1,5 +1,6 @@
 import 'package:custed2/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ScheduleWeekPicker extends StatelessWidget {
   ScheduleWeekPicker({
@@ -17,6 +18,10 @@ class ScheduleWeekPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int selected = selectedWeek;
+    final TextStyle textStyle = TextStyle(
+        fontSize: 22.0,
+        color: isDark(context) ? Colors.white : Colors.black
+    );
 
     List<Widget> items = List<Widget>.generate(maxWeek, (i) {
       final String text =
@@ -25,7 +30,7 @@ class ScheduleWeekPicker extends StatelessWidget {
       return Center(
         child: Text(
           text,
-          style: const TextStyle(fontSize: 22.0),
+          style: textStyle,
         ),
       );
     });
