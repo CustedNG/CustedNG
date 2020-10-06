@@ -13,7 +13,6 @@ import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
 import 'package:custed2/ui/widgets/bottom_navbar.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppFrame extends StatefulWidget {
@@ -49,21 +48,22 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       children: <Widget>[
         Flexible(
             child: Scaffold(
-          body: SizedBox.expand(
-            child: PageView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: _pageController,
-              children: [
-                GradeReportLegacy(),
-                ScheduleTab(),
-                HomeTab(),
-                NavTab(),
-                UserTab(),
-              ],
-            ),
-          ),
-          bottomNavigationBar: _buildBottom(context),
-        )),
+              body: SizedBox.expand(
+                child: PageView(
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: _pageController,
+                  children: [
+                    GradeReportLegacy(),
+                    ScheduleTab(),
+                    HomeTab(),
+                    NavTab(),
+                    UserTab(),
+                  ],
+                ),
+              ),
+              bottomNavigationBar: _buildBottom(context),
+            )
+        ),
         Snakebar(),
       ],
     );

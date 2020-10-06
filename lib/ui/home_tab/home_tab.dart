@@ -34,6 +34,10 @@ class HomeTab extends StatelessWidget {
       backgroundColor: theme.homeBackgroundColor,
       appBar: NavBar.material(
         context: context,
+        leading: Builder(builder: (context) => IconButton(
+          icon: Icon(Icons.account_circle),
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        )),
         middle: HomeWeather(),
         trailing: <Widget>[_showMenu(context)],
       ),
