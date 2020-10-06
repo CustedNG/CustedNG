@@ -23,7 +23,7 @@ class HomeBanner extends StatelessWidget {
     final bannerProvider = Provider.of<BannerProvider>(context);
     final bannerUrl = bannerProvider.bannerUrl;
     if (bannerUrl == null) return Container();
-    List<String> urlList = [bannerUrl, 'https://cat.lolli.tech/toast_neko.png'];
+    List<String> urlList = [bannerUrl, 'https://cat.lolli.tech/banner.png'];
     int urlListLength = urlList.length;
 
     return BannerSwiper(
@@ -34,14 +34,14 @@ class HomeBanner extends StatelessWidget {
       getwidget: (index) => GestureDetector(
         onTap: () => index % urlListLength == 0
             ? bannerProvider.execAction()
-            : openUrl('https://cat.lolli.tech/toast_neko.html'),
+            : openUrl('https://cat.lolli.tech/banner.html'),
         child: TransitionToImage(
           image: AdvancedNetworkImage(
             urlList[index % urlListLength],
             loadedCallback: () => print('Banner$index loaded.'),
             loadFailedCallback: () => print('Banner failed to load.'),
             useDiskCache: true,
-            cacheRule: CacheRule(maxAge: Duration(days: 15)),
+            cacheRule: CacheRule(maxAge: Duration(days: index % urlListLength == 0 ? 15 : 3)),
           ),
           loadingWidgetBuilder: (_, double progress, __) {
             return Center(child: CircularProgressIndicator());
