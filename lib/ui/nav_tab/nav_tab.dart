@@ -4,7 +4,6 @@ import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/ui/nav_tab/nav_tab_toggle.dart';
-import 'package:custed2/ui/webview/webview2.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
@@ -28,10 +27,12 @@ class _NavTabState extends State<NavTab> {
 
   @override
   void initState() {
-    overlay = Center(
-      child: LoadingRotating.square(
-        borderColor: CupertinoColors.activeBlue,
-        size: 30.0,
+    overlay = Scaffold(
+      body: Center(
+        child: LoadingRotating.square(
+          borderColor: CupertinoColors.activeBlue,
+          size: 30.0,
+        ),
       ),
     );
 
