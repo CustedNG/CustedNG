@@ -27,8 +27,9 @@ class _NavTabState extends State<NavTab> {
 
   @override
   void initState() {
-    overlay = Scaffold(
-      body: Center(
+    overlay = Container(
+      color: Colors.transparent,
+      child: Center(
         child: LoadingRotating.square(
           borderColor: CupertinoColors.activeBlue,
           size: 30.0,

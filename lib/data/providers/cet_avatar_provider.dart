@@ -14,8 +14,7 @@ class CetAvatarProvider extends BusyProvider {
   }
 
   Future<void> _getAvatar() async {
-    final studentInfo = await locator<JwService>().getStudentInfo();
-    final imgBase64 = studentInfo.XJZPBlob.Base64String;
+    final imgBase64 = await locator<JwService>().getStudentPhoto();
     _avatar = base64.decode(imgBase64);
   }
 }
