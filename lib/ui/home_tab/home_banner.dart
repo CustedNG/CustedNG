@@ -32,7 +32,9 @@ class HomeBanner extends StatelessWidget {
       length: urlListLength,
       spaceMode: false,
       getwidget: (index) => GestureDetector(
-        onTap: () => index % urlListLength == 0 ? bannerProvider.execAction() : openUrl(''),
+        onTap: () => index % urlListLength == 0
+            ? bannerProvider.execAction()
+            : openUrl('https://cat.lolli.tech/toast_neko.html'),
         child: TransitionToImage(
           image: AdvancedNetworkImage(
             urlList[index % urlListLength],

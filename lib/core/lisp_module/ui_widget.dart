@@ -136,7 +136,7 @@ class LMUIWidget extends LModule {
     return TransitionToImage(
       width: width,
       loadingWidget: Container(
-        child: Center(child: CupertinoActivityIndicator()),
+        child: Center(child: CircularProgressIndicator()),
         width: 100,
         height: 100,
       ),
