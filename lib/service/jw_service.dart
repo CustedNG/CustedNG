@@ -90,6 +90,30 @@ class JwService extends WrdvpnBasedService {
     return JwStudentInfo.fromJson(parsedResponse.data);
   }
 
+  Future<String> getStudentPhoto() async {
+    final resp = await xRequest(
+      'POST',
+      '$baseUrl/api/CommonApi/GetFileContentById'
+          .toUri(),
+      body: {
+        'param' : 'JTdCJTIySWQlMjIlM0ElMjJlMDI2ZjBjYi01OGMyLTQwNTktYTg4OS1lYmU5MTlkYjA0MjMlMjIlN0Q=',
+        '__log' : {
+          'Context' : '查询',
+          'Logtype' : 6,
+          'MenuID' : 'B7E5E595-9705-4E33-939B-D673FE3253F8'
+        },
+        '__permission' : {
+          'MenuID' : 'B7E5E595-9705-4E33-939B-D673FE3253F8',
+          'Operation' : 0
+        }
+      },
+      headers: {'content-type': 'application/json'},
+    );
+
+    Map<String,dynamic> jsonData = json.decode(resp.body);
+    return jsonData['data']['ZZCLBlob']['Base64String'];
+  }
+
   Future<JwWeekTime> getWeekTime() async {
     final resp = await xRequest(
       'POST',
