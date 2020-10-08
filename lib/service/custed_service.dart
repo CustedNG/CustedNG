@@ -5,6 +5,7 @@ import 'package:custed2/data/models/custed_banner.dart';
 import 'package:custed2/data/models/custed_file.dart';
 import 'package:custed2/data/models/custed_response.dart';
 import 'package:custed2/data/models/custed_update.dart';
+import 'package:custed2/data/models/custed_update_testflight.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/res/build_data.dart';
 
@@ -40,6 +41,14 @@ class CustedService extends CatClient {
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
     if (custedResp.hasError) return null;
     return CustedUpdate.fromJson(custedResp.data as Map<String, dynamic>);
+  }
+
+  Future<CustedUpdateTestflight> getTestflithgUpdate() async {
+    final build = BuildData.build;
+    final resp = await get('https://cust.cc/api/update/ios?build=$build',
+        timeout: defaultTimeout);
+    return CustedUpdateTestflight.fromJson(
+        json.decode(resp.body) as Map<String, dynamic>);
   }
 
   Future<CustedBanner> getBanner() async {
