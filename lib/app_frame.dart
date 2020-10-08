@@ -118,27 +118,29 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   }
 
   Widget _buildBottom(BuildContext context) {
-    return Container(
-      height: 56,
-      padding: EdgeInsets.only(left: 17, top: 4, bottom: 4, right: 8),
-      width: MediaQuery.of(context).size.width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: items.map((item) {
-          var itemIndex = items.indexOf(item);
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                _selectIndex = itemIndex;
-                _pageController.animateToPage(itemIndex,
-                    duration: Duration(milliseconds: 377),
-                    curve: Curves.easeInOutCubic);
-              });
-            },
-            child: _buildItem(item, _selectIndex == itemIndex),
-          );
-        }).toList(),
-      ),
+    return SafeArea(
+        child: Container(
+          height: 56,
+          padding: EdgeInsets.only(left: 17, top: 4, bottom: 4, right: 8),
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: items.map((item) {
+              var itemIndex = items.indexOf(item);
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _selectIndex = itemIndex;
+                    _pageController.animateToPage(itemIndex,
+                        duration: Duration(milliseconds: 377),
+                        curve: Curves.easeInOutCubic);
+                  });
+                },
+                child: _buildItem(item, _selectIndex == itemIndex),
+              );
+            }).toList(),
+          ),
+        )
     );
   }
 

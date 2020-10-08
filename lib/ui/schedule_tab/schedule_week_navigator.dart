@@ -33,12 +33,12 @@ class ScheduleWeekNavigator extends StatelessWidget {
               onPressed: () => _openPicker(context),
               onLongPress: scheduleProvider.gotoCurrentWeek),
           _ArrowButton(
-              icon: scheduleProvider.selectedWeek > scheduleProvider.minWeek
+              icon: scheduleProvider.selectedWeek > (scheduleProvider.minWeek ?? 0)
                   ? Icon(Icons.arrow_back_ios)
                   : Icon(Icons.arrow_back_ios, color: iconColorWithAlpha),
               onPressed: scheduleProvider.gotoPrevWeek),
           _ArrowButton(
-              icon: scheduleProvider.selectedWeek < scheduleProvider.maxWeek
+              icon: scheduleProvider.selectedWeek < (scheduleProvider.maxWeek ?? 0)
                   ? Icon(Icons.arrow_forward_ios)
                   : Icon(Icons.arrow_forward_ios, color: iconColorWithAlpha),
               onPressed: scheduleProvider.gotoNextWeek),

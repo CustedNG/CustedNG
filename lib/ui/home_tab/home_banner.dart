@@ -48,7 +48,7 @@ class HomeBanner extends StatelessWidget {
           },
           fit: BoxFit.cover,
           placeholder: const Icon(Icons.refresh),
-          duration: Duration(milliseconds: 300),
+          duration: Duration(milliseconds: 777),
           enableRefresh: true,
         ),
       ),

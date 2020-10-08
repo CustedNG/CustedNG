@@ -73,7 +73,7 @@ class _Webview2HeaderState extends State<Webview2Header> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned.fill(child: buildNavigationBar(context)),
+        buildNavigationBar(context),
         Positioned(
           bottom: 0,
           left: 0,
@@ -92,7 +92,9 @@ class _Webview2HeaderState extends State<Webview2Header> {
 
   Widget buildNavigationBar(BuildContext context) {
     return AppBar(
-      backgroundColor: AppTheme.of(context).navBarColor,
+      backgroundColor: isDark(context)
+          ? Color.fromRGBO(9, 29, 47, 1)
+          : Color.fromRGBO(0, 56, 117, 1),
       leading: Container(
         alignment: Alignment.centerLeft,
         width: 70,
