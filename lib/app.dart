@@ -61,6 +61,8 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   @override
   void afterFirstLayout(BuildContext context) async {
     final path = await getAppDocDir.invoke();
+    final setting = locator<SettingStore>();
+    final weatherProvider = locator<WeatherProvider>();
     print('AppDocDir: $path');
 
     final debug = locator<DebugProvider>();
@@ -80,7 +82,8 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       Analytics.init();
       Analytics.isDebug = false;
     }
-    locator<WeatherProvider>().startAutoUpdate();
+    if(setting.autoUpdateWeather.fetch())weatherProvider.startAutoUpdate();
+    weatherProvider.update();
 
     // 加载核心数据
     await Future.wait([

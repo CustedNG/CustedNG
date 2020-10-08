@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:custed2/core/service/cat_error.dart';
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/util/cookie.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
@@ -41,6 +41,11 @@ class CatClient {
     );
     saveCookies(response);
     _alice.onHttpResponse(response);
+    if(BuildMode.isDebug){
+      print('\n${request.method} ${request.url}'
+          '\n[${response.statusCode}]'
+          '\n${response.body}');
+    }
     return await followRedirect(response, maxRedirects);
   }
 

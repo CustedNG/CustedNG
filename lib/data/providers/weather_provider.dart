@@ -23,6 +23,7 @@ class WeatherProvider extends BusyProvider {
   }
 
   Future<void> update() async {
+    if(_updateTimer != null)return;
     final custed = locator<CustedService>();
     _data = await custed.getWeather();
 

@@ -186,7 +186,7 @@ class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
     );
     return Column(
       children: [
-        SizedBox(height: 20.0),
+        SizedBox(height: 10.0),
         Text('设置'),
         SizedBox(height: 10.0),
         SettingItem(
@@ -208,6 +208,20 @@ class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
           isShowArrow: false,
           rightBtn: _buildSwitch(
               context, setting.dontCountElectiveCourseGrade),
+        ),
+        SettingItem(
+          title: '自动更新课表',
+          titleStyle: settingTextStyle,
+          isShowArrow: false,
+          rightBtn: _buildSwitch(
+              context, setting.autoUpdateSchedule),
+        ),
+        SettingItem(
+          title: '自动更新天气',
+          titleStyle: settingTextStyle,
+          isShowArrow: false,
+          rightBtn: _buildSwitch(
+              context, setting.autoUpdateWeather),
         ),
         SettingItem(
           title: '黑暗模式',

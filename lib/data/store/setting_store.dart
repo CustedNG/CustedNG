@@ -14,6 +14,12 @@ class SettingStore with PresistentStore {
   StoreProperty<bool> get showInactiveLessons =>
       property('showInactiveLessons', defaultValue: true);
 
+  StoreProperty<bool> get autoUpdateSchedule =>
+      property('autoUpdateSchedule', defaultValue: true);
+
+  StoreProperty<bool> get autoUpdateWeather =>
+      property('autoUpdateWeather', defaultValue: true);
+
   StoreProperty<bool> get dontCountElectiveCourseGrade =>
       property('dontCountElectiveCourseGrade', defaultValue: false);
 

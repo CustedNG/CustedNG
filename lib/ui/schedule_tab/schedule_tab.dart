@@ -74,11 +74,24 @@ class _ScheduleTabState extends State<ScheduleTab>
       body: ListView(
         controller: scrollController,
         children: <Widget>[
+          _buildCloseAutoUpdateTip(),
           ScheduleWeekNavigator(),
           _buildTable(context),
         ],
       ),
     );
+  }
+
+  Widget _buildCloseAutoUpdateTip(){
+    return !settings.autoUpdateSchedule.fetch() ? Center(
+      child: Text(
+        '温馨提示：课表已关闭自动更新',
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).textTheme.bodyText1.color.withOpacity(0.5)
+        ),
+      ),
+    ) : Container();
   }
 
   SelectView(IconData icon, String text, String id) {
@@ -131,7 +144,9 @@ class _ScheduleTabState extends State<ScheduleTab>
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
     if (scheduleProvider.isBusy || BuildMode.isDebug) return;
 
-    scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
+    if(settings.autoUpdateSchedule.fetch()){
+      scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
+    }
   }
 
   Widget _buildTitle(BuildContext context) {

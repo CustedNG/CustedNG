@@ -4,10 +4,10 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/wrdvpn_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 Future<void> openIecard(BuildContext context) async {
-  final open = await showCupertinoDialog(
+  final open = await showDialog(
     context: context,
     builder: (context) => OpenOrNotDialog(),
   );
@@ -16,7 +16,7 @@ Future<void> openIecard(BuildContext context) async {
     return;
   }
 
-  showCupertinoDialog(
+  showDialog(
     context: context,
     builder: (context) => OpenIecardDialog(),
   );
@@ -25,15 +25,14 @@ Future<void> openIecard(BuildContext context) async {
 class OpenOrNotDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoAlertDialog(
+    return AlertDialog(
       content: Text('即将在浏览器中打开'),
       actions: [
-        CupertinoDialogAction(
+        FlatButton(
           child: Text('取消'),
           onPressed: () => Navigator.of(context).pop(false),
         ),
-        CupertinoDialogAction(
-          isDefaultAction: true,
+        FlatButton(
           child: Text('确定'),
           onPressed: () => Navigator.of(context).pop(true),
         ),
@@ -54,10 +53,10 @@ class _OpenIecardDialogState extends State<OpenIecardDialog>
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoAlertDialog(
-      content: _failed ? Text('加载失败') : CupertinoActivityIndicator(),
+    return AlertDialog(
+      content: _failed ? Text('加载失败') : Center(child: CircularProgressIndicator()),
       actions: [
-        CupertinoDialogAction(
+        FlatButton(
           child: Text(_failed ? '关闭' : '取消'),
           onPressed: () {
             _canceled = true;
