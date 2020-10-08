@@ -42,7 +42,9 @@ class PhotoViewMap extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             TransitionToImage(
-              image: isDark(context) ? map.darkImage : map.image,
+              // 暂时使用bright版地图 等dark版重做之后换上dark版
+              image: map.image,
+              // image: isDark(context) ? map.darkImage : map.image,
               // image: isDark ? map.darkImage : map.image,
               // placeholder: CircularProgressIndicator(),
               placeholder: Container(),
