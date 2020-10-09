@@ -135,6 +135,7 @@ class Maps {
           custE,
           25, 92
       ),
+      makeMap('东1教', custE, 48, 27),
       makeMap('东2教', custE, 65, 12),
       PhotoViewMap(
         '机实',

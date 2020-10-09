@@ -83,12 +83,18 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
               },
               shouldOverrideUrlLoading: (controller, request) async {
                 print('open ${request.url}');
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return WebviewBrowser(request.url);
-                  },
-                );
+
+                if (request.url.contains('custed-target=blank')) {
+                  openUrl(request.url);
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return WebviewBrowser(request.url);
+                    },
+                  );
+                }
+
                 return ShouldOverrideUrlLoadingAction.CANCEL;
               },
             ),

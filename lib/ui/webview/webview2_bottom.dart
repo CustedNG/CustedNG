@@ -64,16 +64,6 @@ class _Webview2BottomState extends State<Webview2Bottom> {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              width: 0.1,
-              color: CupertinoColors.opaqueSeparator.resolveFrom(context),
-            ),
-          ),
-        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -106,7 +96,6 @@ class _Webview2BottomState extends State<Webview2Bottom> {
             ),
           ],
         ),
-      ),
     );
   }
 }
