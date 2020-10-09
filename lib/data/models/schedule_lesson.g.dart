@@ -8,7 +8,7 @@ part of 'schedule_lesson.dart';
 
 class ScheduleLessonTypeAdapter extends TypeAdapter<ScheduleLessonType> {
   @override
-  final typeId = 1;
+  final int typeId = 1;
 
   @override
   ScheduleLessonType read(BinaryReader reader) {
@@ -43,17 +43,27 @@ class ScheduleLessonTypeAdapter extends TypeAdapter<ScheduleLessonType> {
         break;
     }
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ScheduleLessonTypeAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
 
 class ScheduleLessonAdapter extends TypeAdapter<ScheduleLesson> {
   @override
-  final typeId = 0;
+  final int typeId = 0;
 
   @override
   ScheduleLesson read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ScheduleLesson()
       ..name = fields[0] as String
@@ -108,4 +118,14 @@ class ScheduleLessonAdapter extends TypeAdapter<ScheduleLesson> {
       ..writeByte(14)
       ..write(obj.endTime);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ScheduleLessonAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

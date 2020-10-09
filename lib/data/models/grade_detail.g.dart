@@ -8,13 +8,13 @@ part of 'grade_detail.dart';
 
 class GradeDetailAdapter extends TypeAdapter<GradeDetail> {
   @override
-  final typeId = 6;
+  final int typeId = 6;
 
   @override
   GradeDetail read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return GradeDetail()
       ..year = fields[0] as String
@@ -51,4 +51,14 @@ class GradeDetailAdapter extends TypeAdapter<GradeDetail> {
       ..writeByte(8)
       ..write(obj.testType);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GradeDetailAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
@@ -101,8 +100,12 @@ Future<void> doTestflightUpdate(
             CupertinoDialogAction(
               child: Text('前往Testflight更新'),
               isDefaultAction: true,
-              onPressed: () {
-                openUrl(update.url);
+              onPressed: () async {
+                for (var url in update.urls) {
+                  if (await openUrl(url)) {
+                    break;
+                  }
+                }
                 Navigator.of(context).pop();
               },
             ),

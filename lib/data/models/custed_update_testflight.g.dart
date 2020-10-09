@@ -11,7 +11,9 @@ CustedUpdateTestflight _$CustedUpdateTestflightFromJson(
   return CustedUpdateTestflight()
     ..min = json['min'] as int
     ..newest = json['newest'] as int
-    ..url = json['url'] as String;
+    ..urls = (json['urls'] as List)?.map((e) => e as String)?.toList()
+    ..title = json['title'] as String
+    ..content = json['content'] as String;
 }
 
 Map<String, dynamic> _$CustedUpdateTestflightToJson(
@@ -19,5 +21,7 @@ Map<String, dynamic> _$CustedUpdateTestflightToJson(
     <String, dynamic>{
       'min': instance.min,
       'newest': instance.newest,
-      'url': instance.url,
+      'urls': instance.urls,
+      'title': instance.title,
+      'content': instance.content,
     };
