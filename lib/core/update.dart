@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/store/setting_store.dart';
@@ -13,16 +14,33 @@ import 'package:flutter/cupertino.dart';
 updateCheck(BuildContext context, {bool force = false}) async {
   print('Checking for updates...');
 
-  if (!Platform.isAndroid) {
-    print('Update is only avaliable for andriod currently.');
+  // if (BuildMode.isDebug) {
+  //   print('Now in debug mode, skip checking updates.');
+  //   return;
+  // }
+
+  if (Platform.isAndroid) {
+    doAndroidUpdate(context, force: force);
     return;
   }
 
-  if (BuildMode.isDebug) {
-    print('Now in debug mode, skip checking updates.');
+  if (Platform.isIOS) {
+    doTestflightUpdate(context, force: force);
     return;
   }
+}
 
+Future<bool> isFileAvaliable(String url) async {
+  try {
+    final resp = await Dio().head(url);
+    return resp.statusCode == 200;
+  } catch (e) {
+    print('update file not avaliable: $e');
+    return false;
+  }
+}
+
+Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
   final update = await locator<CustedService>().getUpdate();
   if (update == null) return;
   print('Update avaliable: $update');
@@ -54,12 +72,43 @@ updateCheck(BuildContext context, {bool force = false}) async {
   ).go(context, rootNavigator: true);
 }
 
-Future<bool> isFileAvaliable(String url) async {
-  try {
-    final resp = await Dio().head(url);
-    return resp.statusCode == 200;
-  } catch (e) {
-    print('update file not avaliable: $e');
-    return false;
+Future<void> doTestflightUpdate(
+  BuildContext context, {
+  bool force = false,
+}) async {
+  final update = await locator<CustedService>().getTestflithgUpdate();
+  if (update == null) return;
+
+  print('Update avaliable: $update');
+
+  final isCurrentVersionTooOld = BuildData.build < update.min;
+  final shouldShowDialog = force || isCurrentVersionTooOld;
+
+  if (shouldShowDialog) {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text('新版本可用'),
+          content: Text('使用旧版本可能导致某些功能无法使用'),
+          actions: [
+            CupertinoDialogAction(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            CupertinoDialogAction(
+              child: Text('前往Testflight更新'),
+              isDefaultAction: true,
+              onPressed: () {
+                openUrl(update.url);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

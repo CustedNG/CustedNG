@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/extension/stringx.dart';
+import 'package:custed2/core/open.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
@@ -14,7 +15,6 @@ import 'package:custed2/ui/webview/plugin_portal.dart';
 import 'package:custed2/ui/webview/webview2.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 class WebviewBrowser extends StatelessWidget {
   WebviewBrowser(this.url);
@@ -26,6 +26,12 @@ class WebviewBrowser extends StatelessWidget {
     return Webview2(
       url: url,
       onCreated: onCreated,
+      invalidUrlRegex: 'custed-target=blank',
+      onLoadAborted: (controller, url) {
+        if (url.contains('custed-target=blank')) {
+          openUrl(url);
+        }
+      },
       plugins: [
         PluginForMysso(),
         PluginForPortal(),

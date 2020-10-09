@@ -1,38 +1,64 @@
+import 'dart:async';
+
 import 'package:custed2/core/open.dart';
 import 'package:custed2/ui/widgets/missing_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share_extend/share_extend.dart';
 
-class Webview2Bottom extends StatefulWidget{
-  bool canBack = false;
-  bool canForward = false;
-  dynamic controller;
+class Webview2BottomController extends ChangeNotifier {
+  bool canGoBack = false;
+  bool canGoForward = false;
 
-  Webview2Bottom(bool canBack, bool canForward, dynamic controller);
-
-  @override
-  State<StatefulWidget> createState() => _Webview2BottomState();
-}
-
-class _Webview2BottomState extends State<Webview2Bottom>{
-
-  Future<String> evalJs(String source) async {
-    var result = await widget.controller.evalJavascript(source);
-
-    if (result.startsWith('"')) {
-      result = result.substring(1);
-    }
-
-    if (result.endsWith('"')) {
-      result = result.substring(0, result.length - 1);
-    }
-
-    return result;
+  void setCanGoBack(bool value) {
+    canGoBack = value;
+    notifyListeners();
   }
 
-  Future<String> getUrl() {
-    return evalJs('window.location.href');
+  void setCanGoForward(bool value) {
+    canGoForward = value;
+    notifyListeners();
+  }
+}
+
+class Webview2Bottom extends StatefulWidget {
+  Webview2Bottom({
+    this.controller,
+    this.url,
+    this.onGoBack,
+    this.onGoForward,
+  });
+
+  final Future<String> Function() url;
+
+  final Webview2BottomController controller;
+
+  final void Function() onGoBack;
+
+  final void Function() onGoForward;
+
+  @override
+  _Webview2BottomState createState() => _Webview2BottomState();
+}
+
+class _Webview2BottomState extends State<Webview2Bottom> {
+  bool get canGoBack => widget.controller.canGoBack;
+  bool get canGoForward => widget.controller.canGoForward;
+
+  @override
+  void initState() {
+    widget.controller.addListener(onStateChanged);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(onStateChanged);
+    super.dispose();
+  }
+
+  void onStateChanged() {
+    setState(() {});
   }
 
   @override
@@ -52,31 +78,30 @@ class _Webview2BottomState extends State<Webview2Bottom>{
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             IconButton(
-                icon: widget.canBack
-                    ? const Icon(Icons.arrow_back_ios)
-                    : const Icon(Icons.arrow_back_ios, color: Colors.white54),
-                onPressed: () async {
-                  widget.controller?.goBack();
-                }
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: canGoBack ? widget.onGoBack?.call : null,
             ),
             IconButton(
-              icon: widget.canForward
-                  ? const Icon(Icons.arrow_forward_ios)
-                  : const Icon(Icons.arrow_forward_ios, color: Colors.white54),
-              onPressed: () async {
-                widget.controller?.goForward();
-              } ,
+              icon: const Icon(Icons.arrow_forward_ios),
+              onPressed: canGoForward ? widget.onGoForward?.call : null,
             ),
             IconButton(
               icon: const Icon(Icons.share),
               onPressed: () async {
-                ShareExtend.share(await getUrl(), 'text');
+                // var url = await webview.evalJavascript('window.location.href');
+                final url = await widget.url();
+                ShareExtend.share(url, 'text');
               },
             ),
             IconButton(
               icon: const Icon(MissingIcons.earth, size: 26),
               onPressed: () async {
-                openUrl(await getUrl());
+                // var url = await webview.evalJavascript('window.location.href');
+                // if (url.length >= 2) {
+                //   url = url.substring(1, url.length - 1);
+                // }
+                final url = await widget.url();
+                openUrl(url);
               },
             ),
           ],
@@ -84,5 +109,4 @@ class _Webview2BottomState extends State<Webview2Bottom>{
       ),
     );
   }
-
 }
