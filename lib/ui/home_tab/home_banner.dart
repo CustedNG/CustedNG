@@ -38,7 +38,7 @@ class HomeBanner extends StatelessWidget {
         child: TransitionToImage(
           image: AdvancedNetworkImage(
             urlList[index % urlListLength],
-            loadedCallback: () => print('Banner$index loaded.'),
+            loadedCallback: () => print('Banner${index % urlListLength} loaded.'),
             loadFailedCallback: () => print('Banner failed to load.'),
             useDiskCache: true,
             cacheRule: CacheRule(maxAge: Duration(days: index % urlListLength == 0 ? 15 : 3)),

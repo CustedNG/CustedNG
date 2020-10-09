@@ -10,7 +10,6 @@ import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_header.dart';
 import 'package:custed2/ui/widgets/missing_icons.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide Cookie;
 import 'package:share_extend/share_extend.dart';
@@ -82,12 +81,6 @@ class Webview2StateGeneral extends Webview2State {
     super.dispose();
   }
 
-  Future<void> onChange() async {
-    canBack = await controller.canGoBack();
-    canForward = await controller.canGoForward();
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     Color iconColor = Theme.of(context).iconTheme.color.withOpacity(0.2);
@@ -102,26 +95,17 @@ class Webview2StateGeneral extends Webview2State {
         },
       ),
       bottomNavigationBar: BottomAppBar(
-        color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
         child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                width: 0.1,
-                color: CupertinoColors.opaqueSeparator.resolveFrom(context),
-              ),
-            ),
-          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               IconButton(
-                icon: canBack
-                    ? Icon(Icons.arrow_back_ios)
-                    : Icon(Icons.arrow_back_ios, color: iconColor),
-                onPressed: () async {
-                  controller?.goBack();
-                }
+                  icon: canBack
+                      ? Icon(Icons.arrow_back_ios)
+                      : Icon(Icons.arrow_back_ios, color: iconColor),
+                  onPressed: () async {
+                    controller?.goBack();
+                  }
               ),
               IconButton(
                 icon: canForward
@@ -176,11 +160,14 @@ class Webview2StateGeneral extends Webview2State {
           pluginOnLoadStart(controllerAdaptor, url);
 
           widget.onLoadStart?.call(controllerAdaptor, url);
-          onChange();
+
+          canBack = await controller.canGoBack();
+          canForward = await controller.canGoForward();
+          setState(() {});
         },
         onLoadStop: (controller, url) async {
           pluginActivate(url);
-          
+
           await addJsChannels(controller);
 
           pluginOnLoadStop(controllerAdaptor, url);

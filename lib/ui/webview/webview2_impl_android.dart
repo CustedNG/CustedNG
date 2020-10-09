@@ -9,7 +9,6 @@ import 'package:custed2/ui/webview/webview2_header.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
 import 'package:custed2/ui/widgets/missing_icons.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -221,16 +220,7 @@ class Webview2StateAndroid extends Webview2State {
         hidden: true,
         initialChild: buildLoadingWidget(),
         bottomNavigationBar: BottomAppBar(
-          color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
           child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  width: 0.1,
-                  color: CupertinoColors.opaqueSeparator.resolveFrom(context),
-                ),
-              ),
-            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
