@@ -81,7 +81,10 @@ dependencies:
   dio: ^3.0.8
   dio_cookie_manager: ^1.0.0
 
-  countly_flutter: 20.04.0
+  countly_flutter:
+    git: 
+      url: https://github.com/Countly/countly-sdk-flutter-bridge.git
+      ref: master
 
   flutter_svg: 0.18.0
 

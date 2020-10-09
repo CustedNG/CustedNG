@@ -75,13 +75,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       App First Layout Done. 
   
     ''');
-
-    // 启动外围服务
-    if (BuildMode.isRelease) {
-      Analytics.init();
-      Analytics.isDebug = false;
-    }
-
+    
     locator<WeatherProvider>().startAutoUpdate();
 
     // 加载核心数据
@@ -90,6 +84,12 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       locator<GradeProvider>().loadLocalData(),
       locator<UserProvider>().loadLocalData(),
     ]);
+
+    // 启动外围服务
+    if (BuildMode.isRelease) {
+      await Analytics.init();
+      Analytics.isDebug = true;
+    }
 
     // 预热 IecardService
     // final user = locator<UserProvider>();
