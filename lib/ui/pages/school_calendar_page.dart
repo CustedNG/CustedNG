@@ -1,22 +1,21 @@
 import 'package:custed2/ui/pages/school_calendar_menu.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/more_btn.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:custed2/res/image_res.dart';
+import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class SchoolCalendarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        previousPageTitle: '主页',
-        backgroundColor: CupertinoColors.black,
-        actionsForegroundColor: CupertinoColors.white,
-        middle: Text('校历', style: TextStyle(color: CupertinoColors.white)),
-        trailing: NavBarMoreBtn(onTap: () => _showMenu(context)),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text('校历', style: TextStyle(color: Colors.white)),
+        centerTitle: true,
+        actions: [NavBarMoreBtn(onTap: () => _showMenu(context))],
       ),
-      child: ClipRect(
+      body: ClipRect(
         child: SafeArea(
           child: DarkModeFilter(
             level: 160,
@@ -32,7 +31,7 @@ class SchoolCalendarPage extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context) {
-    showCupertinoModalPopup(
+    showDialog(
       context: context,
       builder: (context) => SchoolCalendarMenu(),
     );

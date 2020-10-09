@@ -16,10 +16,10 @@ class NavBarMoreBtn extends StatelessWidget {
     return Container(
       alignment: alignment,
       width: 100,
-      child: FlatButton(
+      child: IconButton(
         onPressed: onTap,
         padding: EdgeInsets.zero,
-        child: Icon(
+        icon: Icon(
           icon,
           size: 32,
         ),
