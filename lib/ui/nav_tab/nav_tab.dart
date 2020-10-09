@@ -86,12 +86,18 @@ class _NavTabState extends State<NavTab> {
               },
               shouldOverrideUrlLoading: (controller, request) async {
                 print('open ${request.url}');
-                showCupertinoModalPopup(
-                  context: context,
-                  builder: (context) {
-                    return WebviewBrowser(request.url);
-                  },
-                );
+
+                if (request.url.contains('custed-target=blank')) {
+                  openUrl(request.url);
+                } else {
+                  showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) {
+                      return WebviewBrowser(request.url);
+                    },
+                  );
+                }
+
                 return ShouldOverrideUrlLoadingAction.CANCEL;
               },
             ),
