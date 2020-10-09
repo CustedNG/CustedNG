@@ -92,6 +92,7 @@ class Webview2StateGeneral extends Webview2State {
       ),
       bottomNavigationBar: Webview2Bottom(
         controller: bottom,
+        url: () => controller?.getUrl(),
         onGoForward: () => controller?.goForward(),
         onGoBack: () => controller?.goBack(),
       ),
