@@ -57,8 +57,8 @@ class LessonInfo extends StatelessWidget {
             _buildDataItem('地点', lesson.roomRaw),
           ],
         ),
-        SizedBox(width: width * 0.01),
-        _buildDataItem('教师', lesson.teacherName),
+        SizedBox(width: 27),
+        _buildDataItem('任课教师', lesson.teacherName),
       ],
     );
   }
