@@ -42,8 +42,8 @@ class Webview2Bottom extends StatefulWidget {
 }
 
 class _Webview2BottomState extends State<Webview2Bottom> {
-  bool canGoBack = false;
-  bool canGoForward = false;
+  bool get canGoBack => widget.controller.canGoBack;
+  bool get canGoForward => widget.controller.canGoForward;
 
   @override
   void initState() {

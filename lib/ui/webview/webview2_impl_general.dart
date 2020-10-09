@@ -1,19 +1,17 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:custed2/core/open.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/download_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/webview/webview2.dart';
+import 'package:custed2/ui/webview/webview2_bottom.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_header.dart';
-import 'package:custed2/ui/widgets/missing_icons.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide Cookie;
-import 'package:share_extend/share_extend.dart';
 
 class Webview2ControllerGeneral extends Webview2Controller {
   Webview2ControllerGeneral(this.controller);
@@ -68,9 +66,7 @@ class Webview2StateGeneral extends Webview2State {
   InAppWebViewController controller;
 
   final header = Webview2HeaderController();
-
-  bool canBack = false;
-  bool canForward = false;
+  final bottom = Webview2BottomController();
 
   @override
   void initState() {
@@ -82,16 +78,8 @@ class Webview2StateGeneral extends Webview2State {
     super.dispose();
   }
 
-  Future<void> onChange() async {
-    canBack = await controller.canGoBack();
-    canForward = await controller.canGoForward();
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
-    Color iconColor = Theme.of(context).iconTheme.color.withOpacity(0.2);
-
     return Scaffold(
       appBar: Webview2Header(
         controller: header,
@@ -102,58 +90,10 @@ class Webview2StateGeneral extends Webview2State {
           controller?.reload();
         },
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: CupertinoColors.systemGroupedBackground.resolveFrom(context),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                width: 0.1,
-                color: CupertinoColors.opaqueSeparator.resolveFrom(context),
-              ),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              IconButton(
-                  icon: canBack
-                      ? const Icon(Icons.arrow_back_ios)
-                      : Icon(Icons.arrow_back_ios, color: iconColor),
-                  onPressed: () async {
-                    controller?.goBack();
-                  }
-              ),
-              IconButton(
-                icon: canForward
-                    ? const Icon(Icons.arrow_forward_ios)
-                    : Icon(Icons.arrow_forward_ios, color: iconColor),
-                onPressed: () async {
-                  controller?.goForward();
-                } ,
-              ),
-              IconButton(
-                icon: const Icon(Icons.share),
-                onPressed: () async {
-                  // var url = await webview.evalJavascript('window.location.href');
-                  final url = await controller.getUrl();
-                  ShareExtend.share(url, 'text');
-                },
-              ),
-              IconButton(
-                icon: const Icon(MissingIcons.earth, size: 26),
-                onPressed: () async {
-                  // var url = await webview.evalJavascript('window.location.href');
-                  // if (url.length >= 2) {
-                  //   url = url.substring(1, url.length - 1);
-                  // }
-                  final url = await controller.getUrl();
-                  openUrl(url);
-                },
-              ),
-            ],
-          ),
-        ),
+      bottomNavigationBar: Webview2Bottom(
+        controller: bottom,
+        onGoForward: () => controller?.goForward(),
+        onGoBack: () => controller?.goBack(),
       ),
       body: InAppWebView(
         initialUrl: widget.url,
@@ -177,7 +117,9 @@ class Webview2StateGeneral extends Webview2State {
           pluginOnLoadStart(controllerAdaptor, url);
 
           widget.onLoadStart?.call(controllerAdaptor, url);
-          onChange();
+
+          bottom.setCanGoBack(await controller.canGoBack());
+          bottom.setCanGoForward(await controller.canGoForward());
         },
         onLoadStop: (controller, url) async {
           pluginActivate(url);
@@ -190,6 +132,9 @@ class Webview2StateGeneral extends Webview2State {
 
           header.stopLoad();
           header.setUrl(url);
+
+          bottom.setCanGoBack(await controller.canGoBack());
+          bottom.setCanGoForward(await controller.canGoForward());
         },
         onTitleChanged: (controller, title) {
           header.setTitle(title);
