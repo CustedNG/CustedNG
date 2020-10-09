@@ -52,7 +52,7 @@ class _ScheduleArrowState extends State<ScheduleArrow> {
       child: SizedBox(
         height: calcTop(),
         child: Stack(
-          // overflow: Overflow.visible,
+          overflow: Overflow.visible,
           children: <Widget>[
             Positioned(
               bottom: 0,
