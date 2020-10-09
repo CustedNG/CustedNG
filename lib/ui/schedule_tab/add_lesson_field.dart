@@ -1,5 +1,4 @@
-import 'package:custed2/ui/theme.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AddLessonField extends StatelessWidget {
   AddLessonField(
@@ -20,30 +19,18 @@ class AddLessonField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
-    final iconColor =
-        isPrimary ? theme.primaryColor : CupertinoColors.inactiveGray;
-
-    return CupertinoTextField(
-      readOnly: isReadonly,
-      controller: controller,
-      padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
-      placeholder: placeholder,
-      autocorrect: false,
-      prefix: Padding(
-        padding: EdgeInsets.only(left: 12.0),
-        child: Icon(icon, size: 24.0, color: iconColor),
-      ),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 1,
-            color: theme.textFieldBorderColor,
+    return Padding(
+        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        child: TextField(
+          readOnly: isReadonly,
+          controller: controller,
+          autocorrect: false,
+          decoration: InputDecoration(
+            labelText: placeholder,
+            prefixIcon: Icon(icon)
           ),
+          onTap: onTap,
         ),
-        color: theme.textFieldBackgroundColor,
-      ),
-      onTap: onTap,
     );
   }
 }

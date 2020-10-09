@@ -5,7 +5,7 @@ import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/update/update_progress_page.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class UpdateNoticePage extends StatelessWidget {
   UpdateNoticePage(this.update);
@@ -55,28 +55,28 @@ class UpdateNoticePage extends StatelessWidget {
   Widget _buildActions(BuildContext context) {
     return Column(
       children: <Widget>[
-        CupertinoButton.filled(
+        FlatButton(
           child: Text(
             '开始更新',
-            style: TextStyle(color: CupertinoColors.white),
+            style: TextStyle(color: Colors.white),
           ),
+          color: Colors.cyan,
           onPressed: () async {
             var connectivityResult = await (Connectivity().checkConnectivity());
             if (connectivityResult == ConnectivityResult.mobile) {
-              showCupertinoDialog(
+              showDialog(
                 context: context,
-                builder: (context) => CupertinoAlertDialog(
+                builder: (context) => AlertDialog(
                   content: Text('你正在使用移动数据网络。继续下载将会消耗流量'),
                   actions: [
-                    CupertinoDialogAction(
-                      isDefaultAction: true,
+                    FlatButton(
                       child: Text('继续'),
                       onPressed: () {
                         Navigator.of(context).pop();
                         doUpdate(context);
                       },
                     ),
-                    CupertinoDialogAction(
+                    FlatButton(
                       child: Text('取消'),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
@@ -88,7 +88,7 @@ class UpdateNoticePage extends StatelessWidget {
             }
           },
         ),
-        CupertinoButton(
+        FlatButton(
           child: Text('我不'),
           onPressed: () {
             final settings = locator<SettingStore>();

@@ -1,6 +1,6 @@
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HomeEntry extends StatelessWidget {
   HomeEntry({this.name, this.icon, this.action, this.longPressAction});
@@ -21,7 +21,7 @@ class HomeEntry extends StatelessWidget {
 
     return GestureDetector(
       onLongPress: longPressAction,
-      child: CupertinoButton(
+      child: FlatButton(
         padding: EdgeInsets.zero,
         onPressed: action ?? () {},
         child: Column(

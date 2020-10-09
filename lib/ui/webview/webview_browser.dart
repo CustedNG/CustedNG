@@ -14,7 +14,7 @@ import 'package:custed2/ui/webview/plugin_netdisk.dart';
 import 'package:custed2/ui/webview/plugin_portal.dart';
 import 'package:custed2/ui/webview/webview2.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class WebviewBrowser extends StatelessWidget {
   WebviewBrowser(this.url);

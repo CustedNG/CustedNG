@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/util/time_point.dart';
 import 'package:custed2/data/models/schedule.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
 
 class ScheduleArrow extends StatefulWidget {
   ScheduleArrow({this.child, this.schedule});
@@ -52,7 +51,7 @@ class _ScheduleArrowState extends State<ScheduleArrow> {
       child: SizedBox(
         height: calcTop(),
         child: Stack(
-          // overflow: Overflow.visible,
+          overflow: Overflow.visible,
           children: <Widget>[
             Positioned(
               bottom: 0,
@@ -66,8 +65,8 @@ class _ScheduleArrowState extends State<ScheduleArrow> {
   }
 
   Widget _buildArrow() {
-    return Icon(material.Icons.forward,
-        color: CupertinoColors.systemRed.withAlpha(200));
+    return Icon(Icons.forward,
+        color: Colors.red.withAlpha(200));
   }
 
   double calcWidthFactor() {

@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ProgressBar extends StatelessWidget {
   ProgressBar(
     this.value,
     this.total, {
     this.borderWidth = 0,
-    this.bgColor = CupertinoColors.lightBackgroundGray,
+    this.bgColor = Colors.grey,
   });
 
   final int value;
@@ -15,7 +15,7 @@ class ProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final left = Container(color: CupertinoColors.activeBlue);
+    final left = Container(color: Colors.blueAccent);
     final right = Container(color: bgColor);
     final bar = Row(
       children: <Widget>[
@@ -35,7 +35,7 @@ class ProgressBar extends StatelessWidget {
     }
 
     return Border.all(
-      color: CupertinoColors.black.withAlpha(60),
+      color: Colors.black.withAlpha(60),
       width: borderWidth,
     );
   }

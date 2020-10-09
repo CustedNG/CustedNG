@@ -3,7 +3,6 @@ import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/kv_table.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {

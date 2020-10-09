@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class NavBarTitle extends StatelessWidget {
   NavBarTitle({this.child, Key key}) : super(key: key);

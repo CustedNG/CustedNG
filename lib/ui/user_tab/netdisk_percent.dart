@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class NetdiskPercent extends StatelessWidget {
   NetdiskPercent(this.value, this.total, {this.height = 12});
@@ -10,11 +10,11 @@ class NetdiskPercent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final left = Container(
-      color: CupertinoColors.activeBlue.withOpacity(0.8),
+      color: Colors.lightBlue.withOpacity(0.8),
       height: height,
     );
     final right = Container(
-      color: CupertinoColors.lightBackgroundGray,
+      color: Colors.grey,
       height: height,
     );
     return Row(

@@ -1,7 +1,7 @@
 import 'package:custed2/core/webview/addon.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class SelfLoginAddon extends WebviewAddon {

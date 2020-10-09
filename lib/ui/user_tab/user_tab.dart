@@ -64,7 +64,7 @@ class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
         borderRadius: BorderRadius.all(Radius.circular(40.0)),
       ),
       color: isLegacy ? Colors.cyan : Colors.lightBlueAccent,
-      child: Text(text),
+      child: Text(text, style: TextStyle(color: Colors.white)),
       onPressed: () => isLegacy
           ? loginPageLegacy.go(context)
           : loginPage.popup(context),
@@ -210,14 +210,14 @@ class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
               context, setting.dontCountElectiveCourseGrade),
         ),
         SettingItem(
-          title: '自动更新课表',
+          title: '启动时自动更新课表',
           titleStyle: settingTextStyle,
           isShowArrow: false,
           rightBtn: _buildSwitch(
               context, setting.autoUpdateSchedule),
         ),
         SettingItem(
-          title: '自动更新天气',
+          title: '持续自动更新天气',
           titleStyle: settingTextStyle,
           isShowArrow: false,
           rightBtn: _buildSwitch(

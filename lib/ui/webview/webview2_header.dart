@@ -93,9 +93,6 @@ class _Webview2HeaderState extends State<Webview2Header> {
 
   Widget buildNavigationBar(BuildContext context) {
     return AppBar(
-      backgroundColor: isDark(context)
-          ? Color.fromRGBO(9, 29, 47, 1)
-          : Color.fromRGBO(0, 56, 117, 1),
       leading: Container(
         alignment: Alignment.centerLeft,
         width: 70,

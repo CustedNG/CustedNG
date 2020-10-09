@@ -26,7 +26,7 @@ class AddLessonPage extends StatefulWidget {
 }
 
 class _AddLessonPageState extends State<AddLessonPage> {
-  final nameController = TextEditingController(text: '自定义课程1');
+  final nameController = TextEditingController(text: '');
   final roomController = TextEditingController(text: '');
   final teacherController = TextEditingController(text: '');
   final weeksController = TextEditingController();
@@ -97,14 +97,12 @@ class _AddLessonPageState extends State<AddLessonPage> {
         ),
         child: ListView(
           children: <Widget>[
-            SizedBox(height: 16),
             _buildNameField(context),
-            SizedBox(height: 12),
             _buildRoomField(context),
             _buildTeacherField(context),
             _buildWeekField(context),
             _buildTimeField(context),
-            _buildDeleteButton(context)
+            //_buildDeleteButton(context)
           ],
         ),
       ),
@@ -113,7 +111,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
 
   Widget _buildNameField(BuildContext context) {
     return AddLessonField(
-      CupertinoIcons.book_solid,
+      Icons.book,
       placeholder: '课程名称',
       controller: nameController,
       isPrimary: true,
@@ -122,7 +120,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
 
   Widget _buildRoomField(BuildContext context) {
     return AddLessonField(
-      CupertinoIcons.location_solid,
+      Icons.location_on,
       placeholder: '教室',
       controller: roomController,
     );
@@ -130,7 +128,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
 
   Widget _buildTeacherField(BuildContext context) {
     return AddLessonField(
-      CupertinoIcons.person_solid,
+      Icons.person,
       placeholder: '老师',
       controller: teacherController,
     );
@@ -138,7 +136,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
 
   Widget _buildWeekField(BuildContext context) {
     return AddLessonField(
-      CupertinoIcons.time_solid,
+      Icons.timer,
       placeholder: '周数',
       isReadonly: true,
       controller: weeksController,
@@ -150,9 +148,9 @@ class _AddLessonPageState extends State<AddLessonPage> {
     return Row(
       children: <Widget>[
         Flexible(
-          flex: 1,
+          flex: 2,
           child: AddLessonField(
-            CupertinoIcons.bell_solid,
+            Icons.calendar_today,
             placeholder: '星期',
             isReadonly: true,
             controller: weekdayController,
@@ -160,9 +158,9 @@ class _AddLessonPageState extends State<AddLessonPage> {
           ),
         ),
         Flexible(
-          flex: 2,
+          flex: 3,
           child: AddLessonField(
-            CupertinoIcons.bell_solid,
+            Icons.class_,
             placeholder: '第几节',
             isReadonly: true,
             controller: sectionController,

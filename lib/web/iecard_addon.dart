@@ -1,6 +1,6 @@
 import 'package:custed2/core/webview/addon.dart';
 import 'package:custed2/service/iecard_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class IecardAddon extends WebviewAddon {
@@ -18,12 +18,12 @@ class IecardAddon extends WebviewAddon {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Flexible(
-          child: CupertinoTextField(
+          child: TextField(
             controller: _textEditingController,
             keyboardType: TextInputType.number,
           ),
         ),
-        CupertinoButton(
+        FlatButton(
           child: Text('快速充值'),
           onPressed: () async {
             await controller.loadUrl(url: IecardService.phoneChargeUrl);

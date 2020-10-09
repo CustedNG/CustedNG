@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
 
 class NavBarButton extends StatelessWidget {
   NavBarButton({this.alignment = Alignment.center, this.child, this.onPressed});
@@ -13,7 +12,7 @@ class NavBarButton extends StatelessWidget {
   NavBarButton.close({this.onPressed})
       : alignment = Alignment.centerLeft,
         child =
-            Icon(material.Icons.clear, color: CupertinoColors.white, size: 22);
+            Icon(Icons.clear, color: Colors.white, size: 22);
 
   final Widget child;
   final Function onPressed;
@@ -23,7 +22,7 @@ class NavBarButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 70,
-      child: CupertinoButton(
+      child: FlatButton(
         child: Container(
           child: this.child,
           alignment: alignment,

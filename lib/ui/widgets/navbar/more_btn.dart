@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class NavBarMoreBtn extends StatelessWidget {
   NavBarMoreBtn({
     this.onTap,
-    this.icon = CupertinoIcons.ellipsis,
+    this.icon = Icons.more_horiz,
     this.alignment = Alignment.centerRight,
   });
 
@@ -16,9 +16,8 @@ class NavBarMoreBtn extends StatelessWidget {
     return Container(
       alignment: alignment,
       width: 100,
-      child: CupertinoButton(
+      child: FlatButton(
         onPressed: onTap,
-        minSize: 0,
         padding: EdgeInsets.zero,
         child: Icon(
           icon,

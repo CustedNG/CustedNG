@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/open.dart';
+import 'package:custed2/core/route.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
@@ -87,12 +88,10 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
                 if (request.url.contains('custed-target=blank')) {
                   openUrl(request.url);
                 } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return WebviewBrowser(request.url);
-                    },
-                  );
+                  AppRoute(
+                    title: '',
+                    page: WebviewBrowser(request.url),
+                  ).popup(context);
                 }
 
                 return ShouldOverrideUrlLoadingAction.CANCEL;

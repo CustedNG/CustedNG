@@ -11,7 +11,6 @@ import 'package:custed2/ui/grade_tab/sliver_header_delegate.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -21,13 +20,13 @@ const colorMain = Color(0xFF3D93F8);
 const colorButtom = Color(0xFF5395F7);
 
 const textStyleInfo = TextStyle(
-  color: CupertinoColors.white,
+  color: Colors.white,
   fontWeight: FontWeight.bold,
   fontSize: 20,
 );
 
 final textStyleTag = TextStyle(
-  color: CupertinoColors.white.withAlpha(200),
+  color: Colors.white.withAlpha(200),
   fontWeight: FontWeight.w500,
   fontSize: 14,
 );
@@ -42,12 +41,12 @@ final textStyleNameDark = textStyleName.copyWith(
   color: Colors.white70,
 );
 final textStyleField = TextStyle(
-  color: CupertinoColors.black.withAlpha(170),
+  color: Colors.black.withAlpha(170),
   fontWeight: FontWeight.bold,
   fontSize: 14,
 );
 final textStyleFieldDark = textStyleField.copyWith(
-  color: CupertinoColors.white.withAlpha(170),
+  color: Colors.white.withAlpha(170),
 );
 const textStyleMark = TextStyle(
   fontWeight: FontWeight.bold,
@@ -55,7 +54,7 @@ const textStyleMark = TextStyle(
 );
 
 final textStyleRankingTitle = TextStyle(
-    color: CupertinoColors.white, fontWeight: FontWeight.bold, fontSize: 18);
+    color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18);
 
 final textStyleRankingDescription = TextStyle(
   color: Colors.blueGrey,
@@ -100,7 +99,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     final terms = grade.terms.map((t) => t.termName).toList();
     final current = currentPage.round().clamp(0, terms.length - 1);
 
-    final selected = await showCupertinoDialog<int>(
+    final selected = await showDialog<int>(
       context: context,
       builder: (context) => GradePicker(
         currentIndex: current,
@@ -421,11 +420,11 @@ class __ReportItemState extends State<_ReportItem>
     }
     final theme = AppTheme.of(context);
     final fieldTextTheme =
-    CupertinoTheme.brightnessOf(context) == Brightness.dark
+    isDark(context)
         ? textStyleFieldDark
         : textStyleField;
     final nameTextTheme =
-    CupertinoTheme.brightnessOf(context) == Brightness.dark
+    isDark(context)
         ? textStyleNameDark
         : textStyleName;
     final content = isExpanded
@@ -522,9 +521,9 @@ class __ReportItemState extends State<_ReportItem>
         decoration: BoxDecoration(
           color: theme.cardBackgroundColor,
           borderRadius: BorderRadius.circular(5),
-          border: CupertinoTheme.brightnessOf(context) == Brightness.dark
+          border: isDark(context)
               ? null
-              : Border.all(color: CupertinoColors.black.withAlpha(50)),
+              : Border.all(color: Colors.black.withAlpha(50)),
         ),
         child: content,
       ),

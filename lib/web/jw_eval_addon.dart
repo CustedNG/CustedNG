@@ -1,7 +1,6 @@
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/webview/addon.dart';
-import 'package:custed2/ui/widgets/card_dialog.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class JwEvalAddon extends WebviewAddon {
@@ -33,26 +32,26 @@ class _JwEvalWidgetState extends State<JwEvalWidget> {
     final List<Widget> children = busy
         ? [
             Text('评教中...'),
-            CupertinoButton(
+            FlatButton(
               child: Text('停止'),
               onPressed: stopEvalAll,
             ),
           ]
         : [
-            CupertinoButton(
+            FlatButton(
               child: Text('本页全选'),
               onPressed: evalSelectAll,
             ),
-            CupertinoButton(
+            FlatButton(
               child: Text('提交'),
               onPressed: evalSubmit,
             ),
-            CupertinoButton(
+            FlatButton(
               child: Text('下一个'),
               onPressed: evalSwitchToNext,
             ),
             Text('/'),
-            CupertinoButton(
+            FlatButton(
               child: Text('一键评教'),
               onPressed: evalAll,
             ),
@@ -128,7 +127,7 @@ class _JwEvalWidgetState extends State<JwEvalWidget> {
   }
 
   Future<int> getGrade() {
-    return showCupertinoDialog(
+    return showDialog(
       context: context,
       builder: (context) {
         return JwEvalDialog();
@@ -140,32 +139,31 @@ class _JwEvalWidgetState extends State<JwEvalWidget> {
 class JwEvalDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoAlertDialog(
+    return AlertDialog(
       title: Text('选择评教成绩'),
       // content: Text('请不要误伤值得好评的老师'),
       actions: [
-        CupertinoDialogAction(
+        FlatButton(
           child: Text('优秀'),
           onPressed: () => Navigator.of(context).pop(1),
         ),
-        CupertinoDialogAction(
+        FlatButton(
           child: Text('良好'),
           onPressed: () => Navigator.of(context).pop(2),
         ),
-        CupertinoDialogAction(
+        FlatButton(
           child: Text('中等'),
           onPressed: () => Navigator.of(context).pop(3),
         ),
-        CupertinoDialogAction(
+        FlatButton(
           child: Text('较差'),
           onPressed: () => Navigator.of(context).pop(4),
         ),
-        CupertinoDialogAction(
+        FlatButton(
           child: Text('差'),
           onPressed: () => Navigator.of(context).pop(5),
         ),
-        CupertinoDialogAction(
-          isDefaultAction: true,
+        FlatButton(
           child: Text('取消'),
           onPressed: () => Navigator.of(context).pop(),
         ),

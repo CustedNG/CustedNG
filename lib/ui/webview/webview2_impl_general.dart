@@ -9,7 +9,6 @@ import 'package:custed2/ui/webview/webview2_bottom.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_header.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide Cookie;
 

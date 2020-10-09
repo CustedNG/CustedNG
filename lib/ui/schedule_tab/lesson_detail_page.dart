@@ -1,6 +1,7 @@
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
+import 'package:flutter/material.dart';
 
 class LessonDetailPage extends StatelessWidget {
   LessonDetailPage(this.lesson);
@@ -14,9 +15,12 @@ class LessonDetailPage extends StatelessWidget {
     final classes = lesson.classes?.toList();
     classes?.sort();
 
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(),
-      child: DefaultTextStyle(
+    return Scaffold(
+      appBar: AppBar(
+        title: NavbarText('课程详情'),
+        centerTitle: true,
+      ),
+      body: DefaultTextStyle(
         style: TextStyle(
           color: theme.textColor,
         ),

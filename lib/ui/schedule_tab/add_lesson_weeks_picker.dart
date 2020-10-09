@@ -1,7 +1,6 @@
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Colors;
+import 'package:flutter/material.dart';
 
 class AddLessonWeeksPicker extends StatefulWidget {
   final Map<int, bool> data;
@@ -48,8 +47,8 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
           Align(
             alignment: Alignment.centerRight,
             child: Icon(
-              CupertinoIcons.check_mark_circled,
-              color: active ? CupertinoColors.white : Colors.transparent,
+              Icons.check_box,
+              color: active ? Colors.white : Colors.transparent,
               size: 23.0,
             ),
           )
@@ -94,9 +93,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
             Container(
               height: 60.0,
               alignment: Alignment.center,
-              child: CupertinoNavigationBar(
-                automaticallyImplyLeading: false,
-                padding: EdgeInsetsDirectional.zero,
+              child: NavigationToolbar(
                 leading: NavBarButton(
                   child: Align(alignment: Alignment.center, child: Text("取消")),
                   onPressed: () => Navigator.of(context).pop(),
@@ -111,7 +108,6 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
                     onPressed: () {
                       Navigator.pop(context, data);
                     }),
-                backgroundColor: theme.textFieldListBackgroundColor,
               ),
             ),
             GridView(
@@ -123,7 +119,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                CupertinoButton(
+                FlatButton(
                   child: Text("单周"),
                   onPressed: () {
                     setState(() {
@@ -131,7 +127,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
                     });
                   },
                 ),
-                CupertinoButton(
+                FlatButton(
                   child: Text("双周"),
                   onPressed: () {
                     setState(() {
@@ -139,7 +135,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
                     });
                   },
                 ),
-                CupertinoButton(
+                FlatButton(
                   child: Text(allWeekSelected ? "全不选" : "全选"),
                   onPressed: () {
                     setState(() {

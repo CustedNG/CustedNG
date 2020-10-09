@@ -5,8 +5,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Icons, Scaffold;
+import 'package:flutter/material.dart';
 
 class LoginPageLegacy extends StatefulWidget {
   @override
@@ -89,103 +88,108 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
       children: [
         Flexible(
             child: Scaffold(
-          body: DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: ImageRes.bgAbstractDark,
+              body: DecoratedBox(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: ImageRes.bgAbstractDark,
+                  ),
+                ),
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: _buildLoginForm(context)
+                ),
               ),
-            ),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: _buildLoginForm(context),
-              ),
-            ),
-          ),
-        )),
+            )
+        ),
         Snakebar()
       ],
     );
   }
 
-  Widget _buildLoginForm(BuildContext context) {
-    final textFieldBorderDecoration = BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-      border: Border.all(
-        color: Color(0x77FFFFFF),
-        style: BorderStyle.solid,
-        width: 1.0,
-      ),
+  InputDecoration _buildDecoration(String label, TextStyle textStyle){
+    return InputDecoration(
+      labelText: label,
+      labelStyle: textStyle,
+      border: OutlineInputBorder(),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.cyan
+        )
+      )
     );
+  }
 
+  Widget _buildLoginForm(BuildContext context) {
     return ListView(
       // mainAxisSize: MainAxisSize.min,
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 20),
-        CupertinoButton(
-          onPressed: () => Navigator.of(context).pop(),
-          padding: EdgeInsets.all(0),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Icon(Icons.arrow_back_ios, color: CupertinoColors.white),
-          ),
-        ),
-        SizedBox(height: 50),
-        _title(),
-        SizedBox(height: 90),
-        CupertinoTextField(
-          controller: usernameController,
-          placeholder: '一卡通号',
-          keyboardType: TextInputType.number,
-          placeholderStyle: TextStyle(color: Color(0x55FFFFFF)),
-          style: TextStyle(color: CupertinoColors.white),
-          decoration: textFieldBorderDecoration,
-          onSubmitted: (_) => focusOnPasswordField(),
-        ),
-        SizedBox(height: 15),
-        CupertinoTextField(
-          controller: passwordController,
-          focusNode: passwordFocusNode,
-          placeholder: '统一认证密码',
-          placeholderStyle: TextStyle(color: Color(0x55FFFFFF)),
-          style: TextStyle(color: CupertinoColors.white),
-          obscureText: true,
-          decoration: textFieldBorderDecoration,
-          onSubmitted: (_) => tryLogin(),
-        ),
-        SizedBox(height: 90),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              '登录',
-              style: TextStyle(color: CupertinoColors.white, fontSize: 30),
-            ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: 80,
-                maxHeight: 80,
-              ),
-              child: GestureDetector(
-                onLongPress: forceLogin,
-                child: CupertinoButton(
-                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                  padding: EdgeInsets.all(0),
-                  child: Center(
-                    child: isBusy
-                        ? CupertinoActivityIndicator()
-                        : Icon(Icons.arrow_forward),
-                  ),
-                  color: CupertinoColors.activeBlue,
-                  onPressed: tryLogin,
+        Padding(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              FlatButton(
+                onPressed: () => Navigator.of(context).pop(),
+                padding: EdgeInsets.all(0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Icon(Icons.arrow_back_ios, color: Colors.white),
                 ),
               ),
-            )
-          ],
-        ),
+              SizedBox(height: 47),
+              _title(),
+              SizedBox(height: 77),
+              TextField(
+                controller: usernameController,
+                keyboardType: TextInputType.number,
+                style: TextStyle(color: Colors.white),
+                decoration: _buildDecoration('一卡通号', TextStyle(color: Color(0x55FFFFFF))),
+                onSubmitted: (_) => focusOnPasswordField(),
+              ),
+              SizedBox(height: 15),
+              TextField(
+                controller: passwordController,
+                focusNode: passwordFocusNode,
+                style: TextStyle(color: Colors.white),
+                obscureText: true,
+                decoration: _buildDecoration('统一认证密码', TextStyle(color: Color(0x55FFFFFF))),
+                onSubmitted: (_) => tryLogin(),
+              ),
+              SizedBox(height: 90),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    '登录',
+                    style: TextStyle(color: Colors.white, fontSize: 30),
+                  ),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: 80,
+                      maxHeight: 80,
+                    ),
+                    child: GestureDetector(
+                      onLongPress: forceLogin,
+                      onTap: tryLogin,
+                      child: Material(
+                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                        child: Center(
+                          child: isBusy
+                              ? CircularProgressIndicator()
+                              : Icon(Icons.arrow_forward, color: Colors.white),
+                        ),
+                        color: Colors.lightBlueAccent,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        )
       ],
     );
   }
@@ -198,7 +202,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           '欢迎使用',
           style: TextStyle(
             fontSize: 60,
-            color: CupertinoColors.white,
+            color: Colors.white,
           ),
         ),
         SizedBox(
@@ -208,7 +212,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           'Custed',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: CupertinoColors.white,
+            color: Colors.white,
             fontSize: 60,
           ),
         )

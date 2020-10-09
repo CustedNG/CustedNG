@@ -4,7 +4,6 @@ import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -60,10 +59,9 @@ class ScheduleWeekNavigator extends StatelessWidget {
       child: SizedBox(
         height: 35,
         width: 100,
-        child: CupertinoButton(
+        child: FlatButton(
           onPressed: onPressed,
           color: theme.scheduleButtonColor,
-          borderRadius: BorderRadius.all(Radius.circular(100)),
           padding: EdgeInsets.zero,
           child: Text(
             text,
@@ -85,7 +83,7 @@ class ScheduleWeekNavigator extends StatelessWidget {
     }
 
     int week = scheduleProvider.selectedWeek;
-    await showCupertinoModalPopup(
+    await showDialog(
       context: context,
       builder: (context) => ScheduleWeekPicker(
         currentWeek: scheduleProvider.currentWeek,
