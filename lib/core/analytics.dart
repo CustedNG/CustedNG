@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:countly_flutter/countly_flutter.dart';
-import 'package:custed2/core/extension/intx.dart';
-import 'package:dio/dio.dart';
 
 class Analytics {
   static const _url = '';
@@ -17,12 +15,12 @@ class Analytics {
 
     _enabled = true;
     await Countly.init(_url, _key);
-    Countly.enableCrashReporting();
-    Countly.giveAllConsent();
+    await Countly.start();
+    await Countly.enableCrashReporting();
+    await Countly.giveAllConsent();
   }
 
   static set isDebug(bool value) {
-    Countly.isDebug = value;
     Countly.setLoggingEnabled(value);
   }
 
