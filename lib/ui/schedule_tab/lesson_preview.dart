@@ -52,13 +52,13 @@ class LessonInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _buildDataItem(
-                '上课时间', '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}'),
+                '时间', '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}'),
             SizedBox(height: 7),
-            _buildDataItem('上课地点', lesson.roomRaw),
+            _buildDataItem('地点', lesson.roomRaw),
           ],
         ),
-        SizedBox(width: width * 0.1),
-        _buildDataItem('任课教师', lesson.teacherName),
+        SizedBox(width: width * 0.01),
+        _buildDataItem('教师', lesson.teacherName),
       ],
     );
   }
@@ -172,7 +172,6 @@ class LessonPreview extends StatelessWidget {
 
     return CardDialog(
       child: Column(mainAxisSize: MainAxisSize.min, children: content),
-      width: deviceWidth * 0.9,
       actions: actions,
     );
   }
@@ -202,11 +201,11 @@ class LessonPreview extends StatelessWidget {
       child: Text('编辑自定义'),
       onPressed: () async {
         Navigator.of(context).pop();
-        showCupertinoModalPopup(
+        showDialog(
             context: context,
-            builder: (context) => CupertinoActionSheet(
+            builder: (context) => AlertDialog(
                 actions: List<Widget>.of(
-                    customLessons.map((selectedLesson) => CupertinoActionSheetAction(
+                    customLessons.map((selectedLesson) => FlatButton(
                           child: Text(selectedLesson.displayName),
                           onPressed: () {
                             Navigator.of(context).pop();
@@ -216,7 +215,11 @@ class LessonPreview extends StatelessWidget {
                             ).popup(context);
                             locator<ScheduleProvider>().loadLocalData();
                           },
-                        )))));
+                        )
+                    )
+                )
+            )
+        );
         locator<ScheduleProvider>().loadLocalData();
       },
     );
