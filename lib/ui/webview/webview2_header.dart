@@ -1,5 +1,6 @@
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/webview/webview2_progress.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -107,9 +108,9 @@ class _Webview2HeaderState extends State<Webview2Header> {
         ),
       ),
       centerTitle: true,
-      title: Text(
-        '${widget.controller.title ?? ''}\n${widget.controller.host ?? ''}',
-        style: TextStyle(fontSize: 13.0),
+      title: NavbarMiddle(
+        textAbove: widget.controller.title ?? '',
+        textBelow: widget.controller.host ?? '',
       ),
       actions: [
         Padding(
