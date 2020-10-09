@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/open.dart';
+import 'package:custed2/core/route.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/ui/nav_tab/nav_tab_toggle.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
@@ -90,12 +91,10 @@ class _NavTabState extends State<NavTab> {
                 if (request.url.contains('custed-target=blank')) {
                   openUrl(request.url);
                 } else {
-                  showCupertinoModalPopup(
-                    context: context,
-                    builder: (context) {
-                      return WebviewBrowser(request.url);
-                    },
-                  );
+                  AppRoute(
+                    title: '',
+                    page: WebviewBrowser(request.url),
+                  ).go(context);
                 }
 
                 return ShouldOverrideUrlLoadingAction.CANCEL;
