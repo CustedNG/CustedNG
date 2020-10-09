@@ -11,35 +11,38 @@ import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/maps.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
 
 class LessonInfo extends StatelessWidget {
   const LessonInfo({
     Key key,
     @required this.lesson,
+    this.deviceWidth
     // this.children,
   }) : super(key: key);
 
   // final List<Widget> children;
   final ScheduleLesson lesson;
+  final deviceWidth;
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.only(top: 20, bottom: 20),
       child: Column(
-        mainAxisSize: material.MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _buildTitle(context),
-          SizedBox(height: 10),
-          _buildData(context),
+          SizedBox(height: 20),
+          _buildData(context, deviceWidth),
         ],
       ),
     );
   }
 
-  Widget _buildData(BuildContext context) {
+  Widget _buildData(BuildContext context, double width) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -50,11 +53,11 @@ class LessonInfo extends StatelessWidget {
           children: <Widget>[
             _buildDataItem(
                 '上课时间', '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}'),
-            SizedBox(height: 10),
+            SizedBox(height: 7),
             _buildDataItem('上课地点', lesson.roomRaw),
           ],
         ),
-        SizedBox(width: 40),
+        SizedBox(width: width * 0.1),
         _buildDataItem('任课教师', lesson.teacherName),
       ],
     );
@@ -102,7 +105,7 @@ class LessonInfo extends StatelessWidget {
           Column(
             children: <Widget>[
               Icon(
-                CupertinoIcons.right_chevron,
+                Icons.chevron_right,
                 size: 20,
                 color: theme.textColor.withAlpha(100),
               ),
@@ -142,48 +145,48 @@ class LessonPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = <Widget>[];
-    content.add(LessonInfo(lesson: lesson));
+    final actions = <Widget>[];
+    final deviceWidth = MediaQuery.of(context).size.width;
+    content.add(LessonInfo(lesson: lesson, deviceWidth: deviceWidth));
 
     if (noConflict) {
-      if(!lesson.roomRaw.contains('线上教学')){
-        final map = Maps.search(lesson.roomRaw);
-        if (map != null) {
-          content.add(SizedBox(
-            height: 270 * 0.618,
-            child: ClipRect(child: DarkModeFilter(child: map, level: 170)),
-          ));
-        }
+      final map = Maps.search(lesson.roomRaw);
+      if (map != null) {
+        content.add(SizedBox(
+          height: 270 * 0.618,
+          child: ClipRect(child: DarkModeFilter(child: map, level: 170)),
+        ));
       }
     } else {
       for (var lesson in conflict) {
-        final div = material.Divider(
+        final div = Divider(
           height: 1,
-          color: CupertinoColors.inactiveGray,
+          color: Colors.grey,
         );
         content.add(div);
-        content.add(LessonInfo(lesson: lesson));
+        content.add(LessonInfo(lesson: lesson, deviceWidth: deviceWidth));
       }
     }
 
-    content.add(_buildActions(context));
+    actions.add(_buildActions(context));
 
     return CardDialog(
       child: Column(mainAxisSize: MainAxisSize.min, children: content),
+      width: deviceWidth * 0.9,
+      actions: actions,
     );
   }
 
   Widget _buildActions(BuildContext context) {
-    final confirm = CupertinoDialogAction(
+    final confirm = FlatButton(
       child: Text('确定'),
-      isDefaultAction: true,
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
 
-    final delete = CupertinoDialogAction(
+    final delete = FlatButton(
       child: Text('编辑'),
-      isDestructiveAction: true,
       onPressed: () async {
         Navigator.of(context).pop();
         // await lesson.delete();
@@ -195,9 +198,8 @@ class LessonPreview extends StatelessWidget {
       },
     );
 
-    final deleteCustom = CupertinoDialogAction(
+    final deleteCustom = FlatButton(
       child: Text('编辑自定义'),
-      isDestructiveAction: true,
       onPressed: () async {
         Navigator.of(context).pop();
         showCupertinoModalPopup(
@@ -219,9 +221,8 @@ class LessonPreview extends StatelessWidget {
       },
     );
 
-    final helpMe = CupertinoDialogAction(
+    final helpMe = FlatButton(
       child: Text('我该怎么办?'),
-      isDestructiveAction: true,
       onPressed: () {},
     );
 

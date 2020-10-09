@@ -1,5 +1,4 @@
 import 'package:custed2/res/image_res.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
@@ -32,7 +31,6 @@ class PhotoViewMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final isDark = isDark(context);
     return ZoomableWidget(
       initialOffset: offset,
       initialScale: map.initScale,
@@ -42,9 +40,7 @@ class PhotoViewMap extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             TransitionToImage(
-              image: isDark(context) ? map.darkImage : map.image,
-              // image: isDark ? map.darkImage : map.image,
-              // placeholder: CircularProgressIndicator(),
+              image: map.image,//isDark(context) ? map.darkImage : map.image,
               placeholder: Container(),
               duration: Duration(milliseconds: 300),
             ),

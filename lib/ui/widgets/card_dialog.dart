@@ -1,23 +1,25 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CardDialog extends StatelessWidget {
-  static const double _dialogWidth = 270.0;
 
   CardDialog({
     this.child,
-    this.width = _dialogWidth,
+    this.actions,
+    this.width,
   });
 
   final Widget child;
+  final List<Widget> actions;
   final double width;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: this.width,
-        child: CupertinoPopupSurface(
-          child: child,
+        width: width,
+        child: AlertDialog(
+          content: child,
+          actions: actions,
         ),
       ),
     );

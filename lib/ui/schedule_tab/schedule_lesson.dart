@@ -6,7 +6,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
 
 class ScheduleLessonWidget extends StatelessWidget {
   ScheduleLessonWidget(
@@ -58,7 +58,7 @@ class ScheduleLessonWidget extends StatelessWidget {
     } else {
       for (var lesson in conflict) {
         content.add(SizedBox(height: 5));
-        content.add(material.Divider(
+        content.add(Divider(
           height: 1,
           color: CupertinoColors.white,
         ));
@@ -98,7 +98,7 @@ class ScheduleLessonWidget extends StatelessWidget {
     ];
 
     final inactiveColor =
-        DynamicColor(Color(0xFFEBEFF5), material.Colors.grey[800]);
+        DynamicColor(Color(0xFFEBEFF5), Colors.grey[800]);
 
     if (!isActive) {
       return inactiveColor.resolve(context);
@@ -108,7 +108,7 @@ class ScheduleLessonWidget extends StatelessWidget {
   }
 
   void _showLessonPreview(BuildContext context) {
-    showCupertinoDialog(
+    showDialog(
       context: context,
       builder: (context) {
         return LessonPreview(lesson, conflict: conflict);
