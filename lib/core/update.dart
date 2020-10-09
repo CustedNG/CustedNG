@@ -88,8 +88,8 @@ Future<void> doTestflightUpdate(
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
-          title: Text('新版本可用'),
-          content: Text('使用旧版本可能导致某些功能无法使用'),
+          title: Text(update.title),
+          content: Text(update.content),
           actions: [
             CupertinoDialogAction(
               child: Text('取消'),

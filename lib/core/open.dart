@@ -10,7 +10,7 @@ Future<bool> openUrl(String url) async {
 
   final ok = await launch(url);
 
-  if (ok) {
+  if (ok == true) {
     return true;
   }
 
