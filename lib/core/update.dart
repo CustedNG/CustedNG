@@ -8,7 +8,7 @@ import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/update/update_notice_page.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 updateCheck(BuildContext context, {bool force = false}) async {
   print('Checking for updates...');
@@ -84,22 +84,21 @@ Future<void> doTestflightUpdate(
   final shouldShowDialog = force || isCurrentVersionTooOld;
 
   if (shouldShowDialog) {
-    showCupertinoDialog(
+    showDialog(
       context: context,
       builder: (context) {
-        return CupertinoAlertDialog(
+        return AlertDialog(
           title: Text(update.title),
           content: Text(update.content),
           actions: [
-            CupertinoDialogAction(
+            FlatButton(
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            CupertinoDialogAction(
-              child: Text('前往Testflight更新'),
-              isDefaultAction: true,
+            FlatButton(
+              child: Text('前往TestFlight更新'),
               onPressed: () async {
                 for (var url in update.urls) {
                   if (await openUrl(url)) {
