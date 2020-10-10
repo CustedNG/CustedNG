@@ -14,8 +14,14 @@ class CustedUpdateTestflight {
   /// 最新版本
   int newest;
   
-  /// Testflight链接地址
-  String url;
+  /// Testflight链接地址, 依次尝试打开 直到打开为止
+  List<String> urls;
+  
+  /// alert title
+  String title;
+
+  /// alert content
+  String content;
 
   factory CustedUpdateTestflight.fromJson(Map<String, dynamic> json) =>
       _$CustedUpdateTestflightFromJson(json);
@@ -24,6 +30,6 @@ class CustedUpdateTestflight {
 
   @override
   String toString() {
-    return 'tf_${newest}_$url';
+    return 'tf_${newest}_$urls';
   }
 }

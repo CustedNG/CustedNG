@@ -8,13 +8,13 @@ part of 'grade.dart';
 
 class GradeAdapter extends TypeAdapter<Grade> {
   @override
-  final typeId = 5;
+  final int typeId = 5;
 
   @override
   Grade read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Grade()
       ..averageGradePoint = fields[0] as double
@@ -57,4 +57,14 @@ class GradeAdapter extends TypeAdapter<Grade> {
       ..writeByte(11)
       ..write(obj.terms);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GradeAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

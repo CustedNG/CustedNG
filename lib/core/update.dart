@@ -8,10 +8,15 @@ import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/update/update_notice_page.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 updateCheck(BuildContext context, {bool force = false}) async {
   print('Checking for updates...');
+
+  // if (BuildMode.isDebug) {
+  //   print('Now in debug mode, skip checking updates.');
+  //   return;
+  // }
 
   if (Platform.isAndroid) {
     doAndroidUpdate(context, force: force);
@@ -79,23 +84,28 @@ Future<void> doTestflightUpdate(
   final shouldShowDialog = force || isCurrentVersionTooOld;
 
   if (shouldShowDialog) {
-    showDialog(
+    showCupertinoDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text('新版本可用'),
-          content: Text('使用旧版本可能导致某些功能无法使用'),
+        return CupertinoAlertDialog(
+          title: Text(update.title),
+          content: Text(update.content),
           actions: [
-            FlatButton(
+            CupertinoDialogAction(
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
-              child: Text('前往TestFlight更新'),
-              onPressed: () {
-                openUrl(update.url);
+            CupertinoDialogAction(
+              child: Text('前往Testflight更新'),
+              isDefaultAction: true,
+              onPressed: () async {
+                for (var url in update.urls) {
+                  if (await openUrl(url)) {
+                    break;
+                  }
+                }
                 Navigator.of(context).pop();
               },
             ),

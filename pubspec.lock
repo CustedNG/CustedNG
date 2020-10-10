@@ -7,7 +7,7 @@ packages:
       name: _fe_analyzer_shared
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "7.0.0"
+    version: "11.0.0"
   add_2_calendar:
     dependency: "direct main"
     description:
@@ -37,7 +37,7 @@ packages:
       name: analyzer
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "0.39.17"
+    version: "0.40.4"
   android_path_provider:
     dependency: "direct main"
     description:
@@ -79,7 +79,7 @@ packages:
       name: build
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "1.3.0"
+    version: "1.5.0"
   build_config:
     dependency: transitive
     description:
@@ -100,21 +100,21 @@ packages:
       name: build_resolvers
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "1.3.11"
+    version: "1.4.1"
   build_runner:
     dependency: "direct dev"
     description:
       name: build_runner
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "1.10.2"
+    version: "1.10.3"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "6.0.1"
+    version: "6.0.3"
   built_collection:
     dependency: transitive
     description:
@@ -223,10 +223,12 @@ packages:
   countly_flutter:
     dependency: "direct main"
     description:
-      name: countly_flutter
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
-    source: hosted
-    version: "20.04.0"
+      path: "."
+      ref: master
+      resolved-ref: "73351ab1faf710dde6d3c8039f17cd65a3abce01"
+      url: "https://github.com/Countly/countly-sdk-flutter-bridge.git"
+    source: git
+    version: "20.04.1"
   crypto:
     dependency: "direct main"
     description:
@@ -254,7 +256,7 @@ packages:
       name: dart_style
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "1.3.6"
+    version: "1.3.7"
   dartx:
     dependency: transitive
     description:
@@ -290,13 +292,6 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
     version: "0.1.3"
-  ffloat:
-    dependency: "direct main"
-    description:
-      name: ffloat
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
-    source: hosted
-    version: "1.0.1"
   file:
     dependency: transitive
     description:
@@ -325,13 +320,6 @@ packages:
       url: "https://github.com/CustedNG/flutter_advanced_networkimage.git"
     source: git
     version: "0.8.0"
-  flutter_banner_swiper:
-    dependency: "direct main"
-    description:
-      name: flutter_banner_swiper
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
-    source: hosted
-    version: "0.1.4"
   flutter_cupertino_settings:
     dependency: "direct main"
     description:
@@ -355,6 +343,13 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
     version: "0.9.1+3"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
+    source: hosted
+    version: "1.0.11"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -408,7 +403,7 @@ packages:
       name: hive
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "1.4.4"
+    version: "1.4.4+1"
   hive_flutter:
     dependency: "direct main"
     description:
@@ -422,14 +417,14 @@ packages:
       name: hive_generator
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "0.7.2+1"
+    version: "0.8.1"
   html:
     dependency: "direct main"
     description:
       name: html
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "0.14.0+3"
+    version: "0.14.0+4"
   http:
     dependency: "direct main"
     description:
@@ -493,6 +488,13 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
     version: "3.5.0"
+  loading_animations:
+    dependency: "direct main"
+    description:
+      name: loading_animations
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
+    source: hosted
+    version: "2.1.0"
   logging:
     dependency: transitive
     description:
@@ -639,7 +641,7 @@ packages:
       name: plugin_platform_interface
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   pointycastle:
     dependency: transitive
     description:
@@ -695,14 +697,14 @@ packages:
       name: retrofit
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "1.3.4"
+    version: "1.3.4+1"
   retrofit_generator:
     dependency: "direct dev"
     description:
       name: retrofit_generator
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "1.3.7+6"
+    version: "1.1.0"
   rxdart:
     dependency: transitive
     description:
@@ -954,5 +956,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.10.0-110 <2.11.0"
+  dart: ">=2.10.0-110 <=2.11.0-181.0.dev"
   flutter: ">=1.18.0-6.0.pre <2.0.0"

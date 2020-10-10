@@ -8,13 +8,13 @@ part of 'grade_term.dart';
 
 class GradeTermAdapter extends TypeAdapter<GradeTerm> {
   @override
-  final typeId = 7;
+  final int typeId = 7;
 
   @override
   GradeTerm read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return GradeTerm()
       ..averageGradePoint = fields[0] as double
@@ -48,4 +48,14 @@ class GradeTermAdapter extends TypeAdapter<GradeTerm> {
       ..writeByte(8)
       ..write(obj.averageGradePointNoElectiveCourse);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GradeTermAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
