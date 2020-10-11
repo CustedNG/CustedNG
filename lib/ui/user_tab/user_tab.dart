@@ -196,7 +196,7 @@ class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
           titleStyle: settingTextStyle,
           onTap: () => AppRoute(
               title: '',
-              page: IntroScreen(isFromSetting: true)
+              page: IntroScreen()
           ).go(context),
         ),
         SettingItem(

@@ -1,5 +1,3 @@
-import 'package:custed2/app.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +5,9 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 
 class IntroScreen extends StatefulWidget{
-  final bool isFromSetting;
   final double width;
 
-  IntroScreen({Key key, this.isFromSetting, this.width}) : super(key: key);
+  IntroScreen({Key key, this.width}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _IntroScreenState();
@@ -56,9 +53,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   void onDonePress() {
     locator<UserDataStore>().haveInit.put(true);
-    widget.isFromSetting
-        ? Navigator.pop(context)
-        : AppRoute(title: '', page: Custed()).go(context);
+    Navigator.pop(context);
   }
 
   @override
