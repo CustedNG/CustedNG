@@ -417,7 +417,7 @@ packages:
       name: hive_generator
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "0.7.3"
+    version: "0.8.1"
   html:
     dependency: "direct main"
     description:

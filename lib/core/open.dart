@@ -8,9 +8,9 @@ Future<bool> openUrl(String url) async {
     return false;
   }
 
-  final ok = await launch(url);
+  final ok = await launch(url, forceSafariVC: false);
 
-  if (ok) {
+  if (ok == true) {
     return true;
   }
 

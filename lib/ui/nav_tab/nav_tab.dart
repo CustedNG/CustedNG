@@ -91,12 +91,13 @@ class _NavTabState extends State<NavTab> {
                 if (request.url.contains('custed-target=blank')) {
                   openUrl(request.url);
                 } else {
-                  AppRoute(
-                    title: '',
-                    page: WebviewBrowser(request.url),
-                  ).go(context);
+                  showCupertinoModalPopup(
+                    context: context,
+                    builder: (context) {
+                      return WebviewBrowser(request.url);
+                    },
+                  );
                 }
-
                 return ShouldOverrideUrlLoadingAction.CANCEL;
               },
             ),

@@ -8,13 +8,13 @@ part of 'schedule.dart';
 
 class ScheduleAdapter extends TypeAdapter<Schedule> {
   @override
-  final typeId = 3;
+  final int typeId = 3;
 
   @override
   Schedule read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Schedule()
       ..lessons = (fields[0] as List)?.cast<ScheduleLesson>()
@@ -36,4 +36,14 @@ class ScheduleAdapter extends TypeAdapter<Schedule> {
       ..writeByte(3)
       ..write(obj.startDate);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ScheduleAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
