@@ -95,7 +95,7 @@ class _ScheduleTabState extends State<ScheduleTab>
   }
 
   SelectView(IconData icon, String text, String id) {
-    return new PopupMenuItem<String>(
+    return PopupMenuItem<String>(
         value: id,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -120,7 +120,7 @@ class _ScheduleTabState extends State<ScheduleTab>
               final snakeBar = locator<SnakebarProvider>();
               snakeBar.catchAll(() async {
                 await scheduleProvider.updateScheduleData();
-              }, message: '教务系统超时 :(', duration: Duration(seconds: 7));
+              }, message: '教务超时 :(，请尝试使用4G更新课表', duration: Duration(seconds: 7));
               break;
             case 'B':
               runScript('schedule_wrong.cl', context);
@@ -175,7 +175,8 @@ class _ScheduleTabState extends State<ScheduleTab>
         child: Column(
           children: <Widget>[
             SizedBox(height: 150),
-            PlaceholderWidget(text: '无课表信息')
+            PlaceholderWidget(text: '无课表信息'),
+            PlaceholderWidget(text: '如遇无法更新，请尝试使用4G更新课表')
           ],
         ),
       );

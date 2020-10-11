@@ -76,41 +76,11 @@ void runInZone(Function body) {
   );
 }
 
-Future<void> initData() async {
-  final setting = locator<SettingStore>();
-  final weatherProvider = locator<WeatherProvider>();
-
-  if (BuildMode.isRelease) {
-    Analytics.init();
-    Analytics.isDebug = false;
-  }
-
-  if(setting.autoUpdateWeather.fetch())weatherProvider.startAutoUpdate();
-  weatherProvider.update();
-
-  // 加载核心数据
-  await Future.wait([
-    locator<ScheduleProvider>().loadLocalData(),
-    locator<GradeProvider>().loadLocalData(),
-    locator<UserProvider>().loadLocalData(),
-  ]);
-
-  // 启动外围服务
-  // 预热 IecardService
-  // final user = locator<UserProvider>();
-  // await user.initialized;
-  // if (user.loggedIn) {
-  //   IecardService().login();
-  // }
-}
-
 void main() async {
   locator.registerSingleton(DebugProvider());
 
   runInZone(() async {
     await initApp();
-    await initData();
-
     runApp(
       MultiProvider(
         providers: [

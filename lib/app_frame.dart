@@ -1,13 +1,16 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/hotfix.dart';
+import 'package:custed2/core/route.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/core/update.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/grade_legacy.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
 import 'package:custed2/ui/nav_tab/nav_tab.dart';
+import 'package:custed2/ui/pages/intro_page.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
@@ -22,6 +25,7 @@ class AppFrame extends StatefulWidget {
 
 class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   final setting = locator<SettingStore>();
+  double width;
   bool useScheduleAsHome;
   int _selectIndex;
   PageController _pageController;
@@ -44,6 +48,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
         Flexible(
@@ -122,7 +127,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
         child: Container(
           height: 56,
           padding: EdgeInsets.only(left: 17, top: 4, bottom: 4, right: 8),
-          width: MediaQuery.of(context).size.width,
+          width: width,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: items.map((item) {
@@ -155,5 +160,37 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     updateCheck(context);
 
     doHotfix(context);
+
+    Future.delayed(Duration(seconds: 1), (){
+      if(!locator<UserDataStore>().haveInit.fetch()){
+        showDialog(
+            context: context,
+            builder: (ctx){
+              return AlertDialog(
+                title: Text('提示'),
+                content: Text('是否查看新版使用说明？'),
+                actions: [
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      AppRoute(
+                          title: 'intro',
+                          page: IntroScreen()
+                      ).go(context);
+                    },
+                    child: Text('是'),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('否'),
+                  )
+                ],
+              );
+            }
+        );
+      }
+    });
   }
 }

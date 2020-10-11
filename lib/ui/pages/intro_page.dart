@@ -5,10 +5,6 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 
 class IntroScreen extends StatefulWidget{
-  final double width;
-
-  IntroScreen({Key key, this.width}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() => _IntroScreenState();
 }
@@ -23,9 +19,6 @@ class _IntroScreenState extends State<IntroScreen> {
     slides.add(
       Slide(
         title: '界面，焕然一新',
-        widthImage: widget.width,
-        heightImage: widget.width / 9 * 16,
-        foregroundImageFit: BoxFit.fitWidth,
         description: '不仅是更精美的Material Design UI，还有更丰富的选项',
         pathImage: 'assets/intro/home.png',
         backgroundColor: Colors.cyan,
@@ -34,18 +27,16 @@ class _IntroScreenState extends State<IntroScreen> {
     slides.add(
       Slide(
         title: '账户页面',
-        widthImage: widget.width,
         description: '在该版本中，我们将用户界面移至了首页左上角Navigation',
-        pathImage: 'assets/intro/navigation.mov',
+        pathImage: 'assets/intro/navigation.gif',
         backgroundColor: Colors.pinkAccent,
       ),
     );
     slides.add(
       Slide(
         title: '设置项目',
-        widthImage: widget.width,
         description: '其次，设计了全新的设置界面，提供更丰富的选择，更精美的UI',
-        pathImage: 'assets/setting.mov',
+        pathImage: 'assets/intro/setting.gif',
         backgroundColor: Colors.purple,
       ),
     );

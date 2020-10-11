@@ -35,7 +35,6 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       setting: setting.darkMode,
       builder: (context, mode) {
         return MaterialApp(
-          navigatorKey: locator<GlobalKey<NavigatorState>>(),
           title: 'Custed',
           home: AppFrame(),
           builder: (context, child) {
@@ -44,12 +43,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
               data: ThemeData(
                 brightness: isDarkMode ? Brightness.dark : Brightness.light,
               ),
-              child: Builder(
-                builder: (context) => DefaultTextStyle(
-                  style: Theme.of(context).textTheme.bodyText1,
-                  child: child,
-                ),
-              ),
+              child: child
             );
           },
         );
