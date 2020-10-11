@@ -87,7 +87,7 @@ dependencies:
 
   flutter_svg: 0.18.0
   flutter_banner_swiper: 0.1.4
-  ffloat: ^1.0.1
+  intro_slider: ^2.3.3
 
 dev_dependencies:
   # flutter_test:
@@ -147,3 +147,4 @@ flutter:
     - assets/script/
     - assets/bg/
     - assets/wechat/
+    - assets/intro/

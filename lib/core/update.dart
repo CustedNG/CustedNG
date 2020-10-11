@@ -22,11 +22,7 @@ updateCheck(BuildContext context, {bool force = false}) async {
     doAndroidUpdate(context, force: force);
     return;
   }
-
-  if (Platform.isIOS) {
-    doTestflightUpdate(context, force: force);
-    return;
-  }
+  doTestflightUpdate(context, force: force);
 }
 
 Future<bool> isFileAvaliable(String url) async {

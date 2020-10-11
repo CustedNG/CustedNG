@@ -9,4 +9,5 @@ class UserDataStore with PresistentStore {
   StoreProperty<String> get password => property('password');
   StoreProperty<UserProfile> get profile => property('profile');
   StoreProperty<bool> get loggedIn => property('loggedIn', defaultValue: false);
+  StoreProperty<bool> get haveInit => property('init327', defaultValue: false);
 }
