@@ -91,19 +91,34 @@ class JwService extends WrdvpnBasedService {
   }
 
   Future<String> getStudentPhoto() async {
+    final ticket = await _mysso.getTicketForJw();
+    final response = await request(
+      'POST',
+      '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
+      body: encodeParams({
+        'Ticket': ticket,
+        'Url': 'https://jwgl.cust.edu.cn/welcome',
+      }),
+      headers: {
+        'content-type': 'application/json',
+      },
+    );
+
+    final parsedResponse = JwResponse.fromJson(json.decode(response.body));
     final resp = await xRequest(
       'POST',
       '$baseUrl/api/CommonApi/GetFileContentById'
           .toUri(),
       body: {
-        'param' : 'JTdCJTIySWQlMjIlM0ElMjJlMDI2ZjBjYi01OGMyLTQwNTktYTg4OS1lYmU5MTlkYjA0MjMlMjIlN0Q=',
+        'param' : base64Encode(utf8.encode('%7B%22Id%22%3A%22'
+            '${parsedResponse.data['StudentDto']['ZPID']}%22%7D')),
         '__log' : {
           'Context' : '查询',
           'Logtype' : 6,
-          'MenuID' : 'B7E5E595-9705-4E33-939B-D673FE3253F8'
+          'MenuID' : '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5'
         },
         '__permission' : {
-          'MenuID' : 'B7E5E595-9705-4E33-939B-D673FE3253F8',
+          'MenuID' : '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5',
           'Operation' : 0
         }
       },
