@@ -11,8 +11,8 @@ class LessonDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
 
-    final classes = lesson.classes?.toList();
-    classes?.sort();
+    // final classes = lesson.classes?.toList();
+    // classes?.sort();
 
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(),
@@ -28,7 +28,8 @@ class LessonDetailPage extends StatelessWidget {
               '上课时间': '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}',
               '任课教师': lesson.teacherName ?? '',
               '上课周数': lesson.weeks.join(','),
-              if (classes != null) '上课班级': classes.join('\n'),
+              // if (classes != null) '上课班级': classes.join('\n'),
+              if (lesson.classRaw != null) '上课班级': lesson.classRaw,
             }),
           ],
         ),
