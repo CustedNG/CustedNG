@@ -141,7 +141,7 @@ class MyssoService extends CatService {
       getTicket('http://wwwn.cust.edu.cn/wengine-auth/login?cas_login=true');
 
   Future<String> getTicketForJw() =>
-      getTicket('https://jwgl.cust.edu.cn/welcome');
+      getTicket('https://jwgls2.cust.edu.cn/welcome');
 
   Future<String> getTicketForIecard() =>
       getTicket('http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT');

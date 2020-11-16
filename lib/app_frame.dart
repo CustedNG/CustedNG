@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/hotfix.dart';
 import 'package:custed2/core/tty/executer.dart';
@@ -12,6 +14,8 @@ import 'package:custed2/ui/nav_tab/nav_tab.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AppFrame extends StatefulWidget {
@@ -31,6 +35,12 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   @override
   Widget build(BuildContext context) {
+    if (Platform.isAndroid) {
+      SystemUiOverlayStyle systemUiOverlayStyle =
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+      SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+    }
+
     return WillPopScope(
       onWillPop: () async {
         return !await _currentNavigatorKey().currentState.maybePop();

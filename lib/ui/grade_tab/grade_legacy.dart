@@ -126,6 +126,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
         automaticallyImplyMiddle: false,
         backgroundColor: theme.navBarColor,
         actionsForegroundColor: CupertinoColors.white,
+        brightness: Brightness.dark,
         leading: Align(
           alignment: Alignment.centerLeft,
           child: Text('成绩查询', style: textStyleInfo.copyWith(fontSize: 17)),

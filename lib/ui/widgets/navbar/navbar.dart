@@ -13,6 +13,7 @@ class NavBar {
     return CupertinoNavigationBar(
       backgroundColor: theme.navBarColor,
       actionsForegroundColor: theme.navBarActionsColor,
+      brightness: Brightness.dark,
       leading: leading,
       middle: middle,
       trailing: trailing,
