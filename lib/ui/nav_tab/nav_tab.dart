@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/open.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/ui/nav_tab/nav_tab_toggle.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
@@ -12,7 +11,6 @@ import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:loading_animations/loading_animations.dart';
 
 const custcc = 'https://cust.cc/?custed=1';
 const custccDark = 'https://cust.cc/?custed=1&dark=1';
@@ -31,10 +29,7 @@ class _NavTabState extends State<NavTab> {
     overlay = Container(
       color: Colors.transparent,
       child: Center(
-        child: LoadingRotating.square(
-          borderColor: CupertinoColors.activeBlue,
-          size: 30.0,
-        ),
+        child: CupertinoActivityIndicator(),
       ),
     );
 

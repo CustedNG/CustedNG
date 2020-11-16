@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:custed2/core/route.dart';
 import 'package:custed2/data/models/exam.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
+import 'package:custed2/ui/pages/exam_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -36,8 +38,9 @@ class _HomeExamState extends State<HomeExam> {
     String examType;
     String examTime;
 
-    List rows = exam.data.rows;
-    rows.sort((i, ii) => sortByTime(i, ii));
+    List<Rows> rows = exam.data.rows;
+    rows.sort((i, ii) => sortByTime(ii, i));
+    rows.forEach((element) {print(element.examTask.kSRQ);});
     for(Rows eachExam in rows){
       examTime = eachExam.examTask.kSRQ.substring(0, 11)
           + eachExam.examTask.kSSF;
@@ -45,30 +48,12 @@ class _HomeExamState extends State<HomeExam> {
         examPosition = eachExam.examTask.examRoom.kCMC;
         examType = eachExam.examTask.kSXS;
         examName = eachExam.examTask.beginLesson.lessonInfo.kCMC;
+        break;
       }
-
     }
 
     return GestureDetector(
-      onTap: () => showCupertinoDialog(
-          context: context,
-          builder: (ctx) {
-            List<Widget> list = [];
-            for(Rows eachExam in rows){
-              examTime = eachExam.examTask.kSRQ.substring(5, 11)
-                  + eachExam.examTask.kSSF;
-              examPosition = eachExam.examTask.examRoom.kCMC;
-              examType = eachExam.examTask.kSXS;
-              examName = eachExam.examTask.beginLesson.lessonInfo.kCMC;
-              list.add(Text(examTime, style: TextStyle(fontSize: 17)));
-              list.add(Text('$examName \n$examPosition \n$examType'));
-              list.add(SizedBox(height: 15));
-            }
-            return CupertinoAlertDialog(
-              content: Column(children: list),
-            );
-          }
-      ),
+      onTap: () => AppRoute(page: ExamPage(exam: exam)).go(context),
       child: HomeCard(
         title: _buildTitle(context, examTime.substring(5)),
         trailing: _buildArrow(),

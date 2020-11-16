@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
+import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -88,6 +89,11 @@ class _ScheduleTabState extends State<ScheduleTab>
     if (scheduleProvider.isBusy) return;
 
     scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
+    final setting = locator<SettingStore>();
+    if(setting.showTipOnViewingExam.fetch()){
+      locator<SnakebarProvider>().info('主页可查看考试安排了');
+      setting.showTipOnViewingExam.put(false);
+    }
   }
 
   Widget _buildTitle(BuildContext context) {

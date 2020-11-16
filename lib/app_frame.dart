@@ -79,6 +79,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   Widget _buildScaffold(BuildContext context) {
     final app = Provider.of<AppProvider>(context);
     _tabController.index = app.tabIndex;
+    bool isAndroid = Platform.isAndroid;
 
     return CupertinoTabScaffold(
       controller: _tabController,
@@ -89,30 +90,44 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.home),
-            title: Text('主页'),
+            icon: isAndroid
+                ? Icon(Icons.home, size: 27)
+                : Icon(CupertinoIcons.home, size: 27)
+            ,
+            label: '主页',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              const IconData(
-                0xf428,
-                fontFamily: 'CupertinoIcons',
-                fontPackage: 'cupertino_icons',
-              ),
+            icon: isAndroid
+                ? Icon(Icons.navigation, size: 26)
+                : Icon(
+                const IconData(
+                  0xf428,
+                  fontFamily: 'CupertinoIcons',
+                  fontPackage: 'cupertino_icons',
+                ), size: 34
             ),
-            title: Text('导航'),
+            label: '导航',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.tags),
-            title: Text('成绩'),
+            icon: isAndroid
+                ? Icon(Icons.bar_chart, size: 31)
+                : Icon(CupertinoIcons.tags, size: 25)
+            ,
+            label: '成绩',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.bell),
-            title: Text('课表'),
+            icon: isAndroid
+                ? Icon(Icons.calendar_today, size: 23)
+                : Icon(CupertinoIcons.bell, size: 27)
+            ,
+            label: '课表',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.settings),
-            title: Text('账户'),
+            icon: isAndroid
+                ? Icon(Icons.settings,size: 27)
+                : Icon(CupertinoIcons.settings, size: 27)
+            ,
+            label: '账户',
           ),
         ],
       ),
