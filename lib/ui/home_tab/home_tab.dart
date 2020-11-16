@@ -1,4 +1,5 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/ui/home_tab/home_exam.dart';
 import 'package:custed2/ui/home_tab/home_banner.dart';
 import 'package:custed2/ui/home_tab/home_entries.dart';
 import 'package:custed2/ui/home_tab/home_iecard.dart';
@@ -44,6 +45,8 @@ class HomeTab extends StatelessWidget {
         HomeNotice(),
         SizedBox(height: 15),
         HomeSchedule(),
+        SizedBox(height: 15),
+        HomeExam(),
         SizedBox(height: 15),
         HomeEntries(),
         SizedBox(height: 15),
