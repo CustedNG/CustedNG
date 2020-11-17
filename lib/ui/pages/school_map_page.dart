@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class SchoolMapPage extends StatefulWidget {
-  final int index;
-  final String heroTag;
+  final int initialIndex;
   final PageController controller;
 
-  SchoolMapPage({Key key, PageController controller, this.heroTag, this.index})
+  SchoolMapPage({Key key, PageController controller, this.initialIndex})
       : controller = controller ?? PageController(),
         super(key: key);
 
@@ -18,17 +17,31 @@ class SchoolMapPage extends StatefulWidget {
 }
 
 class _PhotoViewGalleryScreenState extends State<SchoolMapPage> {
+  static const maps = [
+    ImageRes.custEMapSimple,
+    ImageRes.custSMapSimple,
+    ImageRes.custWMapSimple
+  ];
+
+  static const darkMaps = [
+    ImageRes.custEMapSimpleDark,
+    ImageRes.custSMapSimpleDark,
+    ImageRes.custWMapSimpleDark
+  ];
+
   int currentMapIndex;
-  static const List<String> area = ['东', '南', '西'];
 
   @override
   void initState() {
     super.initState();
-    currentMapIndex = widget.index ?? 0;
+    currentMapIndex = widget.initialIndex ?? 0;
   }
 
   @override
   Widget build(BuildContext context) {
+    final effectMaps = isDark(context) ? darkMaps : maps;
+    final background = isDark(context) ? CupertinoColors.darkBackgroundGray : Colors.white;
+
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         middle: CupertinoSlidingSegmentedControl<int>(
@@ -51,71 +64,21 @@ class _PhotoViewGalleryScreenState extends State<SchoolMapPage> {
         ),
       ),
       child: PhotoViewGallery.builder(
-        builder: (BuildContext context, int index) {
+        builder: (context, index) {
           return PhotoViewGalleryPageOptions(
-            imageProvider: isDark(context)
-                ? [
-                    ImageRes.custEMapSimpleDark,
-                    ImageRes.custSMapSimpleDark,
-                    ImageRes.custWMapSimpleDark
-                  ][index]
-                : [
-                    ImageRes.custEMapSimple,
-                    ImageRes.custSMapSimple,
-                    ImageRes.custWMapSimple
-                  ][index],
+            imageProvider: effectMaps[index],
           );
         },
         itemCount: 3,
-        backgroundDecoration: null,
+        backgroundDecoration: BoxDecoration(color: background),
         pageController: widget.controller,
         enableRotation: true,
         onPageChanged: (index) {
-          setState(
-            () {
-              currentMapIndex = index;
-            },
-          );
+          setState(() {
+            currentMapIndex = index;
+          });
         },
       ),
     );
-
-    // return Scaffold(
-    //   body: Stack(
-    //     children: <Widget>[
-    //       Positioned(
-    //         top: 0,
-    //         left: 0,
-    //         bottom: 0,
-    //         right: 0,
-    //         child: Container(
-    //           child:
-    //         ),
-    //       ),
-    //       Positioned(
-    //         top: MediaQuery.of(context).padding.top + 15,
-    //         width: MediaQuery.of(context).size.width,
-    //         child: Center(
-    //           child: Text('${area[currentMapIndex]}区',
-    //               style: TextStyle(color: Colors.white, fontSize: 16)),
-    //         ),
-    //       ),
-    //       Positioned(
-    //         right: 10,
-    //         top: MediaQuery.of(context).padding.top,
-    //         child: IconButton(
-    //           icon: Icon(
-    //             Icons.close,
-    //             size: 30,
-    //             color: Colors.white,
-    //           ),
-    //           onPressed: () {
-    //             Navigator.of(context).pop();
-    //           },
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }
