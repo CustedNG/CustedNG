@@ -26,7 +26,6 @@ class CatClient {
     Duration timeout = kDefaultTimeout,
   }) async {
     url = resolveUri(url);
-    print('Cat Request: $method $url');
     final request = CatRequest(method, url);
     request.headers.addAll(headers);
     request.headers.putIfAbsent('Accept-Language',
@@ -101,8 +100,6 @@ class CatClient {
       uri = uri.replace(scheme: response.request.url.scheme);
     }
 
-    print('Cat Redirect: $uri');
-
     return await rawRequest(
       method,
       uri,
@@ -117,7 +114,6 @@ class CatClient {
     // }
 
     final cookies = findCookiesAsString(request.url);
-    print('load cookie for ${request.url} : [${cookies.length}]');
     if (cookies.length > 1) {
       request.headers[HttpHeaders.cookieHeader] = cookies;
       return;
@@ -130,7 +126,6 @@ class CatClient {
     if (cookieString == null) return;
 
     cookieString = cookieString.replaceAll(', ', '__custed_comma_space__');
-    print('load cookie for ${response.request.url} : ${cookieString.length}');
     final cookies = cookieString
         .split(',')
         .map((c) => c.replaceAll('__custed_comma_space__', ', '))

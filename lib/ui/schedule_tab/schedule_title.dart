@@ -9,14 +9,14 @@ class ScheduleTitle extends StatelessWidget {
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
     final scheduleTitleProvider = Provider.of<ScheduleTitleProvider>(context);
 
-    var title = '课表';
+    var title = ' 课表';
     var key = title;
 
     if (scheduleProvider.isBusy) {
       title = '更新中';
       key = title;
     } else if (scheduleTitleProvider.showWeekInTitle) {
-      title = '第${scheduleProvider.selectedWeek}周';
+      title = ' ${scheduleProvider.selectedWeek}周';
       key = '第x周';
     }
 
@@ -31,6 +31,7 @@ class ScheduleTitle extends StatelessWidget {
           overflow: TextOverflow.fade,
           style: TextStyle(
             fontSize: 13,
+            fontWeight: FontWeight.bold
           ),
         ),
         alignment: Alignment.centerLeft,

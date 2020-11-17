@@ -1,5 +1,4 @@
 import 'package:custed2/core/route.dart';
-import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/home_tab/home_go_to_wechat.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
@@ -132,7 +131,7 @@ final gotoWechat = AppRoute(
   page: GoToWechat(),
 );
 
-AppRoute examPage(JwExam exam) => AppRoute(
+AppRoute examPage() => AppRoute(
   title: '考试安排',
-  page: ExamPage(exam: exam),
+  page: ExamPage(),
 );

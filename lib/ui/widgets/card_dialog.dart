@@ -19,6 +19,7 @@ class CardDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
       ),
+      title: title,
       content: child,
       actions: actions,
     );
