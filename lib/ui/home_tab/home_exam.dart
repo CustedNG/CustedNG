@@ -44,6 +44,8 @@ class _HomeExamState extends State<HomeExam> {
 
     if (setting.agreeToShowExam.fetch() == false) {
       notice = '点击查看考场信息';
+    } else if (exam.failed) {
+      notice = '暂时无法获取考场信息';
     } else {
       final nextExam = exam.getNextExam();
       if (nextExam == null) {
