@@ -1,4 +1,3 @@
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/webview/webview2_progress.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:custed2/ui/widgets/progress_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class Webview2Progress extends StatelessWidget {
   Webview2Progress({

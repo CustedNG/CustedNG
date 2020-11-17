@@ -1,9 +1,9 @@
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/mysso_service.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,6 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
 
     final userData = await locator.getAsync<UserDataStore>();
     final mysso = locator<MyssoService>();
-    final snake = locator<SnakebarProvider>();
     final user = locator<UserProvider>();
 
     userData.username.put(usernameController.text);
@@ -52,13 +51,13 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           await mysso.login(force: true).timeout(Duration(minutes: 1));
       if (login.ok) {
         user.login();
-        snake.info('登录成功');
+        showSnackBar(context, '登录成功');
         Navigator.pop(context);
       } else {
-        snake.warning('登录失败[${login.data}]');
+        showSnackBar(context, '登录失败[${login.data}]');
       }
     } catch (e) {
-      snake.warning('登录失败[认证系统超时]');
+      showSnackBar(context, '登录失败[认证系统超时]');
       rethrow;
     } finally {
       setState(() => isBusy = false);
@@ -67,14 +66,13 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
 
   Future<void> forceLogin() async {
     final userData = await locator.getAsync<UserDataStore>();
-    final snake = locator<SnakebarProvider>();
     final user = locator<UserProvider>();
 
     userData.username.put(usernameController.text);
     userData.password.put(passwordController.text);
 
     user.login();
-    snake.info('#强制登录');
+    showSnackBar(context, '#强制登陆');
     Navigator.pop(context);
   }
 

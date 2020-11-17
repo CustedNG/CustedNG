@@ -1,6 +1,5 @@
 import 'package:custed2/core/util/save_image.dart';
 import 'package:custed2/res/image_res.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -14,7 +13,7 @@ class SchoolCalendarMenu extends StatelessWidget {
           child: Text('确定'),
           onPressed: () {
             Navigator.of(context).pop();
-            save();
+            save(context);
           },
         ),
         FlatButton(
@@ -27,8 +26,8 @@ class SchoolCalendarMenu extends StatelessWidget {
     );
   }
 
-  Future<void> save() async {
+  Future<void> save(BuildContext context) async {
     final bytes = await rootBundle.load(ImageRes.miscSchoolCalendar.assetName);
-    saveImageToGallery(bytes.buffer.asUint8List());
+    saveImageToGallery(context, bytes.buffer.asUint8List());
   }
 }

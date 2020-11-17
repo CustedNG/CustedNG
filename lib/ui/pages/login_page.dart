@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/webview/user_agent.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -161,8 +161,7 @@ class _LoginPageState extends State<LoginPage> {
     final user = locator<UserProvider>();
     user.login();
 
-    final snake = locator<SnakebarProvider>();
-    snake.info('登录成功');
+    showSnackBar(context, '登录成功');
   }
 
   Widget _buildIndicator(BuildContext context) {

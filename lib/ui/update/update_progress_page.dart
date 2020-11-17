@@ -5,10 +5,9 @@ import 'package:after_layout/after_layout.dart';
 import 'package:crypto/crypto.dart';
 import 'package:custed2/core/platform/os/app_tmp_dir.dart';
 import 'package:custed2/data/models/custed_update.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
-import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/custed_service.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Icons;
@@ -68,7 +67,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
 
     return WillPopScope(
       onWillPop: () async {
-        locator<SnakebarProvider>().info('更新将在后台进行');
+        showSnackBar(context, '更新将在后台进行');
         return true;
       },
       child: content,

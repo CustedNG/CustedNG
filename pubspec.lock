@@ -243,6 +243,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.16.2"
+  cupertino_icons:
+    dependency: "direct main"
+    description:
+      name: cupertino_icons
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.3"
   dart_style:
     dependency: transitive
     description:

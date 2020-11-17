@@ -1,5 +1,4 @@
 import 'package:custed2/ui/web/web_page.dart';
-import 'package:custed2/web/tiku2_addon.dart';
 
 class Tiku2WebPage extends WebPage {
   @override

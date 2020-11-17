@@ -1,8 +1,7 @@
 import 'package:custed2/core/tty/command.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/core/tty/executer.dart';
-import 'package:custed2/locator.dart';
 
 class NewYearCommand extends TTYCommand {
   @override
@@ -24,7 +23,7 @@ class NewYearCommand extends TTYCommand {
       '祝你鼠年开门大吉！',
     ];
     for (var s in ss) {
-      locator<SnakebarProvider>().info(s);
+      showSnackBar(context, s);
     }
   }
 }

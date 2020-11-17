@@ -38,7 +38,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       final rows = exam?.data?.rows ?? <JwExamRows>[];
       final list = <Widget>[];
 
-      for (var eachExam in rows) {
+      for (JwExamRows eachExam in rows) {
         final examTime = eachExam.examTask.beginDate.substring(5, 11) +
             eachExam.examTask.beginTime;
         final examPosition = eachExam.examTask.examRoom.name;

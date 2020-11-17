@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/store/custom_lesson_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_field.dart';
@@ -10,6 +9,7 @@ import 'package:custed2/ui/schedule_tab/add_lesson_time.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time_picker.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_weeks_picker.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -225,12 +225,11 @@ class _AddLessonPageState extends State<AddLessonPage> {
       ..endSection = endSection;
 
     final store = await locator.getAsync<CustomLessonStore>();
-    final snake = locator<SnakebarProvider>();
     
     store.addLesson(lesson);
     locator<ScheduleProvider>().loadLocalData();
 
-    snake.info('添加成功');
+    showSnackBar(context, '添加成功');
     Navigator.pop(context);
   }
 }

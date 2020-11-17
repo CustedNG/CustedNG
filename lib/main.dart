@@ -27,9 +27,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
-import 'core/util/build_mode.dart';
-import 'data/store/setting_store.dart';
-
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   final docDir = await getAppDocDir.invoke();

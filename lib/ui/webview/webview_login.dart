@@ -1,7 +1,7 @@
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/webview/plugin_debug.dart';
 import 'package:custed2/ui/webview/plugin_login.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
@@ -57,13 +57,12 @@ class _WebviewLoginState extends State<WebviewLogin> {
     userData.password.put(this.password);
 
     final user = locator<UserProvider>();
-    final snake = locator<SnakebarProvider>();
 
     try {
       await user.login();
-      snake.info('登录成功');
+      showSnackBar(context, '登录成功');
     } catch (e) {
-      snake.info('登录出错啦 等下再试吧');
+      showSnackBar(context, '登录出错啦 等下再试吧');
       rethrow;
     }
   }

@@ -1,7 +1,7 @@
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/web/web_page.dart';
 import 'package:custed2/web/login_addon.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,7 +58,6 @@ class _LoginWebPageState extends WebPageState {
     final user = locator<UserProvider>();
     user.login();
 
-    final snake = locator<SnakebarProvider>();
-    snake.info('登录成功');
+    showSnackBar(context, '登录成功');
   }
 }

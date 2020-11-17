@@ -1,14 +1,11 @@
 import 'package:custed2/core/open.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/webvpn_service.dart';
-import 'package:custed2/service/wrdvpn_service.dart';
 import 'package:custed2/ui/web/web_page.dart';
 import 'package:custed2/ui/web/web_page_action.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
-import 'package:custed2/web/jw_eval_addon.dart';
 import 'package:custed2/web/self_login_addon.dart';
 
 class SelfWebPage extends WebPage {

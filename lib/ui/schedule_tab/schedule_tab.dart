@@ -4,7 +4,6 @@ import 'package:custed2/core/route.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -111,13 +110,10 @@ class _ScheduleTabState extends State<ScheduleTab>
               this.SelectView(Icons.update, '更新课表', 'A'),
               this.SelectView(Icons.add_alert, '添加课程', 'C'),
             ],
-        onSelected: (String action) {
+        onSelected: (String action) async {
           switch (action) {
             case 'A':
-              final snakeBar = locator<SnakebarProvider>();
-              snakeBar.catchAll(() async {
-                await scheduleProvider.updateScheduleData();
-              }, message: '教务超时 :(，请尝试使用4G更新课表', duration: Duration(seconds: 7));
+              await scheduleProvider.updateScheduleData();
               break;
             case 'C':
               AppRoute(

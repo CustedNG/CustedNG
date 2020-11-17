@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:convert/convert.dart';
 import 'package:custed2/core/service/cat_client.dart';
 import 'package:custed2/core/service/cat_error.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
