@@ -65,9 +65,13 @@ class _HomeExamState extends State<HomeExam> {
         GestureDetector(
           onTap: () => examPage(exam).go(context),
           child: HomeCard(
-            title: _buildTitle(context, examTime.substring(5)),
+            title: _buildTitle(
+                context,
+                examTime.substring(5).replaceFirst('-', ' ~ ', 6)
+                    .replaceFirst('-', '月').replaceFirst(' ', '日 ')
+            ),
             trailing: _buildArrow(),
-            content: Text('$examName \n$examPosition $examType'),
+            content: Text('$examName \n$examPosition  $examType'),
           ),
         ),
         SizedBox(height: 15),

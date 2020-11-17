@@ -111,7 +111,10 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
           BottomNavigationBarItem(
             icon: isAndroid
                 ? Icon(Icons.bar_chart, size: 31)
-                : Icon(CupertinoIcons.tags, size: 25)
+                : Padding(
+                    padding: EdgeInsets.only(top: 5, bottom: 2),
+                    child: Icon(CupertinoIcons.tags, size: 25)
+                )
             ,
             label: '成绩',
           ),
