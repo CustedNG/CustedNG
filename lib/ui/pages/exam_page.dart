@@ -25,15 +25,20 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
 
     Widget content = Container();
 
-    // 两种特殊情况：
+    // 三种特殊情况：
     // 1.没有考试
     // 2.不同意
-
-    if (setting.agreeToShowExam.fetch() == true) {
-      final rows = exam.data.rows;
+    // 3.教务炸了
+    
+    if (exam.failed) {
+      content = Center(
+        child: Text('暂时无法获取考场信息～'),
+      );
+    } else if (setting.agreeToShowExam.fetch() == true) {
+      final rows = exam?.data?.rows ?? <JwExamRows>[];
       final list = <Widget>[];
 
-      for (JwExamRows eachExam in rows) {
+      for (var eachExam in rows) {
         final examTime = eachExam.examTask.beginDate.substring(5, 11) +
             eachExam.examTask.beginTime;
         final examPosition = eachExam.examTask.examRoom.name;

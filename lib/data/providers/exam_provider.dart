@@ -12,6 +12,7 @@ int sortExamByTime(JwExamRows a, JwExamRows b) {
 class ExamProvider extends BusyProvider {
   JwExamData data;
   var show = false;
+  var failed = false;
 
   Future<void> init() async {
     show = await CustedService().getShouldShowExam();
@@ -20,10 +21,16 @@ class ExamProvider extends BusyProvider {
       return;
     }
 
-    busyRun(() async {
+    setBusyState(true);
+
+    try {
       data = JwExam.fromJson(json.decode(await JwService().getExam())).data;
       data.rows.sort((a, b) => sortExamByTime(a, b));
-    });
+    } catch (e) {
+      failed = true;
+    } finally {
+      setBusyState(false);
+    }
   }
 
   JwExamRows getNextExam() {
