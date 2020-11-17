@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:custed2/config/routes.dart';
 import 'package:custed2/data/models/exam.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 
 class HomeExam extends StatefulWidget {
   @override
@@ -28,7 +30,9 @@ class _HomeExamState extends State<HomeExam> {
 
   @override
   Widget build(BuildContext context) {
-    if(!showExam) return Container();
+    final user = Provider.of<UserProvider>(context);
+
+    if(!showExam || user.isBusy || !user.loggedIn) return Container();
     if(exam == null) {
       return Column(
         children: [
