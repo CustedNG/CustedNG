@@ -91,14 +91,14 @@ Map<String, dynamic> _$JwExamTaskToJson(JwExamTask instance) =>
       'PKFS': instance.pKFS,
       'ISTYZJK': instance.iSTYZJK,
       'ExamPlan': instance.examPlan,
-      'KSXS': instance.kSXS,
+      'KSXS': instance.type,
       'CKRS': instance.cKRS,
       'YPJKRS': instance.yPJKRS,
       'FBZT': instance.fBZT,
       'EMKSRWID': instance.eMKSRWID,
-      'KSSF': instance.kSSF,
+      'KSSF': instance.beginTime,
       'BeginLesson': instance.beginLesson,
-      'KSRQ': instance.kSRQ,
+      'KSRQ': instance.beginDate,
       'ExamRoom': instance.examRoom,
       'KSSC': instance.kSSC,
       'FBSJ_BZ': instance.fBSJBZ,
@@ -219,7 +219,7 @@ Map<String, dynamic> _$JwExamLessonInfoToJson(JwExamLessonInfo instance) =>
     <String, dynamic>{
       'KCBH': instance.kCBH,
       'JYBJ': instance.jYBJ,
-      'KCMC': instance.kCMC,
+      'KCMC': instance.name,
     };
 
 Department _$DepartmentFromJson(Map<String, dynamic> json) {
@@ -278,7 +278,7 @@ Map<String, dynamic> _$JwExamRoomToJson(JwExamRoom instance) =>
       'IsCompleteAssgin': instance.isCompleteAssgin,
       'IsFull': instance.isFull,
       'IsConflict': instance.isConflict,
-      'KCMC': instance.kCMC,
+      'KCMC': instance.name,
       'AssignLessonNum': instance.assignLessonNum,
       'RemainNum': instance.remainNum,
       'IsPlanAssign': instance.isPlanAssign,

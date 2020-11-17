@@ -4,6 +4,7 @@ import 'package:custed2/core/analytics.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
+import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
@@ -91,11 +92,13 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       Analytics.isDebug = true;
     }
 
-    // 预热 IecardService
-    // final user = locator<UserProvider>();
-    // await user.initialized;
-    // if (user.loggedIn) {
-    //   IecardService().login();
-    // }
+    final user = locator<UserProvider>();
+    await user.initialized;
+    if (user.loggedIn) {
+      await locator<ExamProvider>().init();
+      // 预热 IecardService
+      // IecardService().login();
+    }
+
   }
 }

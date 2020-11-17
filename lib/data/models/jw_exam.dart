@@ -82,7 +82,7 @@ class JwExamTask extends Object {
   JwExamPlan examPlan;
 
   @JsonKey(name: 'KSXS')
-  String kSXS;
+  String type;
 
   @JsonKey(name: 'CKRS')
   int cKRS;
@@ -97,13 +97,13 @@ class JwExamTask extends Object {
   String eMKSRWID;
 
   @JsonKey(name: 'KSSF')
-  String kSSF;
+  String beginTime;
 
   @JsonKey(name: 'BeginLesson')
   JwExamBeginLesson beginLesson;
 
   @JsonKey(name: 'KSRQ')
-  String kSRQ;
+  String beginDate;
 
   @JsonKey(name: 'ExamRoom')
   JwExamRoom examRoom;
@@ -117,7 +117,7 @@ class JwExamTask extends Object {
   @JsonKey(name: 'YQJKRS')
   int yQJKRS;
 
-  JwExamTask(this.pKZT,this.kSLX,this.pKFS,this.iSTYZJK,this.examPlan,this.kSXS,this.cKRS,this.yPJKRS,this.fBZT,this.eMKSRWID,this.kSSF,this.beginLesson,this.kSRQ,this.examRoom,this.kSSC,this.fBSJBZ,this.yQJKRS,);
+  JwExamTask(this.pKZT,this.kSLX,this.pKFS,this.iSTYZJK,this.examPlan,this.type,this.cKRS,this.yPJKRS,this.fBZT,this.eMKSRWID,this.beginTime,this.beginLesson,this.beginDate,this.examRoom,this.kSSC,this.fBSJBZ,this.yQJKRS,);
 
   factory JwExamTask.fromJson(Map<String, dynamic> srcJson) => _$JwExamTaskFromJson(srcJson);
 
@@ -280,9 +280,9 @@ class JwExamLessonInfo extends Object {
   bool jYBJ;
 
   @JsonKey(name: 'KCMC')
-  String kCMC;
+  String name;
 
-  JwExamLessonInfo(this.kCBH,this.jYBJ,this.kCMC,);
+  JwExamLessonInfo(this.kCBH,this.jYBJ,this.name,);
 
   factory JwExamLessonInfo.fromJson(Map<String, dynamic> srcJson) => _$JwExamLessonInfoFromJson(srcJson);
 
@@ -361,7 +361,7 @@ class JwExamRoom extends Object {
   bool isConflict;
 
   @JsonKey(name: 'KCMC')
-  String kCMC;
+  String name;
 
   @JsonKey(name: 'AssignLessonNum')
   int assignLessonNum;
@@ -372,7 +372,7 @@ class JwExamRoom extends Object {
   @JsonKey(name: 'IsPlanAssign')
   bool isPlanAssign;
 
-  JwExamRoom(this.kSRNRS,this.assignNum,this.isTaskAssgin,this.bPKBJ,this.assignClassNum,this.isLessonAssgin,this.isCompleteAssgin,this.isFull,this.isConflict,this.kCMC,this.assignLessonNum,this.remainNum,this.isPlanAssign,);
+  JwExamRoom(this.kSRNRS,this.assignNum,this.isTaskAssgin,this.bPKBJ,this.assignClassNum,this.isLessonAssgin,this.isCompleteAssgin,this.isFull,this.isConflict,this.name,this.assignLessonNum,this.remainNum,this.isPlanAssign,);
 
   factory JwExamRoom.fromJson(Map<String, dynamic> srcJson) => _$JwExamRoomFromJson(srcJson);
 

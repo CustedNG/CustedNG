@@ -138,7 +138,7 @@ final schoolMapPage = AppRoute(
   page: SchoolMapPage(),
 );
 
-AppRoute examPage(JwExam exam) => AppRoute(
+AppRoute examPage() => AppRoute(
   title: '考试安排',
-  page: ExamPage(exam: exam),
+  page: ExamPage(),
 );

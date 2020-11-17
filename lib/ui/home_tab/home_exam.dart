@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/data/models/jw_exam.dart';
+import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
-import 'package:custed2/service/custed_service.dart';
-import 'package:custed2/service/jw_service.dart';
+import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
@@ -14,64 +13,67 @@ class HomeExam extends StatefulWidget {
 }
 
 class _HomeExamState extends State<HomeExam> {
-  JwExam exam;
-  bool showExam = false;
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      showExam = await CustedService().getShouldShowExam();
-      setState(() {});
-      if(showExam) exam = JwExam.fromJson(json.decode(await JwService().getExam()));
-      setState(() {});
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context);
+    final exam = Provider.of<ExamProvider>(context);
+    final setting = locator<SettingStore>();
 
-    if(!showExam || user.isBusy || !user.loggedIn) return Container();
-    if(exam == null) {
-      return Column(
-        children: [
-          Center(child: CupertinoActivityIndicator()),
-          SizedBox(height: 15),
-        ]
+    if (!exam.show || user.isBusy || !user.loggedIn) {
+      return Container();
+    }
+
+    if (exam.isBusy) {
+      return Container(
+        padding: EdgeInsets.only(bottom: 15),
+        child: Center(
+          child: CupertinoActivityIndicator(),
+        ),
       );
     }
 
-    String examName;
-    String examPosition;
-    String examType;
-    String examTime;
+    if (exam == null) {
+      return Column(children: [
+        Center(child: CupertinoActivityIndicator()),
+        SizedBox(height: 15),
+      ]);
+    }
 
-    List<JwExamRows> rows = exam.data.rows;
-    rows.sort((i, ii) => sortByTime(ii, i));
-    for(JwExamRows eachExam in rows){
-      examTime = eachExam.examTask.kSRQ.substring(0, 11)
-          + eachExam.examTask.kSSF;
-      if(DateTime.parse(examTime).isAfter(DateTime.now())){
-        examPosition = eachExam.examTask.examRoom.kCMC;
-        examType = eachExam.examTask.kSXS;
-        examName = eachExam.examTask.beginLesson.lessonInfo.kCMC;
-        break;
+    var time = '';
+    var notice = '';
+
+    if (setting.agreeToShowExam.fetch() == false) {
+      notice = '点击查看考场信息';
+    } else {
+      final nextExam = exam.getNextExam();
+      if (nextExam == null) {
+        notice = '没有考试啦～';
+      } else {
+        final examName = nextExam.examTask.beginLesson.lessonInfo.name;
+        final examPosition = nextExam.examTask.examRoom.name;
+        final examType = nextExam.examTask.type;
+
+        var examTime = nextExam.examTask.beginDate.substring(0, 11) +
+            nextExam.examTask.beginTime;
+        examTime = examTime
+            .substring(5)
+            .replaceFirst('-', ' ~ ', 6)
+            .replaceFirst('-', '月')
+            .replaceFirst(' ', '日 ');
+
+        time = examTime;
+        notice = '$examName \n$examPosition  $examType';
       }
     }
 
     return Column(
       children: [
         GestureDetector(
-          onTap: () => examPage(exam).go(context),
+          onTap: () => examPage().go(context),
           child: HomeCard(
-            title: _buildTitle(
-                context,
-                examTime.substring(5).replaceFirst('-', ' ~ ', 6)
-                    .replaceFirst('-', '月').replaceFirst(' ', '日 ')
-            ),
+            title: _buildTitle(context, time),
             trailing: _buildArrow(),
-            content: Text('$examName \n$examPosition  $examType'),
+            content: Text(notice),
           ),
         ),
         SizedBox(height: 15),
@@ -79,17 +81,10 @@ class _HomeExamState extends State<HomeExam> {
     );
   }
 
-  int sortByTime(JwExamRows i, JwExamRows ii) =>
-      ii.examTask.kSRQ.compareTo(i.examTask.kSRQ);
-
-  Widget _buildTitle(BuildContext context, String exam) {
-    final style = TextStyle(
-      color: Color(0xFF889CC3),
-    );
-
-    final title = '下场考试 $exam';
-
-    return Text(exam == '' ? '点击获取考试表' : title, style: style);
+  Widget _buildTitle(BuildContext context, String examTime) {
+    final style = TextStyle(color: Color(0xFF889CC3));
+    final title = '下场考试 $examTime';
+    return Text(title, style: style);
   }
 
   Widget _buildArrow() {

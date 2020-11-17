@@ -7,6 +7,7 @@ import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/banner_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/download_provider.dart';
+import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -49,6 +50,7 @@ void setupLocatorForProviders() {
   locator.registerSingleton(NetdiskProvider());
   locator.registerSingleton(DownloadProvider());
   locator.registerSingleton(BannerProvider());
+  locator.registerSingleton(ExamProvider());
 }
 
 Future<void> setupLocatorForStores() async {
