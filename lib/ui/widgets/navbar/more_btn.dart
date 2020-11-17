@@ -22,7 +22,7 @@ class NavBarMoreBtn extends StatelessWidget {
         padding: EdgeInsets.zero,
         child: Icon(
           icon,
-          size: 27,
+          size: 32,
         ),
       ),
     );

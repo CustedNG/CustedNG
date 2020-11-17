@@ -1,67 +1,69 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'exam.dart';
+part of 'jw_exam.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Exam _$ExamFromJson(Map<String, dynamic> json) {
-  return Exam(
+JwExam _$JwExamFromJson(Map<String, dynamic> json) {
+  return JwExam(
     json['state'] as int,
     json['data'] == null
         ? null
-        : Data.fromJson(json['data'] as Map<String, dynamic>),
+        : JwExamData.fromJson(json['data'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$ExamToJson(Exam instance) => <String, dynamic>{
+Map<String, dynamic> _$JwExamToJson(JwExam instance) => <String, dynamic>{
       'state': instance.state,
       'data': instance.data,
     };
 
-Data _$DataFromJson(Map<String, dynamic> json) {
-  return Data(
+JwExamData _$JwExamDataFromJson(Map<String, dynamic> json) {
+  return JwExamData(
     json['Total'] as int,
     (json['Rows'] as List)
-        ?.map(
-            (e) => e == null ? null : Rows.fromJson(e as Map<String, dynamic>))
+        ?.map((e) =>
+            e == null ? null : JwExamRows.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
+Map<String, dynamic> _$JwExamDataToJson(JwExamData instance) =>
+    <String, dynamic>{
       'Total': instance.total,
       'Rows': instance.rows,
     };
 
-Rows _$RowsFromJson(Map<String, dynamic> json) {
-  return Rows(
+JwExamRows _$JwExamRowsFromJson(Map<String, dynamic> json) {
+  return JwExamRows(
     json['ZXBJ'] as bool,
     json['ZXSJ'] as String,
     json['ExamTask'] == null
         ? null
-        : ExamTask.fromJson(json['ExamTask'] as Map<String, dynamic>),
+        : JwExamTask.fromJson(json['ExamTask'] as Map<String, dynamic>),
     json['ISGB'] as bool,
   );
 }
 
-Map<String, dynamic> _$RowsToJson(Rows instance) => <String, dynamic>{
+Map<String, dynamic> _$JwExamRowsToJson(JwExamRows instance) =>
+    <String, dynamic>{
       'ZXBJ': instance.zXBJ,
       'ZXSJ': instance.zXSJ,
       'ExamTask': instance.examTask,
       'ISGB': instance.iSGB,
     };
 
-ExamTask _$ExamTaskFromJson(Map<String, dynamic> json) {
-  return ExamTask(
+JwExamTask _$JwExamTaskFromJson(Map<String, dynamic> json) {
+  return JwExamTask(
     json['PKZT'] as int,
     json['KSLX'] as int,
     json['PKFS'] as int,
     json['ISTYZJK'] as bool,
     json['ExamPlan'] == null
         ? null
-        : ExamPlan.fromJson(json['ExamPlan'] as Map<String, dynamic>),
+        : JwExamPlan.fromJson(json['ExamPlan'] as Map<String, dynamic>),
     json['KSXS'] as String,
     json['CKRS'] as int,
     json['YPJKRS'] as int,
@@ -70,18 +72,20 @@ ExamTask _$ExamTaskFromJson(Map<String, dynamic> json) {
     json['KSSF'] as String,
     json['BeginLesson'] == null
         ? null
-        : BeginLesson.fromJson(json['BeginLesson'] as Map<String, dynamic>),
+        : JwExamBeginLesson.fromJson(
+            json['BeginLesson'] as Map<String, dynamic>),
     json['KSRQ'] as String,
     json['ExamRoom'] == null
         ? null
-        : ExamRoom.fromJson(json['ExamRoom'] as Map<String, dynamic>),
+        : JwExamRoom.fromJson(json['ExamRoom'] as Map<String, dynamic>),
     json['KSSC'] as int,
     json['FBSJ_BZ'] as String,
     json['YQJKRS'] as int,
   );
 }
 
-Map<String, dynamic> _$ExamTaskToJson(ExamTask instance) => <String, dynamic>{
+Map<String, dynamic> _$JwExamTaskToJson(JwExamTask instance) =>
+    <String, dynamic>{
       'PKZT': instance.pKZT,
       'KSLX': instance.kSLX,
       'PKFS': instance.pKFS,
@@ -101,8 +105,8 @@ Map<String, dynamic> _$ExamTaskToJson(ExamTask instance) => <String, dynamic>{
       'YQJKRS': instance.yQJKRS,
     };
 
-ExamPlan _$ExamPlanFromJson(Map<String, dynamic> json) {
-  return ExamPlan(
+JwExamPlan _$JwExamPlanFromJson(Map<String, dynamic> json) {
+  return JwExamPlan(
     json['JSRQ'] as String,
     json['JYBJ'] as bool,
     json['ISXSKBSJPD'] as bool,
@@ -114,7 +118,8 @@ ExamPlan _$ExamPlanFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ExamPlanToJson(ExamPlan instance) => <String, dynamic>{
+Map<String, dynamic> _$JwExamPlanToJson(JwExamPlan instance) =>
+    <String, dynamic>{
       'JSRQ': instance.jSRQ,
       'JYBJ': instance.jYBJ,
       'ISXSKBSJPD': instance.iSXSKBSJPD,
@@ -125,15 +130,15 @@ Map<String, dynamic> _$ExamPlanToJson(ExamPlan instance) => <String, dynamic>{
       'KSRQ': instance.kSRQ,
     };
 
-BeginLesson _$BeginLessonFromJson(Map<String, dynamic> json) {
-  return BeginLesson(
+JwExamBeginLesson _$JwExamBeginLessonFromJson(Map<String, dynamic> json) {
+  return JwExamBeginLesson(
     json['SHZT'] as int,
     json['ISJZPK'] as bool,
     json['LessonInfo'] == null
         ? null
-        : LessonInfo.fromJson(json['LessonInfo'] as Map<String, dynamic>),
+        : JwExamLessonInfo.fromJson(json['LessonInfo'] as Map<String, dynamic>),
     json['ClearZDJS'] as bool,
-    json['XXJD'] as double,
+    (json['XXJD'] as num)?.toDouble(),
     json['PKZT'] as int,
     json['LCKKXXID'] as String,
     json['ISPKYSD'] as bool,
@@ -145,7 +150,7 @@ BeginLesson _$BeginLessonFromJson(Map<String, dynamic> json) {
     json['ISJZCJLR'] as bool,
     json['ISXKBJ'] as bool,
     json['V_REF_JXKSZ'] as int,
-    json['V_REF_PKZXS'] as double,
+    (json['V_REF_PKZXS'] as num)?.toDouble(),
     json['ClearRKJS'] as bool,
     json['PKFS'] as int,
     json['ClearZDFQ'] as bool,
@@ -166,7 +171,7 @@ BeginLesson _$BeginLessonFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BeginLessonToJson(BeginLesson instance) =>
+Map<String, dynamic> _$JwExamBeginLessonToJson(JwExamBeginLesson instance) =>
     <String, dynamic>{
       'SHZT': instance.sHZT,
       'ISJZPK': instance.iSJZPK,
@@ -202,15 +207,15 @@ Map<String, dynamic> _$BeginLessonToJson(BeginLesson instance) =>
       'ISZRPK': instance.iSZRPK,
     };
 
-LessonInfo _$LessonInfoFromJson(Map<String, dynamic> json) {
-  return LessonInfo(
+JwExamLessonInfo _$JwExamLessonInfoFromJson(Map<String, dynamic> json) {
+  return JwExamLessonInfo(
     json['KCBH'] as String,
     json['JYBJ'] as bool,
     json['KCMC'] as String,
   );
 }
 
-Map<String, dynamic> _$LessonInfoToJson(LessonInfo instance) =>
+Map<String, dynamic> _$JwExamLessonInfoToJson(JwExamLessonInfo instance) =>
     <String, dynamic>{
       'KCBH': instance.kCBH,
       'JYBJ': instance.jYBJ,
@@ -244,8 +249,8 @@ Map<String, dynamic> _$DepartmentToJson(Department instance) =>
       'ISKKDW': instance.iSKKDW,
     };
 
-ExamRoom _$ExamRoomFromJson(Map<String, dynamic> json) {
-  return ExamRoom(
+JwExamRoom _$JwExamRoomFromJson(Map<String, dynamic> json) {
+  return JwExamRoom(
     json['KSRNRS'] as int,
     json['AssignNum'] as int,
     json['IsTaskAssgin'] as bool,
@@ -262,7 +267,8 @@ ExamRoom _$ExamRoomFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ExamRoomToJson(ExamRoom instance) => <String, dynamic>{
+Map<String, dynamic> _$JwExamRoomToJson(JwExamRoom instance) =>
+    <String, dynamic>{
       'KSRNRS': instance.kSRNRS,
       'AssignNum': instance.assignNum,
       'IsTaskAssgin': instance.isTaskAssgin,

@@ -11,6 +11,7 @@ import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:loading_animations/loading_animations.dart';
 
 const custcc = 'https://cust.cc/?custed=1';
 const custccDark = 'https://cust.cc/?custed=1&dark=1';
@@ -29,7 +30,10 @@ class _NavTabState extends State<NavTab> {
     overlay = Container(
       color: Colors.transparent,
       child: Center(
-        child: CupertinoActivityIndicator(),
+        child: LoadingRotating.square(
+          borderColor: CupertinoColors.activeBlue,
+          size: 30.0,
+        ),
       ),
     );
 
