@@ -23,8 +23,8 @@ class SettingStore with PresistentStore {
   StoreProperty<bool> get dontCountElectiveCourseGrade =>
       property('dontCountElectiveCourseGrade', defaultValue: false);
 
-  StoreProperty<bool> get showExam =>
-      property('showExam', defaultValue: false);
+  StoreProperty<bool> get agreeToShowExam =>
+      property('agreeToShowExam', defaultValue: false);
 
   StoreProperty<bool> get showTipOnViewingExam =>
       property('showTipOnViewingExam', defaultValue: true);

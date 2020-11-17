@@ -13,6 +13,7 @@ import 'package:custed2/data/providers/banner_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
+import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -96,6 +97,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => locator<GradeProvider>()),
           ChangeNotifierProvider(create: (_) => locator<NetdiskProvider>()),
           ChangeNotifierProvider(create: (_) => locator<BannerProvider>()),
+          ChangeNotifierProvider(create: (_) => locator<ExamProvider>()),
         ],
         child: Custed(),
       ),
