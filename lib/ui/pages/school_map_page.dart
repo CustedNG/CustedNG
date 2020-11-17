@@ -53,7 +53,6 @@ class _PhotoViewGalleryScreenState extends State<SchoolMapPage> {
           },
           onValueChanged: (index) {
             setState(() {
-              currentMapIndex = index;
               widget.controller.animateToPage(
                 index,
                 duration: Duration(milliseconds: 500),
