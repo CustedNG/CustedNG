@@ -52,7 +52,7 @@ class HomeEntries extends StatelessWidget {
             icon: Image(image: ImageRes.mapIcon),
             // action: () => examRoomWebPage.go(context),
             // action: () => custNavWebPage.go(context),
-            action: () => schoolMapPage.popup(context),
+            action: () => schoolMapPage.go(context),
           ),
           HomeEntry(
             name: Text('校园网'),
