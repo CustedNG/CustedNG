@@ -1,11 +1,11 @@
-import 'package:custed2/data/models/exam.dart';
+import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
 
 class ExamPage extends StatelessWidget{
-  final Exam exam;
+  final JwExam exam;
 
   const ExamPage({Key key, this.exam}) : super(key: key);
 
@@ -19,7 +19,7 @@ class ExamPage extends StatelessWidget{
     String examTime;
 
     rows.sort((i, ii) => sortByTime(ii, i));
-    for(Rows eachExam in rows){
+    for(JwExamRows eachExam in rows){
       examTime = eachExam.examTask.kSRQ.substring(5, 11)
           + eachExam.examTask.kSSF;
       examPosition = eachExam.examTask.examRoom.kCMC;
@@ -60,6 +60,6 @@ class ExamPage extends StatelessWidget{
     );
   }
 
-  int sortByTime(Rows i, Rows ii) =>
+  int sortByTime(JwExamRows i, JwExamRows ii) =>
       ii.examTask.kSRQ.compareTo(i.examTask.kSRQ);
 }

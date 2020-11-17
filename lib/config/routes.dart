@@ -1,5 +1,5 @@
 import 'package:custed2/core/route.dart';
-import 'package:custed2/data/models/exam.dart';
+import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/home_tab/home_go_to_wechat.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
@@ -138,7 +138,7 @@ final schoolMapPage = AppRoute(
   page: SchoolMapPage(),
 );
 
-AppRoute examPage(Exam exam) => AppRoute(
+AppRoute examPage(JwExam exam) => AppRoute(
   title: '考试安排',
   page: ExamPage(exam: exam),
 );

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/data/models/exam.dart';
+import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
@@ -14,7 +14,7 @@ class HomeExam extends StatefulWidget {
 }
 
 class _HomeExamState extends State<HomeExam> {
-  Exam exam;
+  JwExam exam;
   bool showExam = false;
 
   @override
@@ -22,7 +22,7 @@ class _HomeExamState extends State<HomeExam> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       showExam = await CustedService().getShouldShowExam();
       setState(() {});
-      if(showExam) exam = Exam.fromJson(json.decode(await JwService().getExam()));
+      if(showExam) exam = JwExam.fromJson(json.decode(await JwService().getExam()));
       setState(() {});
     });
     super.initState();
@@ -47,9 +47,9 @@ class _HomeExamState extends State<HomeExam> {
     String examType;
     String examTime;
 
-    List<Rows> rows = exam.data.rows;
+    List<JwExamRows> rows = exam.data.rows;
     rows.sort((i, ii) => sortByTime(ii, i));
-    for(Rows eachExam in rows){
+    for(JwExamRows eachExam in rows){
       examTime = eachExam.examTask.kSRQ.substring(0, 11)
           + eachExam.examTask.kSSF;
       if(DateTime.parse(examTime).isAfter(DateTime.now())){
@@ -75,7 +75,7 @@ class _HomeExamState extends State<HomeExam> {
     );
   }
 
-  int sortByTime(Rows i, Rows ii) =>
+  int sortByTime(JwExamRows i, JwExamRows ii) =>
       ii.examTask.kSRQ.compareTo(i.examTask.kSRQ);
 
   Widget _buildTitle(BuildContext context, String exam) {
