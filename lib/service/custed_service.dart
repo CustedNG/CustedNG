@@ -60,6 +60,12 @@ class CustedService extends CatClient {
     return CustedBanner.fromJson(custedResp.data as Map<String, dynamic>);
   }
 
+  Future<bool> getShouldShowExam() async{
+    final resp = await get('https://cust.cc/api/haveExam', timeout: defaultTimeout);
+    if(resp.body != null) return resp.body == '1' ? true : false;
+    return false;
+  }
+
   static String getFileUrl(CustedFile file) {
     if (file == null) return null;
     return file.url.startsWith('/') ? '$baseUrl${file.url}' : file.url;

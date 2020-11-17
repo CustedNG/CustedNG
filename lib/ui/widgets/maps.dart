@@ -1,4 +1,5 @@
 import 'package:custed2/res/image_res.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
@@ -21,16 +22,24 @@ class CustCompusMap {
 }
 
 class PhotoViewMap extends StatelessWidget {
-  PhotoViewMap(this.name, this.map, this.position, this.offset);
+  PhotoViewMap(
+      this.name,
+      this.map,
+      this.position,
+      this.darkPosition,
+      this.offset
+  );
 
-  static const flagSize = 5.0;
+  static const flagSize = 4.7;
   final String name;
   final CustCompusMap map;
   final Offset position;
+  final Offset darkPosition;
   final Offset offset;
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = isDark(context);
     return ZoomableWidget(
       initialOffset: offset,
       initialScale: map.initScale,
@@ -40,17 +49,18 @@ class PhotoViewMap extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             TransitionToImage(
-              image: map.image,//isDark(context) ? map.darkImage : map.image,
+              image: isDarkMode ? map.darkImage : map.image,
+              // placeholder: CircularProgressIndicator(),
               placeholder: Container(),
               duration: Duration(milliseconds: 300),
             ),
             Positioned(
-              top: position.dy,
-              left: position.dx,
+              top: isDarkMode ? darkPosition.dy : position.dy,
+              left: isDarkMode ? darkPosition.dx : position.dx,
               child: Icon(
-                CupertinoIcons.flag,
+                Icons.flag_sharp,
                 size: flagSize,
-                color: CupertinoColors.activeBlue,
+                color: Colors.lightBlueAccent,
               ),
             ),
           ],
@@ -107,6 +117,7 @@ class Maps {
       name,
       map,
       Offset(dx, dy),
+      Offset(dx, dy),
       Offset(-dx + 57, -dy + 80),
     );
   }
@@ -117,12 +128,14 @@ class Maps {
         '东1西',
         custE,
         Offset(31, 28),
-        Offset(30, 53),
+        Offset(31, 28),
+        Offset(27, 53),
       )
       ,
       PhotoViewMap(
         '东1东',
         custE,
+        Offset(68, 28),
         Offset(68, 28),
         Offset(-8, 53),
       ),
@@ -137,11 +150,13 @@ class Maps {
         '机实',
         custE,
         Offset(95, 148),
+        Offset(95, 148),
         Offset(-30, -65),
       ),
       PhotoViewMap(
         '东3教',
         custE,
+        Offset(35, 12),
         Offset(35, 12),
         Offset(15, 65),
       ),
@@ -149,12 +164,20 @@ class Maps {
         '研',
         custS,
         Offset(69, 97),
-        Offset(-5, -15),
+        Offset(72, 99),
+        Offset(-5, -20),
       ),
-      makeMap('南实训', custS, 65, 108),
+      PhotoViewMap(
+        '南实训',
+        custS,
+        Offset(67, 108),
+        Offset(72, 108),
+        Offset(-5, -20),
+      ),
       PhotoViewMap(
         '南区体育馆',
         custS,
+        Offset(81, 72),
         Offset(81, 72),
         Offset(-30, 10),
       ),
@@ -162,30 +185,35 @@ class Maps {
         '西1教',
         custW,
         Offset(67, 99),
+        Offset(68, 100),
         Offset(-9, -20),
       ),
       PhotoViewMap(
         '西区田',
         custW,
         Offset(68, 60),
+        Offset(68, 60),
         Offset(-5, 20),
       ),
       PhotoViewMap(
         '西2教',
         custW,
-        Offset(87, 115),
+        Offset(87, 106),
+        Offset(89, 107),
         Offset(-15, -25),
       ),
       PhotoViewMap(
         '西区实',
         custW,
         Offset(49, 105),
+        Offset(49, 106),
         Offset(-5, -25),
       ),
       PhotoViewMap(
         '西区攀岩',
         custW,
-        Offset(97, 77),
+        Offset(93, 77),
+        Offset(97, 76),
         Offset(-27, 5),
       ),
     ];
@@ -199,5 +227,5 @@ class Maps {
   }
 
   static Widget get defaultMap =>
-      PhotoViewMap('默认', custE, Offset.zero, Offset.zero);
+      PhotoViewMap('默认', custE, Offset.zero, Offset.zero, Offset.zero);
 }

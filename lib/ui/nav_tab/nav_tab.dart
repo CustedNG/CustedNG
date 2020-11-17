@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/open.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';

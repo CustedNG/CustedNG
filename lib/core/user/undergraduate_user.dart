@@ -44,7 +44,7 @@ class UndergraduateUser with CustUser implements User {
           final lesson = ScheduleLesson()
             ..weeks = rawLesson.parseWeeks()
             ..name = rawLesson.getName()
-            ..classes = rawLesson.Classs.map((c) => c.Name).toList()
+            ..classes = rawLesson?.Classs?.map((c) => c.Name)?.toList()
             ..startTime = section.StartTime
             ..endTime = section.EndTime
             ..type = ScheduleLessonType.general

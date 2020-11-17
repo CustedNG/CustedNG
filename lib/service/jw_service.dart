@@ -13,7 +13,7 @@ import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/wrdvpn_based_service.dart';
 
 class JwService extends WrdvpnBasedService {
-  static const baseUrl = 'https://jwgl.cust.edu.cn';
+  static const baseUrl = 'https://jwgls2.cust.edu.cn';
   
   final MyssoService _mysso = locator<MyssoService>();
 
@@ -28,7 +28,7 @@ class JwService extends WrdvpnBasedService {
       '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
       body: encodeParams({
         'Ticket': ticket,
-        'Url': 'https://jwgl.cust.edu.cn/welcome',
+        'Url': '$baseUrl/welcome',
       }),
       headers: {
         'content-type': 'application/json',
@@ -80,7 +80,7 @@ class JwService extends WrdvpnBasedService {
   Future<JwStudentInfo> getStudentInfo() async {
     final resp = await xRequest(
       'POST',
-      '$baseUrl/api/LoginApi/LGSSOLocalLogin'
+      '$baseUrl/api/ClientStudent/Home/StudentInfoApi/GetSudentInfoByStudentId'
           .toUri(),
       body: encodeParams({}),
       headers: {'content-type': 'application/json'},
@@ -97,7 +97,7 @@ class JwService extends WrdvpnBasedService {
       '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
       body: encodeParams({
         'Ticket': ticket,
-        'Url': 'https://jwgl.cust.edu.cn/welcome',
+        'Url': '$baseUrl/welcome',
       }),
       headers: {
         'content-type': 'application/json',
@@ -127,6 +127,28 @@ class JwService extends WrdvpnBasedService {
 
     Map<String,dynamic> jsonData = json.decode(resp.body);
     return jsonData['data']['ZZCLBlob']['Base64String'];
+  }
+
+  Future<String> getExam() async{
+    final resp = await xRequest(
+      'POST',
+      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentExamAssign',
+      body: {
+        'param':'JTdCJTdE',
+        '__permission':{
+          'MenuID':'00000000-0000-0000-0000-000000000000',
+          "Operation":0
+        },
+        "__log":{
+          "MenuID":"00000000-0000-0000-0000-000000000000",
+          "Logtype":6,
+          "Context":"查询"
+        }
+      },
+      headers: {'content-type': 'application/json'},
+    );
+
+    return resp.body;
   }
 
   Future<JwWeekTime> getWeekTime() async {
