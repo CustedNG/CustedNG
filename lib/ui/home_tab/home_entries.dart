@@ -1,18 +1,14 @@
 import 'package:custed2/config/routes.dart';
 import 'package:custed2/core/script.dart';
-import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
 import 'package:custed2/ui/home_tab/home_open_iecard.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 
 class HomeEntries extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final appProvider = Provider.of<AppProvider>(context, listen: false);
-
     return HomeCard(
       padding: 5,
       content: Table(children: [
@@ -52,11 +48,11 @@ class HomeEntries extends StatelessWidget {
           ),
           HomeEntry(
             // name: Text('考场查询'),
-            name: Text('导航'),
+            name: Text('地图'),
             icon: Image(image: ImageRes.mapIcon),
             // action: () => examRoomWebPage.go(context),
             // action: () => custNavWebPage.go(context),
-            action: () => appProvider.setTab(AppProvider.navTab),
+            action: () => schoolMapPage.popup(context),
           ),
           HomeEntry(
             name: Text('校园网'),

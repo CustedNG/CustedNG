@@ -1,6 +1,7 @@
 import 'package:custed2/data/models/exam.dart';
 import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
 
 class ExamPage extends StatelessWidget{
@@ -43,7 +44,7 @@ class ExamPage extends StatelessWidget{
     }
     return CupertinoPageScaffold(
       child: Padding(
-        padding: EdgeInsets.only(left: 27, right: 27, top: 7),
+        padding: EdgeInsets.only(left: 27, right: 27, top: 17),
         child: ListView(
           children: list,
         ),
@@ -54,6 +55,7 @@ class ExamPage extends StatelessWidget{
           child: BackIcon(),
           onTap: () => Navigator.of(context).pop(),
         ),
+        middle: NavbarText('考试安排')
       ),
     );
   }

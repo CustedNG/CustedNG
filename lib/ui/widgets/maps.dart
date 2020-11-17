@@ -32,7 +32,6 @@ class PhotoViewMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final isDark = isDark(context);
     return ZoomableWidget(
       initialOffset: offset,
       initialScale: map.initScale,
@@ -42,10 +41,7 @@ class PhotoViewMap extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             TransitionToImage(
-              // 暂时使用bright版地图 等dark版重做之后换上dark版
-              image: map.image,
-              // image: isDark(context) ? map.darkImage : map.image,
-              // image: isDark ? map.darkImage : map.image,
+              image: isDark(context) ? map.darkImage : map.image,
               // placeholder: CircularProgressIndicator(),
               placeholder: Container(),
               duration: Duration(milliseconds: 300),
@@ -82,9 +78,9 @@ class PhotoViewMap extends StatelessWidget {
 
 class Maps {
   static const custW = CustCompusMap(
-    minScale: 1,
-    maxScale: 3,
-    initScale: 2,
+    minScale: 4,
+    maxScale: 7,
+    initScale: 6,
     image: ImageRes.custWMapSimple,
     darkImage: ImageRes.custWMapSimpleDark,
   );

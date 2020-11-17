@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'package:custed2/core/route.dart';
+import 'package:custed2/config/routes.dart';
 import 'package:custed2/data/models/exam.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
-import 'package:custed2/ui/pages/exam_page.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class HomeExam extends StatefulWidget {
   @override
@@ -31,7 +29,14 @@ class _HomeExamState extends State<HomeExam> {
   @override
   Widget build(BuildContext context) {
     if(!showExam) return Container();
-    if(exam == null) return Center(child: CupertinoActivityIndicator());
+    if(exam == null) {
+      return Column(
+        children: [
+          Center(child: CupertinoActivityIndicator()),
+          SizedBox(height: 15),
+        ]
+      );
+    }
 
     String examName;
     String examPosition;
@@ -40,7 +45,6 @@ class _HomeExamState extends State<HomeExam> {
 
     List<Rows> rows = exam.data.rows;
     rows.sort((i, ii) => sortByTime(ii, i));
-    rows.forEach((element) {print(element.examTask.kSRQ);});
     for(Rows eachExam in rows){
       examTime = eachExam.examTask.kSRQ.substring(0, 11)
           + eachExam.examTask.kSSF;
@@ -52,13 +56,18 @@ class _HomeExamState extends State<HomeExam> {
       }
     }
 
-    return GestureDetector(
-      onTap: () => AppRoute(page: ExamPage(exam: exam)).go(context),
-      child: HomeCard(
-        title: _buildTitle(context, examTime.substring(5)),
-        trailing: _buildArrow(),
-        content: Text('$examName \n$examPosition $examType'),
-      ),
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () => examPage(exam).go(context),
+          child: HomeCard(
+            title: _buildTitle(context, examTime.substring(5)),
+            trailing: _buildArrow(),
+            content: Text('$examName \n$examPosition $examType'),
+          ),
+        ),
+        SizedBox(height: 15),
+      ],
     );
   }
 

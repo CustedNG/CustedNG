@@ -1,26 +1,21 @@
 import 'package:custed2/core/route.dart';
+import 'package:custed2/data/models/exam.dart';
 import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/home_tab/home_go_to_wechat.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
-import 'package:custed2/ui/pages/login_page.dart';
+import 'package:custed2/ui/pages/exam_page.dart';
 import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
+import 'package:custed2/ui/pages/school_map_page.dart';
 import 'package:custed2/ui/user_tab/dark_mode.dart';
 import 'package:custed2/ui/user_tab/netdisk_page.dart';
 import 'package:custed2/ui/web/custnav_web_page.dart';
 import 'package:custed2/ui/web/ecard_web_page.dart';
 import 'package:custed2/ui/web/exam_room_web_page.dart';
 import 'package:custed2/ui/web/iecard_web_page.dart';
-import 'package:custed2/ui/web/jw_web_page.dart';
-import 'package:custed2/ui/web/login_web_page.dart';
 import 'package:custed2/ui/web/netdisk_web_page.dart';
-import 'package:custed2/ui/web/self_web_page.dart';
-import 'package:custed2/ui/web/status_web_page.dart';
-import 'package:custed2/ui/web/tice_web_page.dart';
-import 'package:custed2/ui/web/tiku2_web_page.dart';
-import 'package:custed2/ui/web/tiku_web_page.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/webview/webview_login.dart';
 
@@ -136,4 +131,14 @@ final custNavWebPage = AppRoute(
 final gotoWechat = AppRoute(
   title: '',
   page: GoToWechat(),
+);
+
+final schoolMapPage = AppRoute(
+  title: '地图',
+  page: SchoolMapPage(),
+);
+
+AppRoute examPage(Exam exam) => AppRoute(
+  title: '考试安排',
+  page: ExamPage(exam: exam),
 );
