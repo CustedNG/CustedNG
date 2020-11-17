@@ -5,7 +5,6 @@ import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleLessonWidget extends StatelessWidget {
@@ -60,7 +59,7 @@ class ScheduleLessonWidget extends StatelessWidget {
         content.add(SizedBox(height: 5));
         content.add(Divider(
           height: 1,
-          color: CupertinoColors.white,
+          color: Colors.white,
         ));
         content.add(SizedBox(height: 5));
         content.add(Text(lesson.name, maxLines: 2));
@@ -70,7 +69,7 @@ class ScheduleLessonWidget extends StatelessWidget {
     final textStyle = TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.bold,
-      color: isActive ? CupertinoColors.white : Color(0xFF9C9C9C),
+      color: isActive ? Colors.white : Color(0xFF9C9C9C),
     );
 
     return DefaultTextStyle(

@@ -4,7 +4,6 @@ import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
@@ -20,10 +19,6 @@ class NetdiskPage extends StatelessWidget {
     return Scaffold(
       appBar: NavBar.material(
         context: context,
-        leading: GestureDetector(
-          child: BackIcon(),
-          onTap: () => Navigator.pop(context),
-        ),
         middle: NavbarText('网盘'),
       ),
       body: _buildRoot(context),

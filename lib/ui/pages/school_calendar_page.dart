@@ -1,6 +1,5 @@
 import 'package:custed2/ui/pages/school_calendar_menu.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
-import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -13,7 +12,12 @@ class SchoolCalendarPage extends StatelessWidget {
         backgroundColor: Colors.black,
         title: Text('校历', style: TextStyle(color: Colors.white)),
         centerTitle: true,
-        actions: [NavBarMoreBtn(onTap: () => _showMenu(context))],
+        actions: [
+          IconButton(
+            onPressed: () => _showMenu(context),
+            icon: Icon(Icons.file_download),
+          )
+        ],
       ),
       body: ClipRect(
         child: SafeArea(

@@ -1,4 +1,3 @@
-import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,15 +8,10 @@ class NavTabToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavBarMoreBtn(
-      onTap: onTap,
+    return IconButton(
+      onPressed: onTap,
       alignment: Alignment.centerLeft,
-      // icon: const IconData(
-      //   0xf394,
-      //   fontFamily: 'CupertinoIcons',
-      //   fontPackage: 'cupertino_icons',
-      // ),
-      icon: Icons.menu,
+      icon: Icon(Icons.menu),
     );
   }
 }

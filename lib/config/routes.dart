@@ -1,9 +1,11 @@
 import 'package:custed2/core/route.dart';
+import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/home_tab/home_go_to_wechat.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
+import 'package:custed2/ui/pages/exam_page.dart';
 import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/pages/map_page.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
@@ -128,4 +130,9 @@ final custNavWebPage = AppRoute(
 final gotoWechat = AppRoute(
   title: '',
   page: GoToWechat(),
+);
+
+AppRoute examPage(JwExam exam) => AppRoute(
+  title: '考试安排',
+  page: ExamPage(exam: exam),
 );

@@ -1,3 +1,4 @@
+/*
 import 'package:custed2/core/script.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:custed2/config/routes.dart';
@@ -38,3 +39,4 @@ class HomeMenu extends StatelessWidget {
     );
   }
 }
+*/

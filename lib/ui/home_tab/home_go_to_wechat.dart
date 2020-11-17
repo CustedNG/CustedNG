@@ -1,5 +1,4 @@
 import 'package:custed2/res/image_res.dart';
-import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
 
@@ -8,10 +7,6 @@ class GoToWechat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leading: GestureDetector(
-            child: BackIcon(),
-            onTap: () => Navigator.pop(context),
-          ),
           title: NavbarText('一卡通'),
           centerTitle: true,
       ),

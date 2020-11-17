@@ -1,5 +1,4 @@
 import 'package:custed2/res/build_data.dart';
-import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/kv_table.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
@@ -17,10 +16,6 @@ class AboutPage extends StatelessWidget {
     return Scaffold(
       appBar: NavBar.material(
         context: context,
-        leading: GestureDetector(
-          child: BackIcon(),
-          onTap: () => Navigator.pop(context),
-        ),
         middle: NavbarText('关于'),
       ),
       body: SafeArea(

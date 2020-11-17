@@ -1,5 +1,3 @@
-import 'package:custed2/data/store/user_data_store.dart';
-import 'package:custed2/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
@@ -42,10 +40,7 @@ class _IntroScreenState extends State<IntroScreen> {
     );
   }
 
-  void onDonePress() {
-    locator<UserDataStore>().haveInit.put(true);
-    Navigator.pop(context);
-  }
+  void onDonePress() => Navigator.pop(context);
 
   @override
   Widget build(BuildContext context) {

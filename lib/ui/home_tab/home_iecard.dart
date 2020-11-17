@@ -1,3 +1,4 @@
+/*
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,3 +14,4 @@ class HomeIecard extends StatelessWidget {
     );
   }
 }
+*/

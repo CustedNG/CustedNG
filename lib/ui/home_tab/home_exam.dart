@@ -5,7 +5,7 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeExam extends StatefulWidget {
@@ -36,7 +36,14 @@ class _HomeExamState extends State<HomeExam> {
     if(exam == null) {
       return Column(
         children: [
-          Center(child: CupertinoActivityIndicator()),
+          HomeCard(
+            content: Padding(
+              padding: EdgeInsets.all(7),
+              child: Center(
+                child: CircularProgressIndicator()
+              )
+            )
+          ),
           SizedBox(height: 15),
         ]
       );
@@ -70,7 +77,7 @@ class _HomeExamState extends State<HomeExam> {
                 examTime.substring(5).replaceFirst('-', ' ~ ', 6)
                     .replaceFirst('-', '月').replaceFirst(' ', '日 ')
             ),
-            trailing: _buildArrow(),
+            trailing: Icon(Icons.keyboard_arrow_right),
             content: Text('$examName \n$examPosition  $examType'),
           ),
         ),
@@ -90,12 +97,5 @@ class _HomeExamState extends State<HomeExam> {
     final title = '下场考试 $exam';
 
     return Text(exam == '' ? '点击获取考试表' : title, style: style);
-  }
-
-  Widget _buildArrow() {
-    return Icon(
-      CupertinoIcons.right_chevron,
-      color: CupertinoColors.black.withAlpha(100),
-    );
   }
 }

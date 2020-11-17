@@ -23,8 +23,8 @@ class SettingItem extends StatelessWidget {
   final TextStyle contentStyle;
   final Widget rightBtn;
   final double height;
-  final bool isShowArrow;//是否显示右侧箭头
-  final Icon icon;//左侧图片名字 不传则不显示图片
+  final bool isShowArrow;
+  final Icon icon;
   @override
   Widget build(BuildContext context) {
 
@@ -50,7 +50,7 @@ class SettingItem extends StatelessWidget {
                       SizedBox(width: 10.0),
                       Text(this.title,
                           style: this.titleStyle ??
-                              new TextStyle(
+                              TextStyle(
                                 color: Color(0xFF333333),
                                 fontSize: 14.0,
                               )),
@@ -61,7 +61,7 @@ class SettingItem extends StatelessWidget {
                               textAlign: this.textAlign,
                               overflow: TextOverflow.ellipsis,
                               style: this.contentStyle ??
-                                  new TextStyle(
+                                  TextStyle(
                                     fontSize: 14.0,
                                     color: Color(0xFFCCCCCC),
                                   )),

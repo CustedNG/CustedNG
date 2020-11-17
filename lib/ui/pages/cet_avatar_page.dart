@@ -1,7 +1,6 @@
 import 'package:custed2/core/util/save_image.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
@@ -16,10 +15,6 @@ class CetAvatarPage extends StatelessWidget {
     return Scaffold(
       appBar: NavBar.material(
           context: context,
-          leading: GestureDetector(
-            child: BackIcon(),
-            onTap: () => Navigator.pop(context),
-          ),
           middle: NavbarText('四六级照片')),
       body: Container(
         child: SafeArea(

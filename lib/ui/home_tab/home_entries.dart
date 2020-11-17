@@ -1,10 +1,10 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/core/script.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
 import 'package:custed2/ui/home_tab/home_open_iecard.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HomeEntries extends StatelessWidget {
   @override
@@ -63,7 +63,9 @@ class HomeEntries extends StatelessWidget {
           HomeEntry(
             name: Text('快速联网'),
             icon: Image(image: ImageRes.wifiIcon),
-            action: () => runScript('wifi_connect.cl', context),
+            action: () => Scaffold.of(context).showSnackBar(
+                SnackBar(content: Text('该功能暂时不可用'))
+            ),
           ),
         ])
       ]),

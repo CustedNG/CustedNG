@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BackIcon extends StatelessWidget {
@@ -6,10 +5,13 @@ class BackIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      Icons.arrow_back_sharp,
-      size: 25,
-      color: Colors.white,
+    return GestureDetector(
+      child: Icon(
+        Icons.arrow_back_sharp,
+        size: 25,
+        color: Colors.white,
+      ),
+      onTap: () => Navigator.of(context).pop(),
     );
   }
 }

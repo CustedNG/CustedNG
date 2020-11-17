@@ -27,7 +27,11 @@ class ScheduleTitle extends StatelessWidget {
         child: Text(
           title,
           softWrap: false,
+          textScaleFactor: 1.0,
           overflow: TextOverflow.fade,
+          style: TextStyle(
+            fontSize: 13,
+          ),
         ),
         alignment: Alignment.centerLeft,
         key: Key(key),

@@ -1,7 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/core/script.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
@@ -16,7 +15,6 @@ import 'package:custed2/ui/schedule_tab/schedule_week_navigator.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_title.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +64,7 @@ class _ScheduleTabState extends State<ScheduleTab>
       appBar: NavBar.material(
           context: context,
           needPadding: true,
-          leading: _buildTitle(context),
+          leading: ScheduleTitle(),
           middle: _buildNavbarMiddle(context),
           trailing: <Widget>[
             scheduleProvider.isBusy ? Container() : _showMenu(context),
@@ -112,7 +110,6 @@ class _ScheduleTabState extends State<ScheduleTab>
         itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
               this.SelectView(Icons.update, '更新课表', 'A'),
               this.SelectView(Icons.add_alert, '添加课程', 'C'),
-              this.SelectView(Icons.group_add, '常见问题', 'B'),
             ],
         onSelected: (String action) {
           switch (action) {
@@ -121,9 +118,6 @@ class _ScheduleTabState extends State<ScheduleTab>
               snakeBar.catchAll(() async {
                 await scheduleProvider.updateScheduleData();
               }, message: '教务超时 :(，请尝试使用4G更新课表', duration: Duration(seconds: 7));
-              break;
-            case 'B':
-              runScript('schedule_wrong.cl', context);
               break;
             case 'C':
               AppRoute(
@@ -147,13 +141,6 @@ class _ScheduleTabState extends State<ScheduleTab>
     if(settings.autoUpdateSchedule.fetch()){
       scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
     }
-  }
-
-  Widget _buildTitle(BuildContext context) {
-    // final scheduleProvider = Provider.of<ScheduleProvider>(context);
-    // final text = scheduleProvider.isBusy ? '更新中' : '课表';
-    // final text1 = showWeekInTitle ? 'lalala' : text;
-    return NavBarTitle(child: ScheduleTitle());
   }
 
   Widget _buildNavbarMiddle(BuildContext context) {

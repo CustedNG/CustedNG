@@ -10,7 +10,6 @@ import 'package:custed2/ui/schedule_tab/add_lesson_time.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time_picker.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_weeks_picker.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,10 +71,6 @@ class _AddLessonPageState extends State<AddLessonPage> {
       backgroundColor: theme.textFieldListBackgroundColor,
       appBar: NavBar.material(
           context: context,
-          leading: GestureDetector(
-            child: BackIcon(),
-            onTap: () => Navigator.pop(context),
-          ),
           middle: Text('添加课程', style: navBarText),
           trailing: [
             NavBarButton.trailing(

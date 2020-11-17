@@ -10,9 +10,7 @@ import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/web/web_page_action.dart';
 import 'package:custed2/ui/web/web_page_addon.dart';
 import 'package:custed2/ui/web/web_progress.dart';
-import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
-import 'package:custed2/ui/widgets/navbar/more_btn.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,10 +71,6 @@ class WebPageState extends State<WebPage> {
       navigationBar: CupertinoNavigationBar(
         backgroundColor: theme.webviewNavBarColor,
         actionsForegroundColor: theme.navBarActionsColor,
-        leading: GestureDetector(
-          child: BackIcon(),
-          onTap: () => Navigator.pop(context),
-        ),
         middle: NavbarText(widget.title),
         trailing:
             isBusy ? _buildIndicator(context) : _buildActionButton(context),
@@ -233,7 +227,10 @@ class WebPageState extends State<WebPage> {
       return null;
     }
 
-    return NavBarMoreBtn(onTap: () => showActionsMenu(context));
+    return material.IconButton(
+      onPressed: () => showActionsMenu(context),
+      icon: Icon(material.Icons.more_vert),
+    );
   }
 
   void showActionsMenu(BuildContext context) {

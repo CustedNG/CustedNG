@@ -31,10 +31,7 @@ class _DebugPageState extends State<DebugPage> {
       navigationBar: CupertinoNavigationBar(
           backgroundColor: CupertinoColors.black,
           actionsForegroundColor: CupertinoColors.white,
-          leading: GestureDetector(
-            child: BackIcon(),
-            onTap: () => Navigator.pop(context),
-          ),
+          leading: BackIcon(),
           middle: NavbarText('Terminal')),
       child: content,
     );

@@ -1,6 +1,5 @@
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter_advanced_networkimage/zoomable.dart';
@@ -45,42 +44,25 @@ class PhotoViewMap extends StatelessWidget {
       initialScale: map.initScale,
       minScale: map.minScale,
       maxScale: map.maxScale,
-      child: Container(
-        child: Stack(
-          children: <Widget>[
-            TransitionToImage(
-              image: isDarkMode ? map.darkImage : map.image,
-              // placeholder: CircularProgressIndicator(),
-              placeholder: Container(),
-              duration: Duration(milliseconds: 300),
+      child: Stack(
+        children: <Widget>[
+          TransitionToImage(
+            image: isDarkMode ? map.darkImage : map.image,
+            placeholder: Container(),
+            duration: Duration(milliseconds: 300),
+          ),
+          Positioned(
+            top: isDarkMode ? darkPosition.dy : position.dy,
+            left: isDarkMode ? darkPosition.dx : position.dx,
+            child: Icon(
+              Icons.flag_sharp,
+              size: flagSize,
+              color: Colors.lightBlueAccent,
             ),
-            Positioned(
-              top: isDarkMode ? darkPosition.dy : position.dy,
-              left: isDarkMode ? darkPosition.dx : position.dx,
-              child: Icon(
-                Icons.flag_sharp,
-                size: flagSize,
-                color: Colors.lightBlueAccent,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
-
-    // return PhotoView(
-    //   basePosition: Alignment.topCenter,
-    //   controller: PhotoViewController(
-    //     initialPosition: Offset(offsetX ?? 0, offsetY ?? 0),
-    //   ),
-    //   backgroundDecoration: BoxDecoration(
-    //     color: Color(0xFFF5F5F5),
-    //   ),
-    //   minScale: 0.1,
-    //   maxScale: 1.0,
-    //   initialScale: scale,
-    //   imageProvider: img,
-    // );
   }
 }
 

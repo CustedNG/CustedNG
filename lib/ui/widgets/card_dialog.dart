@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class CardDialog extends StatelessWidget {
 
   CardDialog({
+    this.title,
     this.child,
     this.actions,
   });
 
   final Widget child;
   final List<Widget> actions;
+  final Widget title;
 
   @override
   Widget build(BuildContext context) {

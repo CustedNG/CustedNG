@@ -4,9 +4,10 @@ import 'package:custed2/core/store/presistent_store.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/res/build_data.dart';
 import 'package:custed2/ui/pages/intro_page.dart';
+import 'package:custed2/ui/pages/issue_page.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/user_tab/custed_header.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
@@ -20,41 +21,15 @@ class UserTab extends StatefulWidget {
   State<StatefulWidget> createState() => _UseTabState();
 }
 
-class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
-  AnimationController _controller;
-  CurvedAnimation _curvedAnimation;
-  double _scale;
+class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
   final setting = locator<SettingStore>();
 
   @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      lowerBound: 0.0,
-      upperBound: 0.9,
-      duration: Duration(milliseconds: 777),
-    );
-    _curvedAnimation = CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOutCubic
-    )..addListener(() { setState(() {});});
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final user = Provider.of<UserProvider>(context);
 
-    if (user.isBusy) {
-      return PlaceholderWidget(isActive: true);
-    }
-
+    if (user.isBusy) return PlaceholderWidget(isActive: true);
     return user.loggedIn ? _buildUserTab(context) : _buildLoginButton(context);
   }
 
@@ -93,91 +68,22 @@ class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
 
   Widget _buildUserTab(BuildContext context) {
     final theme = AppTheme.of(context);
-    _scale = 1 - _curvedAnimation.value;
 
     return Scaffold(
         backgroundColor: theme.homeBackgroundColor,
         appBar: NavBar.material(
           context: context,
+          leading: Container(),
           middle: NavbarText('设置'),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              _buildHeadCard(),
+              CustedHeader(),
               _buildSetting()
             ],
           ),
         ));
-  }
-
-  Widget _buildHeadCard(){
-    return Padding(
-        padding: EdgeInsets.all(20.0),
-        child: GestureDetector(
-            onTap: (){
-              _controller.forward();
-              Future.delayed(Duration(milliseconds: 300), () => _controller.reverse());
-            },
-            child: Transform.scale(
-              scale: _scale,
-              child:Card(
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                ),
-                clipBehavior: Clip.antiAlias,
-                semanticContainer: false,
-                child: Stack(
-                  children: <Widget>[
-                    AspectRatio(
-                      aspectRatio: (MediaQuery.of(context).size.width - 40) / 110,
-                      child: Image.asset(
-                          'assets/bg/abstract-dark.jpg',
-                          fit: BoxFit.cover
-                      ),
-                    ),
-                    Positioned(
-                        top: 30,
-                        left: 30,
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: DarkModeFilter(
-                                  child: Image.asset(
-                                      'assets/icon/custed_lite.png',
-                                      height: 50,
-                                      width: 50
-                                  ),
-                                )
-                            ),
-                            SizedBox(width: 40.0),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Custed NG',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                                SizedBox(height: 10.0),
-                                Text(
-                                  'Ver: Material 1.0.${BuildData.build}',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 15),
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                    )
-                  ],
-                ),
-              ),
-            )
-        )
-    );
   }
 
   Widget _buildSetting(){
@@ -192,10 +98,16 @@ class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
         Text('设置'),
         SizedBox(height: 10.0),
         SettingItem(
+          title: '我要疑问',
+          titleStyle: settingTextStyle,
+          onTap: () => AppRoute(
+            page: IssuePage(),
+          ).go(context),
+        ),
+        SettingItem(
           title: '查看新版指引',
           titleStyle: settingTextStyle,
           onTap: () => AppRoute(
-              title: '',
               page: IntroScreen()
           ).go(context),
         ),
@@ -252,17 +164,20 @@ class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
         Radio(
             value: 0,
             groupValue: setting.darkMode.fetch(),
-            onChanged: _onSelection),
+            onChanged: _onSelection
+        ),
         Text('开'),
         Radio(
             value: 1,
             groupValue: setting.darkMode.fetch(),
-            onChanged: _onSelection),
+            onChanged: _onSelection
+        ),
         Text('关'),
         Radio(
             value: 2,
             groupValue: setting.darkMode.fetch(),
-            onChanged: _onSelection)
+            onChanged: _onSelection
+        )
       ],
     );
   }
@@ -288,4 +203,7 @@ class _UseTabState extends State<UserTab> with TickerProviderStateMixin{
         )
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

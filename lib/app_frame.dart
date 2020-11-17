@@ -15,6 +15,7 @@ import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
 import 'package:custed2/ui/widgets/bottom_navbar.dart';
+import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/material.dart';
 
@@ -24,18 +25,15 @@ class AppFrame extends StatefulWidget {
 }
 
 class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
-  final setting = locator<SettingStore>();
-  double width;
-  bool useScheduleAsHome;
+  double _width;
   int _selectIndex;
   PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    bool useScheduleAsHome = setting.useScheduleAsHome.fetch();
-    _selectIndex = useScheduleAsHome ? 1 : 2;
-    _pageController = PageController(initialPage: useScheduleAsHome ? 1 : 2);
+    _selectIndex = locator<SettingStore>().useScheduleAsHome.fetch() ? 1 : 2;
+    _pageController = PageController(initialPage: _selectIndex);
   }
 
   @override
@@ -44,11 +42,9 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     super.dispose();
   }
 
-  bool isShowNavigator = false;
-
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
+    _width = MediaQuery.of(context).size.width;
     return Column(
       children: <Widget>[
         Flexible(
@@ -75,11 +71,11 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   }
 
   List<NavigationItem> items = [
-    NavigationItem(Icon(Icons.leaderboard, size: 27), Text('成绩'), Colors.pinkAccent),
-    NavigationItem(Icon(Icons.calendar_today, size: 25), Text('课表'), Colors.amberAccent),
-    NavigationItem(Icon(Icons.home, size: 28), Text('主页'), Colors.deepPurpleAccent),
-    NavigationItem(Icon(Icons.navigation, size: 27), Text('导航'), Colors.greenAccent),
-    NavigationItem(Icon(Icons.settings, size: 27), Text('设置'), Colors.cyanAccent)
+    NavigationItem(Icon(Icons.leaderboard, size: 27), Text('成绩')),
+    NavigationItem(Icon(Icons.calendar_today, size: 25), Text('课表')),
+    NavigationItem(Icon(Icons.home, size: 28), Text('主页')),
+    NavigationItem(Icon(Icons.navigation, size: 27), Text('导航')),
+    NavigationItem(Icon(Icons.settings, size: 27), Text('设置'))
   ];
 
   Widget _buildItem(NavigationItem item, bool isSelected) {
@@ -89,11 +85,15 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       curve: Curves.fastOutSlowIn,
       height: 50,
       width: isSelected ? 95 : 50,
-      padding: isSelected ? EdgeInsets.only(left: 16, right: 16) : null,
+      padding: isSelected ? const EdgeInsets.only(left: 16, right: 16) : null,
       decoration: isSelected
           ? BoxDecoration(
-          color: item.color,
-          borderRadius: BorderRadius.all(Radius.circular(50)))
+              color: isDarkMode
+                  ? Colors.white12
+                  : Colors.black12
+              ,
+              borderRadius: const BorderRadius.all(Radius.circular(50))
+          )
           : null,
       child: ListView(
         scrollDirection: Axis.horizontal,
@@ -112,7 +112,8 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
                     ? DefaultTextStyle.merge(
                         child: item.title,
                         style: TextStyle(
-                            color: isDarkMode ? Colors.white : Colors.black))
+                            color: isDarkMode ? Colors.white : Colors.black)
+                    )
                     : null,
               )
             ],
@@ -126,19 +127,19 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     return SafeArea(
         child: Container(
           height: 56,
-          padding: EdgeInsets.only(left: 17, top: 4, bottom: 4, right: 8),
-          width: width,
+          padding: const EdgeInsets.only(left: 17, top: 4, bottom: 4, right: 8),
+          width: _width,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: items.map((item) {
-              var itemIndex = items.indexOf(item);
+              int itemIndex = items.indexOf(item);
               return GestureDetector(
                 onTap: () {
                   setState(() {
                     _selectIndex = itemIndex;
                     _pageController.animateToPage(itemIndex,
-                        duration: Duration(milliseconds: 377),
-                        curve: Curves.easeInOutCubic);
+                        duration: Duration(milliseconds: 677),
+                        curve: Curves.fastLinearToSlowEaseIn);
                   });
                 },
                 child: _buildItem(item, _selectIndex == itemIndex),
@@ -156,9 +157,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       locator<TTYExecuter>().execute('(debug)', context, quiet: true);
     }
 
-    // call updateCheck to ensure navigator exists in context
     updateCheck(context);
-
     doHotfix(context);
 
     Future.delayed(Duration(seconds: 1), (){
@@ -166,9 +165,9 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
         showDialog(
             context: context,
             builder: (ctx){
-              return AlertDialog(
+              return CardDialog(
                 title: Text('提示'),
-                content: Text('是否查看新版使用说明？'),
+                child: Text('是否查看新版使用说明？'),
                 actions: [
                   FlatButton(
                     onPressed: () {
@@ -190,6 +189,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
               );
             }
         );
+        locator<UserDataStore>().haveInit.put(true);
       }
     });
   }

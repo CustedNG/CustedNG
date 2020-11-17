@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:custed2/core/open.dart';
-import 'package:custed2/ui/widgets/missing_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share_extend/share_extend.dart';
@@ -84,7 +83,7 @@ class _Webview2BottomState extends State<Webview2Bottom> {
               },
             ),
             IconButton(
-              icon: const Icon(MissingIcons.earth, size: 26),
+              icon: const Icon(Icons.open_in_browser, size: 26),
               onPressed: () async {
                 // var url = await webview.evalJavascript('window.location.href');
                 // if (url.length >= 2) {

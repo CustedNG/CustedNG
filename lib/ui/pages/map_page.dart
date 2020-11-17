@@ -53,7 +53,9 @@ class _PhotoViewGalleryScreenState extends State<MapPage> {
                 );
               },
               itemCount: 3,
-              backgroundDecoration: null,
+              backgroundDecoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor
+              ),
               pageController: widget.controller,
               enableRotation: true,
               onPageChanged: (index) {

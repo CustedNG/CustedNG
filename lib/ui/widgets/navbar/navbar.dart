@@ -1,4 +1,5 @@
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:flutter/material.dart';
 
 class NavBar {
@@ -14,8 +15,11 @@ class NavBar {
     return AppBar(
       backgroundColor: theme.navBarColor,
       leading: needPadding
-          ? Padding(padding: EdgeInsets.only(left: 10.0), child: leading)
-          : leading,
+          ? Padding(
+              padding: EdgeInsets.only(left: 10.0),
+              child: leading??BackIcon()
+          )
+          : leading??BackIcon(),
       title: middle,
       centerTitle: true,
       actions: trailing,

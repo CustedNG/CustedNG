@@ -2,7 +2,7 @@ import 'package:custed2/config/routes.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeWeather extends StatefulWidget {
