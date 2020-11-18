@@ -5,8 +5,8 @@ import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/back_icon.dart';
-import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
@@ -109,32 +109,28 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     }
 
     Future.delayed(Duration(milliseconds: 377), () =>
-        showDialog(
-          context: context,
-          builder: (innerContext) {
-            return CardDialog(
-              title: Text('提示'),
-              child: Text('考场信息仅供参考\n请与教务系统中信息核对后使用'),
-              actions: [
-                FlatButton(
-                  child: Text('取消'),
-                  onPressed: () async {
-                    await Navigator.of(innerContext).pop();
-                    await Future.delayed(Duration(milliseconds: 377));
-                    await Navigator.of(context).pop();
-                  },
-                ),
-                FlatButton(
-                  child: Text('好的'),
-                  onPressed: () {
-                    setting.agreeToShowExam.put(true);
-                    setState(() {});
-                    Navigator.of(innerContext).pop();
-                  },
-                ),
-              ],
-            );
-          },
+        showRoundDialog(
+            context,
+            '提示',
+            Text('考场信息仅供参考\n请与教务系统中信息核对后使用'),
+            [
+              FlatButton(
+                child: Text('取消'),
+                onPressed: () async {
+                  await Navigator.of(context).pop();
+                  await Future.delayed(Duration(milliseconds: 377));
+                  await Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text('好的'),
+                onPressed: () {
+                  setting.agreeToShowExam.put(true);
+                  setState(() {});
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]
         )
     );
   }

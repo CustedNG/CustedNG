@@ -64,7 +64,7 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
   AppRoute(
     title: '更新',
     page: UpdateNoticePage(update),
-  ).go(context, rootNavigator: true);
+  ).go(context);
 }
 
 Future<void> doTestflightUpdate(

@@ -53,6 +53,23 @@ class ExamProvider extends BusyProvider {
     return null;
   }
 
+  int getRemainExam(){
+    if (data == null) {
+      return null;
+    }
+
+    for (JwExamRows exam in data.rows) {
+      final examTime =
+          exam.examTask.beginDate.substring(0, 11) + exam.examTask.beginTime;
+
+      if (DateTime.parse(examTime).isAfter(DateTime.now())) {
+        return data.rows.length - data.rows.indexOf(exam);
+      }
+    }
+
+    return 0;
+  }
+
   void refreshData() async {
     data = JwExam.fromJson(json.decode(await JwService().getExam())).data;
     data.rows.sort((a, b) => sortExamByTime(a, b));

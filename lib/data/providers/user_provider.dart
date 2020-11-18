@@ -9,7 +9,6 @@ import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/service/iecard_service.dart';
 import 'package:pedantic/pedantic.dart';
 
 class UserProvider extends BusyProvider {

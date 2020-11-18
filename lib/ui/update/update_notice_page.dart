@@ -3,8 +3,10 @@ import 'package:custed2/core/route.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/update/update_progress_page.dart';
+import 'package:custed2/ui/utils.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
 
 class UpdateNoticePage extends StatelessWidget {
@@ -14,17 +16,19 @@ class UpdateNoticePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
-    return Container(
-      color: theme.backgroundColor,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
+    return Scaffold(
+      appBar: NavBar.material(
+          context: context,
+          middle: NavbarText('更新')
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           _buildMsg(context),
           _buildActions(context),
         ],
-      ),
+      )
     );
   }
 
@@ -49,7 +53,7 @@ class UpdateNoticePage extends StatelessWidget {
     AppRoute(
       title: '更新中',
       page: UpdateProgressPage(update),
-    ).go(context, rootNavigator: true);
+    ).go(context);
   }
 
   Widget _buildActions(BuildContext context) {
@@ -64,11 +68,11 @@ class UpdateNoticePage extends StatelessWidget {
           onPressed: () async {
             var connectivityResult = await (Connectivity().checkConnectivity());
             if (connectivityResult == ConnectivityResult.mobile) {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  content: Text('你正在使用移动数据网络。继续下载将会消耗流量'),
-                  actions: [
+              showRoundDialog(
+                  context,
+                  '请确认',
+                  Text('你正在使用移动数据网络。继续下载将会消耗流量'),
+                  [
                     FlatButton(
                       child: Text('继续'),
                       onPressed: () {
@@ -80,8 +84,7 @@ class UpdateNoticePage extends StatelessWidget {
                       child: Text('取消'),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
-                  ],
-                ),
+                  ]
               );
             } else {
               doUpdate(context);

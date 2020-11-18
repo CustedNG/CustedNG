@@ -14,8 +14,8 @@ import 'package:custed2/ui/pages/intro_page.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/bottom_navbar.dart';
-import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/material.dart';
 
@@ -162,32 +162,28 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
     Future.delayed(Duration(seconds: 1), (){
       if(!locator<UserDataStore>().haveInit.fetch()){
-        showDialog(
-            context: context,
-            builder: (ctx){
-              return CardDialog(
-                title: Text('提示'),
-                child: Text('是否查看新版使用说明？'),
-                actions: [
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      AppRoute(
-                          title: 'intro',
-                          page: IntroScreen()
-                      ).go(context);
-                    },
-                    child: Text('是'),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('否'),
-                  )
-                ],
-              );
-            }
+        showRoundDialog(
+            context,
+            '提示',
+            Text('是否查看新版使用说明？'),
+            [
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  AppRoute(
+                      title: 'intro',
+                      page: IntroScreen()
+                  ).go(context);
+                },
+                child: Text('是'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('否'),
+              )
+            ]
         );
         locator<UserDataStore>().haveInit.put(true);
       }
