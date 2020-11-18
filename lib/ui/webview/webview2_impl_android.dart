@@ -209,6 +209,7 @@ class Webview2StateAndroid extends Webview2State {
         initialChild: buildLoadingWidget(),
         bottomNavigationBar: Webview2Bottom(
           controller: bottom,
+          url: getUrl,
           onGoBack: wp.goBack,
           onGoForward: wp.goForward,
         ),

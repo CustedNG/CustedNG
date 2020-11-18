@@ -79,10 +79,14 @@ class _HomeExamState extends State<HomeExam> {
       children: [
         GestureDetector(
           onTap: () => examPage().go(context),
-          child: HomeCard(
-            title: _buildTitle(context, time),
-            trailing: _buildArrow(),
-            content: Text(notice),
+          child: Hero(
+              tag: 'ExamCard0',
+              transitionOnUserGestures: true,
+              child: HomeCard(
+                title: _buildTitle(context, time),
+                trailing: _buildArrow(),
+                content: Text(notice),
+              )
           ),
         ),
         SizedBox(height: 15),

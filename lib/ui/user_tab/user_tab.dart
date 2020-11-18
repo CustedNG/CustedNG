@@ -1,11 +1,8 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/core/store/presistent_store.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/ui/pages/intro_page.dart';
-import 'package:custed2/ui/pages/issue_page.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/custed_header.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
@@ -77,12 +74,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
           middle: NavbarText('设置'),
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustedHeader(),
-              _buildSetting()
-            ],
-          ),
+          child: _buildSetting()
         ));
   }
 
@@ -94,23 +86,10 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
     );
     return Column(
       children: [
+        CustedHeader(),
         SizedBox(height: 10.0),
         Text('设置'),
         SizedBox(height: 10.0),
-        SettingItem(
-          title: '我要疑问',
-          titleStyle: settingTextStyle,
-          onTap: () => AppRoute(
-            page: IssuePage(),
-          ).go(context),
-        ),
-        SettingItem(
-          title: '查看新版指引',
-          titleStyle: settingTextStyle,
-          onTap: () => AppRoute(
-              page: IntroScreen()
-          ).go(context),
-        ),
         SettingItem(
           title: '将课表设置为首页',
           titleStyle: settingTextStyle,

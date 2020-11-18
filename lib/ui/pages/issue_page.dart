@@ -3,6 +3,7 @@ import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
 
 class IssuePage extends StatelessWidget{
@@ -12,7 +13,7 @@ class IssuePage extends StatelessWidget{
       backgroundColor: AppTheme.of(context).backgroundColor,
       appBar: NavBar.material(
         context: context,
-        middle: Text('问题汇总'),
+        middle: NavbarText('反馈👉'),
         trailing: [
           IconButton(
               icon: Icon(Icons.feedback),

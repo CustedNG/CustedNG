@@ -39,8 +39,11 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       final list = <Widget>[];
 
       for (JwExamRows eachExam in rows) {
-        final examTime = eachExam.examTask.beginDate.substring(5, 11) +
-            eachExam.examTask.beginTime;
+        final examTime = (eachExam.examTask.beginDate.substring(5, 11) +
+            eachExam.examTask.beginTime)
+            .replaceFirst('-', ' ~ ', 6)
+            .replaceFirst('-', '月')
+            .replaceFirst(' ', '日 ');;
         final examPosition = eachExam.examTask.examRoom.name;
         final examType = eachExam.examTask.type;
         final examName = eachExam.examTask.beginLesson.lessonInfo.name;
@@ -48,21 +51,27 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
         HomeCard homeCard = HomeCard(
           title: Text(
               examTime,
-              textScaleFactor: 1.0,
-              style: TextStyle(fontSize: 17, color: Color(0xFF889CC3))
+              style: TextStyle(color: Color(0xFF889CC3))
           ),
           content: Text(
-              '$examName  $examPosition  $examType',
-              textScaleFactor: 1.0,
-              style: TextStyle(fontSize: 13)
+              '$examName\n$examPosition  $examType'
           ),
         );
 
-        list.add(homeCard);
+        list.add(
+            list.isEmpty
+                ? Hero(
+                    child: homeCard,
+                    transitionOnUserGestures: true,
+                    tag: 'ExamCard${list.length ~/ 2}',
+                )
+                : homeCard
+        );
         list.add(SizedBox(height: 15));
       }
 
       content = ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           SizedBox(height: 27),
           ...list,
