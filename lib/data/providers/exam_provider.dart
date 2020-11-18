@@ -40,7 +40,7 @@ class ExamProvider extends BusyProvider {
     if (data == null) {
       return null;
     }
-    
+
     for (JwExamRows exam in data.rows) {
       final examTime =
           exam.examTask.beginDate.substring(0, 11) + exam.examTask.beginTime;
@@ -64,7 +64,6 @@ class ExamProvider extends BusyProvider {
     }
 
     _updateTimer = Timer.periodic(Duration(minutes: 1), (timer) async {
-      await refreshData();
       notifyListeners();
     });
   }
