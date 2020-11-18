@@ -3,6 +3,7 @@ import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
@@ -35,19 +36,27 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       final rows = exam?.data?.rows ?? <JwExamRows>[];
       final list = <Widget>[];
 
-      for (var exam in rows) {
-        final examTime =
-            exam.examTask.beginDate.substring(5, 11) + exam.examTask.beginTime;
-        final examPosition = exam.examTask.examRoom.name;
-        final examType = exam.examTask.type;
-        final examName = exam.examTask.beginLesson.lessonInfo.name;
-        list.add(Text(examTime,
-            textScaleFactor: 1.0,
-            style: TextStyle(fontSize: 17, color: Color(0xFF889CC3))));
-        list.add(Text('$examName $examType',
-            textScaleFactor: 1.0, style: TextStyle(fontSize: 13)));
-        list.add(Text(examPosition,
-            textScaleFactor: 1.0, style: TextStyle(fontSize: 13)));
+      for (var eachExam in rows) {
+        final examTime = eachExam.examTask.beginDate.substring(5, 11) +
+            eachExam.examTask.beginTime;
+        final examPosition = eachExam.examTask.examRoom.name;
+        final examType = eachExam.examTask.type;
+        final examName = eachExam.examTask.beginLesson.lessonInfo.name;
+
+        HomeCard homeCard = HomeCard(
+          title: Text(
+              examTime,
+              textScaleFactor: 1.0,
+              style: TextStyle(fontSize: 17, color: Color(0xFF889CC3))
+          ),
+          content: Text(
+              '$examName  $examPosition  $examType',
+              textScaleFactor: 1.0,
+              style: TextStyle(fontSize: 13)
+          ),
+        );
+
+        list.add(homeCard);
         list.add(SizedBox(height: 15));
       }
 
