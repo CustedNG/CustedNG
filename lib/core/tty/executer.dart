@@ -1,4 +1,3 @@
-import 'package:custed2/core/lisp/lisp_util.dart';
 import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/core/tty/engine.dart';
 import 'package:custed2/core/tty/exception.dart';
@@ -35,7 +34,6 @@ class TTYExecuter {
       await engine.setContext(context);
       if (!quiet) print(cmd);
       final result = await engine.eval(cmd);
-      print('-> ${LispUtil.str(result)}');
     } on TTYInterrupt catch (i) {
       print('-> $i');
     } catch (e, stacktrace) {

@@ -56,7 +56,7 @@ class HomeDrawer extends StatelessWidget{
               ),
               AboutListTile(
                 icon: Icon(Icons.text_snippet),
-                child: Text('开源'),
+                child: Text('开源证书'),
                 applicationName: "CustedNG",
                 applicationVersion: version,
                 applicationIcon: Image.asset(

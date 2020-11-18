@@ -120,6 +120,10 @@ class _ScheduleTabState extends State<ScheduleTab>
         onSelected: (String action) async {
           switch (action) {
             case 'A':
+              if(!Provider.of<UserProvider>(context).loggedIn) {
+                showSnackBar(context, '请登录');
+                return;
+              }
               showCatchSnackBar(
                   context,
                   () async => await scheduleProvider.updateScheduleData(),
@@ -169,7 +173,6 @@ class _ScheduleTabState extends State<ScheduleTab>
           children: <Widget>[
             SizedBox(height: 150),
             PlaceholderWidget(text: '无课表信息'),
-            PlaceholderWidget(text: '如遇无法更新，请尝试使用4G更新课表')
           ],
         ),
       );

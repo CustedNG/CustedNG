@@ -95,7 +95,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
     return PopupMenuButton<String>(
         itemBuilder: (BuildContext context) =>
         <PopupMenuItem<String>>[
-          this.SelectView(Icons.calendar_today, '查看校历', 'A'),
+          this.SelectView(Icons.calendar_view_day, '查看校历', 'A'),
           this.SelectView(Icons.monitor, '状态监测', 'C'),
         ],
         onSelected: (String action) {

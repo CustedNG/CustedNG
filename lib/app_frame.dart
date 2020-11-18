@@ -1,5 +1,4 @@
 import 'package:after_layout/after_layout.dart';
-import 'package:custed2/core/hotfix.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/core/update.dart';
@@ -71,54 +70,31 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   }
 
   List<NavigationItem> items = [
-    NavigationItem(Icon(Icons.leaderboard, size: 27), Text('成绩')),
-    NavigationItem(Icon(Icons.calendar_today, size: 25), Text('课表')),
-    NavigationItem(Icon(Icons.home, size: 28), Text('主页')),
-    NavigationItem(Icon(Icons.navigation, size: 27), Text('导航')),
-    NavigationItem(Icon(Icons.settings, size: 27), Text('设置'))
+    NavigationItem(Icon(Icons.leaderboard, size: 29), Text('成绩')),
+    NavigationItem(Icon(Icons.calendar_today, size: 27), Text('课表')),
+    NavigationItem(Icon(Icons.home, size: 30), Text('主页')),
+    NavigationItem(Icon(Icons.navigation, size: 29), Text('导航')),
+    NavigationItem(Icon(Icons.settings, size: 29), Text('设置'))
   ];
 
   Widget _buildItem(NavigationItem item, bool isSelected) {
     bool isDarkMode = isDark(context);
+    final width = MediaQuery.of(context).size.width / 5;
     return AnimatedContainer(
       duration: Duration(milliseconds: 377),
       curve: Curves.fastOutSlowIn,
       height: 50,
-      width: isSelected ? 95 : 50,
-      padding: isSelected ? const EdgeInsets.only(left: 16, right: 16) : null,
+      width: isSelected ? width : width - 17,
+      padding: isSelected ? const EdgeInsets.only(left: 1, right: 1) : null,
       decoration: isSelected
           ? BoxDecoration(
-              color: isDarkMode
-                  ? Colors.white12
-                  : Colors.black12
-              ,
+              color: isDarkMode ? Colors.white12 : Colors.black12,
               borderRadius: const BorderRadius.all(Radius.circular(50))
           )
           : null,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              IconTheme(
-                data: IconThemeData(
-                    size: 24, color: isDarkMode ? Colors.white : Colors.black),
-                child: item.icon,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: isSelected
-                    ? DefaultTextStyle.merge(
-                        child: item.title,
-                        style: TextStyle(
-                            color: isDarkMode ? Colors.white : Colors.black)
-                    )
-                    : null,
-              )
-            ],
-          ),
-        ],
+      child: IconTheme(
+        data: IconThemeData(color: isDarkMode ? Colors.white : Colors.black),
+        child: item.icon,
       ),
     );
   }
@@ -127,7 +103,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     return SafeArea(
         child: Container(
           height: 56,
-          padding: const EdgeInsets.only(left: 17, top: 4, bottom: 4, right: 8),
+          padding: const EdgeInsets.only(left: 8, top: 4, bottom: 4, right: 8),
           width: _width,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -158,7 +134,6 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     }
 
     updateCheck(context);
-    doHotfix(context);
 
     Future.delayed(Duration(seconds: 1), (){
       if(!locator<UserDataStore>().haveInit.fetch()){

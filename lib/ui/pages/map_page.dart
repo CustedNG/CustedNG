@@ -12,12 +12,22 @@ class MapPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _PhotoViewGalleryScreenState createState() => _PhotoViewGalleryScreenState();
+  _MapPageState createState() => _MapPageState();
 }
 
-class _PhotoViewGalleryScreenState extends State<MapPage> {
+class _MapPageState extends State<MapPage> {
   int currentIndex;
   static const List<String> area = ['东', '南', '西'];
+  static const darkMaps = [
+    ImageRes.custEMapSimpleDark,
+    ImageRes.custSMapSimpleDark,
+    ImageRes.custWMapSimpleDark
+  ];
+  static const maps = [
+    ImageRes.custEMapSimple,
+    ImageRes.custSMapSimple,
+    ImageRes.custWMapSimple
+  ];
 
   @override
   void initState() {
@@ -31,25 +41,14 @@ class _PhotoViewGalleryScreenState extends State<MapPage> {
       body: Stack(
         children: <Widget>[
           Positioned(
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
+            top: 0, left: 0, bottom: 0, right: 0,
             child: Container(
                 child: PhotoViewGallery.builder(
               builder: (BuildContext context, int index) {
                 return PhotoViewGalleryPageOptions(
                   imageProvider: isDark(context)
-                      ? [
-                          ImageRes.custEMapSimpleDark,
-                          ImageRes.custSMapSimpleDark,
-                          ImageRes.custWMapSimpleDark
-                        ][index]
-                      : [
-                          ImageRes.custEMapSimple,
-                          ImageRes.custSMapSimple,
-                          ImageRes.custWMapSimple
-                        ][index],
+                      ? darkMaps[index]
+                      : maps[index],
                 );
               },
               itemCount: 3,
@@ -59,9 +58,7 @@ class _PhotoViewGalleryScreenState extends State<MapPage> {
               pageController: widget.controller,
               enableRotation: true,
               onPageChanged: (index) {
-                setState(() {
-                  currentIndex = index;
-                });
+                setState(() => currentIndex = index);
               },
             )),
           ),
@@ -77,14 +74,8 @@ class _PhotoViewGalleryScreenState extends State<MapPage> {
             right: 10,
             top: MediaQuery.of(context).padding.top,
             child: IconButton(
-              icon: Icon(
-                Icons.close,
-                size: 30,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              icon: Icon(Icons.close, size: 30),
+              onPressed: () => Navigator.of(context).pop(),
             ),
           ),
         ],

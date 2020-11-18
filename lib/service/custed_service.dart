@@ -11,6 +11,7 @@ import 'package:custed2/res/build_data.dart';
 
 class CustedService extends CatClient {
   static const baseUrl = 'https://cust.app';
+  static const ccUrl = 'https://cust.cc';
   static const defaultTimeout = Duration(seconds: 100);
 
   Future<WeatherData> getWeather() async {
@@ -20,13 +21,13 @@ class CustedService extends CatClient {
     return WeatherData.fromJson(custedResp.data as Map<String, dynamic>);
   }
 
-  Future<List<String>> getHotfix() async {
+  Future<String> getHotfix() async {
     final build = BuildData.build;
     final resp =
-        await get('$baseUrl/app/hotfix?build=$build', timeout: defaultTimeout);
-    final custedResp = CustedResponse.fromJson(json.decode(resp.body));
-    if (custedResp.hasError) return null;
-    return List<String>.from(custedResp.data);
+        await get('$ccUrl/api/notify?build=$build', timeout: defaultTimeout);
+    final body = resp.body;
+    if (body == null || body == '') return null;
+    return body;
   }
 
   Future<String> getScript(String name) async {

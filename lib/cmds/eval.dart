@@ -1,4 +1,3 @@
-import 'package:custed2/core/lisp/lisp_util.dart';
 import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/core/tty/engine.dart';
 import 'package:custed2/core/tty/executer.dart';
@@ -20,7 +19,7 @@ class EvalCommand extends TTYCommand {
       final engine = TTYEngine();
       await engine.init();
       final result = await engine.eval(args.join(' '));
-      print('-> ${LispUtil.str(result)}');
+      print('-> ${result}');
     } catch (e) {
       print('-> $e');
     }
