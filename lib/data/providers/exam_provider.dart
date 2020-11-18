@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:custed2/core/provider/busy_provider.dart';
@@ -14,6 +15,8 @@ class ExamProvider extends BusyProvider {
   var show = false;
   var failed = false;
 
+  Timer _updateTimer;
+
   Future<void> init() async {
     show = await CustedService().getShouldShowExam();
 
@@ -24,8 +27,8 @@ class ExamProvider extends BusyProvider {
     setBusyState(true);
 
     try {
-      data = JwExam.fromJson(json.decode(await JwService().getExam())).data;
-      data.rows.sort((a, b) => sortExamByTime(a, b));
+      await refreshData();
+      startAutoRefresh();
     } catch (e) {
       failed = true;
     } finally {
@@ -34,6 +37,10 @@ class ExamProvider extends BusyProvider {
   }
 
   JwExamRows getNextExam() {
+    if (data == null) {
+      return null;
+    }
+
     for (JwExamRows exam in data.rows) {
       final examTime =
           exam.examTask.beginDate.substring(0, 11) + exam.examTask.beginTime;
@@ -44,5 +51,20 @@ class ExamProvider extends BusyProvider {
     }
 
     return null;
+  }
+
+  void refreshData() async {
+    data = JwExam.fromJson(json.decode(await JwService().getExam())).data;
+    data.rows.sort((a, b) => sortExamByTime(a, b));
+  }
+
+  void startAutoRefresh() {
+    if (_updateTimer != null && _updateTimer.isActive) {
+      return;
+    }
+
+    _updateTimer = Timer.periodic(Duration(minutes: 1), (timer) async {
+      notifyListeners();
+    });
   }
 }

@@ -27,7 +27,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     // 1.没有考试
     // 2.不同意
     // 3.教务炸了
-    
+
     if (exam.failed) {
       content = Center(
         child: Text('暂时无法获取考场信息～'),
