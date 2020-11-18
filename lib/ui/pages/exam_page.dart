@@ -105,7 +105,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
           builder: (innerContext) {
             return CardDialog(
               title: Text('提示'),
-              child: Text('\n  考场信息仅供参考\n  请与教务系统中信息核对后使用'),
+              child: Text('考场信息仅供参考\n请与教务系统中信息核对后使用'),
               actions: [
                 FlatButton(
                   child: Text('取消'),
