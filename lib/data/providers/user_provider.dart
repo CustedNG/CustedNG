@@ -4,6 +4,7 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/user_profile.dart';
+import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
@@ -62,10 +63,13 @@ class UserProvider extends BusyProvider {
   void _afterLogin() async {
     final schedule = locator<ScheduleProvider>();
     final grade = locator<GradeProvider>();
+    final exam = locator<ExamProvider>();
+    
     locator<PersistCookieJar>().deleteAll();
     await schedule.updateScheduleData(reset: true);
     await grade.updateGradeData();
     // call login() here to improve iecard open speed.
-    await IecardService().login();
+    // await IecardService().login();
+    await exam.init();
   }
 }
