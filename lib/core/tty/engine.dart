@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/lisp/lisp.dart';
@@ -17,7 +16,6 @@ import 'package:custed2/data/store/lisp_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
-import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/ui/web/common_web_page.dart';
 import 'package:custed2/ui/widgets/lisp_debug_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -175,10 +173,10 @@ class TTYEngine {
   }
 
   _openAlice(args) {
-    final alice = locator<Alice>();
+    /*final alice = locator<Alice>();
     Navigator.of(_context).push(
       CupertinoPageRoute(builder: (_) => alice.buildInspector()),
-    );
+    );*/
   }
 
   _print(args) {

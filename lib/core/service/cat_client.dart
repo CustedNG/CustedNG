@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/util/cookie.dart';
@@ -15,7 +14,7 @@ class CatClient {
 
   final Client _client = Client();
   final PersistCookieJar _cookieJar = locator<PersistCookieJar>();
-  final Alice _alice = locator<Alice>();
+  //final Alice _alice = locator<Alice>();
 
   Future<Response> rawRequest(
     String method,
@@ -39,11 +38,14 @@ class CatClient {
       await _client.send(request).timeout(timeout),
     );
     saveCookies(response);
-    _alice.onHttpResponse(response);
+    //_alice.onHttpResponse(response);
+
+    final respBody = response.body;
+    final length = respBody.length;
     if(BuildMode.isDebug){
       print('\n${request.method} ${request.url}'
           '\n[${response.statusCode}]'
-          '\n${response.body}');
+          '\n${respBody.substring(0, length > 1000 ? 1000 : length)}');
     }
     return await followRedirect(response, maxRedirects);
   }
