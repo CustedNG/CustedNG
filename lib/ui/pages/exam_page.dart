@@ -26,7 +26,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     // 1.没有考试
     // 2.不同意
     // 3.教务炸了
-    
+
     if (exam.failed) {
       content = Center(
         child: Text('暂时无法获取考场信息～'),
@@ -35,12 +35,12 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       final rows = exam?.data?.rows ?? <JwExamRows>[];
       final list = <Widget>[];
 
-      for (var eachExam in rows) {
-        final examTime = eachExam.examTask.beginDate.substring(5, 11) +
-            eachExam.examTask.beginTime;
-        final examPosition = eachExam.examTask.examRoom.name;
-        final examType = eachExam.examTask.type;
-        final examName = eachExam.examTask.beginLesson.lessonInfo.name;
+      for (var exam in rows) {
+        final examTime =
+            exam.examTask.beginDate.substring(5, 11) + exam.examTask.beginTime;
+        final examPosition = exam.examTask.examRoom.name;
+        final examType = exam.examTask.type;
+        final examName = exam.examTask.beginLesson.lessonInfo.name;
         list.add(Text(examTime,
             textScaleFactor: 1.0,
             style: TextStyle(fontSize: 17, color: Color(0xFF889CC3))));
