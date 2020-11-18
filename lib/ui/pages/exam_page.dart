@@ -3,6 +3,7 @@ import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
@@ -41,13 +42,21 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
         final examPosition = eachExam.examTask.examRoom.name;
         final examType = eachExam.examTask.type;
         final examName = eachExam.examTask.beginLesson.lessonInfo.name;
-        list.add(Text(examTime,
-            textScaleFactor: 1.0,
-            style: TextStyle(fontSize: 17, color: Color(0xFF889CC3))));
-        list.add(Text('$examName $examType',
-            textScaleFactor: 1.0, style: TextStyle(fontSize: 13)));
-        list.add(Text(examPosition,
-            textScaleFactor: 1.0, style: TextStyle(fontSize: 13)));
+
+        HomeCard homeCard = HomeCard(
+          title: Text(
+              examTime,
+              textScaleFactor: 1.0,
+              style: TextStyle(fontSize: 17, color: Color(0xFF889CC3))
+          ),
+          content: Text(
+              '$examName  $examPosition  $examType',
+              textScaleFactor: 1.0,
+              style: TextStyle(fontSize: 13)
+          ),
+        );
+
+        list.add(homeCard);
         list.add(SizedBox(height: 15));
       }
 
