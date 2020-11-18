@@ -12,6 +12,7 @@ import 'package:custed2/ui/schedule_tab/schedule_table.dart';
 import 'package:custed2/ui/schedule_tab/schedule_title.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_navigator.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
@@ -113,7 +114,10 @@ class _ScheduleTabState extends State<ScheduleTab>
         onSelected: (String action) async {
           switch (action) {
             case 'A':
-              await scheduleProvider.updateScheduleData();
+              showCatchSnackBar(
+                  context,
+                  () async => await scheduleProvider.updateScheduleData(),
+                  '教务超时');
               break;
             case 'C':
               AppRoute(

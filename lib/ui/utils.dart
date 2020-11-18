@@ -7,3 +7,7 @@ void showSnackBar(BuildContext context, String content){
       )
   );
 }
+
+void showCatchSnackBar(BuildContext context, Function func, String message){
+  Future.sync(func).catchError((e) => showSnackBar(context, message ?? '$e'));
+}

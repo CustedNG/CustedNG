@@ -4,7 +4,6 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/ui/utils.dart';
-import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/material.dart';
 
 class LoginPageLegacy extends StatefulWidget {
@@ -34,7 +33,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     }
   }
 
-  Future<void> tryLogin() async {
+  Future<void> tryLogin(BuildContext ctx) async {
     if (isBusy) return;
 
     setState(() => isBusy = true);
@@ -51,20 +50,19 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           await mysso.login(force: true).timeout(Duration(minutes: 1));
       if (login.ok) {
         user.login();
-        showSnackBar(context, '登录成功');
-        Navigator.pop(context);
+        Navigator.pop(ctx);
       } else {
-        showSnackBar(context, '登录失败[${login.data}]');
+        showSnackBar(ctx, '登录失败[${login.data}]');
       }
     } catch (e) {
-      showSnackBar(context, '登录失败[认证系统超时]');
+      showSnackBar(ctx, '登录失败[认证系统超时]');
       rethrow;
     } finally {
       setState(() => isBusy = false);
     }
   }
 
-  Future<void> forceLogin() async {
+  Future<void> forceLogin(BuildContext ctx) async {
     final userData = await locator.getAsync<UserDataStore>();
     final user = locator<UserProvider>();
 
@@ -72,8 +70,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     userData.password.put(passwordController.text);
 
     user.login();
-    showSnackBar(context, '#强制登陆');
-    Navigator.pop(context);
+    Navigator.pop(ctx);
   }
 
   void focusOnPasswordField() {
@@ -81,27 +78,17 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Flexible(
-            child: Scaffold(
-              body: DecoratedBox(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: ImageRes.bgAbstractDark,
-                  ),
-                ),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: _buildLoginForm(context)
-                ),
-              ),
-            )
+  Widget build(BuildContext ctx) {
+    return Scaffold(
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: ImageRes.bgAbstractDark,
+          ),
         ),
-        Snakebar()
-      ],
+        child: Builder(builder: (cc) => _buildLoginForm(cc)),
+      ),
     );
   }
 
@@ -118,7 +105,84 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     );
   }
 
-  Widget _buildLoginForm(BuildContext context) {
+  Widget _buildTextInputField(BuildContext ctx){
+    return Column(
+      children: [
+        SizedBox(height: 77),
+        TextField(
+          controller: usernameController,
+          keyboardType: TextInputType.number,
+          style: TextStyle(color: Colors.white),
+          decoration: _buildDecoration('一卡通号', TextStyle(color: Color(0x55FFFFFF))),
+          onSubmitted: (_) => focusOnPasswordField(),
+        ),
+        SizedBox(height: 15),
+        TextField(
+          controller: passwordController,
+          focusNode: passwordFocusNode,
+          style: TextStyle(color: Colors.white),
+          obscureText: true,
+          decoration: _buildDecoration('统一认证密码', TextStyle(color: Color(0x55FFFFFF))),
+          onSubmitted: (_) => tryLogin(ctx),
+        ),
+        SizedBox(height: 90),
+      ],
+    );
+  }
+
+  Widget _buildFAB(BuildContext context){
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              '登录',
+              style: TextStyle(color: Colors.white, fontSize: 30),
+            ),
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 80,
+                maxHeight: 80,
+              ),
+              child: GestureDetector(
+                onLongPress: () => forceLogin(context),
+                onTap: () => tryLogin(context),
+                child: Material(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  child: Center(
+                    child: isBusy
+                        ? CircularProgressIndicator()
+                        : Icon(Icons.arrow_forward, color: Colors.white),
+                  ),
+                  color: Colors.lightBlueAccent,
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHead(){
+    return Column(
+      children: [
+        SizedBox(height: 20),
+        FlatButton(
+          onPressed: () => Navigator.of(context).pop(),
+          padding: EdgeInsets.all(0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Icon(Icons.arrow_back_ios, color: Colors.white),
+          ),
+        ),
+        SizedBox(height: 47),
+      ],
+    );
+  }
+
+  Widget _buildLoginForm(BuildContext ctx) {
     return ListView(
       // mainAxisSize: MainAxisSize.min,
       // crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,63 +191,10 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
-              FlatButton(
-                onPressed: () => Navigator.of(context).pop(),
-                padding: EdgeInsets.all(0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(Icons.arrow_back_ios, color: Colors.white),
-                ),
-              ),
-              SizedBox(height: 47),
+              _buildHead(),
               _title(),
-              SizedBox(height: 77),
-              TextField(
-                controller: usernameController,
-                keyboardType: TextInputType.number,
-                style: TextStyle(color: Colors.white),
-                decoration: _buildDecoration('一卡通号', TextStyle(color: Color(0x55FFFFFF))),
-                onSubmitted: (_) => focusOnPasswordField(),
-              ),
-              SizedBox(height: 15),
-              TextField(
-                controller: passwordController,
-                focusNode: passwordFocusNode,
-                style: TextStyle(color: Colors.white),
-                obscureText: true,
-                decoration: _buildDecoration('统一认证密码', TextStyle(color: Color(0x55FFFFFF))),
-                onSubmitted: (_) => tryLogin(),
-              ),
-              SizedBox(height: 90),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    '登录',
-                    style: TextStyle(color: Colors.white, fontSize: 30),
-                  ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: 80,
-                      maxHeight: 80,
-                    ),
-                    child: GestureDetector(
-                      onLongPress: forceLogin,
-                      onTap: tryLogin,
-                      child: Material(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        child: Center(
-                          child: isBusy
-                              ? CircularProgressIndicator()
-                              : Icon(Icons.arrow_forward, color: Colors.white),
-                        ),
-                        color: Colors.lightBlueAccent,
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              _buildTextInputField(ctx),
+              _buildFAB(ctx)
             ],
           ),
           padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
