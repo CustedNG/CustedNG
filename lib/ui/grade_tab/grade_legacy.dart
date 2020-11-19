@@ -196,7 +196,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
           );
           return Container(
             // height: 150 - offset,
-            color: theme.secondaryHeaderColor,
+            color: theme.navBarColor,
             child: result,
           );
         },

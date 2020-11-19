@@ -1,7 +1,9 @@
-import 'package:custed2/ui/pages/school_calendar_menu.dart';
+import 'package:custed2/core/util/save_image.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
 
 class SchoolCalendarPage extends StatelessWidget {
@@ -35,9 +37,30 @@ class SchoolCalendarPage extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => SchoolCalendarMenu(),
+    showRoundDialog(
+        context,
+        '保存到本地',
+        Container(),
+        [
+          FlatButton(
+            child: Text('确定'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              save(context);
+            },
+          ),
+          FlatButton(
+            child: Text('取消'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ]
     );
+  }
+
+  Future<void> save(BuildContext context) async {
+    final bytes = await rootBundle.load(ImageRes.miscSchoolCalendar.assetName);
+    saveImageToGallery(context, bytes.buffer.asUint8List());
   }
 }

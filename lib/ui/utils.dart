@@ -19,7 +19,7 @@ void showRoundDialog(BuildContext context, String title, Widget child, List<Widg
       builder: (ctx) {
         return CardDialog(
           title: Text(title),
-          child: child,
+          content: child,
           actions: actions,
         );
       }

@@ -11,7 +11,6 @@ import 'package:custed2/ui/schedule_tab/add_lesson_weeks_picker.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +29,6 @@ class _AddLessonPageState extends State<AddLessonPage> {
   final teacherController = TextEditingController(text: '');
   final weeksController = TextEditingController();
   final weekdayController = TextEditingController();
-  final sectionController = TextEditingController();
 
   var weeks = Map<int, bool>.fromIterables(
     List<int>.generate(24, (index) => index + 1),
@@ -68,24 +66,22 @@ class _AddLessonPageState extends State<AddLessonPage> {
     );
 
     return Scaffold(
-      backgroundColor: theme.textFieldListBackgroundColor,
+      backgroundColor: theme.backgroundColor,
       appBar: NavBar.material(
           context: context,
           middle: Text('添加课程', style: navBarText),
           trailing: [
-            NavBarButton.trailing(
-              child: Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: Text('提交', style: navBarText),
-              ),
-              onPressed: () {
-                if (widget.lesson != null) {
-                  widget.lesson.delete();
-                }
-                _addLesson();
-              },
-            ),
-          ]),
+            FlatButton(
+                onPressed: (){
+                  if (widget.lesson != null) {
+                    widget.lesson.delete();
+                  }
+                  _addLesson();
+                },
+                child: Text('提交', style: navBarText)
+            )
+          ]
+      ),
       body: DefaultTextStyle(
         style: TextStyle(
           color: theme.textColor,
@@ -96,7 +92,6 @@ class _AddLessonPageState extends State<AddLessonPage> {
             _buildRoomField(context),
             _buildTeacherField(context),
             _buildWeekField(context),
-            _buildTimeField(context),
             //_buildDeleteButton(context)
           ],
         ),
@@ -130,43 +125,33 @@ class _AddLessonPageState extends State<AddLessonPage> {
   }
 
   Widget _buildWeekField(BuildContext context) {
-    return AddLessonField(
-      Icons.timer,
-      placeholder: '周数',
-      isReadonly: true,
-      controller: weeksController,
-      onTap: () => _openWeekPicker(context),
-    );
-  }
-
-  Widget _buildTimeField(BuildContext context) {
     return Row(
-      children: <Widget>[
+      children: [
         Flexible(
           flex: 2,
           child: AddLessonField(
-            Icons.calendar_today,
-            placeholder: '星期',
+            Icons.timer,
+            placeholder: '周数',
             isReadonly: true,
-            controller: weekdayController,
-            onTap: () => _openTimePicker(context),
+            controller: weeksController,
+            onTap: () => _openWeekPicker(context),
           ),
         ),
         Flexible(
           flex: 3,
           child: AddLessonField(
-            Icons.class_,
-            placeholder: '第几节',
+            Icons.calendar_today,
+            placeholder: '具体时间',
             isReadonly: true,
-            controller: sectionController,
+            controller: weekdayController,
             onTap: () => _openTimePicker(context),
           ),
-        ),
+        )
       ],
     );
   }
 
-  Widget _buildDeleteButton(BuildContext context) {
+  /*Widget _buildDeleteButton(BuildContext context) {
     return CupertinoButton(
       child:
           Text('删除', style: TextStyle(color: CupertinoColors.destructiveRed)),
@@ -176,7 +161,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
         Navigator.pop(context);
       },
     );
-  }
+  }*/
 
   Iterable<int> get activeWeeks {
     return weeks.entries
@@ -207,8 +192,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
   }
   
   void updateDisplay() {
-    weekdayController.text = weekday.weekdayInChinese();
-    sectionController.text = '${startSection}-${endSection}节';
+    weekdayController.text = weekday.weekdayInChinese() + ' ${startSection}-${endSection}节';
     weeksController.text = activeWeeks.join(',');
   }
 

@@ -104,7 +104,7 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   }
 
   SelectView(IconData icon, String text, String id) {
-    return new PopupMenuItem<String>(
+    return PopupMenuItem<String>(
         value: id,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

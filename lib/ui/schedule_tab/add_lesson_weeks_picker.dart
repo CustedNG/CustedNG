@@ -1,5 +1,4 @@
 import 'package:custed2/ui/theme.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
 import 'package:flutter/material.dart';
 
 class AddLessonWeeksPicker extends StatefulWidget {
@@ -94,17 +93,12 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
               height: 60.0,
               alignment: Alignment.center,
               child: NavigationToolbar(
-                leading: NavBarButton(
-                  child: Align(alignment: Alignment.center, child: Text("取消")),
+                leading: FlatButton(
+                  child: Text('取消'),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
-                middle: Text(
-                  "选择上课周数",
-                  style: TextStyle(fontWeight: FontWeight.normal),
-                ),
-                trailing: NavBarButton(
-                    child:
-                        Align(alignment: Alignment.center, child: Text("确定")),
+                trailing: FlatButton(
+                    child: Text('确定'),
                     onPressed: () {
                       Navigator.pop(context, data);
                     }),
@@ -120,7 +114,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 FlatButton(
-                  child: Text("单周"),
+                  child: Text('单周'),
                   onPressed: () {
                     setState(() {
                       data.updateAll((key, value) => key % 2 == 0);
@@ -128,7 +122,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
                   },
                 ),
                 FlatButton(
-                  child: Text("双周"),
+                  child: Text('双周'),
                   onPressed: () {
                     setState(() {
                       data.updateAll((key, value) => key % 2 != 0);
@@ -136,7 +130,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
                   },
                 ),
                 FlatButton(
-                  child: Text(allWeekSelected ? "全不选" : "全选"),
+                  child: Text(allWeekSelected ? '全不选' : '全选'),
                   onPressed: () {
                     setState(() {
                       final newValue = allWeekSelected ? false : true;

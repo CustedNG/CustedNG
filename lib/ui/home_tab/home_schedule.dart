@@ -42,7 +42,7 @@ class HomeSchedule extends StatelessWidget {
 
     final lesson = scheduleProvider.lessonsSince(DateTime.now()).firstIfExist;
     return lesson == null
-        ? Text('本学期没有课了')
+        ? const Text('本学期没有课了')
         : Text('${lesson.name}@${lesson.roomRaw}');
   }
 }

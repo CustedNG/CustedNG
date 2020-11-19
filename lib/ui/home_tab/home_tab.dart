@@ -31,12 +31,16 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
     }
 
     return Scaffold(
-      drawer: _buildDrawer(context, user),
+      drawer: HomeDrawer(
+        version: BuildData.build.toString(),
+        myTheme: Theme.of(context),
+        user: user,
+      ),
       backgroundColor: theme.homeBackgroundColor,
       appBar: NavBar.material(
         context: context,
         leading: Builder(builder: (context) => IconButton(
-          icon: Icon(Icons.account_circle),
+          icon: const Icon(Icons.account_circle),
           onPressed: () => Scaffold.of(context).openDrawer(),
         )),
         middle: HomeWeather(),
@@ -46,17 +50,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
     );
   }
 
-  Widget _buildDrawer(BuildContext context, UserProvider user){
-    return HomeDrawer(
-        version: BuildData.build.toString(),
-        myTheme: Theme.of(context),
-        user: user,
-    );
-  }
-
   Widget _buildContent(BuildContext context) {
     Widget widget = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         HomeBanner(),
         SizedBox(height: 15),

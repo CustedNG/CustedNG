@@ -15,7 +15,6 @@ import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/bottom_navbar.dart';
-import 'package:custed2/ui/widgets/snakebar.dart';
 import 'package:flutter/material.dart';
 
 class AppFrame extends StatefulWidget {
@@ -44,32 +43,23 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   @override
   Widget build(BuildContext context) {
     _width = MediaQuery.of(context).size.width;
-    return Column(
-      children: <Widget>[
-        Flexible(
-            child: Scaffold(
-              body: SizedBox.expand(
-                child: PageView(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: _pageController,
-                  children: [
-                    GradeReportLegacy(),
-                    ScheduleTab(),
-                    HomeTab(),
-                    NavTab(),
-                    UserTab(),
-                  ],
-                ),
-              ),
-              bottomNavigationBar: _buildBottom(context),
-            )
-        ),
-        Snakebar(),
-      ],
+    return Scaffold(
+      body: PageView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: _pageController,
+        children: [
+          GradeReportLegacy(),
+          ScheduleTab(),
+          HomeTab(),
+          NavTab(),
+          UserTab(),
+        ],
+      ),
+      bottomNavigationBar: _buildBottom(context),
     );
   }
 
-  List<NavigationItem> items = [
+  static const List<NavigationItem> items = [
     NavigationItem(Icon(Icons.leaderboard, size: 29), Text('成绩')),
     NavigationItem(Icon(Icons.calendar_today, size: 27), Text('课表')),
     NavigationItem(Icon(Icons.home, size: 30), Text('主页')),
@@ -79,7 +69,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   Widget _buildItem(NavigationItem item, bool isSelected) {
     bool isDarkMode = isDark(context);
-    final width = MediaQuery.of(context).size.width / 5;
+    final width = _width / 5;
     return AnimatedContainer(
       duration: Duration(milliseconds: 377),
       curve: Curves.fastOutSlowIn,

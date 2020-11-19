@@ -170,7 +170,7 @@ class LessonPreview extends StatelessWidget {
     actions.add(_buildActions(context));
 
     return CardDialog(
-      child: Column(mainAxisSize: MainAxisSize.min, children: content),
+      content: Column(mainAxisSize: MainAxisSize.min, children: content),
       actions: actions,
     );
   }

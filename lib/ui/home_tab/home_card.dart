@@ -28,16 +28,13 @@ class HomeCard extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         semanticContainer: false,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(borderRadius),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Flexible(child: _buildContent(context)),
-              if (trailing != null) trailing,
-              if (trailing != null) SizedBox(width: 7),
-            ],
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Flexible(child: _buildContent(context)),
+            if (trailing != null) trailing,
+            if (trailing != null) SizedBox(width: 7),
+          ],
         )
     );
   }

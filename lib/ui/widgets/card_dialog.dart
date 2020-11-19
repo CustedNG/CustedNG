@@ -4,11 +4,11 @@ class CardDialog extends StatelessWidget {
 
   CardDialog({
     this.title,
-    this.child,
+    this.content,
     this.actions,
   });
 
-  final Widget child;
+  final Widget content;
   final List<Widget> actions;
   final Widget title;
 
@@ -20,7 +20,7 @@ class CardDialog extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(20.0)),
       ),
       title: title,
-      content: child,
+      content: content,
       actions: actions,
     );
   }

@@ -4,5 +4,5 @@ class NavigationItem {
   final Icon icon;
   final Text title;
 
-  NavigationItem(this.icon, this.title);
+  const NavigationItem(this.icon, this.title);
 }

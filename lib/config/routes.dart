@@ -78,7 +78,7 @@ final examRoomWebPage = AppRoute(
 final tiku2WebPage = AppRoute(
   title: '考试题库',
   //page: Tiku2WebPage(),
-  page: WebviewBrowser('https://cust.cc/go/tiku'),
+  page: WebviewBrowser('https://tiku.lacus.site'),
 );
 
 final schoolCalendarPage = AppRoute(

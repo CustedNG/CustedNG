@@ -126,7 +126,7 @@ class _ScheduleTabState extends State<ScheduleTab>
               }
               showCatchSnackBar(
                   context,
-                  () async => await scheduleProvider.updateScheduleData(),
+                  scheduleProvider.updateScheduleData,
                   '教务超时');
               break;
             case 'C':
