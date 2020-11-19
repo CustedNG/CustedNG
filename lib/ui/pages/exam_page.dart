@@ -61,6 +61,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       }
 
       content = ListView(
+        clipBehavior: Clip.none,
         children: [
           SizedBox(height: 27),
           ...list,
@@ -76,8 +77,8 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     }
 
     return CupertinoPageScaffold(
-      child: Padding(
-        padding: EdgeInsets.only(left: 27, right: 27),
+      child: Container(
+        margin: EdgeInsets.only(left: 27, right: 27),
         child: content,
       ),
       navigationBar: NavBar.cupertino(
