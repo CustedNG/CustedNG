@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:custed2/constants.dart';
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
@@ -418,7 +419,6 @@ class __ReportItemState extends State<_ReportItem>
             Color(0xffb3ad00),
           ).resolve(context));
     }
-    final theme = AppTheme.of(context);
     final fieldTextTheme =
     isDark(context)
         ? textStyleFieldDark
@@ -428,104 +428,94 @@ class __ReportItemState extends State<_ReportItem>
         ? textStyleNameDark
         : textStyleName;
     final content = isExpanded
-        ? Container(
-      alignment: Alignment.center,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(widget.exam.lessonName, style: nameTextTheme),
-                SizedBox(width: 5),
-                Text(
-                  widget.exam.lessonType,
-                  style: textStyleMark.copyWith(
-                      color: DynamicColor(
-                        Color(0xFF2ACD75),
-                        Color(0xFF059c0a),
-                      ).resolve(context)),
-                ),
-              ],
-            ),
+        ? Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(widget.exam.lessonName, style: nameTextTheme),
+              SizedBox(width: 5),
+              Text(
+                widget.exam.lessonType,
+                style: textStyleMark.copyWith(
+                    color: DynamicColor(
+                      Color(0xFF2ACD75),
+                      Color(0xFF059c0a),
+                    ).resolve(context)),
+              ),
+            ],
           ),
-          // SizedBox(height: 10),
-          Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  '成绩 : ${formatGrade(widget.exam)}',
-                  style: gradeTextStyle,
-                ),
-                SizedBox(width: 20),
-                Text(
-                  '类别 : ${widget.exam.lessonType}',
-                  style: fieldTextTheme,
-                ),
-              ],
-            ),
+        ),
+        // SizedBox(height: 10),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '成绩 : ${formatGrade(widget.exam)}',
+                style: gradeTextStyle,
+              ),
+              SizedBox(width: 20),
+              Text(
+                '类别 : ${widget.exam.lessonType}',
+                style: fieldTextTheme,
+              ),
+            ],
           ),
-          // SizedBox(height: 10),
-          Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  '学分 : ${widget.exam.credit}',
-                  style: fieldTextTheme,
-                ),
-                SizedBox(width: 20),
-                Text(
-                  '学时 : ${widget.exam.schoolHour}',
-                  style: fieldTextTheme,
-                ),
-                SizedBox(width: 20),
-                Text(
-                  '状态 : ${widget.exam.testStatus}',
-                  style: fieldTextTheme,
-                ),
-              ],
-            ),
+        ),
+        // SizedBox(height: 10),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '学分 : ${widget.exam.credit}',
+                style: fieldTextTheme,
+              ),
+              SizedBox(width: 20),
+              Text(
+                '学时 : ${widget.exam.schoolHour}',
+                style: fieldTextTheme,
+              ),
+              SizedBox(width: 20),
+              Text(
+                '状态 : ${widget.exam.testStatus}',
+                style: fieldTextTheme,
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     )
-        : Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            widget.exam.lessonName,
-            style: nameTextTheme,
-          ),
-          Text(
-            widget.exam.rawMark,
-            style: gradeTextStyle,
-          ),
-        ],
-      ),
+        : Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          widget.exam.lessonName,
+          style: nameTextTheme,
+        ),
+        Text(
+          widget.exam.rawMark,
+          style: gradeTextStyle,
+        ),
+      ],
     );
     final item = AnimatedContainer(
       height: isExpanded ? 115 : 57,
       curve: Curves.fastLinearToSlowEaseIn,
       duration: Duration(milliseconds: 500),
-      child: Container(
-        margin: EdgeInsets.only(bottom: 10),
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: theme.cardBackgroundColor,
-          borderRadius: BorderRadius.circular(5),
-          border: isDark(context)
-              ? null
-              : Border.all(color: Colors.black.withAlpha(50)),
+      child: Card(
+        elevation: 3,
+        shape: roundShape,
+        child: Padding(
+          padding: EdgeInsets.only(left: 17, right: 17),
+          child: Align(
+            child: content,
+          ),
         ),
-        child: content,
       ),
     );
     return GestureDetector(

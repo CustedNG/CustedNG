@@ -55,6 +55,9 @@ class NetdiskPage extends StatelessWidget {
         SizedBox(height: 30.0),
         MaterialButton(
             child: Text('一键登录网盘'),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(40.0)),
+            ),
             color: Colors.blue,
             textColor: Colors.white,
             onPressed: () => netdiskWebPage.popup(context)),

@@ -1,4 +1,5 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/constants.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
@@ -49,18 +50,13 @@ class HomeDrawer extends StatelessWidget{
                   netdiskPage.go(context);
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.new_releases),
-                title: Text('版本信息'),
-                onTap: () => aboutPage.go(context),
-              ),
               AboutListTile(
                 icon: Icon(Icons.text_snippet),
                 child: Text('开源证书'),
-                applicationName: "CustedNG",
+                applicationName: appName,
                 applicationVersion: version,
                 applicationIcon: Image.asset(
-                  'assets/icon/custed_lite.png',
+                  custedIconPath,
                   width: 64.0,
                   height: 64.0,
                 ),
@@ -73,7 +69,7 @@ class HomeDrawer extends StatelessWidget{
                         TextSpan(
                             style: myTheme.textTheme.bodyText1
                                 .copyWith(color: myTheme.accentColor),
-                            text: 'https://github.com/CustedNG/CustedNG')
+                            text: custedGithubUrl)
                       ])
                   )
                 ],

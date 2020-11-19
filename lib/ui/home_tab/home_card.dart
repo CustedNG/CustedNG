@@ -1,3 +1,4 @@
+import 'package:custed2/constants.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +24,7 @@ class HomeCard extends StatelessWidget {
     return Card(
         color: theme.cardBackgroundColor,
         elevation: 3.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-        ),
+        shape: roundShape,
         clipBehavior: Clip.antiAlias,
         semanticContainer: false,
         child: Row(

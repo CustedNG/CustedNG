@@ -1,3 +1,4 @@
+import 'package:custed2/constants.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/ui/pages/intro_page.dart';
 import 'package:custed2/ui/pages/issue_page.dart';
@@ -34,7 +35,7 @@ class VersionPage extends StatelessWidget{
                     borderRadius: BorderRadius.circular(8.0),
                     child: DarkModeFilter(
                       child: Image.asset(
-                          'assets/icon/custed_lite.png',
+                          custedIconPath,
                           height: 50,
                           width: 50
                       ),
@@ -42,27 +43,27 @@ class VersionPage extends StatelessWidget{
                 )
             ),
             SizedBox(height: 10),
-            Text('Custed NG'),
+            Text(appName),
             SizedBox(height: 20),
             SettingItem(
               title: '下载地址',
               titleStyle: settingTextStyle,
               onTap: () => AppRoute(
-                page: WebviewBrowser('https://cust.app'),
+                page: WebviewBrowser(custedAppUrl),
               ).go(context),
             ),
             SettingItem(
               title: '开源地址',
               titleStyle: settingTextStyle,
               onTap: () => AppRoute(
-                page: WebviewBrowser('https://github.com/CustedNG/CustedNG'),
+                page: WebviewBrowser(custedGithubUrl),
               ).go(context),
             ),
             SettingItem(
               title: '用户协议',
               titleStyle: settingTextStyle,
               onTap: () => AppRoute(
-                page: WebviewBrowser('https://blog.tusi.site/serviceagreement.html'),
+                page: WebviewBrowser(custedServiceAgreementUrl),
               ).go(context),
             ),
             SettingItem(
