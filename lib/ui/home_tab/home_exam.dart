@@ -55,8 +55,8 @@ class _HomeExamState extends State<HomeExam> {
         final examPosition = nextExam.examTask.examRoom.name;
         final examType = nextExam.examTask.type;
 
-        var examTime = nextExam.examTask.beginDate.substring(0, 11) +
-            nextExam.examTask.beginTime;
+        var examTime = nextExam.examTask.date.substring(0, 11) +
+            nextExam.examTask.time;
         examTime = examTime
             .substring(5)
             .replaceFirst('-', ' ~ ', 6)

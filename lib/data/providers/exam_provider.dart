@@ -7,7 +7,7 @@ import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 
 int sortExamByTime(JwExamRows a, JwExamRows b) {
-  return a.examTask.beginDate.compareTo(b.examTask.beginDate);
+  return a.examTask.date.compareTo(b.examTask.date);
 }
 
 class ExamProvider extends BusyProvider {
@@ -43,7 +43,7 @@ class ExamProvider extends BusyProvider {
 
     for (JwExamRows exam in data.rows) {
       final examTime =
-          exam.examTask.beginDate.substring(0, 11) + exam.examTask.beginTime;
+          exam.examTask.date.substring(0, 11) + exam.examTask.time;
 
       if (DateTime.parse(examTime).isAfter(DateTime.now())) {
         return exam;

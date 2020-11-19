@@ -97,13 +97,13 @@ class JwExamTask extends Object {
   String eMKSRWID;
 
   @JsonKey(name: 'KSSF')
-  String beginTime;
+  String time;
 
   @JsonKey(name: 'BeginLesson')
   JwExamBeginLesson beginLesson;
 
   @JsonKey(name: 'KSRQ')
-  String beginDate;
+  String date;
 
   @JsonKey(name: 'ExamRoom')
   JwExamRoom examRoom;
@@ -117,7 +117,7 @@ class JwExamTask extends Object {
   @JsonKey(name: 'YQJKRS')
   int yQJKRS;
 
-  JwExamTask(this.pKZT,this.kSLX,this.pKFS,this.iSTYZJK,this.examPlan,this.type,this.cKRS,this.yPJKRS,this.fBZT,this.eMKSRWID,this.beginTime,this.beginLesson,this.beginDate,this.examRoom,this.kSSC,this.fBSJBZ,this.yQJKRS,);
+  JwExamTask(this.pKZT,this.kSLX,this.pKFS,this.iSTYZJK,this.examPlan,this.type,this.cKRS,this.yPJKRS,this.fBZT,this.eMKSRWID,this.time,this.beginLesson,this.date,this.examRoom,this.kSSC,this.fBSJBZ,this.yQJKRS,);
 
   factory JwExamTask.fromJson(Map<String, dynamic> srcJson) => _$JwExamTaskFromJson(srcJson);
 

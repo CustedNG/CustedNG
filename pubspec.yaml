@@ -20,6 +20,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   provider: ^3.2.0
   get_it: ^4.0.0-release-candidate
 
@@ -54,6 +57,8 @@ dependencies:
   after_layout: ^1.0.7+2
   auto_size_text: ^2.1.0
   loading_animations: ^2.1.0
+  syncfusion_flutter_calendar: ^18.3.50
+  syncfusion_localizations: ^18.3.50
 
   path_provider: ^1.5.1
   android_path_provider: ^0.1.1

@@ -15,6 +15,8 @@ import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/setting_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 bool _shouldEnableDarkMode(BuildContext context, int mode) {
   // print('ddf: ${MediaQuery.platformBrightnessOf(context)}');
@@ -38,6 +40,19 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       builder: (context, mode) {
         return CupertinoApp(
           navigatorKey: locator<GlobalKey<NavigatorState>>(),
+          localizationsDelegates: [
+            DefaultCupertinoLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            SfGlobalLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale.fromSubtags(languageCode: 'zh'),
+            Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
+          ],
+          locale: Locale('zh'),
           title: 'Custed',
           home: AppFrame(),
           builder: (context, child) {
@@ -76,7 +91,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       App First Layout Done. 
   
     ''');
-    
+
     locator<WeatherProvider>().startAutoUpdate();
 
     // 加载核心数据
@@ -99,6 +114,5 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       // 预热 IecardService
       // IecardService().login();
     }
-
   }
 }
