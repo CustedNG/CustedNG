@@ -40,7 +40,8 @@ class _PhotoViewGalleryScreenState extends State<SchoolMapPage> {
   @override
   Widget build(BuildContext context) {
     final effectMaps = isDark(context) ? darkMaps : maps;
-    final background = isDark(context) ? CupertinoColors.darkBackgroundGray : Colors.white;
+    final background =
+        isDark(context) ? CupertinoColors.darkBackgroundGray : Colors.white;
     final deviceWidth = MediaQuery.of(context).size.width;
 
     return CupertinoPageScaffold(
@@ -67,8 +68,8 @@ class _PhotoViewGalleryScreenState extends State<SchoolMapPage> {
               groupValue: currentMapIndex,
               children: {
                 0: Text('东区'),
-                1: Text('西区'),
-                2: Text('南区'),
+                1: Text('南区'),
+                2: Text('西区'),
               },
               onValueChanged: (index) {
                 setState(() {
