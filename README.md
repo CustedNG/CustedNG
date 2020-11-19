@@ -11,19 +11,21 @@
 
 ## CustedNG
 
+**图为深色模式**
+
 <table>
   <tr>
     <td>
-		<img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/home.png">
+		<img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/home.png">
     </td>
     <td>
-       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/schedule.png">
+       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/schedule.png">
     </td>
     <td>
-       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/lesson.png">
+       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/lesson.png">
     </td>
     <td>
-       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/tiku.png">
+       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/tiku.png">
     </td>
   </tr>
 </table>
