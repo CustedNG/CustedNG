@@ -13,7 +13,7 @@ import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/wrdvpn_based_service.dart';
 
 class JwService extends WrdvpnBasedService {
-  static const baseUrl = 'https://jwgls2.cust.edu.cn';
+  static const baseUrl = 'https://jwgls1.cust.edu.cn';
   
   final MyssoService _mysso = locator<MyssoService>();
 
