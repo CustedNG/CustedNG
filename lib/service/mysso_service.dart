@@ -29,7 +29,7 @@ class MyssoService extends CatService {
   Future<CatLoginResult<String>> login({bool force = false}) async {
     if (force) clearCookieFor(baseUrl.toUri());
 
-    final loginService = 'http://test.cust.edu.cn/custp2/shiro-cas';
+    final loginService = 'http://portal.cust.edu.cn/custp2/shiro-cas';
     final loginUrlWithService = '$loginUrl?service=$loginService';
 
     // final loginPage = await getFrontPage(loginUrlWithService);
