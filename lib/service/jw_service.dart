@@ -13,8 +13,8 @@ import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/wrdvpn_based_service.dart';
 
 class JwService extends WrdvpnBasedService {
-  static const baseUrl = 'https://jwgls1.cust.edu.cn';
-  
+  static const baseUrl = 'https://jwgl.cust.edu.cn';
+
   final MyssoService _mysso = locator<MyssoService>();
 
   @override
@@ -107,42 +107,41 @@ class JwService extends WrdvpnBasedService {
     final parsedResponse = JwResponse.fromJson(json.decode(response.body));
     final resp = await xRequest(
       'POST',
-      '$baseUrl/api/CommonApi/GetFileContentById'
-          .toUri(),
+      '$baseUrl/api/CommonApi/GetFileContentById'.toUri(),
       body: {
-        'param' : base64Encode(utf8.encode('%7B%22Id%22%3A%22'
+        'param': base64Encode(utf8.encode('%7B%22Id%22%3A%22'
             '${parsedResponse.data['StudentDto']['ZPID']}%22%7D')),
-        '__log' : {
-          'Context' : '查询',
-          'Logtype' : 6,
-          'MenuID' : '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5'
+        '__log': {
+          'Context': '查询',
+          'Logtype': 6,
+          'MenuID': '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5'
         },
-        '__permission' : {
-          'MenuID' : '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5',
-          'Operation' : 0
+        '__permission': {
+          'MenuID': '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5',
+          'Operation': 0
         }
       },
       headers: {'content-type': 'application/json'},
     );
 
-    Map<String,dynamic> jsonData = json.decode(resp.body);
+    Map<String, dynamic> jsonData = json.decode(resp.body);
     return jsonData['data']['ZZCLBlob']['Base64String'];
   }
 
-  Future<String> getExam() async{
+  Future<String> getExam() async {
     final resp = await xRequest(
       'POST',
       '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentExamAssign',
       body: {
-        'param':'JTdCJTdE',
-        '__permission':{
-          'MenuID':'00000000-0000-0000-0000-000000000000',
-          "Operation":0
+        'param': 'JTdCJTdE',
+        '__permission': {
+          'MenuID': '00000000-0000-0000-0000-000000000000',
+          "Operation": 0
         },
-        "__log":{
-          "MenuID":"00000000-0000-0000-0000-000000000000",
-          "Logtype":6,
-          "Context":"查询"
+        "__log": {
+          "MenuID": "00000000-0000-0000-0000-000000000000",
+          "Logtype": 6,
+          "Context": "查询"
         }
       },
       headers: {'content-type': 'application/json'},
