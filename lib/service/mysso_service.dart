@@ -29,7 +29,7 @@ class MyssoService extends CatService {
   Future<CatLoginResult<String>> login({bool force = false}) async {
     if (force) clearCookieFor(baseUrl.toUri());
 
-    final loginService = 'http://portal.cust.edu.cn/custp2/shiro-cas';
+    final loginService = 'https://portal.cust.edu.cn/custp/shiro-cas';
     final loginUrlWithService = '$loginUrl?service=$loginService';
 
     // final loginPage = await getFrontPage(loginUrlWithService);
@@ -132,7 +132,7 @@ class MyssoService extends CatService {
   }
 
   Future<String> getTicketForPortal() =>
-      getTicket('http://portal.cust.edu.cn/custp/shiro-cas');
+      getTicket('https://portal.cust.edu.cn/custp/shiro-cas');
 
   Future<String> getTicketForWebvpn() =>
       getTicket('https://webvpn.cust.edu.cn/auth/cas_validate?entry_id=1');
@@ -141,7 +141,7 @@ class MyssoService extends CatService {
       getTicket('http://wwwn.cust.edu.cn/wengine-auth/login?cas_login=true');
 
   Future<String> getTicketForJw() =>
-      getTicket('https://jwgls1.cust.edu.cn/welcome');
+      getTicket('https://jwgl.cust.edu.cn/welcome');
 
   Future<String> getTicketForIecard() =>
       getTicket('http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT');
