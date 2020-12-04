@@ -40,7 +40,7 @@ class CatClient {
     );
     saveCookies(response);
     _alice.onHttpResponse(response);
-    return await followRedirect(response, maxRedirects);
+    return await followRedirect(response, maxRedirects, body: body);
   }
 
   Future<Response> get(
@@ -73,17 +73,26 @@ class CatClient {
     );
   }
 
-  Future<Response> followRedirect(Response response, int maxRedirects) async {
-    final isRedirect =
-        response.isRedirect || response.statusCode == HttpStatus.found;
+  Future<Response> followRedirect(
+    Response response,
+    int maxRedirects, {
+    dynamic body,
+  }) async {
+    final isRedirect = response.isRedirect ||
+        response.statusCode == HttpStatus.found ||
+        response.statusCode == 307;
 
     if (maxRedirects <= 0 || !isRedirect) {
       return response;
     }
 
-    final method = response.request.method.toUpperCase() == 'POST'
-        ? 'GET'
-        : response.request.method;
+    var method = response.request.method;
+
+    if (response.request.method.toUpperCase() == 'POST') {
+      if (response.statusCode != 307) {
+        method = 'GET';
+      }
+    }
 
     var uri = Uri.parse(response.headers[HttpHeaders.locationHeader]);
 
@@ -95,13 +104,20 @@ class CatClient {
       uri = uri.replace(scheme: response.request.url.scheme);
     }
 
+    var headers = <String, String>{};
+    if (response.statusCode == 307) {
+      headers = Map<String, String>.from(response.request.headers);
+      // headers['Host'] =
+    }
+
     print('Cat Redirect: $uri');
 
     return await rawRequest(
       method,
       uri,
-      // headers: response.request.headers,
+      headers: headers,
       maxRedirects: maxRedirects - 1,
+      body: body,
     );
   }
 
@@ -204,6 +220,7 @@ class CatRequest extends Request {
       case 'application/x-www-form-urlencoded':
         return encodeFormData(body);
       case 'application/json':
+      case 'application/json; charset=utf-8':
         return json.encode(body);
       default:
         throw ArgumentError('Unsupported content-type "$contentType".');
