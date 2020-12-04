@@ -25,6 +25,7 @@ import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/service/netdisk_service.dart';
+import 'package:custed2/service/remote_config_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as path;
@@ -36,6 +37,7 @@ void setupLocatorForServices() {
   locator.registerLazySingleton(() => JwService());
   locator.registerLazySingleton(() => CustedService());
   locator.registerLazySingleton(() => NetdiskService());
+  locator.registerLazySingleton(() => RemoteConfigService());
 }
 
 void setupLocatorForProviders() {

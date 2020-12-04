@@ -10,11 +10,14 @@ import 'package:custed2/data/models/jw_student_info.dart';
 import 'package:custed2/data/models/jw_week_time.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
+import 'package:custed2/service/remote_config_service.dart';
 import 'package:custed2/service/wrdvpn_based_service.dart';
 
 class JwService extends WrdvpnBasedService {
-  static const baseUrl = 'https://jwgl.cust.edu.cn';
-  static const apiUrl = 'https://cust.cc/jwgl307';
+  String get baseUrl {
+    return locator<RemoteConfigService>()
+        .fetchSync('jwglBaseUrl', 'https://jwgls2.cust.edu.cn');
+  }
 
   final MyssoService _mysso = locator<MyssoService>();
 
@@ -26,7 +29,7 @@ class JwService extends WrdvpnBasedService {
     final ticket = await _mysso.getTicketForJw();
     final response = await request(
       'POST',
-      '$apiUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
+      '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
       body: encodeParams({
         'Ticket': ticket,
         'Url': '$baseUrl/welcome',
@@ -41,9 +44,10 @@ class JwService extends WrdvpnBasedService {
   }
 
   Future<JwSchedule> getSchedule() async {
+    await locator<RemoteConfigService>().reloadData();
     final resp = await xRequest(
       'POST',
-      '$apiUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentScheduleData'
+      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentScheduleData'
           .toUri(),
       body: encodeParams({}),
       headers: {'content-type': 'application/json'},
@@ -56,7 +60,7 @@ class JwService extends WrdvpnBasedService {
   Future<JwGradeData> getGrade() async {
     final resp = await xRequest(
       'POST',
-      '$apiUrl/api/ClientStudent/QueryService/GradeQueryApi/GetDataByStudent'
+      '$baseUrl/api/ClientStudent/QueryService/GradeQueryApi/GetDataByStudent'
           .toUri(),
       body: {
         // {"ShowGradeType":1} -> url -> base64
@@ -81,7 +85,7 @@ class JwService extends WrdvpnBasedService {
   Future<JwStudentInfo> getStudentInfo() async {
     final resp = await xRequest(
       'POST',
-      '$apiUrl/api/ClientStudent/Home/StudentInfoApi/GetSudentInfoByStudentId'
+      '$baseUrl/api/ClientStudent/Home/StudentInfoApi/GetSudentInfoByStudentId'
           .toUri(),
       body: encodeParams({}),
       headers: {'content-type': 'application/json'},
@@ -95,7 +99,7 @@ class JwService extends WrdvpnBasedService {
     final ticket = await _mysso.getTicketForJw();
     final response = await request(
       'POST',
-      '$apiUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
+      '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
       body: encodeParams({
         'Ticket': ticket,
         'Url': '$baseUrl/welcome',
@@ -108,7 +112,7 @@ class JwService extends WrdvpnBasedService {
     final parsedResponse = JwResponse.fromJson(json.decode(response.body));
     final resp = await xRequest(
       'POST',
-      '$apiUrl/api/CommonApi/GetFileContentById'.toUri(),
+      '$baseUrl/api/CommonApi/GetFileContentById'.toUri(),
       body: {
         'param': base64Encode(utf8.encode('%7B%22Id%22%3A%22'
             '${parsedResponse.data['StudentDto']['ZPID']}%22%7D')),
@@ -132,7 +136,7 @@ class JwService extends WrdvpnBasedService {
   Future<String> getExam() async {
     final resp = await xRequest(
       'POST',
-      '$apiUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentExamAssign',
+      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentExamAssign',
       body: {
         'param': 'JTdCJTdE',
         '__permission': {
@@ -154,7 +158,7 @@ class JwService extends WrdvpnBasedService {
   Future<JwWeekTime> getWeekTime() async {
     final resp = await xRequest(
       'POST',
-      '$apiUrl/api/ClientStudent/Home/StudentHomeApi/GetHomeCurWeekTime'
+      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/GetHomeCurWeekTime'
           .toUri(),
       body: encodeParams({}),
       headers: {'content-type': 'application/json'},

@@ -7,6 +7,7 @@ import 'package:custed2/core/service/cat_service.dart';
 import 'package:custed2/data/models/mysso_profile.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/data/store/user_data_store.dart';
+import 'package:custed2/service/jw_service.dart';
 import 'package:html/parser.dart' show parse;
 
 class MyssoService extends CatService {
@@ -141,7 +142,7 @@ class MyssoService extends CatService {
       getTicket('http://wwwn.cust.edu.cn/wengine-auth/login?cas_login=true');
 
   Future<String> getTicketForJw() =>
-      getTicket('https://jwgl.cust.edu.cn/welcome');
+      getTicket(locator<JwService>().baseUrl + '/welcome');
 
   Future<String> getTicketForIecard() =>
       getTicket('http://iecard.cust.edu.cn:8080/ias/prelogin?sysid=FWDT');
