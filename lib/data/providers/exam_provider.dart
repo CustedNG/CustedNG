@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/data/models/jw_exam.dart';
@@ -71,7 +70,8 @@ class ExamProvider extends BusyProvider {
   }
 
   void refreshData() async {
-    data = JwExam.fromJson(json.decode(await JwService().getExam())).data;
+    final exam = await JwService().getExam();
+    data = exam.data;
     data.rows.sort((a, b) => sortExamByTime(a, b));
   }
 
