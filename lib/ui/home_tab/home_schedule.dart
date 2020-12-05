@@ -5,9 +5,12 @@ import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class HomeSchedule extends StatelessWidget {
+  static const platform = MethodChannel('custed2.xuty.cc/notification');
+
   @override
   Widget build(BuildContext context) {
     final appProvider = Provider.of<AppProvider>(context, listen: false);
@@ -32,9 +35,10 @@ class HomeSchedule extends StatelessWidget {
     final detail = lesson == null
         ? ''
         : '${lesson.weekday.weekdayInChinese('周')} '
-            '${lesson.startTime} ~ ${lesson.endTime}';
+        '${lesson.startTime} ~ ${lesson.endTime}';
 
     final title = '下节 $detail';
+    platform.invokeMethod('notifyNextCourse', {"content": detail});
 
     return Text(title, style: style);
   }
