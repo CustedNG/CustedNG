@@ -75,8 +75,8 @@ class WrdvpnService extends CatService {
       response = await request(method, url,
           headers: headers, body: body, maxRedirects: maxRedirects);
     } else {
-      if (response.isRedirect) {
-        response = await followRedirect(response, maxRedirects - 1);
+      if (response.statusCode >= 300 && response.statusCode <= 399) {
+        response = await followRedirect(response, maxRedirects - 1, body: body);
       }
     }
 

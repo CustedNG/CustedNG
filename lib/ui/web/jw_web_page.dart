@@ -66,7 +66,7 @@ class _JwWebPageState extends WebPageState {
 
     // await CookieManager.instance().deleteCookies(url: url);
 
-    await loadCookieFor(JwService.baseUrl);
+    await loadCookieFor('https://jwgl.cust.edu.cn/');
     await loadCookieFor(MyssoService.loginUrl);
     await loadCookieFor(WrdvpnService.baseUrl);
 

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/util/cookie.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
@@ -14,7 +14,7 @@ class CatClient {
 
   final Client _client = Client();
   final PersistCookieJar _cookieJar = locator<PersistCookieJar>();
-  //final Alice _alice = locator<Alice>();
+  final Alice _alice = locator<Alice>();
 
   Future<Response> rawRequest(
     String method,
@@ -25,6 +25,7 @@ class CatClient {
     Duration timeout = kDefaultTimeout,
   }) async {
     url = resolveUri(url);
+    print('Cat Request: $method $url');
     final request = CatRequest(method, url);
     request.headers.addAll(headers);
     request.headers.putIfAbsent('Accept-Language',
@@ -38,16 +39,8 @@ class CatClient {
       await _client.send(request).timeout(timeout),
     );
     saveCookies(response);
-    //_alice.onHttpResponse(response);
-
-    final respBody = response.body;
-    final length = respBody.length;
-    if(BuildMode.isDebug){
-      print('\n${request.method} ${request.url}'
-          '\n[${response.statusCode}]'
-          '\n${respBody.substring(0, length > 1000 ? 1000 : length)}');
-    }
-    return await followRedirect(response, maxRedirects);
+    _alice.onHttpResponse(response);
+    return await followRedirect(response, maxRedirects, body: body);
   }
 
   Future<Response> get(
@@ -80,17 +73,26 @@ class CatClient {
     );
   }
 
-  Future<Response> followRedirect(Response response, int maxRedirects) async {
-    final isRedirect =
-        response.isRedirect || response.statusCode == HttpStatus.found;
+  Future<Response> followRedirect(
+    Response response,
+    int maxRedirects, {
+    dynamic body,
+  }) async {
+    final isRedirect = response.isRedirect ||
+        response.statusCode == HttpStatus.found ||
+        response.statusCode == 307;
 
     if (maxRedirects <= 0 || !isRedirect) {
       return response;
     }
 
-    final method = response.request.method.toUpperCase() == 'POST'
-        ? 'GET'
-        : response.request.method;
+    var method = response.request.method;
+
+    if (response.request.method.toUpperCase() == 'POST') {
+      if (response.statusCode != 307) {
+        method = 'GET';
+      }
+    }
 
     var uri = Uri.parse(response.headers[HttpHeaders.locationHeader]);
 
@@ -102,11 +104,20 @@ class CatClient {
       uri = uri.replace(scheme: response.request.url.scheme);
     }
 
+    var headers = <String, String>{};
+    if (response.statusCode == 307) {
+      headers = Map<String, String>.from(response.request.headers);
+      // headers['Host'] =
+    }
+
+    print('Cat Redirect: $uri');
+
     return await rawRequest(
       method,
       uri,
-      // headers: response.request.headers,
+      headers: headers,
       maxRedirects: maxRedirects - 1,
+      body: body,
     );
   }
 
@@ -116,11 +127,10 @@ class CatClient {
     // }
 
     final cookies = findCookiesAsString(request.url);
-    if (cookies.length > 1) {
+    print('load cookie for ${request.url} : [${cookies.length}]');
+    if (cookies.isNotEmpty) {
       request.headers[HttpHeaders.cookieHeader] = cookies;
-      return;
     }
-    if(!request.url.toString().startsWith('https://cust.app/app'))print('empty cookie');
   }
 
   void saveCookies(Response response) {
@@ -210,6 +220,7 @@ class CatRequest extends Request {
       case 'application/x-www-form-urlencoded':
         return encodeFormData(body);
       case 'application/json':
+      case 'application/json; charset=utf-8':
         return json.encode(body);
       default:
         throw ArgumentError('Unsupported content-type "$contentType".');

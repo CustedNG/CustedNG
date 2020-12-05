@@ -37,7 +37,7 @@ abstract class CatService extends CatClient {
     int maxRedirects = CatClient.kDefaultMaxRedirects,
     bool expireTest(Response response),
   }) async {
-    Response response = await request(method, url,
+    var response = await request(method, url,
         headers: headers, maxRedirects: maxRedirects, body: body);
 
     final expired = isSessionExpired(response) ||

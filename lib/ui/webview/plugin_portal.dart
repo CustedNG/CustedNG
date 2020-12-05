@@ -11,7 +11,7 @@ String get rmFooter => '''
 class PluginForPortal extends Webview2Plugin {
   @override
   bool shouldActivate(Uri uri) {
-    return uri.path.startsWith('/custp2/index');
+    return uri.path.startsWith('/custp/index');
   }
 
   @override

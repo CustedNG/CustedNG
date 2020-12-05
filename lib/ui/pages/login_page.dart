@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
           this.controller = controller;
           await CookieManager().clearCookies();
           controller.loadUrl(
-            'https://mysso.cust.edu.cn/cas/login?service=http://test.cust.edu.cn/custp2/shiro-cas',
+            'https://mysso.cust.edu.cn/cas/login?service=https://portal.cust.edu.cn/custp/shiro-cas',
           );
         },
         onPageStarted: (url) {
@@ -87,8 +87,7 @@ class _LoginPageState extends State<LoginPage> {
         navigationDelegate: (request) async {
           print('Redirect: ${request.url}');
 
-          if (request.url.contains('custp2') ||
-              request.url.contains('test.cust.edu.cn') ||
+          if (request.url.contains('custp') ||
               request.url.contains('portal.cust.edu.cn')) {
             Future.delayed(200.ms, _loginSuccessCallback);
             return NavigationDecision.prevent;
