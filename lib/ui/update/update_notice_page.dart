@@ -89,7 +89,7 @@ class UpdateNoticePage extends StatelessWidget {
           },
         ),
         CupertinoButton(
-          child: Text('我不'),
+          child: Text('不再提示该版本'),
           onPressed: () {
             final settings = locator<SettingStore>();
             settings.ignoreUpdate.put(update.build);
