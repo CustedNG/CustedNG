@@ -191,7 +191,7 @@ class LessonPreview extends StatelessWidget {
         AppRoute(
           title: '编辑课程',
           page: AddLessonPage(lesson: lesson),
-        ).popup(context);
+        ).go(context);
         locator<ScheduleProvider>().loadLocalData();
       },
     );
@@ -211,7 +211,7 @@ class LessonPreview extends StatelessWidget {
                             AppRoute(
                               title: '编辑课程',
                               page: AddLessonPage(lesson: selectedLesson),
-                            ).popup(context);
+                            ).go(context);
                             locator<ScheduleProvider>().loadLocalData();
                           },
                         )

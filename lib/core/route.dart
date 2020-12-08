@@ -1,5 +1,6 @@
 import 'package:custed2/core/analytics.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AppRoute {
   final String title;
@@ -10,18 +11,9 @@ class AppRoute {
   void go(BuildContext context, {bool rootNavigator = false}) {
     Analytics.recordView(title);
     Navigator.of(context, rootNavigator: rootNavigator).push(
-      CupertinoPageRoute(
-        title: title,
+      MaterialPageRoute(
         builder: (_) => page,
       ),
-    );
-  }
-
-  void popup(BuildContext context, {bool useRootNavigator = true}) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (_) => page,
-      useRootNavigator: useRootNavigator,
     );
   }
 

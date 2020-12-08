@@ -91,7 +91,7 @@ class HomeDrawer extends StatelessWidget{
 
 
   void _login(BuildContext context) {
-    loginPage.popup(context);
+    loginPage.go(context);
   }
 
   void _logout(BuildContext context) {

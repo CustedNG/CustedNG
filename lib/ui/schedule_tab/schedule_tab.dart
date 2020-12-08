@@ -133,7 +133,7 @@ class _ScheduleTabState extends State<ScheduleTab>
               AppRoute(
                 title: '添加课程',
                 page: AddLessonPage(),
-              ).popup(context);
+              ).go(context);
               break;
           }
         });

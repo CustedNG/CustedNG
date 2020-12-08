@@ -60,7 +60,7 @@ class NetdiskPage extends StatelessWidget {
             ),
             color: Colors.blue,
             textColor: Colors.white,
-            onPressed: () => netdiskWebPage.popup(context)),
+            onPressed: () => netdiskWebPage.go(context)),
       ],
     );
   }

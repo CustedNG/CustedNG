@@ -41,7 +41,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
       child: Text(text, style: TextStyle(color: Colors.white)),
       onPressed: () => isLegacy
           ? loginPageLegacy.go(context)
-          : loginPage.popup(context),
+          : loginPage.go(context),
     );
   }
 

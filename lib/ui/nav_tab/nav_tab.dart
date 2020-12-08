@@ -91,7 +91,7 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
                   AppRoute(
                     title: '',
                     page: WebviewBrowser(request.url),
-                  ).popup(context);
+                  ).go(context);
                 }
                 return ShouldOverrideUrlLoadingAction.CANCEL;
               },
