@@ -1,5 +1,4 @@
 import 'package:custed2/core/route.dart';
-import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/home_tab/home_go_to_wechat.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
@@ -76,12 +75,6 @@ final examRoomWebPage = AppRoute(
 //   title: '考试题库',
 //   page: TikuWebPage(),
 // );
-
-final tiku2WebPage = AppRoute(
-  title: '考试题库',
-  // page: Tiku2WebPage(),
-  page: WebviewBrowser('https://tiku.lacus.site/?custed=1'),
-);
 
 final schoolCalendarPage = AppRoute(
   title: '校历',

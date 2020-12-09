@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
+import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
@@ -133,7 +134,7 @@ class JwService extends WrdvpnBasedService {
     return jsonData['data']['ZZCLBlob']['Base64String'];
   }
 
-  Future<String> getExam() async {
+  Future<JwExam> getExam() async {
     final resp = await xRequest(
       'POST',
       '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentExamAssign',
@@ -152,7 +153,7 @@ class JwService extends WrdvpnBasedService {
       headers: {'content-type': 'application/json'},
     );
 
-    return resp.body;
+    return JwExam.fromJson(json.decode(resp.body));
   }
 
   Future<JwWeekTime> getWeekTime() async {
