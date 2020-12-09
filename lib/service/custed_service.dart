@@ -74,6 +74,11 @@ class CustedService extends CatClient {
     return resp.body;
   }
 
+  Future<List<String>> getWebviewPlugins() async {
+    final resp = await get('https://cust.cc/webview/plugins.json');
+    return List<String>.from(json.decode(resp.body));
+  }
+
   static String getFileUrl(CustedFile file) {
     if (file == null) return null;
     return file.url.startsWith('/') ? '$baseUrl${file.url}' : file.url;
