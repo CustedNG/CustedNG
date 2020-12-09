@@ -9,6 +9,7 @@ import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/webvpn_service.dart';
 import 'package:custed2/service/wrdvpn_service.dart';
 import 'package:custed2/ui/webview/plugin_iecard.dart';
+import 'package:custed2/ui/webview/plugin_jw_eval.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
 import 'package:custed2/ui/webview/plugin_netdisk.dart';
 import 'package:custed2/ui/webview/plugin_portal.dart';
@@ -37,6 +38,7 @@ class WebviewBrowser extends StatelessWidget {
         PluginForPortal(),
         PluginForIecard(),
         PluginForNetdisk(),
+        PluginJwEval(),
       ],
     );
   }
