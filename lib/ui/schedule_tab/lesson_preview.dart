@@ -187,7 +187,7 @@ class LessonPreview extends StatelessWidget {
         // await lesson.delete();
         AppRoute(
           title: '编辑课程',
-          page: AddLessonPage(lesson: lesson),
+          page: AddLessonPage.editLesson(lesson),
         ).popup(context);
         locator<ScheduleProvider>().loadLocalData();
       },
@@ -199,20 +199,25 @@ class LessonPreview extends StatelessWidget {
       onPressed: () async {
         Navigator.of(context).pop();
         showCupertinoModalPopup(
-            context: context,
-            builder: (context) => CupertinoActionSheet(
-                actions: List<Widget>.of(
-                    customLessons.map((selectedLesson) => CupertinoActionSheetAction(
-                          child: Text(selectedLesson.displayName),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            AppRoute(
-                              title: '编辑课程',
-                              page: AddLessonPage(lesson: selectedLesson),
-                            ).popup(context);
-                            locator<ScheduleProvider>().loadLocalData();
-                          },
-                        )))));
+          context: context,
+          builder: (context) => CupertinoActionSheet(
+            actions: List<Widget>.of(
+              customLessons.map(
+                (selectedLesson) => CupertinoActionSheetAction(
+                  child: Text(selectedLesson.displayName),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    AppRoute(
+                      title: '编辑课程',
+                      page: AddLessonPage.editLesson(selectedLesson),
+                    ).popup(context);
+                    locator<ScheduleProvider>().loadLocalData();
+                  },
+                ),
+              ),
+            ),
+          ),
+        );
         locator<ScheduleProvider>().loadLocalData();
       },
     );

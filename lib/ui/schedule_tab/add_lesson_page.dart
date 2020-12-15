@@ -16,8 +16,43 @@ import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
 import 'package:flutter/cupertino.dart';
 
 class AddLessonPage extends StatefulWidget {
-  AddLessonPage({this.lesson});
+  AddLessonPage({
+    this.name,
+    this.room,
+    this.teacher,
+    this.weeks,
+    this.weekday,
+    this.startSection,
+    this.endSection,
+    this.startTime,
+    this.endTime,
+  }) : lesson = null;
 
+  AddLessonPage.editLesson(this.lesson)
+      : name = lesson.name,
+        room = lesson.roomRaw,
+        teacher = lesson.teacherName,
+        weeks = lesson.weeks,
+        weekday = lesson.weekday,
+        startSection = lesson.startSection,
+        endSection = lesson.endSection,
+        startTime = lesson.startTime,
+        endTime = lesson.endTime;
+
+  final String name;
+  final String room;
+  final String teacher;
+
+  final List<int> weeks;
+  final int weekday;
+
+  final int startSection;
+  final int endSection;
+
+  final String startTime;
+  final String endTime;
+
+  // 已添加的课程, 可以为空
   final ScheduleLesson lesson;
 
   @override
@@ -25,37 +60,36 @@ class AddLessonPage extends StatefulWidget {
 }
 
 class _AddLessonPageState extends State<AddLessonPage> {
-  final nameController = TextEditingController(text: '自定义课程1');
-  final roomController = TextEditingController(text: '');
-  final teacherController = TextEditingController(text: '');
+  final nameController = TextEditingController();
+  final roomController = TextEditingController();
+  final teacherController = TextEditingController();
   final weeksController = TextEditingController();
   final weekdayController = TextEditingController();
   final sectionController = TextEditingController();
 
-  var weeks = Map<int, bool>.fromIterables(
-    List<int>.generate(24, (index) => index + 1),
-    List<bool>.generate(24, (index) => index <= 2),
-  );
+  Map<int, bool> weeks;
 
-  var weekday = 1;
-  var startSection = 1;
-  var endSection = 2;
+  int weekday;
+  int startSection;
+  int endSection;
 
   @override
   void initState() {
     super.initState();
-    if (widget.lesson != null) {
-      nameController.text = widget.lesson.name;
-      roomController.text = widget.lesson.roomRaw;
-      teacherController.text = widget.lesson.teacherName;
-      weeks = Map<int, bool>.fromIterables(
-        List<int>.generate(24, (idx) => idx + 1),
-        List<bool>.generate(24, (idx) => widget.lesson.weeks.contains(idx + 1)),
-      );
-      weekday = widget.lesson.weekday;
-      startSection = widget.lesson.startSection;
-      endSection = widget.lesson.endSection;
-    }
+    nameController.text = widget.name ?? '自定义课程1';
+    roomController.text = widget.room ?? '';
+    teacherController.text = widget.teacher ?? '';
+
+    final weeks = widget.weeks ?? [1];
+    this.weeks = Map<int, bool>.fromIterables(
+      List<int>.generate(24, (idx) => idx + 1),
+      List<bool>.generate(24, (idx) => weeks.contains(idx + 1)),
+    );
+
+    weekday = widget.weekday ?? 1;
+    startSection = widget.startSection ?? 1;
+    endSection = widget.endSection ?? 2;
+
     updateDisplay();
   }
 
@@ -96,7 +130,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
             _buildTeacherField(context),
             _buildWeekField(context),
             _buildTimeField(context),
-            _buildDeleteButton(context)
+            if (widget.lesson != null) _buildDeleteButton(context)
           ],
         ),
       ),
@@ -204,7 +238,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
     endSection = result.endSection;
     updateDisplay();
   }
-  
+
   void updateDisplay() {
     weekdayController.text = weekday.weekdayInChinese();
     sectionController.text = '${startSection}-${endSection}节';
@@ -221,11 +255,13 @@ class _AddLessonPageState extends State<AddLessonPage> {
       ..weeks = activeWeeks.toList()
       ..weekday = weekday
       ..startSection = startSection
-      ..endSection = endSection;
+      ..endSection = endSection
+      ..startTime = widget.startTime
+      ..endTime = widget.endTime;
 
     final store = await locator.getAsync<CustomLessonStore>();
     final snake = locator<SnakebarProvider>();
-    
+
     store.addLesson(lesson);
     locator<ScheduleProvider>().loadLocalData();
 
