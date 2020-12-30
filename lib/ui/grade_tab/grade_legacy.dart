@@ -322,7 +322,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     BuildContext context, {
     @required String value,
     @required String tag,
-    String unit = '',
+    //String unit = '',
   }) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -340,7 +340,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   }
 
   Widget _buildInfoItem(BuildContext context,
-      {@required String value, @required String tag, String unit = ''}) {
+      {@required String value, @required String tag, /*String unit = ''*/}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

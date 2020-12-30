@@ -34,7 +34,7 @@ class _HomeWeatherState extends State<HomeWeather> {
   _buildWeather(WeatherData data) {
     return NavbarMiddle(
       textAbove: data != null ? '${data?.city} ${data?.type}' : '加载中...',
-      textBelow: '${data?.today?.lowNum ?? ''}~${data?.today?.highNum ?? ''}',
+      textBelow: '${data?.today?.lowNum ?? ''} ~ ${data?.today?.highNum ?? ''}',
     );
   }
 

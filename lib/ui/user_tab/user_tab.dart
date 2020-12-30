@@ -3,6 +3,7 @@ import 'package:custed2/core/store/presistent_store.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
+import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -91,6 +92,13 @@ class UserTab extends StatelessWidget {
             contentWidget:
                 _buildSwitch(context, setting.dontCountElectiveCourseGrade),
           ),
+          CSControl(
+            nameWidget: Text('成绩安全模式'),
+            contentWidget: _buildSwitch(
+                context,
+                setting.gradeSafeMode,
+                msg: '切换安全模式，需要刷新成绩'),
+          ),
           _buildLink(context, '黑暗模式', () {
             darkModePage.go(context);
           }, isLast: true, prompt: darkModeStatus),
@@ -140,13 +148,18 @@ class UserTab extends StatelessWidget {
     );
   }
 
-  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop) {
+  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop, {String msg}) {
     return ValueListenableBuilder(
       valueListenable: prop.listenable(),
       builder: (context, value, widget) {
         return DarkModeFilter(
           child: CupertinoSwitch(
-              value: value, onChanged: (value) => prop.put(value)),
+              value: value, onChanged: (value) {
+                prop.put(value);
+                if (msg != null) {
+                  locator<SnakebarProvider>().info(msg);
+                }
+              }),
         );
       },
     );
