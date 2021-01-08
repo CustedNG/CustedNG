@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
@@ -465,7 +466,7 @@ class __ReportItemState extends State<_ReportItem> {
                       ),
                       SizedBox(width: 20),
                       Text(
-                        '类别 : ${widget.exam.lessonType}',
+                        '类别 : ${widget.exam.lessonCategory}',
                         style: fieldTextTheme,
                       ),
                     ],
