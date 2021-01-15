@@ -181,6 +181,7 @@ class UndergraduateUser with CustUser implements User {
     final table = {
       '20201': DateTime(2020, 2, 24),
       '20202': DateTime(2020, 8, 31),
+      '20211': DateTime(2021, 3, 1),
     };
 
     final year = DateTime.now().year.toString();
