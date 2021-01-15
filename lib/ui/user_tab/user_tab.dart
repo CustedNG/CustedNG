@@ -92,13 +92,28 @@ class UserTab extends StatelessWidget {
             contentWidget:
                 _buildSwitch(context, setting.dontCountElectiveCourseGrade),
           ),
-          CSControl(
-            nameWidget: Text('成绩安全模式'),
-            contentWidget: _buildSwitch(
-                context,
-                setting.gradeSafeMode,
-                msg: '切换安全模式，需要刷新成绩'),
-          ),
+          // CSControl(
+          //   nameWidget: Text('成绩安全模式'),
+          //   contentWidget: _buildSwitch(
+          //     context,
+          //     setting.gradeSafeMode,
+          //     onChanged: (value) {
+          //       if (value == true) {
+          //         showCupertinoDialog(
+          //           context: context,
+          //           builder: (context) {
+          //             return CupertinoAlertDialog(
+          //               content: Text('安全模式开启成功\n'
+          //                   '你可以在五分钟内放心地展示你的成绩。\n'
+          //                   '避免与父母争吵影响学习心情和家庭和谐\n'
+          //                   '另：此功能对好学生无效。'),
+          //             );
+          //           },
+          //         );
+          //       }
+          //     },
+          //   ),
+          // ),
           _buildLink(context, '黑暗模式', () {
             darkModePage.go(context);
           }, isLast: true, prompt: darkModeStatus),
@@ -133,9 +148,12 @@ class UserTab extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(profile.displayName,
-            style: TextStyle(
-                color: isDark(context) ? Colors.white : Colors.black)),
+        Text(
+          profile.displayName,
+          style: TextStyle(
+            color: isDark(context) ? Colors.white : Colors.black,
+          ),
+        ),
         SizedBox(height: 3),
         Text(profile.department, style: departmentText),
       ],
@@ -148,18 +166,20 @@ class UserTab extends StatelessWidget {
     );
   }
 
-  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop, {String msg}) {
+  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop,
+      {bool Function(bool value) onChanged}) {
     return ValueListenableBuilder(
       valueListenable: prop.listenable(),
       builder: (context, value, widget) {
         return DarkModeFilter(
           child: CupertinoSwitch(
-              value: value, onChanged: (value) {
+            value: value,
+            onChanged: (value) {
+              if (onChanged(value) == true) {
                 prop.put(value);
-                if (msg != null) {
-                  locator<SnakebarProvider>().info(msg);
-                }
-              }),
+              }
+            },
+          ),
         );
       },
     );
