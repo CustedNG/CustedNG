@@ -78,17 +78,17 @@ class ScheduleWeekNavigator extends StatelessWidget {
       return;
     }
 
-    int week = scheduleProvider.selectedWeek;
-    await showCupertinoModalPopup(
+    final week = await showCupertinoModalPopup(
       context: context,
       builder: (context) => ScheduleWeekPicker(
         currentWeek: scheduleProvider.currentWeek,
         selectedWeek: scheduleProvider.selectedWeek,
         maxWeek: scheduleProvider.maxWeek,
-        onChange: (n) => week = n,
       ),
     );
+
     print('Week: $week');
+
     scheduleProvider.selectWeek(week);
   }
 }
