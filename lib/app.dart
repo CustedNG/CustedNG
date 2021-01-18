@@ -81,7 +81,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 
     // 加载核心数据
     await Future.wait([
-      locator<ScheduleProvider>().loadLocalData(reset: true),
+      locator<ScheduleProvider>().loadLocalData(resetWeek: true),
       locator<GradeProvider>().loadLocalData(),
       locator<UserProvider>().loadLocalData(),
     ]);
