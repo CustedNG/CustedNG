@@ -201,8 +201,10 @@ class _AddLessonPageState extends State<AddLessonPage> {
 
   Widget _buildDeleteButton(BuildContext context) {
     return CupertinoButton(
-      child:
-          Text('删除', style: TextStyle(color: CupertinoColors.destructiveRed)),
+      child: Text(
+        '删除',
+        style: TextStyle(color: CupertinoColors.destructiveRed),
+      ),
       onPressed: () {
         widget.lesson.delete();
         locator<ScheduleProvider>().loadLocalData();
