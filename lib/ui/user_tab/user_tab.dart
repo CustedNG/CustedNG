@@ -175,7 +175,7 @@ class UserTab extends StatelessWidget {
           child: CupertinoSwitch(
             value: value,
             onChanged: (value) {
-              if (onChanged(value) == true) {
+              if (onChanged == null || onChanged(value) == true) {
                 prop.put(value);
               }
             },
