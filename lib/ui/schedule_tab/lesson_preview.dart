@@ -190,7 +190,7 @@ class LessonPreview extends StatelessWidget {
         // await lesson.delete();
         AppRoute(
           title: '编辑课程',
-          page: AddLessonPage(lesson: lesson),
+          page: AddLessonPage.editLesson(lesson),
         ).go(context);
         locator<ScheduleProvider>().loadLocalData();
       },
@@ -210,7 +210,7 @@ class LessonPreview extends StatelessWidget {
                             Navigator.of(context).pop();
                             AppRoute(
                               title: '编辑课程',
-                              page: AddLessonPage(lesson: selectedLesson),
+                              page: AddLessonPage.editLesson(selectedLesson),
                             ).go(context);
                             locator<ScheduleProvider>().loadLocalData();
                           },

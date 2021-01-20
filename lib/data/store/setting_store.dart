@@ -28,7 +28,9 @@ class SettingStore with PresistentStore {
   StoreProperty<bool> get showTipOnViewingExam =>
       property('showTipOnViewingExam', defaultValue: true);
 
-  //default value 0 is Dark.auto
+  StoreProperty<bool> get gradeSafeMode =>
+      property('gradeSafeMode', defaultValue: false);
+
   StoreProperty<int> get darkMode =>
       property('darkMode', defaultValue: 0);
 

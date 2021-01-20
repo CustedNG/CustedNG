@@ -31,6 +31,9 @@ class GradeDetail extends HiveObject {
   @HiveField(8)
   String testType;
 
+  @HiveField(9)
+  String lessonCategory;
+
   @override
   String toString() {
     return 'GradeDetail<>';

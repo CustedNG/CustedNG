@@ -25,13 +25,14 @@ class GradeDetailAdapter extends TypeAdapter<GradeDetail> {
       ..mark = fields[5] as double
       ..rawMark = fields[6] as String
       ..lessonName = fields[7] as String
-      ..testType = fields[8] as String;
+      ..testType = fields[8] as String
+      ..lessonCategory = fields[9] as String;
   }
 
   @override
   void write(BinaryWriter writer, GradeDetail obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.year)
       ..writeByte(1)
@@ -49,7 +50,9 @@ class GradeDetailAdapter extends TypeAdapter<GradeDetail> {
       ..writeByte(7)
       ..write(obj.lessonName)
       ..writeByte(8)
-      ..write(obj.testType);
+      ..write(obj.testType)
+      ..writeByte(9)
+      ..write(obj.lessonCategory);
   }
 
   @override

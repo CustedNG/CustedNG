@@ -42,7 +42,8 @@ class ExamProvider extends BusyProvider {
 
     for (JwExamRows exam in data.rows) {
       final examTime =
-          exam.examTask.beginDate.substring(0, 11) + exam.examTask.beginTime;
+          exam.examTask.beginDate.substring(0, 11)
+              + exam.examTask.beginTime.substring(6);
 
       if (DateTime.parse(examTime).isAfter(DateTime.now())) {
         return exam;

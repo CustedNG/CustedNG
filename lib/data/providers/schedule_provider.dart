@@ -29,21 +29,23 @@ class ScheduleProvider extends BusyProvider {
     notifyListeners();
   }
 
-  Future<void> loadLocalData() async {
+  Future<void> loadLocalData({bool resetWeek = false}) async {
     final scheduleStore = await locator.getAsync<ScheduleStore>();
     final head = scheduleStore.head;
     await _useSchedule(head);
 
     if (head != null) {
       print('use cached schedule: $head');
-      resetWeekToCurrentWeek();
+      if (resetWeek) {
+        resetWeekToCurrentWeek();
+      }
       notifyListeners();
     }
   }
 
-  Future<void> updateScheduleData({bool reset = false}) async {
+  Future<void> updateScheduleData({bool resetWeek = false}) async {
     await busyRun(_updateScheduleData);
-    if (reset) resetWeekToCurrentWeek();
+    if (resetWeek) resetWeekToCurrentWeek();
   }
 
   Future<void> _updateScheduleData() async {

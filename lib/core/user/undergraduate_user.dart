@@ -63,6 +63,10 @@ class UndergraduateUser with CustUser implements User {
     return result;
   }
 
+  static bool isElectiveCourse(GradeDetail grade) {
+    return grade.lessonType != '选修';
+  }
+
   static Future<Grade> normalizeGrade(JwGradeData raw) async {
     final termSet = raw.GradeList.map((e) => e.KSXNXQ).toSet();
     final terms = termSet.map((term) {
@@ -80,11 +84,13 @@ class UndergraduateUser with CustUser implements User {
           ..mark = rawGrade.YXCJ
           ..rawMark = rawGrade.ShowYXCJ
           ..lessonName = rawGrade.LessonInfo.KCMC
-          ..testType = rawGrade.KSXZ;
+          ..testType = rawGrade.KSXZ
+          ..lessonCategory = rawGrade.LessonClass.FLMC;
 
         final key = '${grade.year}:'
             '${grade.lessonName}:'
             '${grade.lessonType}:'
+            '${grade.lessonCategory}'
             '${grade.credit}:'
             '${grade.schoolHour}';
 
@@ -119,7 +125,7 @@ class UndergraduateUser with CustUser implements User {
         }
         weightedGradePointSum += gradePoint * grade.credit;
 
-        if (grade.lessonType != '选修') {
+        if (isElectiveCourse(grade)) {
           weightedGradePointSumNoElectiveCourse += gradePoint * grade.credit;
           creditTotalNoElectiveCourse += grade.credit;
         }
@@ -175,6 +181,7 @@ class UndergraduateUser with CustUser implements User {
     final table = {
       '20201': DateTime(2020, 2, 24),
       '20202': DateTime(2020, 8, 31),
+      '20211': DateTime(2021, 3, 1),
     };
 
     final year = DateTime.now().year.toString();

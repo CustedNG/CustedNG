@@ -1,6 +1,9 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:custed2/core/route.dart';
+import 'package:custed2/core/util/time_point.dart';
 import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
+import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
@@ -48,7 +51,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
         final examType = eachExam.examTask.type;
         final examName = eachExam.examTask.beginLesson.lessonInfo.name;
 
-        HomeCard homeCard = HomeCard(
+        final homeCard = HomeCard(
           title: Text(
               examTime,
               style: TextStyle(color: Color(0xFF889CC3))
@@ -73,9 +76,11 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       content = ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          SizedBox(height: 27),
+          SizedBox(height: 20),
+          Text('提示: 点击考试卡片可将考试添加到课表'),
+          SizedBox(height: 15),
           ...list,
-          SizedBox(height: 27),
+          SizedBox(height: 20),
         ],
       );
 
@@ -134,4 +139,25 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
         )
     );
   }
+}
+
+int assumeStartSection(String time) {
+  final times = {
+    TimePoint(9, 35): 1,
+    TimePoint(11, 40): 3,
+    TimePoint(15, 05): 5,
+    TimePoint(17, 10): 7,
+    TimePoint(19, 35): 9,
+    TimePoint(21, 20): 11,
+  };
+
+  final timePoint = TimePoint.fromString(time);
+
+  for (var time in times.entries) {
+    if (timePoint.minutes < time.key.minutes) {
+      return time.value;
+    }
+  }
+
+  return times.values.last;
 }

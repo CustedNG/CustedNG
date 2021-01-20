@@ -34,22 +34,22 @@ class HomeDrawer extends StatelessWidget{
                   backgroundImage: AssetImage('assets/icon/custed_lite.png'),
                 ),
               ),
-              ListTile(
+              isLoggedIn ? ListTile(
                 leading: Icon(Icons.photo_camera),
                 title: Text('四六级照片'),
                 onTap: () {
                   locator<CetAvatarProvider>().getAvatar();
                   cetAvatarPage.go(context);
                 },
-              ),
-              ListTile(
+              ) : Container(),
+              isLoggedIn ? ListTile(
                 leading: Icon(Icons.cloud),
                 title: Text('校园网盘'),
                 onTap: () {
                   locator<NetdiskProvider>().getQuota();
                   netdiskPage.go(context);
                 },
-              ),
+              ) : Container(),
               AboutListTile(
                 icon: Icon(Icons.text_snippet),
                 child: Text('开源证书'),

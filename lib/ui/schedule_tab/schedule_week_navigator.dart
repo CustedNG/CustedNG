@@ -89,10 +89,11 @@ class ScheduleWeekNavigator extends StatelessWidget {
         currentWeek: scheduleProvider.currentWeek,
         selectedWeek: scheduleProvider.selectedWeek,
         maxWeek: scheduleProvider.maxWeek,
-        onChange: (n) => week = n,
       ),
     );
+
     print('Week: $week');
+
     scheduleProvider.selectWeek(week);
   }
 }

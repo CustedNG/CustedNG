@@ -65,7 +65,7 @@ class UserProvider extends BusyProvider {
     final exam = locator<ExamProvider>();
     
     locator<PersistCookieJar>().deleteAll();
-    await schedule.updateScheduleData(reset: true);
+    await schedule.updateScheduleData(resetWeek: true);
     await grade.updateGradeData();
     // call login() here to improve iecard open speed.
     // await IecardService().login();
