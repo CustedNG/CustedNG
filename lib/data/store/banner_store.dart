@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:custed2/core/store/presistent_store.dart';
+import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/models/custed_banner.dart';
 
-class BannerStore with PresistentStore<String> {
+class BannerStore with PersistentStore<String> {
   @override
   final boxName = 'banner';
 

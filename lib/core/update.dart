@@ -22,15 +22,15 @@ updateCheck(BuildContext context, {bool force = false}) async {
     doAndroidUpdate(context, force: force);
     return;
   }
-  doTestflightUpdate(context, force: force);
+  doTestFlightUpdate(context, force: force);
 }
 
-Future<bool> isFileAvaliable(String url) async {
+Future<bool> isFileAvailable(String url) async {
   try {
     final resp = await Dio().head(url);
     return resp.statusCode == 200;
   } catch (e) {
-    print('update file not avaliable: $e');
+    print('update file not available: $e');
     return false;
   }
 }
@@ -38,7 +38,7 @@ Future<bool> isFileAvaliable(String url) async {
 Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
   final update = await locator<CustedService>().getUpdate();
   if (update == null) return;
-  print('Update avaliable: $update');
+  print('Update available: $update');
 
   final settings = locator<SettingStore>();
   final ignore = settings.ignoreUpdate.fetch();
@@ -57,7 +57,7 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
     return;
   }
 
-  if (!await isFileAvaliable(update.file.url)) {
+  if (!await isFileAvailable(update.file.url)) {
     return;
   }
 
@@ -67,14 +67,14 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
   ).go(context);
 }
 
-Future<void> doTestflightUpdate(
+Future<void> doTestFlightUpdate(
   BuildContext context, {
   bool force = false,
 }) async {
-  final update = await locator<CustedService>().getTestflithgUpdate();
+  final update = await locator<CustedService>().getTestFlightUpdate();
   if (update == null) return;
 
-  print('Update avaliable: $update');
+  print('Update available: $update');
 
   final isCurrentVersionTooOld = BuildData.build < update.min;
   final shouldShowDialog = force || isCurrentVersionTooOld;
@@ -94,7 +94,7 @@ Future<void> doTestflightUpdate(
               },
             ),
             FlatButton(
-              child: Text('前往TestFlight更新'),
+              child: Text('前往TF更新'),
               onPressed: () async {
                 for (var url in update.urls) {
                   if (await openUrl(url)) {

@@ -1,5 +1,5 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/core/store/presistent_store.dart';
+import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';

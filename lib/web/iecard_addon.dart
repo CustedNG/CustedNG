@@ -14,24 +14,24 @@ class IecardAddon extends WebviewAddon {
 
   Widget build(InAppWebViewController controller, String url) {
     return null;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Flexible(
-          child: TextField(
-            controller: _textEditingController,
-            keyboardType: TextInputType.number,
-          ),
-        ),
-        FlatButton(
-          child: Text('快速充值'),
-          onPressed: () async {
-            await controller.loadUrl(url: IecardService.phoneChargeUrl);
-            charge = double.tryParse(_textEditingController.value.text);
-          },
-        )
-      ],
-    );
+    // return Row(
+    //   mainAxisSize: MainAxisSize.min,
+    //   children: <Widget>[
+    //     Flexible(
+    //       child: TextField(
+    //         controller: _textEditingController,
+    //         keyboardType: TextInputType.number,
+    //       ),
+    //     ),
+    //     FlatButton(
+    //       child: Text('快速充值'),
+    //       onPressed: () async {
+    //         await controller.loadUrl(url: IecardService.phoneChargeUrl);
+    //         charge = double.tryParse(_textEditingController.value.text);
+    //       },
+    //     )
+    //   ],
+    // );
   }
 
   Future<void> onPageFinished(

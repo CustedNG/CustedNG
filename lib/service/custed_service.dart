@@ -44,7 +44,7 @@ class CustedService extends CatClient {
     return CustedUpdate.fromJson(custedResp.data as Map<String, dynamic>);
   }
 
-  Future<CustedUpdateTestflight> getTestflithgUpdate() async {
+  Future<CustedUpdateTestflight> getTestFlightUpdate() async {
     final build = BuildData.build;
     final resp = await get('https://cust.cc/api/update/ios?build=$build',
         timeout: defaultTimeout);

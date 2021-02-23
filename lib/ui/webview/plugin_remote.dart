@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
-import 'package:flutter/cupertino.dart';
 
 class PluginFromRemote extends Webview2Plugin {
   PluginFromRemote() {
