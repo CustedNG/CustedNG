@@ -10,6 +10,7 @@ import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/grade_tab/grade_picker.dart';
 import 'package:custed2/ui/grade_tab/sliver_header_delegate.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,12 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
           leading: IconButton(
               icon: Icon(Icons.refresh),
               onPressed: () async {
-                await gradeProvider.updateGradeData();
+                try {
+                  await gradeProvider.updateGradeData();
+                  showSnackBar(context, "更新成功");
+                } catch(e) {
+                  showSnackBar(context, e.toString());
+                }
                 setState(() {});
               }
           ),
