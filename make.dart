@@ -20,7 +20,7 @@ Future<int> getGitModificationCount() async {
 }
 
 Future<String> getFlutterVersion() async {
-  final result = await Process.run('flutter', ['--version']);
+  final result = await Process.run('flutter', ['--version'], runInShell: true);
   return (result.stdout as String);
 }
 
@@ -73,7 +73,7 @@ void flutterBuildAndriod() async {
   final args = [
     'build',
     'apk',
-    '--target-platform=android-arm',
+    '--target-platform=android-arm64',
     '--build-number=$build',
     '--build-name=1.0.$build',
     '-v'
