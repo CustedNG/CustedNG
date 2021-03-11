@@ -20,7 +20,7 @@ class UndergraduateUser with CustUser implements User {
   final _jw = locator<JwService>();
 
   @override
-  Future<Schedule> getSchdeule() async {
+  Future<Schedule> getSchedule() async {
     final rawSchedule = await _jw.getSchedule();
     return normalizeSchedule(rawSchedule);
   }

@@ -51,7 +51,7 @@ class ScheduleProvider extends BusyProvider {
   }
 
   Future<void> _updateScheduleData() async {
-    final schedule = await User().getSchdeule();
+    final schedule = await User().getSchedule();
     _schedule = schedule;
     final scheduleStore = await locator.getAsync<ScheduleStore>();
     scheduleStore.checkIn(schedule);
