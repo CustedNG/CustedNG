@@ -15,6 +15,8 @@ class ScheduleProvider extends BusyProvider {
   int _selectedWeek = 1;
   int get selectedWeek => _selectedWeek;
 
+  int get activeLessonCount => schedule.activeLessonCount(selectedWeek);
+
   final int minWeek = 1;
   int get maxWeek => _schedule.weekCount;
 

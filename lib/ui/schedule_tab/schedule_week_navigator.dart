@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_picker.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +30,21 @@ class ScheduleWeekNavigator extends StatelessWidget {
           _buildRoundButton(context, '第${scheduleProvider.selectedWeek}周',
               onPressed: () => _openPicker(context),
               onLongPress: scheduleProvider.gotoCurrentWeek),
+          ConstrainedBox(
+            constraints: BoxConstraints.tight(Size(45, 30)),
+            child: Center(
+                // intended to use PlaceHolder but it doesn't seem a placeholder
+                child: Text(
+              '${scheduleProvider.activeLessonCount} 节',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: theme.lightTextColor,
+              ),
+              textAlign: TextAlign.center,
+            )),
+          ),
+          // PlaceholderWidget(text: '${scheduleProvider.activeLessonCount} 节'),
           _ArrowButton(
               icon: CupertinoIcons.back,
               onPressed: scheduleProvider.gotoPrevWeek),

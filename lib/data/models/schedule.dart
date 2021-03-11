@@ -24,12 +24,18 @@ class Schedule extends HiveObject {
     return lessons.where((lesson) => lesson.isActiveInWeek(week));
   }
 
+  int activeLessonCount(int week) {
+    return activeLessons(week).length;
+  }
+
   Iterable<ScheduleLesson> inactiveLessons(int week) {
     return lessons.where((lesson) => !lesson.isActiveInWeek(week));
   }
 
   int calculateWeekSinceStart(DateTime dateTime) {
-    final weeks = dateTime.difference(startDate).inDays ~/ 7;
+    final weeks = dateTime
+        .difference(startDate)
+        .inDays ~/ 7;
     return dateTime.compareTo(startDate) >= 0 ? weeks + 1 : weeks;
   }
 
