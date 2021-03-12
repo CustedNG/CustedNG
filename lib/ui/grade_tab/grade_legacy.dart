@@ -80,7 +80,8 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
 
   double currentPage;
 
-  GradeProvider get gradeProvider => Provider.of<GradeProvider>(context);
+  GradeProvider get gradeProvider => Provider.of<GradeProvider>(context, listen: false);
+  // don't know why, just works
 
   Grade get grade => gradeProvider.grade;
 
@@ -126,7 +127,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       navigationBar: CupertinoNavigationBar(
         automaticallyImplyMiddle: false,
         backgroundColor: theme.navBarColor,
-        actionsForegroundColor: CupertinoColors.white,
         brightness: Brightness.dark,
         leading: Align(
           alignment: Alignment.centerLeft,

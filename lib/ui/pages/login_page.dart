@@ -33,7 +33,6 @@ class _LoginPageState extends State<LoginPage> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         backgroundColor: theme.webviewNavBarColor,
-        actionsForegroundColor: theme.navBarActionsColor,
         middle: NavbarText('登录'),
         trailing: isBusy ? _buildIndicator(context) : null,
       ),

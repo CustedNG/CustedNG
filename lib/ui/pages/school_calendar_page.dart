@@ -12,7 +12,6 @@ class SchoolCalendarPage extends StatelessWidget {
       navigationBar: CupertinoNavigationBar(
         previousPageTitle: '主页',
         backgroundColor: CupertinoColors.black,
-        actionsForegroundColor: CupertinoColors.white,
         middle: Text('校历', style: TextStyle(color: CupertinoColors.white)),
         trailing: NavBarMoreBtn(onTap: () => _showMenu(context)),
       ),

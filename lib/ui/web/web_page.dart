@@ -72,7 +72,7 @@ class WebPageState extends State<WebPage> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         backgroundColor: theme.webviewNavBarColor,
-        actionsForegroundColor: theme.navBarActionsColor,
+        // actionsForegroundColor: theme.navBarActionsColor,
         leading: GestureDetector(
           child: BackIcon(),
           onTap: () => Navigator.pop(context),

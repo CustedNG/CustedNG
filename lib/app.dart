@@ -45,6 +45,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
             return CupertinoTheme(
               data: CupertinoThemeData(
                 brightness: isDarkMode ? Brightness.dark : Brightness.light,
+                // primaryColor: CupertinoColors.white
               ),
               child: Builder(
                 builder: (context) => DefaultTextStyle(

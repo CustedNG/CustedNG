@@ -11,7 +11,7 @@ class GoToWechat extends StatelessWidget {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
           backgroundColor: theme.webviewNavBarColor,
-          actionsForegroundColor: theme.navBarActionsColor,
+          // actionsForegroundColor: theme.navBarActionsColor,
           leading: GestureDetector(
             child: BackIcon(),
             onTap: () => Navigator.pop(context),

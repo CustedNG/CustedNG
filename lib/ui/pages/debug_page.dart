@@ -30,7 +30,6 @@ class _DebugPageState extends State<DebugPage> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
           backgroundColor: CupertinoColors.black,
-          actionsForegroundColor: CupertinoColors.white,
           leading: GestureDetector(
             child: BackIcon(),
             onTap: () => Navigator.pop(context),

@@ -1,6 +1,9 @@
 name: custed2
 description: A new Flutter project.
 
+publish_to:
+  'none'
+
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -14,13 +17,13 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  provider: ^3.2.0
+  provider: ^4.3.3
   get_it: ^4.0.0-release-candidate
 
   html: ^0.14.0+3
@@ -85,8 +88,7 @@ dependencies:
     git: 
       url: https://github.com/Countly/countly-sdk-flutter-bridge.git
       ref: master
-
-  flutter_svg: 0.18.0
+  flutter_svg: ^0.19.3
 
 dev_dependencies:
   # flutter_test:
