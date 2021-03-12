@@ -15,7 +15,11 @@ class HomeSchedule extends StatelessWidget {
     final lesson = scheduleProvider.lessonsSince(DateTime.now()).firstIfExist;
 
     return GestureDetector(
-      onTap: () => appProvider.setTab(AppProvider.scheduleTab),
+      onTap: () {
+        appProvider.setTab(AppProvider.scheduleTab);
+        Provider.of<ScheduleProvider>(context, listen: false)
+            .resetWeekToCurrentWeek();
+      },
       child: HomeCard(
         title: _buildTitle(context, lesson),
         trailing: _buildArrow(),
