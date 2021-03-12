@@ -1,6 +1,9 @@
 #!/usr/bin/env dart
+
 import 'dart:convert';
 import 'dart:io';
+
+var build64Bit = false;
 
 Future<int> getGitCommitCount() async {
   final result = await Process.run('git', ['log', '--oneline']);
@@ -67,26 +70,34 @@ void flutterRun() {
       mode: ProcessStartMode.inheritStdio, runInShell: true);
 }
 
-void flutterBuildAndriod() async {
+void flutterBuildAndroid() async {
   final build = await getGitCommitCount();
 
   final args = [
     'build',
     'apk',
-    '--target-platform=android-arm64',
+    build64Bit
+        ? '--target-platform=android-arm64'
+        : '--target-platform=android-arm',
     '--build-number=$build',
     '--build-name=1.0.$build',
     '-v'
   ];
   print('Building with args: ${args.join(' ')}');
-  await Process.run('flutter', args, runInShell: true);
+  final buildResult = await Process.run('flutter', args, runInShell: true);
+  final exitCode = buildResult.exitCode;
 
-  final copySource = './build/app/outputs/apk/release/app-release.apk';
-  final copyTarget = './CustedNG_${build}_Arm.apk';
-  print('Copying from $copySource to $copyTarget');
+  if (exitCode == 0) {
+    final copySource = './build/app/outputs/apk/release/app-release.apk';
+    final copyTarget = './CustedNG_${build}_Arm.apk';
+    print('Copying from $copySource to $copyTarget');
 
-  await File(copySource).copy(copyTarget);
-  print('Done.');
+    await File(copySource).copy(copyTarget);
+    print('Done.');
+  } else {
+    print(buildResult.stderr.toString());
+    print('\nBuild failed with exit code $exitCode');
+  }
 }
 
 void main(List<String> args) async {
@@ -103,7 +114,15 @@ void main(List<String> args) async {
     case 'run':
       return flutterRun();
     case 'build':
-      return flutterBuildAndriod();
+      if (command.length > 1) {
+        if (args[1] == 'arm64') {
+          print("Building android-arm64 variant");
+          build64Bit = true;
+        } else {
+          print("Unrecognized variant " + args[1]);
+        }
+      }
+      return flutterBuildAndroid();
     default:
       print('Unsupported command: $command');
       return;
