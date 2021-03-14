@@ -8,7 +8,7 @@ import 'package:flutter/painting.dart';
 abstract class User {
   factory User() => UndergraduateUser();
 
-  Future<Schedule> getSchdeule();
+  Future<Schedule> getSchedule();
 
   Future<Grade> getGrade();
 

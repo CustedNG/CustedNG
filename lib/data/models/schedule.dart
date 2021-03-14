@@ -1,5 +1,6 @@
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:hive/hive.dart';
+import 'package:tuple/tuple.dart';
 
 part 'schedule.g.dart';
 
@@ -20,8 +21,39 @@ class Schedule extends HiveObject {
   // @HiveField(4)
   int weekCount = 24;
 
+  Map<Tuple2<int, int>, int> _lessonCountCache;
+
+  void makeLessonCountCache() {
+    if (_lessonCountCache != null) {
+      return;
+    }
+    _lessonCountCache = {};
+    for (final lesson in lessons) {
+      final slotIndex = (lesson.startSection - 1) ~/ 2;
+      final weekIndex = lesson.weekday - 1;
+      final key = Tuple2(weekIndex, slotIndex);
+      _lessonCountCache.putIfAbsent(key, () => 0);
+      _lessonCountCache[key] += lesson.weeks.length;
+    }
+  }
+
+  int lessonCount(int weekIndex, int slotIndex) {
+    makeLessonCountCache();
+    final key = Tuple2(weekIndex, slotIndex);
+    return _lessonCountCache.containsKey(key) ? _lessonCountCache[key] : 0;
+  }
+
+  Map<Tuple2<int, int>, int> get lessonCountMap {
+    makeLessonCountCache();
+    return _lessonCountCache;
+  }
+
   Iterable<ScheduleLesson> activeLessons(int week) {
     return lessons.where((lesson) => lesson.isActiveInWeek(week));
+  }
+
+  int activeLessonCount(int week) {
+    return activeLessons(week).length;
   }
 
   Iterable<ScheduleLesson> inactiveLessons(int week) {
@@ -29,7 +61,9 @@ class Schedule extends HiveObject {
   }
 
   int calculateWeekSinceStart(DateTime dateTime) {
-    final weeks = dateTime.difference(startDate).inDays ~/ 7;
+    final weeks = dateTime
+        .difference(startDate)
+        .inDays ~/ 7;
     return dateTime.compareTo(startDate) >= 0 ? weeks + 1 : weeks;
   }
 

@@ -43,6 +43,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
             return Theme(
               data: ThemeData(
                 brightness: isDarkMode ? Brightness.dark : Brightness.light,
+                // primaryColor: CupertinoColors.white
               ),
               child: child
             );

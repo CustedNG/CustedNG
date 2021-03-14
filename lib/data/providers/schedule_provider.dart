@@ -15,6 +15,8 @@ class ScheduleProvider extends BusyProvider {
   int _selectedWeek = 1;
   int get selectedWeek => _selectedWeek;
 
+  int get activeLessonCount => schedule?.activeLessonCount(selectedWeek) ?? 0;
+
   final int minWeek = 1;
   int get maxWeek => _schedule?.weekCount;
 
@@ -49,7 +51,7 @@ class ScheduleProvider extends BusyProvider {
   }
 
   Future<void> _updateScheduleData() async {
-    final schedule = await User().getSchdeule();
+    final schedule = await User().getSchedule();
     _schedule = schedule;
     final scheduleStore = await locator.getAsync<ScheduleStore>();
     scheduleStore.checkIn(schedule);

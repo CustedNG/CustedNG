@@ -1,5 +1,6 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule.dart';
@@ -8,7 +9,8 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/schedule_arrow.dart';
 import 'package:custed2/ui/schedule_tab/schedule_dates.dart';
 import 'package:custed2/ui/schedule_tab/schedule_lesson.dart';
-import 'package:flutter/material.dart';
+import 'package:custed2/ui/theme.dart';
+import 'package:flutter/cupertino.dart';
 
 class ScheduleTable extends StatelessWidget {
   ScheduleTable(
@@ -81,13 +83,21 @@ class ScheduleTable extends StatelessWidget {
   }
 
   void _fillInactiveLessons(List<TableRow> rows) {
-    for (var lesson in schedule.inactiveLessons(week)) {
+    final inactiveLessons = schedule.inactiveLessons(week);
+
+    final int maxLessonCount = schedule.lessonCountMap.values.fold(1, max);
+    final int minLessonCount = schedule.lessonCountMap.values.fold(128, min);
+    final int interval = maxLessonCount - minLessonCount;
+
+    for (var lesson in inactiveLessons) {
       final slotIndex = (lesson.startSection - 1) ~/ 2;
       final weekIndex = lesson.weekday - 1;
       final lessonWidget = rows[slotIndex].children[weekIndex];
       if (lessonWidget == placeholder) {
-        rows[slotIndex].children[weekIndex] =
-            ScheduleLessonWidget(lesson, isActive: false);
+        rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(lesson,
+            isActive: false,
+            occupancyRate:
+                (schedule.lessonCount(weekIndex, slotIndex) - minLessonCount) / interval);
       }
     }
   }
@@ -118,9 +128,9 @@ class ScheduleTable extends StatelessWidget {
       final date = schedule.startDate.add(Duration(days: dayOffset));
       final shouldShowMonth = i == 0 || date.day == 1;
       final displayDate =
-          shouldShowMonth ? '${date.month}/${date.day}' : '${date.day}';
+      shouldShowMonth ? '${date.month}/${date.day}' : '${date.day}';
       final shouldHighlight =
-          highLightToday ? date.isInSameDayAs(today) : false;
+      highLightToday ? date.isInSameDayAs(today) : false;
 
       final dateOverride = showFestivalAndHoliday
           ? ScheduleDates.getHoliday(date) ?? ScheduleDates.getSolarTerm(date)

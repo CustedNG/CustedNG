@@ -7,7 +7,7 @@ import 'package:flutter/painting.dart';
 
 class UndergraduateUser implements User {
   @override
-  Future<Schedule> getSchdeule() => null;
+  Future<Schedule> getSchedule() => null;
 
   @override
   Future<Grade> getGrade() => null;
