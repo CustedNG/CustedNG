@@ -60,6 +60,10 @@ class UpdateNoticePage extends StatelessWidget {
     return Column(
       children: <Widget>[
         TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.cyan),
+            padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(17, 9, 17, 9))
+          ),
           child: Text(
             '开始更新',
             style: TextStyle(color: Colors.white),

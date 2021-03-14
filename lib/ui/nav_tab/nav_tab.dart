@@ -42,9 +42,9 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
       ),
       body: SafeArea(
         child: FutureBuilder(
-          // use scaffold for auto dark mode background
-          future: Future.delayed(377.ms, () => CircularProgressIndicator()),
-          builder: (ctx, builder) => buildBrowser(url)
+          builder: (ctx, state) {
+            return buildBrowser(url);
+          }
         ),
       ),
     );
@@ -65,7 +65,7 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
       onWebViewCreated: (controller) {
         this.controller = controller;
       },
-      onLoadStart: (controller, url) => syncDarkMode(),
+      onLoadStop: (controller, url) => syncDarkMode(),
       shouldOverrideUrlLoading: (controller, request) async {
         print('open ${request.url}');
 

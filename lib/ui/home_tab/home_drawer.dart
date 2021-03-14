@@ -2,16 +2,13 @@ import 'package:custed2/config/routes.dart';
 import 'package:custed2/constants.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
-import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeDrawer extends StatelessWidget{
   final version;
   final myTheme;
-  final UserProvider user;
+  final user;
 
   const HomeDrawer({
     Key key, this.version, this.myTheme, this.user
@@ -95,7 +92,6 @@ class HomeDrawer extends StatelessWidget{
   }
 
   void _logout(BuildContext context) {
-    final user = Provider.of<UserProvider>(context);
     user.logout();
   }
 }
