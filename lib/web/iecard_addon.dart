@@ -23,7 +23,7 @@ class IecardAddon extends WebviewAddon {
     //         keyboardType: TextInputType.number,
     //       ),
     //     ),
-    //     FlatButton(
+    //     TextButton(
     //       child: Text('快速充值'),
     //       onPressed: () async {
     //         await controller.loadUrl(url: IecardService.phoneChargeUrl);

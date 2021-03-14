@@ -32,26 +32,26 @@ class _JwEvalWidgetState extends State<JwEvalWidget> {
     final List<Widget> children = busy
         ? [
             Text('评教中...'),
-            FlatButton(
+            TextButton(
               child: Text('停止'),
               onPressed: stopEvalAll,
             ),
           ]
         : [
-            FlatButton(
+            TextButton(
               child: Text('本页全选'),
               onPressed: evalSelectAll,
             ),
-            FlatButton(
+            TextButton(
               child: Text('提交'),
               onPressed: evalSubmit,
             ),
-            FlatButton(
+            TextButton(
               child: Text('下一个'),
               onPressed: evalSwitchToNext,
             ),
             Text('/'),
-            FlatButton(
+            TextButton(
               child: Text('一键评教'),
               onPressed: evalAll,
             ),
@@ -143,27 +143,27 @@ class JwEvalDialog extends StatelessWidget {
       title: Text('选择评教成绩'),
       // content: Text('请不要误伤值得好评的老师'),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text('优秀'),
           onPressed: () => Navigator.of(context).pop(1),
         ),
-        FlatButton(
+        TextButton(
           child: Text('良好'),
           onPressed: () => Navigator.of(context).pop(2),
         ),
-        FlatButton(
+        TextButton(
           child: Text('中等'),
           onPressed: () => Navigator.of(context).pop(3),
         ),
-        FlatButton(
+        TextButton(
           child: Text('较差'),
           onPressed: () => Navigator.of(context).pop(4),
         ),
-        FlatButton(
+        TextButton(
           child: Text('差'),
           onPressed: () => Navigator.of(context).pop(5),
         ),
-        FlatButton(
+        TextButton(
           child: Text('取消'),
           onPressed: () => Navigator.of(context).pop(),
         ),

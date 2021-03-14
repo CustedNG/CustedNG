@@ -169,9 +169,8 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     return Column(
       children: [
         SizedBox(height: 20),
-        FlatButton(
+        TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          padding: EdgeInsets.all(0),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Icon(Icons.arrow_back_ios, color: Colors.white),

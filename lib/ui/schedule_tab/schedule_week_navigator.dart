@@ -59,10 +59,8 @@ class ScheduleWeekNavigator extends StatelessWidget {
       child: SizedBox(
         height: 35,
         width: 100,
-        child: FlatButton(
+        child: TextButton(
           onPressed: onPressed,
-          color: theme.scheduleButtonColor,
-          padding: EdgeInsets.zero,
           child: Text(
             text,
             style: TextStyle(

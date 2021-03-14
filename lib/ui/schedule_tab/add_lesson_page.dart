@@ -105,7 +105,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
           context: context,
           middle: Text('添加课程', style: navBarText),
           trailing: [
-            FlatButton(
+            TextButton(
                 onPressed: (){
                   if (widget.lesson != null) {
                     widget.lesson.delete();

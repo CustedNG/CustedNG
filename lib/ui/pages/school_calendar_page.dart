@@ -42,14 +42,14 @@ class SchoolCalendarPage extends StatelessWidget {
         '保存到本地',
         Container(),
         [
-          FlatButton(
+          TextButton(
             child: Text('确定'),
             onPressed: () {
               Navigator.of(context).pop();
               save(context);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text('取消'),
             onPressed: () {
               Navigator.of(context).pop();

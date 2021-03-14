@@ -132,7 +132,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
             '提示',
             Text('是否查看新版使用说明？'),
             [
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                   AppRoute(
@@ -142,7 +142,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
                 },
                 child: Text('是'),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },

@@ -1,9 +1,7 @@
 import 'package:after_layout/after_layout.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/core/util/time_point.dart';
 import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
-import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
@@ -119,7 +117,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
             '提示',
             Text('考场信息仅供参考\n请与教务系统中信息核对后使用'),
             [
-              FlatButton(
+              TextButton(
                 child: Text('取消'),
                 onPressed: () async {
                   await Navigator.of(context).pop();
@@ -127,7 +125,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
                   await Navigator.of(context).pop();
                 },
               ),
-              FlatButton(
+              TextButton(
                 child: Text('好的'),
                 onPressed: () {
                   setting.agreeToShowExam.put(true);

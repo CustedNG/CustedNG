@@ -93,11 +93,11 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
               height: 60.0,
               alignment: Alignment.center,
               child: NavigationToolbar(
-                leading: FlatButton(
+                leading: TextButton(
                   child: Text('取消'),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
-                trailing: FlatButton(
+                trailing: TextButton(
                     child: Text('确定'),
                     onPressed: () {
                       Navigator.pop(context, data);
@@ -113,7 +113,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text('单周'),
                   onPressed: () {
                     setState(() {
@@ -121,7 +121,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
                     });
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text('双周'),
                   onPressed: () {
                     setState(() {
@@ -129,7 +129,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
                     });
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text(allWeekSelected ? '全不选' : '全选'),
                   onPressed: () {
                     setState(() {

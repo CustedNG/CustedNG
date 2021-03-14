@@ -67,10 +67,10 @@ void runInZone(Function body) {
     debugProvider.addError(stack);
   };
 
-  runZoned(
+  runZonedGuarded(
     body,
+    onError,
     zoneSpecification: zoneSpec,
-    onError: onError,
   );
 }
 

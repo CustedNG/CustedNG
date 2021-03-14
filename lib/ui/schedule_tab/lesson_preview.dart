@@ -176,14 +176,14 @@ class LessonPreview extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
-    final confirm = FlatButton(
+    final confirm = TextButton(
       child: Text('确定'),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
 
-    final delete = FlatButton(
+    final delete = TextButton(
       child: Text('编辑'),
       onPressed: () async {
         Navigator.of(context).pop();
@@ -196,7 +196,7 @@ class LessonPreview extends StatelessWidget {
       },
     );
 
-    final deleteCustom = FlatButton(
+    final deleteCustom = TextButton(
       child: Text('编辑自定义'),
       onPressed: () async {
         Navigator.of(context).pop();
@@ -204,7 +204,7 @@ class LessonPreview extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
                 actions: List<Widget>.of(
-                    customLessons.map((selectedLesson) => FlatButton(
+                    customLessons.map((selectedLesson) => TextButton(
                           child: Text(selectedLesson.displayName),
                           onPressed: () {
                             Navigator.of(context).pop();
@@ -223,7 +223,7 @@ class LessonPreview extends StatelessWidget {
       },
     );
 
-    final helpMe = FlatButton(
+    final helpMe = TextButton(
       child: Text('我该怎么办?'),
       onPressed: () {},
     );

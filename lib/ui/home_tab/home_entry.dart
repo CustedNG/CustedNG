@@ -21,8 +21,7 @@ class HomeEntry extends StatelessWidget {
 
     return GestureDetector(
       onLongPress: longPressAction,
-      child: FlatButton(
-        padding: EdgeInsets.zero,
+      child: TextButton(
         onPressed: action ?? () {},
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

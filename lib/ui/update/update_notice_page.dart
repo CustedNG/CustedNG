@@ -59,12 +59,11 @@ class UpdateNoticePage extends StatelessWidget {
   Widget _buildActions(BuildContext context) {
     return Column(
       children: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text(
             '开始更新',
             style: TextStyle(color: Colors.white),
           ),
-          color: Colors.cyan,
           onPressed: () async {
             var connectivityResult = await (Connectivity().checkConnectivity());
             if (connectivityResult == ConnectivityResult.mobile) {
@@ -73,14 +72,14 @@ class UpdateNoticePage extends StatelessWidget {
                   '请确认',
                   Text('你正在使用移动数据网络。继续下载将会消耗流量。'),
                   [
-                    FlatButton(
+                    TextButton(
                       child: Text('继续'),
                       onPressed: () {
                         Navigator.of(context).pop();
                         doUpdate(context);
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text('取消'),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
@@ -91,7 +90,7 @@ class UpdateNoticePage extends StatelessWidget {
             }
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text('不再提示该版本'),
           onPressed: () {
             final settings = locator<SettingStore>();

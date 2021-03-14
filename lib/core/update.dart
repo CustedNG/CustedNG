@@ -87,13 +87,13 @@ Future<void> doTestFlightUpdate(
           title: Text(update.title),
           content: Text(update.content),
           actions: [
-            FlatButton(
+            TextButton(
               child: Text('取消'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text('前往TF更新'),
               onPressed: () async {
                 for (var url in update.urls) {

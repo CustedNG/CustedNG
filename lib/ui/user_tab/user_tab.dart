@@ -162,7 +162,11 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
   }
 
   void _onSelection(int index) {
-    if(index == 0)Scaffold.of(context).showSnackBar(SnackBar(content: Text('自动模式仅在Android 10+或iOS 13+有效')));
+    if(index == 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('自动模式仅在Android 10+或iOS 13+有效'))
+      );
+    }
     print(index.toString());
     final setting = locator<SettingStore>();
     setting.darkMode.put(index);

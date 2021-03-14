@@ -28,11 +28,11 @@ class OpenOrNotDialog extends StatelessWidget {
     return AlertDialog(
       content: Text('即将在浏览器中打开'),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text('取消'),
           onPressed: () => Navigator.of(context).pop(false),
         ),
-        FlatButton(
+        TextButton(
           child: Text('确定'),
           onPressed: () => Navigator.of(context).pop(true),
         ),
@@ -56,7 +56,7 @@ class _OpenIecardDialogState extends State<OpenIecardDialog>
     return AlertDialog(
       content: _failed ? Text('加载失败') : Center(child: CircularProgressIndicator()),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text(_failed ? '关闭' : '取消'),
           onPressed: () {
             _canceled = true;

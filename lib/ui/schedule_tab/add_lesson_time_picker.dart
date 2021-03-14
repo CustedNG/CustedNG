@@ -30,11 +30,11 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
             Container(
               height: 60.0,
               child: NavigationToolbar(
-                  leading: FlatButton(
+                  leading: TextButton(
                     child: Text('取消'),
                     onPressed: () => Navigator.pop(context),
                   ),
-                  trailing: FlatButton(
+                  trailing: TextButton(
                     child: Text('确定'),
                     onPressed: () {
                       final data = AddLessonTime(

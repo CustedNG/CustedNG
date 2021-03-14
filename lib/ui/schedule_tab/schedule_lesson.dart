@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
@@ -8,14 +10,13 @@ import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleLessonWidget extends StatelessWidget {
-  ScheduleLessonWidget(
-    this.lesson, {
-    this.isActive = true,
-  });
-
+  ScheduleLessonWidget(this.lesson,
+      {this.isActive = true, this.occupancyRate = 1.0});
+  
   final ScheduleLesson lesson;
   final List<ScheduleLesson> conflict = [];
   final bool isActive;
+  final double occupancyRate;
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +82,21 @@ class ScheduleLessonWidget extends StatelessWidget {
     );
   }
 
+  int _interpolate(int lower, int higher, double interpolateValue) {
+    int range = higher - lower;
+    interpolateValue = max(0, interpolateValue);
+    interpolateValue = min(1, interpolateValue);
+    return lower + (range * interpolateValue).toInt();
+  }
+  
+  Color _interpolateColor(Color lower, Color higher, double interpolateValue) {
+    return Color.fromARGB(
+        lower.alpha,
+        _interpolate(lower.red, higher.red, interpolateValue),
+        _interpolate(lower.green, higher.green, interpolateValue),
+        _interpolate(lower.blue, higher.blue, interpolateValue));
+  }
+
   Color selectColorForLesson(BuildContext context) {
     if (lesson == null) {
       return null;
@@ -96,11 +112,14 @@ class ScheduleLessonWidget extends StatelessWidget {
       DynamicColor(Color(0xFF7786FE), Color(0xFFa2a573)),
     ];
 
-    final inactiveColor =
-        DynamicColor(Color(0xFFEBEFF5), Colors.grey[800]);
+    //final inactiveColor =
+    //    DynamicColor(Color(0xFFEBEFF5), Colors.grey[800]);
+    final inactiveColorLight = DynamicColor(Color(0xFFFAFAFAFA), Colors.grey[900]);
+    final inactiveColorDense = DynamicColor(Colors.grey[400], Colors.grey[700]);
 
     if (!isActive) {
-      return inactiveColor.resolve(context);
+      return _interpolateColor(inactiveColorLight.resolve(context),
+          inactiveColorDense.resolve(context), occupancyRate);
     }
 
     return colors[lesson.name.hashCode % colors.length].resolve(context);

@@ -70,7 +70,6 @@ class WebPageState extends State<WebPage> {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
         backgroundColor: theme.webviewNavBarColor,
-        actionsForegroundColor: theme.navBarActionsColor,
         middle: NavbarText(widget.title),
         trailing:
             isBusy ? _buildIndicator(context) : _buildActionButton(context),

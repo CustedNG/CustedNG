@@ -93,7 +93,7 @@ class _HomeEntriesState extends State<HomeEntries> {
           HomeEntry(
             name: Text('快速联网'),
             icon: Image(image: ImageRes.wifiIcon),
-            action: () => Scaffold.of(context).showSnackBar(
+            action: () => ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('该功能暂时不可用'))
             ),
           ),
