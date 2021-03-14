@@ -4,6 +4,7 @@ import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/webview/user_agent.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
@@ -19,28 +20,7 @@ class NavTab extends StatefulWidget {
 }
 
 class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
-  Widget overlay;
   InAppWebViewController controller;
-
-  @override
-  void initState() {
-    overlay = Scaffold(
-      body: Center(
-          child: CircularProgressIndicator()
-      ),
-    );
-
-    Timer.periodic(500.ms, (timer) {
-      if (!mounted) {
-        timer.cancel();
-        return;
-      }
-
-      syncDarkMode();
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,45 +41,44 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
         trailing: [_showMenu(context)],
       ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            InAppWebView(
-              initialOptions: InAppWebViewGroupOptions(
-                crossPlatform: InAppWebViewOptions(
-                  userAgent: UserAgent.defaultUA,
-                  useShouldOverrideUrlLoading: true,
-                ),
-                android: AndroidInAppWebViewOptions(
-                  overScrollMode: AndroidOverScrollMode.OVER_SCROLL_NEVER,
-                ),
-              ),
-              initialUrl: url,
-              onWebViewCreated: (controller) {
-                this.controller = controller;
-              },
-              onLoadStop: (controller, url) {
-                setState(() {
-                  overlay = null;
-                });
-              },
-              shouldOverrideUrlLoading: (controller, request) async {
-                print('open ${request.url}');
-
-                if (request.url.contains('custed-target=blank')) {
-                  openUrl(request.url);
-                } else {
-                  AppRoute(
-                    title: '',
-                    page: WebviewBrowser(request.url),
-                  ).go(context);
-                }
-                return ShouldOverrideUrlLoadingAction.CANCEL;
-              },
-            ),
-            if (overlay != null) overlay,
-          ],
+        child: FutureBuilder(
+          // use scaffold for auto dark mode background
+          future: Future.delayed(377.ms, () => CircularProgressIndicator()),
+          builder: (ctx, builder) => buildBrowser(url)
         ),
       ),
+    );
+  }
+
+  Widget buildBrowser(String url) {
+    return InAppWebView(
+      initialOptions: InAppWebViewGroupOptions(
+        crossPlatform: InAppWebViewOptions(
+          userAgent: UserAgent.defaultUA,
+          useShouldOverrideUrlLoading: true,
+        ),
+        android: AndroidInAppWebViewOptions(
+          overScrollMode: AndroidOverScrollMode.OVER_SCROLL_NEVER,
+        ),
+      ),
+      initialUrl: url,
+      onWebViewCreated: (controller) {
+        this.controller = controller;
+      },
+      onLoadStart: (controller, url) => syncDarkMode(),
+      shouldOverrideUrlLoading: (controller, request) async {
+        print('open ${request.url}');
+
+        if (request.url.contains('custed-target=blank')) {
+          openUrl(request.url);
+        } else {
+          AppRoute(
+            title: '',
+            page: WebviewBrowser(request.url),
+          ).go(context);
+        }
+        return ShouldOverrideUrlLoadingAction.CANCEL;
+      },
     );
   }
 
@@ -135,8 +114,7 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   }
 
   void syncDarkMode() {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    if (isDark) {
+    if (isDark(context)) {
       controller?.evaluateJavascript(source: 'switchToDarkMode()');
     } else {
       controller?.evaluateJavascript(source: 'switchToLightMode()');

@@ -145,7 +145,6 @@ class _ScheduleTabState extends State<ScheduleTab>
     await user.initialized;
     if (!user.loggedIn) return;
 
-    final scheduleProvider = Provider.of<ScheduleProvider>(context);
     if (scheduleProvider.isBusy || BuildMode.isDebug) return;
 
     if(settings.autoUpdateSchedule.fetch()){
@@ -154,7 +153,6 @@ class _ScheduleTabState extends State<ScheduleTab>
   }
 
   Widget _buildNavbarMiddle(BuildContext context) {
-    final scheduleProvider = Provider.of<ScheduleProvider>(context);
     final hasSchedule = scheduleProvider.schedule != null;
     return NavbarMiddle(
       textAbove: '上次更新',
