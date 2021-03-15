@@ -11,6 +11,7 @@ import 'package:custed2/ui/grade_tab/grade_picker.dart';
 import 'package:custed2/ui/grade_tab/sliver_header_delegate.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +19,6 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-const colorNavBar = Color(0xFF2F83F6);
-const colorMain = Color(0xFF3D93F8);
-const colorButtom = Color(0xFF5395F7);
 
 const textStyleInfo = TextStyle(
   color: Colors.white,
@@ -123,14 +121,11 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
-      appBar: AppBar(
-          backgroundColor: theme.navBarColor,
-          title: NavbarText('成绩'),
-          centerTitle: true,
-          actions: [
+      appBar: NavBar.material(
+          leading: Container(),
+          middle: NavbarText('成绩'),
+          trailing: [
             grade?.terms?.isNotEmpty == true
                 ? IconButton(
                     icon: Icon(Icons.format_list_numbered),
@@ -138,7 +133,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
                 : Container()
           ]),
       body: Material(
-          color: theme.backgroundColor,
           child: PageView(
             controller: controller,
             children: <Widget>[
@@ -192,7 +186,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     final minHeight = 50.0;
     final maxOffset = 50.0;
 
-    final theme = AppTheme.of(context);
     return SliverPersistentHeader(
       pinned: true,
       delegate: SliverHeaderDelegate(
@@ -210,7 +203,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
           );
           return Container(
             // height: 150 - offset,
-            color: theme.navBarColor,
+            color: Theme.of(context).accentColor,
             child: result,
           );
         },
@@ -376,9 +369,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       mainAxisSize: MainAxisSize.min,
       children: items,
     );
-    final theme = AppTheme.of(context);
     return Container(
-      color: theme.backgroundColor,
       padding: EdgeInsets.all(15.0),
       child: report,
     );

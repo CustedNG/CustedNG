@@ -1,4 +1,5 @@
 import 'package:custed2/ui/webview/webview2_progress.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,7 @@ class _Webview2HeaderState extends State<Webview2Header> {
   }
 
   Widget buildNavigationBar(BuildContext context) {
-    return AppBar(
+    return NavBar.material(
       leading: Container(
         alignment: Alignment.centerLeft,
         width: 70,
@@ -103,12 +104,11 @@ class _Webview2HeaderState extends State<Webview2Header> {
           ),
         ),
       ),
-      centerTitle: true,
-      title: NavbarMiddle(
+      middle: NavbarMiddle(
         textAbove: widget.controller.title ?? '',
         textBelow: widget.controller.host ?? '',
       ),
-      actions: [
+      trailing: [
         Padding(
           padding: EdgeInsets.only(right: 8.0),
           child: GestureDetector(

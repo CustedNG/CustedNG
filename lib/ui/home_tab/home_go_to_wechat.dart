@@ -1,4 +1,5 @@
 import 'package:custed2/res/image_res.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
 
@@ -6,9 +7,8 @@ class GoToWechat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: NavbarText('一卡通'),
-          centerTitle: true,
+      appBar: NavBar.material(
+          middle: NavbarText('一卡通'),
       ),
       body: ListView(
         children: [

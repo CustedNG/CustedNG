@@ -1,4 +1,5 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/ui/home_tab/home_banner.dart';
@@ -9,6 +10,7 @@ import 'package:custed2/ui/home_tab/home_notice.dart';
 import 'package:custed2/ui/home_tab/home_schedule.dart';
 import 'package:custed2/ui/home_tab/home_weather.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
@@ -91,12 +93,18 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
         itemBuilder: (BuildContext context) =>
         <PopupMenuItem<String>>[
           this.SelectView(Icons.calendar_view_day, '查看校历', 'A'),
+          this.SelectView(Icons.feedback, '我要反馈', 'B'),
           this.SelectView(Icons.monitor, '状态监测', 'C'),
         ],
         onSelected: (String action) {
           switch (action) {
             case 'A':
               schoolCalendarPage.go(context);
+              break;
+            case 'B':
+              AppRoute(
+                  page: WebviewBrowser('https://cust.cc/go/feedback')
+              ).go(context);
               break;
             case 'C':
               statusWebPage.go(context);

@@ -21,12 +21,12 @@ class CustedService extends CatClient {
     return WeatherData.fromJson(custedResp.data as Map<String, dynamic>);
   }
 
-  Future<String> getHotfix() async {
+  Future<String> getNotify() async {
     final build = BuildData.build;
     final resp =
         await get('$ccUrl/api/notify?build=$build', timeout: defaultTimeout);
     final body = resp.body;
-    if (body == null || body == '') return null;
+    if (body == '') return null;
     return body;
   }
 
@@ -46,7 +46,7 @@ class CustedService extends CatClient {
 
   Future<CustedUpdateTestflight> getTestFlightUpdate() async {
     final build = BuildData.build;
-    final resp = await get('https://cust.cc/api/update/ios?build=$build',
+    final resp = await get('$ccUrl/api/update/ios?build=$build',
         timeout: defaultTimeout);
     return CustedUpdateTestflight.fromJson(
         json.decode(resp.body) as Map<String, dynamic>);
@@ -63,19 +63,19 @@ class CustedService extends CatClient {
 
   Future<bool> getShouldShowExam() async {
     final resp =
-        await get('https://cust.cc/api/haveExam', timeout: defaultTimeout);
+        await get('$ccUrl/api/haveExam', timeout: defaultTimeout);
     if (resp.body != null) return resp.body == '1' ? true : false;
     return false;
   }
 
   Future<String> getRemoteConfigJson() async {
     final resp =
-        await get('https://cust.cc/api/config', timeout: defaultTimeout);
+        await get('$ccUrl/api/config', timeout: defaultTimeout);
     return resp.body;
   }
 
   Future<List<String>> getWebviewPlugins() async {
-    final resp = await get('https://cust.cc/webview/plugins.json');
+    final resp = await get('$ccUrl/webview/plugins.json');
     return List<String>.from(json.decode(resp.body));
   }
 

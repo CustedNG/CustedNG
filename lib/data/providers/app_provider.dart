@@ -19,7 +19,7 @@ class AppProvider extends ProviderBase {
   Future<void> loadLocalData() async {
     final setting = locator<SettingStore>();
     final useScheduleAsHome = setting.useScheduleAsHome.fetch();
-    final notification = await CustedService().getHotfix();
+    final notification = await CustedService().getNotify();
 
     if (useScheduleAsHome == true) {
       print('useScheduleAsHome: $useScheduleAsHome');
