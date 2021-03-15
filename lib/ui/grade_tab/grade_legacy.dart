@@ -16,6 +16,7 @@ import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 const colorNavBar = Color(0xFF2F83F6);
 const colorMain = Color(0xFF3D93F8);
@@ -79,8 +80,10 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   PageController controller;
 
   double currentPage;
+  final _refreshController = RefreshController(initialRefresh: false);
 
-  GradeProvider get gradeProvider => Provider.of<GradeProvider>(context);
+  GradeProvider get gradeProvider => 
+    Provider.of<GradeProvider>(context, listen: false);
 
   Grade get grade => gradeProvider.grade;
 
@@ -125,18 +128,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       backgroundColor: theme.backgroundColor,
       appBar: AppBar(
           backgroundColor: theme.navBarColor,
-          leading: IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () async {
-                try {
-                  await gradeProvider.updateGradeData();
-                  showSnackBar(context, "更新成功");
-                } catch(e) {
-                  showSnackBar(context, e.toString());
-                }
-                setState(() {});
-              }
-          ),
           title: NavbarText('成绩'),
           centerTitle: true,
           actions: [
@@ -146,19 +137,33 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
                     onPressed: () => _showSelector(context))
                 : Container()
           ]),
-      body: SafeArea(
-        child: Material(
+      body: Material(
           color: theme.backgroundColor,
           child: PageView(
             controller: controller,
             children: <Widget>[
               for (var i = 0; i < (grade?.terms?.length ?? 1); i++)
-                _buildTermReport(context, i),
+                SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  header: MaterialClassicHeader(),
+                  controller: _refreshController,
+                  onRefresh: _onRefresh,
+                  child: _buildTermReport(context, i),
+                ),
             ],
           ),
         ),
-      ),
     );
+  }
+
+  void _onRefresh() async{
+    try {
+      await gradeProvider.updateGradeData();
+      _refreshController.refreshCompleted();
+    } catch(e) {
+      _refreshController.refreshFailed();
+    }
   }
 
   Widget _buildTermReport(BuildContext context, int year) {
