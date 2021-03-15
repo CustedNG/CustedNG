@@ -22,8 +22,8 @@ class ScheduleDates {
     DateTime(2021, 11, 22): '小雪',
     DateTime(2021, 12, 7): '大雪',
     DateTime(2021, 12, 21): '冬至',
-    DateTime(2021, 1, 5): '小寒',
-    DateTime(2021, 1, 20): '大寒',
+    DateTime(2022, 1, 5): '小寒',
+    DateTime(2022, 1, 20): '大寒',
   };
 
   static String getSolarTerm(DateTime dateTime) {
@@ -62,8 +62,8 @@ class ScheduleDates {
     DateTime(2021, 1, 2): '休',
     DateTime(2021, 1, 3): '休',
 
-    DateTime(2021, 4, 3): '清明',
-    DateTime(2021, 4, 4): '休',
+    DateTime(2021, 4, 3): '休',
+    DateTime(2021, 4, 4): '清明',
     DateTime(2021, 4, 5): '休',
 
     DateTime(2021, 4, 25): '周一课',
@@ -74,9 +74,9 @@ class ScheduleDates {
     DateTime(2021, 5, 5): '休',
     DateTime(2021, 5, 8): '周二课',
 
-    DateTime(2021, 6, 12): '端午',
+    DateTime(2021, 6, 12): '休',
     DateTime(2021, 6, 13): '休',
-    DateTime(2021, 6, 14): '休',
+    DateTime(2021, 6, 14): '端午',
 
     DateTime(2021, 7, 19): '暑假',
 
