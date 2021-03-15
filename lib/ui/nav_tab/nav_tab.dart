@@ -23,6 +23,11 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   InAppWebViewController controller;
 
   @override
+  void didChangeDependencies() {
+    setState(() => syncDarkMode());
+    super.didChangeDependencies();
+  }
+  @override
   Widget build(BuildContext context) {
     super.build(context);
 

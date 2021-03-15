@@ -203,7 +203,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
           );
           return Container(
             // height: 150 - offset,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColor,
             child: result,
           );
         },
