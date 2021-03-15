@@ -145,7 +145,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
               for (var i = 0; i < (grade?.terms?.length ?? 1); i++)
                 SmartRefresher(
                   enablePullDown: true,
-                  enablePullUp: true,
+                  enablePullUp: false,
                   header: MaterialClassicHeader(),
                   controller: _refreshController,
                   onRefresh: _onRefresh,
@@ -161,8 +161,10 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     try {
       await gradeProvider.updateGradeData();
       _refreshController.refreshCompleted();
+      showSnackBar(context, '刷新成功');
     } catch(e) {
       _refreshController.refreshFailed();
+      showSnackBar(context, '刷新失败');
     }
   }
 
