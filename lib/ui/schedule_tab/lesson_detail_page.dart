@@ -1,5 +1,6 @@
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
 
@@ -16,9 +17,8 @@ class LessonDetailPage extends StatelessWidget {
     // classes?.sort();
 
     return Scaffold(
-      appBar: AppBar(
-        title: NavbarText('课程详情'),
-        centerTitle: true,
+      appBar: NavBar.material(
+        middle: NavbarText('课程详情')
       ),
       body: DefaultTextStyle(
         style: TextStyle(

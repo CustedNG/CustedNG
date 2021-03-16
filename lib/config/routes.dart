@@ -99,8 +99,7 @@ final netdiskPage = AppRoute(
 
 final netdiskWebPage = AppRoute(
   title: '长理网盘',
-  page: NetdiskWebPage(),
-  // page: WebviewBrowser('https://cust.cc/go/netdisk'),
+  page: WebviewBrowser('https://cust.cc/go/netdisk'),
 );
 
 final statusWebPage = AppRoute(
