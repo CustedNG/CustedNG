@@ -3,6 +3,7 @@ import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter_advanced_networkimage/zoomable.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class CustCompusMap {
   const CustCompusMap({
@@ -46,10 +47,10 @@ class PhotoViewMap extends StatelessWidget {
       maxScale: map.maxScale,
       child: Stack(
         children: <Widget>[
-          TransitionToImage(
-            image: isDarkMode ? map.darkImage : map.image,
-            placeholder: Container(),
-            duration: Duration(milliseconds: 300),
+          FadeInImage(
+            image: isDarkMode ? map.darkImage : map.image, 
+            placeholder: MemoryImage(kTransparentImage),
+            fadeInDuration: Duration(milliseconds: 377),
           ),
           Positioned(
             top: isDarkMode ? darkPosition.dy : position.dy,
