@@ -167,7 +167,7 @@ class _ScheduleTabState extends State<ScheduleTab>
   Widget _buildNavbarMiddle(BuildContext context) {
     final scheduleTitleProvider = Provider.of<ScheduleTitleProvider>(context);
 
-    var display = [''];
+    var display;
 
     if (scheduleProvider.isBusy) {
       display = ['更新中'];

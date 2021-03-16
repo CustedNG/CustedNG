@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/webview/user_agent.dart';
@@ -21,6 +18,7 @@ class NavTab extends StatefulWidget {
 
 class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   InAppWebViewController controller;
+  bool finishLoad = false;
 
   @override
   void didChangeDependencies() {
@@ -45,13 +43,7 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
         middle: NavbarMiddle(textAbove: '资源导航', textBelow: 'cust.cc'),
         trailing: [_showMenu(context)],
       ),
-      body: SafeArea(
-        child: FutureBuilder(
-          builder: (ctx, state) {
-            return buildBrowser(url);
-          }
-        ),
-      ),
+      body: buildBrowser(url),
     );
   }
 
@@ -70,7 +62,10 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
       onWebViewCreated: (controller) {
         this.controller = controller;
       },
-      onLoadStop: (controller, url) => syncDarkMode(),
+      onLoadStop: (controller, url) {
+        syncDarkMode();
+        finishLoad = true;
+      },
       shouldOverrideUrlLoading: (controller, request) async {
         print('open ${request.url}');
 

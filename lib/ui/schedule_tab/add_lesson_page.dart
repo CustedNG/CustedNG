@@ -74,7 +74,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
   @override
   void initState() {
     super.initState();
-    nameController.text = widget.name ?? '自定义课程1';
+    nameController.text = widget.name ?? '';
     roomController.text = widget.room ?? '';
     teacherController.text = widget.teacher ?? '';
 
@@ -93,17 +93,11 @@ class _AddLessonPageState extends State<AddLessonPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
-    final navBarText = TextStyle(
-      color: theme.navBarActionsColor,
-      fontWeight: FontWeight.bold,
-    );
 
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
       appBar: NavBar.material(
           context: context,
-          middle: Text('添加课程', style: navBarText),
+          middle: Text('添加课程'),
           trailing: [
             TextButton(
                 onPressed: (){
@@ -112,22 +106,17 @@ class _AddLessonPageState extends State<AddLessonPage> {
                   }
                   _addLesson();
                 },
-                child: Text('提交', style: navBarText)
+                child: Text('提交')
             )
           ]
       ),
-      body: DefaultTextStyle(
-        style: TextStyle(
-          color: theme.textColor,
-        ),
-        child: ListView(
-          children: <Widget>[
-            _buildNameField(context),
-            _buildRoomField(context),
-            _buildTeacherField(context),
-            _buildWeekField(context)
-          ],
-        ),
+      body: ListView(
+        children: <Widget>[
+          _buildNameField(context),
+          _buildRoomField(context),
+          _buildTeacherField(context),
+          _buildWeekField(context)
+        ],
       ),
     );
   }

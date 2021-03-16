@@ -33,7 +33,6 @@ class TTYExecuter {
       await engine.init();
       await engine.setContext(context);
       if (!quiet) print(cmd);
-      final result = await engine.eval(cmd);
     } on TTYInterrupt catch (i) {
       print('-> $i');
     } catch (e, stacktrace) {

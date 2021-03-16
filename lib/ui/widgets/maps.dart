@@ -1,7 +1,6 @@
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:flutter_advanced_networkimage/zoomable.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -50,7 +49,7 @@ class PhotoViewMap extends StatelessWidget {
           FadeInImage(
             image: isDarkMode ? map.darkImage : map.image, 
             placeholder: MemoryImage(kTransparentImage),
-            fadeInDuration: Duration(milliseconds: 377),
+            fadeInDuration: Duration(milliseconds: 277),
           ),
           Positioned(
             top: isDarkMode ? darkPosition.dy : position.dy,

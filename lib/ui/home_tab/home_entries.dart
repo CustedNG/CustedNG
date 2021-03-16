@@ -64,7 +64,6 @@ class _HomeEntriesState extends State<HomeEntries> {
             icon: Image(image: ImageRes.networkIcon),
             // action: () => ecardWebPage.go(context),
             action: () => gotoWechat.go(context),
-            longPressAction: () => ecardWebPage.go(context),
           ),
         ]),
         TableRow(children: [

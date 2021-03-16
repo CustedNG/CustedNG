@@ -9,11 +9,6 @@ import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/pages/map_page.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
 import 'package:custed2/ui/user_tab/netdisk_page.dart';
-import 'package:custed2/ui/web/custnav_web_page.dart';
-import 'package:custed2/ui/web/ecard_web_page.dart';
-import 'package:custed2/ui/web/exam_room_web_page.dart';
-import 'package:custed2/ui/web/iecard_web_page.dart';
-import 'package:custed2/ui/web/netdisk_web_page.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/webview/webview_login.dart';
 
@@ -53,21 +48,6 @@ final cetAvatarPage = AppRoute(
 final jwWebPage = AppRoute(
   title: '教务系统',
   page: WebviewBrowser('https://cust.cc/go/jwgl'),
-);
-
-final iecardWebPage = AppRoute(
-  title: '一卡通',
-  page: IecardWebPage(),
-);
-
-final ecardWebPage = AppRoute(
-  title: '充网费',
-  page: EcardWebPage(),
-);
-
-final examRoomWebPage = AppRoute(
-  title: '考场查询',
-  page: ExamRoomWebPage(),
 );
 
 //final tikuWebPage = AppRoute(
@@ -118,11 +98,6 @@ final ticeWebPage = AppRoute(
   title: '体测成绩',
   //page: TiceWebPage(),
   page: WebviewBrowser('https://cust.cc/go/tice'),
-);
-
-final custNavWebPage = AppRoute(
-  title: 'Cust+',
-  page: CustNavWebPage(),
 );
 
 final gotoWechat = AppRoute(

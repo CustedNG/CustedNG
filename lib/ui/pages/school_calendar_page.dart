@@ -2,6 +2,7 @@ import 'package:custed2/core/util/save_image.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/res/image_res.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
@@ -10,11 +11,9 @@ class SchoolCalendarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text('校历', style: TextStyle(color: Colors.white)),
-        centerTitle: true,
-        actions: [
+      appBar: NavBar.material(
+        middle: Text('校历', style: TextStyle(color: Colors.white)),
+        trailing: [
           IconButton(
             onPressed: () => _showMenu(context),
             icon: Icon(Icons.file_download),

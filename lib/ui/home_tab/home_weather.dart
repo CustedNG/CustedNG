@@ -19,28 +19,35 @@ class _HomeWeatherState extends State<HomeWeather> {
   Widget build(BuildContext context) {
     final weather = Provider.of<WeatherProvider>(context);
 
-    final content = showCurrent
-        ? _buildCurrent(weather.data?.wendu)
-        : _buildWeather(weather.data);
-
     return GestureDetector(
-      child: content,
+      child: AnimatedSwitcher(
+        duration: Duration(milliseconds: 233),
+        child: showCurrent
+        ? _buildCurrent(weather.data?.wendu)
+        : _buildWeather(weather.data),
+      ),
       onTap: () => setState(() => showCurrent = !showCurrent),
       onLongPress: () => debugPage.go(context),
     );
   }
 
   _buildWeather(WeatherData data) {
-    return NavbarMiddle(
-      textAbove: data != null ? '${data?.city} ${data?.type}' : '加载中...',
-      textBelow: '${data?.today?.lowNum ?? ''} ~ ${data?.today?.highNum ?? ''}',
+    return Container(
+      key: ValueKey(1),
+      child: NavbarMiddle(
+        textAbove: data != null ? '${data?.city} ${data?.type}' : '加载中...',
+        textBelow: '${data?.today?.lowNum ?? ''} ~ ${data?.today?.highNum ?? ''}',
+      ),
     );
   }
 
   _buildCurrent(String temperature) {
-    return NavbarMiddle(
-      textAbove: '当前',
-      textBelow: '${temperature ?? ''}℃',
+    return Container(
+      key: ValueKey(2),
+      child: NavbarMiddle(
+        textAbove: '当前',
+        textBelow: '${temperature ?? ''}℃',
+      ),
     );
   }
 }
