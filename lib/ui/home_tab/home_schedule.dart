@@ -2,20 +2,29 @@ import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/extension/iterablex.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
+import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeSchedule extends StatelessWidget {
+  final scheduleProvider = locator<ScheduleProvider>();
+  
   @override
   Widget build(BuildContext context) {
-    final scheduleProvider = Provider.of<ScheduleProvider>(context);
     final lesson = scheduleProvider.lessonsSince(DateTime.now()).firstIfExist;
 
     return GestureDetector(
+      onTap: () => showDialog(
+        context: context,
+        builder: (context) {
+          return LessonPreview(lesson);
+        },
+      ),
       child: HomeCard(
         title: _buildTitle(context, lesson),
         content: _buildContent(context),
+        trailing: Icon(Icons.arrow_right, color: Colors.black87),
       ),
     );
   }
@@ -36,7 +45,6 @@ class HomeSchedule extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    final scheduleProvider = Provider.of<ScheduleProvider>(context);
     if (scheduleProvider.isBusy) return Text('加载中...');
     if (scheduleProvider.schedule == null) return Text('无课表数据');
 
