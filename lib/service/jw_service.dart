@@ -115,6 +115,8 @@ class JwService extends WrdvpnBasedService {
     Map<String, dynamic> response = json.decode(responseBody);
     final dataList = response['data'];
     if (dataList == null || !(dataList is List)) {
+      print(
+          "Getting profile for $studentNumber: data list is null or not a list.");
       return null;
     }
     if ((dataList as List).isNotEmpty) {
@@ -128,8 +130,10 @@ class JwService extends WrdvpnBasedService {
         ret.add(CustomScheduleProfile(
             name: name, studentNumber: number, uuid: uuid));
       }
+      print("Profiles for $studentNumber: $ret");
       return ret;
     }
+    print("Profiles for $studentNumber is empty");
     return [];
   }
 

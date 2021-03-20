@@ -85,12 +85,13 @@ class _ScheduleTabState extends State<ScheduleTab>
     await user.initialized;
     if (!user.loggedIn) return;
 
-    final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    final scheduleProvider =
+        Provider.of<ScheduleProvider>(context, listen: false);
     if (scheduleProvider.isBusy) return;
 
     scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
     final setting = locator<SettingStore>();
-    if(setting.showTipOnViewingExam.fetch()){
+    if (setting.showTipOnViewingExam.fetch()) {
       locator<SnakebarProvider>().info('主页可查看考试安排了');
       setting.showTipOnViewingExam.put(false);
     }

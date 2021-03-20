@@ -84,7 +84,7 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
     try {
       final String text = _studentNumberTextFieldController.text.trim();
       if(text.isEmpty) {
-        _showBadNotice();
+        _showBadNotice(reason: '请输入学号');
         return;
       }
       final jwService = locator<JwService>();
@@ -94,10 +94,14 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
         store.addProfile(lists.first);
         Navigator.of(context).pop();
       } else {
-        _showBadNotice();
+        if(lists.isEmpty){
+          _showBadNotice(reason: '未能查询到此学号');
+        } else {
+          _showBadNotice(reason: '请输入精确的学号');
+        }
       }
     } catch (e) {
-      _showBadNotice();
+      _showBadNotice(reason: '解析失败：$e');
     } finally {
       setState(() {
         _isLoading = false;
@@ -105,12 +109,12 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
     }
   }
 
-  void _showBadNotice() async {
+  void _showBadNotice({String reason = '请输入精确学号'}) async {
     showCupertinoDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
         title: Text('无法解析学号'),
-        content: Text('请输入精确学号'),
+        content: Text(reason),
         actions: [
           CupertinoDialogAction(
             child: Text('确定'),
