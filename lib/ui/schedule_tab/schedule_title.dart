@@ -1,5 +1,7 @@
+import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
+import 'package:custed2/ui/schedule_tab/select_schedule_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +26,14 @@ class ScheduleTitle extends StatelessWidget {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 100),
       child: Container(
-        child: Text(title),
+        child: GestureDetector(
+            onDoubleTap: () {
+              AppRoute(
+                title: '添加课程',
+                page: SelectSchedulePage(),
+              ).popup(context);
+            },
+            child: Text(title)),
         alignment: Alignment.centerLeft,
         key: Key(key),
       ),

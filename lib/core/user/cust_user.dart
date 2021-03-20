@@ -11,7 +11,8 @@ abstract class CustUser {
     final profile = await _mysso.getProfile();
     return UserProfile()
       ..displayName = profile.name
-      ..department = profile.college ?? '';
+      ..department = profile.college ?? ''
+      ..studentNumber = profile.sno;
   }
 
   Future<ImageProvider> getAvatar() async => ImageRes.defaultAvatar;
