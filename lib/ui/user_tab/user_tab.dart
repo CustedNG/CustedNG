@@ -3,7 +3,6 @@ import 'package:custed2/core/store/presistent_store.dart';
 import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -221,7 +220,7 @@ class UserTab extends StatelessWidget {
   }
 
   void _logout(BuildContext context) {
-    final user = Provider.of<UserProvider>(context);
+    final user = Provider.of<UserProvider>(context, listen: false);
     user.logout();
   }
 }

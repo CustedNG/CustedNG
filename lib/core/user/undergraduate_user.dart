@@ -31,6 +31,12 @@ class UndergraduateUser with CustUser implements User {
     return normalizeGrade(rawGrade);
   }
 
+  static Future<Schedule> getScheduleByStudentUUID(String uuid) async {
+    final jwService = locator<JwService>();
+    final rawSchedule = await jwService.getSchedule(uuid);
+    return normalizeSchedule(rawSchedule);
+  }
+
   static Future<Schedule> normalizeSchedule(JwSchedule raw) async {
     final result = Schedule()
       ..createdAt = DateTime.now()
