@@ -152,7 +152,7 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
         Provider.of<ScheduleProvider>(context, listen: false);
     final store = locator<CustomScheduleStore>();
     store.removeProfileByUUID(profile.uuid);
-    if (scheduleProvider.customScheduleProfile.uuid == profile.uuid) {
+    if (scheduleProvider.customScheduleProfile?.uuid == profile.uuid) {
       _switchToProfile(null);
     }
     Navigator.of(context).pop();
