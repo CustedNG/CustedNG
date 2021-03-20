@@ -106,13 +106,7 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
           ),
         ),
         onPressed: () {
-          final scheduleProvider =
-              Provider.of<ScheduleProvider>(context, listen: false);
-          scheduleProvider.customScheduleProfile = profile;
-          scheduleProvider.loadLocalData(refreshAnyway: true);
-          if(scheduleProvider.schedule == null) {
-            scheduleProvider.updateScheduleData();
-          }
+          _switchToProfile(profile);
           Navigator.of(context).pop();
         },
       ),
@@ -133,10 +127,7 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
                   child: Text('确定'),
                   isDefaultAction: true,
                   onPressed: () {
-                    final store = locator<CustomScheduleStore>();
-                    store.removeProfileByUUID(profile.uuid);
-                    Navigator.of(context).pop();
-                    setState(() {});
+                    _removeProfile(profile);
                   },
                 ),
               ],
@@ -145,5 +136,26 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
         }
       },
     );
+  }
+
+  void _switchToProfile(CustomScheduleProfile profile) {
+    final scheduleProvider =
+        Provider.of<ScheduleProvider>(context, listen: false);
+    final store = locator<CustomScheduleStore>();
+
+    scheduleProvider.customScheduleProfile = profile;
+    scheduleProvider.loadLocalData(refreshAnyway: true, updateOnAbsent: true);
+  }
+
+  void _removeProfile(CustomScheduleProfile profile) {
+    final scheduleProvider =
+        Provider.of<ScheduleProvider>(context, listen: false);
+    final store = locator<CustomScheduleStore>();
+    store.removeProfileByUUID(profile.uuid);
+    if (scheduleProvider.customScheduleProfile.uuid == profile.uuid) {
+      _switchToProfile(null);
+    }
+    Navigator.of(context).pop();
+    setState(() {});
   }
 }

@@ -39,7 +39,9 @@ class CustomScheduleStore with PresistentStore {
     final rawString =
         box.get("ProfileList_", defaultValue: "[]");
     final List jsonObj = json.decode(rawString);
-    return jsonObj.map((e) => CustomScheduleProfile.fromPrimitiveMap(e)).toList();
+    return jsonObj
+        .map((e) => CustomScheduleProfile.fromPrimitiveMap(e))
+        .toList();
   }
 
   List<CustomScheduleProfile> addProfile(CustomScheduleProfile profile) {
@@ -49,13 +51,17 @@ class CustomScheduleStore with PresistentStore {
     return list;
   }
 
-  List<CustomScheduleProfile> removeProfileByUUID(String uuid) {
+  List<CustomScheduleProfile> removeProfileByUUID(String uuid,
+      {bool removeScheduleData = true}) {
     final list = getProfileList();
     final newList = <CustomScheduleProfile>[
       for (final item in list)
         if (item.uuid != uuid) item
     ];
     saveProfileList(newList);
+    if(removeScheduleData){
+      box.delete("Schedule_$uuid");
+    }
     return newList;
   }
 }

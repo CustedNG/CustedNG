@@ -45,7 +45,9 @@ class ScheduleProvider extends BusyProvider {
   }
 
   Future<void> loadLocalData(
-      {bool resetWeek = false, bool refreshAnyway = false}) async {
+      {bool resetWeek = false,
+      bool refreshAnyway = false,
+      bool updateOnAbsent = false}) async {
     Schedule head;
     if (customScheduleProfile == null) {
       final scheduleStore = await locator.getAsync<ScheduleStore>();
@@ -55,14 +57,16 @@ class ScheduleProvider extends BusyProvider {
       head =
           customScheduleStore.getScheduleWithUUID(customScheduleProfile.uuid);
     }
-    await _useSchedule(head, accpetNullSchedule: refreshAnyway);
-
+    await _useSchedule(head, acceptNullSchedule: refreshAnyway);
     if (refreshAnyway || head != null) {
       print('use cached schedule: $head');
       if (resetWeek) {
         resetWeekToCurrentWeek();
       }
       notifyListeners();
+    }
+    if (updateOnAbsent && schedule == null) {
+      updateScheduleData(resetWeek: resetWeek);
     }
   }
 
@@ -90,12 +94,11 @@ class ScheduleProvider extends BusyProvider {
   }
 
   Future<void> _useSchedule(Schedule schedule,
-      {bool accpetNullSchedule = false}) async {
+      {bool acceptNullSchedule = false}) async {
     if (schedule == null) {
       _schedule = schedule;
       return;
     }
-    ;
 
     final newSchedule = schedule.safeCopy();
     final customLessonStore = await locator.getAsync<CustomLessonStore>();
