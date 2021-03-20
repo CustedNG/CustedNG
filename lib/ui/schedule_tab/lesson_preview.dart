@@ -222,11 +222,11 @@ class LessonPreview extends StatelessWidget {
       },
     );
 
-    // final helpMe = CupertinoDialogAction(
-    //   child: Text('我该怎么办?'),
-    //   isDestructiveAction: true,
-    //   onPressed: () {},
-    // );
+    final helpMe = CupertinoDialogAction(
+      child: Text('我该怎么办?'),
+      isDestructiveAction: true,
+      onPressed: () {},
+    );
 
     if (noConflict) {
       if (!lesson.isCustom) {
@@ -243,7 +243,7 @@ class LessonPreview extends StatelessWidget {
       if (customLessons.isEmpty) {
         return Row(
           children: <Widget>[
-            // Flexible(child: helpMe),
+            Flexible(child: helpMe),
             Flexible(child: confirm),
           ],
         );
