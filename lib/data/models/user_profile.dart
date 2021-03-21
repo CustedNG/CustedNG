@@ -12,6 +12,9 @@ class UserProfile {
   @HiveField(1)
   String department;
 
+  @HiveField(2)
+  String studentNumber;
+
   @override
   String toString() {
     return 'Profile<$displayName>';

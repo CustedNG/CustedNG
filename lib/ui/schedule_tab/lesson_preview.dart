@@ -72,8 +72,8 @@ class LessonInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(label, style: labelText),
-        Text(value, style: valueText),
+        Text(label ?? "", style: labelText),
+        Text(value ?? "", style: valueText),
         // if (children != null) ...children
       ],
     );

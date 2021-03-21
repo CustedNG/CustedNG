@@ -5,7 +5,7 @@ import 'package:custed2/data/models/user_profile.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:flutter/painting.dart';
 
-class UndergraduateUser implements User {
+class VisitorUser implements User {
   @override
   Future<Schedule> getSchedule() => null;
 

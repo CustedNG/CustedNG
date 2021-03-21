@@ -75,6 +75,8 @@ void runInZone(Function body) {
 }
 
 void main() async {
+  // debugPaintSizeEnabled = true;
+
   locator.registerSingleton(DebugProvider());
 
   runInZone(() async {
