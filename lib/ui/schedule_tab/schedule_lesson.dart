@@ -56,14 +56,18 @@ class ScheduleLessonWidget extends StatelessWidget {
       content.add(SizedBox(height: 2));
       content.add(Text('@' + lesson.roomRaw, maxLines: 3));
     } else {
+      final divider = Divider(height: 1, color: Colors.white);
       for (var lesson in conflict) {
         content.add(SizedBox(height: 5));
-        content.add(Divider(
-          height: 1,
-          color: Colors.white,
-        ));
+        content.add(divider);
         content.add(SizedBox(height: 5));
         content.add(Text(lesson.name, maxLines: 2));
+      }
+      if (conflict.length >= 2) {
+        content.add(SizedBox(height: 3));
+        content.add(divider);
+        final more = conflict.length - 1;
+        content.add(Text("... +${more}"));
       }
     }
 

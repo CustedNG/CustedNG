@@ -1,9 +1,9 @@
 import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../locator.dart';
 
@@ -27,18 +27,18 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
 
     // final profile = await user.getProfile();
 
-    return CupertinoPageScaffold(
+    return Scaffold(
       backgroundColor: theme.textFieldListBackgroundColor,
-      navigationBar: NavBar.cupertino(
+      appBar: NavBar.material(
         context: context,
-        leading: NavBarButton.leading(
+        leading: TextButton(
             child: Text('取消', style: navBarText),
             onPressed: () {
               Navigator.pop(context);
             }),
         middle: Text('添加课表', style: navBarText),
       ),
-      child: DefaultTextStyle(
+      body: DefaultTextStyle(
         style: TextStyle(
           color: theme.textColor,
         ),
@@ -50,19 +50,21 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                child: CupertinoTextField(
+                child: TextField(
                   controller: _studentNumberTextFieldController,
-                  placeholder: '学号',
+                  decoration: InputDecoration(
+                    labelText: '学号'
+                  ),
                 ),
               ),
               Center(
-                child: CupertinoButton(
+                child: TextButton(
                   child: Text(
                     _isLoading ? '加载中...' : '完成',
                     style: TextStyle(
                         color: _isLoading
-                            ? CupertinoColors.inactiveGray
-                            : CupertinoColors.activeBlue),
+                            ? Colors.grey
+                            : Colors.blue),
                   ),
                   onPressed: () async {
                     if (!_isLoading) _handleInput();
@@ -110,20 +112,18 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
   }
 
   void _showBadNotice({String reason = '请输入精确学号'}) async {
-    showCupertinoDialog(
-      context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text('无法解析学号'),
-        content: Text(reason),
-        actions: [
-          CupertinoDialogAction(
+    showRoundDialog(
+      context,
+      '无法解析学号',
+      Text(reason),
+      [
+          TextButton(
             child: Text('确定'),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-        ],
-      ),
+      ]
     );
   }
 }

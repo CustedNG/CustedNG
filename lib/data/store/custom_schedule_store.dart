@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:custed2/core/store/presistent_store.dart';
+import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/models/custom_schedule_profile.dart';
 import 'package:custed2/data/models/schedule.dart';
 
-class CustomScheduleStore with PresistentStore {
+class CustomScheduleStore with PersistentStore {
   @override
   final boxName = 'custom_schedule';
 

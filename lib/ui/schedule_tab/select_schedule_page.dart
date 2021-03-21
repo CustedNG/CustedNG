@@ -5,9 +5,9 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/ui/schedule_tab/add_custom_schedule_page.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_button.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../locator.dart';
@@ -34,45 +34,40 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
 
     // final profile = await user.getProfile();
 
-    return CupertinoPageScaffold(
+    return Scaffold(
       backgroundColor: theme.textFieldListBackgroundColor,
-      navigationBar: NavBar.cupertino(
+      appBar: NavBar.material(
         context: context,
-        leading: NavBarButton.leading(
+        leading: TextButton(
             child: Text('完成', style: navBarTextStyle),
             onPressed: () {
               Navigator.pop(context);
             }),
         middle: Text('选择课表', style: navBarTextStyle),
-        trailing: NavBarButton.trailing(
-          child: GestureDetector(
+        trailing: [GestureDetector(
               onTap: () {
                 AppRoute(
                   title: '添加',
                   page: AddCustomSchedulePage(),
-                ).popup(context);
+                ).go(context);
               },
               child: Text(
                 "添加",
                 style: navBarTextStyle,
-              )),
-        ),
+              )
+        )],
       ),
-      child: DefaultTextStyle(
-          style: TextStyle(
-            color: theme.textColor,
-          ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: ListView(
-              children: <Widget>[
-                _buildListItem(null, "当前用户", user.profile.studentNumber),
-                for (final profile in profiles)
-                  _buildListItem(profile, profile.name, profile.studentNumber,
-                      displayUUID: profile.uuid),
-              ],
-            ),
-          )),
+      body: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: double.infinity),
+        child: ListView(
+          children: <Widget>[
+            _buildListItem(null, "当前用户", user.profile.studentNumber),
+            for (final profile in profiles)
+              _buildListItem(profile, profile.name, profile.studentNumber,
+                  displayUUID: profile.uuid),
+          ],
+        ),
+      )
     );
   }
 
@@ -82,8 +77,7 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
     final secondaryTextStyle =
         TextStyle(color: theme.lightTextColor, fontSize: 12);
     return GestureDetector(
-      child: CupertinoButton(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: TextButton(
         child: ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Column(
@@ -112,26 +106,24 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
       ),
       onLongPress: () {
         if (profile != null) {
-          showCupertinoDialog(
-            context: context,
-            builder: (context) => CupertinoAlertDialog(
-              title: Text('想要删除此记录吗？'),
-              actions: [
-                CupertinoDialogAction(
+          showRoundDialog(
+            context,
+            '想要删除此记录吗？',
+            Container(),
+            [
+                TextButton(
                   child: Text('取消'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
-                CupertinoDialogAction(
-                  child: Text('确定'),
-                  isDefaultAction: true,
+                TextButton(
+                  child: Text('确定', style: TextStyle(color: Colors.pinkAccent)),
                   onPressed: () {
                     _removeProfile(profile);
                   },
                 ),
-              ],
-            ),
+            ],
           );
         }
       },

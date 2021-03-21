@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -8,7 +7,6 @@ import 'package:custed2/ui/schedule_tab/add_lesson_field.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time_picker.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_weeks_picker.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/cupertino.dart';

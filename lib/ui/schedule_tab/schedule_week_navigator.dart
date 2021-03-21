@@ -65,7 +65,6 @@ class ScheduleWeekNavigator extends StatelessWidget {
             text,
             style: TextStyle(
               color: theme.scheduleButtonTextColor,
-              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
