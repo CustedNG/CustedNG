@@ -44,8 +44,8 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
               Navigator.pop(context);
             }),
         middle: Text('选择课表', style: navBarTextStyle),
-        trailing: [GestureDetector(
-              onTap: () {
+        trailing: [TextButton(
+              onPressed: () {
                 AppRoute(
                   title: '添加',
                   page: AddCustomSchedulePage(),

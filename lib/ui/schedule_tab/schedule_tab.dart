@@ -10,6 +10,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/schedule_table.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_navigator.dart';
+import 'package:custed2/ui/schedule_tab/select_schedule_page.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
@@ -71,7 +72,9 @@ class _ScheduleTabState extends State<ScheduleTab>
       appBar: NavBar.material(
           context: context,
           needPadding: true,
-          leading: Container(),
+          leading: GestureDetector(
+            onDoubleTap: () => AppRoute(page: SelectSchedulePage()).go(context)
+          ),
           middle: _buildNavbarMiddle(context),
           trailing: <Widget>[
             scheduleProvider.isBusy ? Container() : _showMenu(context),

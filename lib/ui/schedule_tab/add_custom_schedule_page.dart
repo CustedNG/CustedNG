@@ -53,7 +53,8 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
                 child: TextField(
                   controller: _studentNumberTextFieldController,
                   decoration: InputDecoration(
-                    labelText: '学号'
+                    labelText: '学号',
+                    icon: Icon(Icons.person)
                   ),
                 ),
               ),
