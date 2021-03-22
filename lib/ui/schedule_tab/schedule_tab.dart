@@ -113,13 +113,22 @@ class _ScheduleTabState extends State<ScheduleTab>
 
   Widget _buildNavbarMiddle(BuildContext context) {
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    final profile = scheduleProvider.customScheduleProfile;
+    final usingCustomSchedule = profile != null;
     final hasSchedule = scheduleProvider.schedule != null;
-    return NavbarMiddle(
-      textAbove: '上次更新',
-      textBelow: hasSchedule
-          ? scheduleProvider.schedule.createdAt.toHumanReadable()
-          : '-',
-    );
+    final captionLastUpdate = '上次更新';
+    final captionLastUpdateValue = hasSchedule
+        ? scheduleProvider.schedule.createdAt.toHumanReadable()
+        : '-';
+    return usingCustomSchedule
+        ? NavbarMiddle(
+            textAbove: captionLastUpdate + ' ' + captionLastUpdateValue,
+            textBelow: profile.name + ' ' + profile.studentNumber,
+          )
+        : NavbarMiddle(
+            textAbove: captionLastUpdate,
+            textBelow: captionLastUpdateValue,
+          );
   }
 
   Widget _buildTable(BuildContext context) {
