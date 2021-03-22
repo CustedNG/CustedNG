@@ -76,26 +76,27 @@ class ScheduleProvider extends BusyProvider {
   }
 
   Future<void> _updateScheduleData() async {
-    if (customScheduleProfile == null) {
-      final schedule = await User().getSchedule();
-      _schedule = schedule;
+    final requestedProfile = customScheduleProfile;
+    Schedule schedule;
+    if (requestedProfile == null) {
+      schedule = await User().getSchedule();
       final scheduleStore = await locator.getAsync<ScheduleStore>();
       scheduleStore.checkIn(schedule);
-      _useSchedule(schedule);
     } else {
-      final uuid = customScheduleProfile.uuid;
-      final schedule = await UndergraduateUser.getScheduleByStudentUUID(uuid);
+      final uuid = requestedProfile.uuid;
+      schedule = await UndergraduateUser.getScheduleByStudentUUID(uuid);
       final scheduleStore = await locator.getAsync<CustomScheduleStore>();
       scheduleStore.saveScheduleWithUUID(uuid, schedule);
-
-      _schedule = schedule;
+    }
+    if(customScheduleProfile == requestedProfile) {
       _useSchedule(schedule);
     }
   }
 
   Future<void> _useSchedule(Schedule schedule,
       {bool acceptNullSchedule = false}) async {
-    if (schedule == null) {
+    if (schedule == null || customScheduleProfile != null) {
+      // Do not show custom lessons for non-primary profiles
       _schedule = schedule;
       return;
     }

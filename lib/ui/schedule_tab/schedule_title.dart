@@ -30,7 +30,7 @@ class ScheduleTitle extends StatelessWidget {
       duration: Duration(milliseconds: 100),
       child: Container(
         child: GestureDetector(
-            onDoubleTap: () {
+            onLongPress: () {
               final userProfile = locator<UserProvider>().profile;
               if (userProfile != null) {
                 AppRoute(

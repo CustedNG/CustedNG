@@ -1,3 +1,4 @@
+import 'package:custed2/data/models/custom_schedule_profile.dart';
 import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/theme.dart';
@@ -13,6 +14,8 @@ class AddCustomSchedulePage extends StatefulWidget {
 }
 
 class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
+  final customScheduleStore = locator<CustomScheduleStore>();
+
   AppThemeResolved theme;
   final _studentNumberTextFieldController = TextEditingController();
   bool _isLoading = false;
@@ -83,18 +86,23 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
     });
     try {
       final String text = _studentNumberTextFieldController.text.trim();
-      if(text.isEmpty) {
+      if (text.isEmpty) {
         _showBadNotice(reason: '请输入学号');
         return;
       }
+      if (customScheduleStore
+          .getProfileList()
+          .any((element) => element.studentNumber == text)) {
+        _showBadNotice(reason: "此学号已存在");
+        return;
+      }
+
       final jwService = locator<JwService>();
-      final lists = await jwService.getProfileByStudentNumber(text);
-      if (lists.length == 1) {
-        final store = locator<CustomScheduleStore>();
-        store.addProfile(lists.first);
-        Navigator.of(context).pop();
+      final profiles = await jwService.getProfileByStudentNumber(text);
+      if (profiles.length == 1) {
+        _addProfile(profiles.first);
       } else {
-        if(lists.isEmpty){
+        if (profiles.isEmpty) {
           _showBadNotice(reason: '未能查询到此学号');
         } else {
           _showBadNotice(reason: '请输入精确的学号');
@@ -109,21 +117,34 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
     }
   }
 
-  void _showBadNotice({String reason = '请输入精确学号'}) async {
+  void _addProfile(CustomScheduleProfile profile) {
+    if (customScheduleStore
+        .getProfileList()
+        .any((element) => element.uuid == profile?.uuid)) {
+      _showBadNotice(reason: "相同项目已存在");
+      return;
+    }
+    customScheduleStore.addProfile(profile);
+    Navigator.of(context).pop();
+  }
+
+  void _showBadNotice(
+      {String title = '不能添加此项目', String reason = "未知原因"}) async {
     showCupertinoDialog(
       context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text('无法解析学号'),
-        content: Text(reason),
-        actions: [
-          CupertinoDialogAction(
-            child: Text('确定'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+      builder: (context) =>
+          CupertinoAlertDialog(
+            title: Text(title),
+            content: Text(reason),
+            actions: [
+              CupertinoDialogAction(
+                child: Text('确定'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }

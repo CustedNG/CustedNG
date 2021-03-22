@@ -27,4 +27,16 @@ class CustomScheduleProfile {
   String toString() {
     return 'ExternalUserProfile{name: $name, studentNumber: $studentNumber, uuid: $uuid}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CustomScheduleProfile &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          studentNumber == other.studentNumber &&
+          uuid == other.uuid;
+
+  @override
+  int get hashCode => name.hashCode ^ studentNumber.hashCode ^ uuid.hashCode;
 }
