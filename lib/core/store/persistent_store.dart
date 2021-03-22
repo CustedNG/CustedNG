@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
-class PresistentStore<E> {
+class PersistentStore<E> {
   final String boxName = 'defaultBox';
 
   Box<E> box;
 
-  Future<PresistentStore<E>> init() async {
+  Future<PersistentStore<E>> init() async {
     box = await Hive.openBox(boxName);
     return this;
   }

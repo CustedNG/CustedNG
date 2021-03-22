@@ -1,7 +1,7 @@
-import 'package:custed2/core/store/presistent_store.dart';
+import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/models/grade.dart';
 
-class GradeStore with PresistentStore<Grade> {
+class GradeStore with PersistentStore<Grade> {
   @override
   final boxName = 'grade';
 

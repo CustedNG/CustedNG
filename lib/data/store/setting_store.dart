@@ -1,7 +1,7 @@
-import 'package:custed2/core/store/presistent_store.dart';
+import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/ui/theme.dart';
 
-class SettingStore with PresistentStore {
+class SettingStore with PersistentStore {
   @override
   final boxName = 'setting';
 

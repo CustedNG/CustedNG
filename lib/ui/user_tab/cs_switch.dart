@@ -1,4 +1,4 @@
-import 'package:custed2/core/store/presistent_store.dart';
+import 'package:custed2/core/store/persistent_store.dart';
 import 'package:flutter/cupertino.dart';
 
 class CSSwitch extends StatelessWidget {

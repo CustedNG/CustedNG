@@ -1,7 +1,7 @@
-import 'package:custed2/core/store/presistent_store.dart';
+import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/models/schedule.dart';
 
-class ScheduleStore with PresistentStore<Schedule> {
+class ScheduleStore with PersistentStore<Schedule> {
   @override
   final boxName = 'schedule';
 
