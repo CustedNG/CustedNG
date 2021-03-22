@@ -29,6 +29,9 @@ class SettingStore with PersistentStore {
   StoreProperty<int> get darkMode =>
       property('darkMode', defaultValue: DarkMode.auto);
 
+  StoreProperty<bool> get allowCustomProfile =>
+      property('allowCustomProfile', defaultValue: false);
+
   StoreProperty<int> get ignoreUpdate => property('ignoreUpdate');
 
   StoreProperty<String> get notification => property('notification');

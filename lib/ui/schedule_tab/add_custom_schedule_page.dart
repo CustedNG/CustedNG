@@ -98,15 +98,19 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
       }
 
       final jwService = locator<JwService>();
-      final profiles = await jwService.getProfileByStudentNumber(text);
+      final rawList = await jwService.getProfileByStudentNumber(text);
+      final profiles = _filterListPrivacySafe(rawList, text);
+      if (profiles.isEmpty) {
+        _showBadNotice(reason: '未能查询到此学号');
+        return;
+      }
       if (profiles.length == 1) {
         _addProfile(profiles.first);
       } else {
-        if (profiles.isEmpty) {
-          _showBadNotice(reason: '未能查询到此学号');
-        } else {
-          _showBadNotice(reason: '请输入精确的学号');
-        }
+        profiles.sort(
+            (a, b) => a.studentNumber?.compareTo(b?.studentNumber ?? '0') ?? 0);
+        _showProfileSelectorMenu(profiles);
+        // _showBadNotice(reason: '请输入精确的学号');
       }
     } catch (e) {
       _showBadNotice(reason: '解析失败：$e');
@@ -117,34 +121,73 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
     }
   }
 
-  void _addProfile(CustomScheduleProfile profile) {
+  List<CustomScheduleProfile> _filterListPrivacySafe(
+      List<CustomScheduleProfile> profiles, String input) {
+    if (profiles.length == 1) return profiles;
+    return <CustomScheduleProfile>[
+      for (final profile in profiles)
+        if (profile.name == input || profile.studentNumber == input) profile
+    ];
+  }
+
+  bool _addProfile(CustomScheduleProfile profile) {
     if (customScheduleStore
         .getProfileList()
         .any((element) => element.uuid == profile?.uuid)) {
       _showBadNotice(reason: "相同项目已存在");
-      return;
+      return false;
     }
     customScheduleStore.addProfile(profile);
     Navigator.of(context).pop();
+    return true;
   }
 
   void _showBadNotice(
       {String title = '不能添加此项目', String reason = "未知原因"}) async {
     showCupertinoDialog(
       context: context,
-      builder: (context) =>
-          CupertinoAlertDialog(
-            title: Text(title),
-            content: Text(reason),
-            actions: [
-              CupertinoDialogAction(
-                child: Text('确定'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(reason),
+        actions: [
+          CupertinoDialogAction(
+            child: Text('确定'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
           ),
+        ],
+      ),
     );
   }
+
+  void _showProfileSelectorMenu(List<CustomScheduleProfile> profiles) async {
+    showCupertinoModalPopup(
+        context: context,
+        builder: (context) => _buildProfileSelectorMenu(profiles));
+  }
+
+  Widget _buildProfileSelectorMenu(List<CustomScheduleProfile> profiles) =>
+      CupertinoActionSheet(
+        message: profiles.length >= 30
+            ? Text('请从列表中选择一项\n列表过长，仅显示了部分结果')
+            : Text('请从列表中选择一项'),
+        actions: [
+          for (final profile in profiles)
+            CupertinoActionSheetAction(
+              child: Text('${profile.name} ${profile.studentNumber}'),
+              onPressed: () {
+                if (_addProfile(profile)) {
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          child: Text('取消'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      );
 }
