@@ -29,6 +29,9 @@ class _ScheduleTabState extends State<ScheduleTab>
   final scrollController = ScrollController();
   var showWeekInTitle = false;
 
+  bool get _usingCustomProfile =>
+      locator<ScheduleProvider>().customScheduleProfile != null;
+
   @override
   void initState() {
     scrollController.addListener(onScroll);
@@ -68,6 +71,8 @@ class _ScheduleTabState extends State<ScheduleTab>
                 child: CupertinoActivityIndicator(),
               )
             : NavBarMoreBtn(onTap: () => _showMenu(context)),
+        backgroundColorOverride:
+            _usingCustomProfile ? theme.navBarColorAlternative : null,
       ),
       child: ListView(
         controller: scrollController,
@@ -87,9 +92,19 @@ class _ScheduleTabState extends State<ScheduleTab>
 
     final scheduleProvider =
         Provider.of<ScheduleProvider>(context, listen: false);
+
+    final scheduleCreationTime = scheduleProvider.schedule?.createdAt;
+    final timeElapsed = scheduleCreationTime == null
+        ? null
+        : DateTime.now().difference(scheduleCreationTime);
+    final scheduleIsObsolete =
+        timeElapsed == null || timeElapsed.inMinutes > 180;
+
     if (scheduleProvider.isBusy) return;
 
-    scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
+    if (scheduleIsObsolete) {
+      scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
+    }
     final setting = locator<SettingStore>();
     if (setting.showTipOnViewingExam.fetch()) {
       locator<SnakebarProvider>().info('主页可查看考试安排了');
@@ -114,13 +129,12 @@ class _ScheduleTabState extends State<ScheduleTab>
   Widget _buildNavbarMiddle(BuildContext context) {
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
     final profile = scheduleProvider.customScheduleProfile;
-    final usingCustomSchedule = profile != null;
     final hasSchedule = scheduleProvider.schedule != null;
     final captionLastUpdate = '上次更新';
     final captionLastUpdateValue = hasSchedule
         ? scheduleProvider.schedule.createdAt.toHumanReadable()
         : '-';
-    return usingCustomSchedule
+    return _usingCustomProfile
         ? NavbarMiddle(
             textAbove: captionLastUpdate + ' ' + captionLastUpdateValue,
             textBelow: profile.name + ' ' + profile.studentNumber,

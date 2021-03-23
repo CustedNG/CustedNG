@@ -7,11 +7,12 @@ class NavBar {
     Widget leading,
     Widget middle,
     Widget trailing,
+    Color backgroundColorOverride,
   }) {
     final theme = AppTheme.of(context);
 
     return CupertinoNavigationBar(
-      backgroundColor: theme.navBarColor,
+      backgroundColor: backgroundColorOverride ?? theme.navBarColor,
       // actionsForegroundColor: theme.navBarActionsColor,
       brightness: Brightness.dark,
       leading: leading,
