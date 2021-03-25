@@ -34,6 +34,9 @@ class _ScheduleTabState extends State<ScheduleTab>
   final settings = locator<SettingStore>();
   final _refreshController = RefreshController(initialRefresh: false);
 
+  bool get _usingCustomProfile =>
+      locator<ScheduleProvider>().customScheduleProfile != null;
+
   @override
   void initState() {
     scrollController.addListener(onScroll);

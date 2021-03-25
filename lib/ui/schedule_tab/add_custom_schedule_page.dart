@@ -1,3 +1,4 @@
+import 'package:custed2/data/models/custom_schedule_profile.dart';
 import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/theme.dart';
@@ -6,6 +7,7 @@ import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 
 import '../../locator.dart';
+import '../utils.dart';
 
 class AddCustomSchedulePage extends StatefulWidget {
   @override
@@ -13,6 +15,8 @@ class AddCustomSchedulePage extends StatefulWidget {
 }
 
 class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
+  final customScheduleStore = locator<CustomScheduleStore>();
+
   AppThemeResolved theme;
   final _studentNumberTextFieldController = TextEditingController();
   bool _isLoading = false;
@@ -86,22 +90,31 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
     });
     try {
       final String text = _studentNumberTextFieldController.text.trim();
-      if(text.isEmpty) {
+      if (text.isEmpty) {
         _showBadNotice(reason: '请输入学号');
         return;
       }
+      if (customScheduleStore
+          .getProfileList()
+          .any((element) => element.studentNumber == text)) {
+        _showBadNotice(reason: "此学号已存在");
+        return;
+      }
+
       final jwService = locator<JwService>();
-      final lists = await jwService.getProfileByStudentNumber(text);
-      if (lists.length == 1) {
-        final store = locator<CustomScheduleStore>();
-        store.addProfile(lists.first);
-        Navigator.of(context).pop();
+      final rawList = await jwService.getProfileByStudentNumber(text);
+      final profiles = _filterListPrivacySafe(rawList, text);
+      if (profiles.isEmpty) {
+        _showBadNotice(reason: '未能查询到此学号');
+        return;
+      }
+      if (profiles.length == 1) {
+        _addProfile(profiles.first);
       } else {
-        if(lists.isEmpty){
-          _showBadNotice(reason: '未能查询到此学号');
-        } else {
-          _showBadNotice(reason: '请输入精确的学号');
-        }
+        profiles.sort(
+            (a, b) => a.studentNumber?.compareTo(b?.studentNumber ?? '0') ?? 0);
+        _showProfileSelectorMenu(profiles);
+        // _showBadNotice(reason: '请输入精确的学号');
       }
     } catch (e) {
       _showBadNotice(reason: '解析失败：$e');
@@ -112,19 +125,71 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
     }
   }
 
-  void _showBadNotice({String reason = '请输入精确学号'}) async {
+  List<CustomScheduleProfile> _filterListPrivacySafe(
+      List<CustomScheduleProfile> profiles, String input) {
+    if (profiles.length == 1) return profiles;
+    return <CustomScheduleProfile>[
+      for (final profile in profiles)
+        if (profile.name == input || profile.studentNumber == input) profile
+    ];
+  }
+
+  bool _addProfile(CustomScheduleProfile profile) {
+    if (customScheduleStore
+        .getProfileList()
+        .any((element) => element.uuid == profile?.uuid)) {
+      _showBadNotice(reason: "相同项目已存在");
+      return false;
+    }
+    customScheduleStore.addProfile(profile);
+    Navigator.of(context).pop();
+    return true;
+  }
+
+  void _showBadNotice(
+      {String title = '不能添加此项目', String reason = "未知原因"}) async {
     showRoundDialog(
       context,
-      '无法解析学号',
+      title,
       Text(reason),
       [
+        TextButton(
+          child: Text('确定'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ]
+    );
+  }
+
+  void _showProfileSelectorMenu(List<CustomScheduleProfile> profiles) async {
+    final child = List.empty();
+    for (final profile in profiles) {
+      child.add(
+        TextButton(
+          child: Text('${profile.name} ${profile.studentNumber}'),
+          onPressed: () {
+            if (_addProfile(profile)) {
+              Navigator.of(context).pop();
+            }
+          },
+        )
+      );
+    }
+            
+    showRoundDialog(
+        context,
+        '请选择',
+        Column(children: child),
+        [
           TextButton(
-            child: Text('确定'),
+            child: Text('取消'),
             onPressed: () {
               Navigator.of(context).pop();
             },
-          ),
-      ]
+          )
+        ]
     );
   }
 }

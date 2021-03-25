@@ -49,6 +49,9 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
                 AppRoute(
                   title: '添加',
                   page: AddCustomSchedulePage(),
+                  then: (result) {
+                    setState(() {});
+                  },
                 ).go(context);
               },
               child: Text(

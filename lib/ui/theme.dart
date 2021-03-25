@@ -39,6 +39,7 @@ class AppTheme {
       ..backgroundColor = s(brightness, _appTheme.backgroundColor)
       ..btnPrimaryColor = s(brightness, _appTheme.btnPrimaryColor)
       ..navBarColor = s(brightness, _appTheme.navBarColor)
+      ..navBarColorAlternative = s(brightness, _appTheme.navBarColorAlternative)
       ..navBarActionsColor = s(brightness, _appTheme.navBarActionsColor)
       ..webviewNavBarColor = s(brightness, _appTheme.webviewNavBarColor)
       ..textColor = s(brightness, _appTheme.textColor)
@@ -88,6 +89,11 @@ class AppTheme {
   final navBarColor = CupertinoDynamicColor.withBrightness(
     color: CupertinoColors.activeBlue,
     darkColor: Color(0xFF113f67),
+  );
+
+  final navBarColorAlternative = CupertinoDynamicColor.withBrightness(
+    color: CupertinoColors.darkBackgroundGray,
+    darkColor: CupertinoColors.black,
   );
 
   final navBarActionsColor = CupertinoDynamicColor.withBrightness(
@@ -177,6 +183,7 @@ class AppThemeResolved {
   Color backgroundColor;
   Color btnPrimaryColor;
   Color navBarColor;
+  Color navBarColorAlternative;
   Color navBarActionsColor;
   Color webviewNavBarColor;
   Color textColor;
