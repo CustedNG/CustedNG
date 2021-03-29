@@ -8,7 +8,6 @@ import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
 import 'package:custed2/ui/home_tab/home_open_iecard.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,12 +45,14 @@ class _HomeEntriesState extends State<HomeEntries> {
             action: () => jwWebPage.go(context),
           ),
           HomeEntry(
-            name: Text('一卡通'),
+            name: Text('校园论坛'),
             icon: Image(image: ImageRes.ecardIcon),
             // action: () => iecardWebPage.go(context),
             // action: () => openIecard(context),
-            action: () => gotoWechat.go(context),
-            longPressAction: () => openIecard(context),
+            action: () => AppRoute(
+                title: '论坛',
+                page: WebviewBrowser('https://bbs.cust.app')
+            ).go(context)
           ),
           HomeEntry(
             name: Text('体测成绩'),
@@ -76,11 +77,8 @@ class _HomeEntriesState extends State<HomeEntries> {
             ).go(context),
           ),
           HomeEntry(
-            // name: Text('考场查询'),
             name: Text('地图'),
             icon: Image(image: ImageRes.mapIcon),
-            // action: () => examRoomWebPage.go(context),
-            // action: () => custNavWebPage.go(context),
             action: () => mapPage.go(context),
           ),
           HomeEntry(

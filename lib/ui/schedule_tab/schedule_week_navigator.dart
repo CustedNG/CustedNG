@@ -3,12 +3,19 @@ import 'dart:async';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/ui/schedule_tab/schedule_week_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ScheduleWeekNavigator extends StatelessWidget {
+class ScheduleWeekNavigator extends StatefulWidget {
   ScheduleWeekNavigator();
+
+  @override
+  _ScheduleWeekNavigatorState createState() => _ScheduleWeekNavigatorState();
+}
+
+class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
+  int week;
 
   @override
   Widget build(BuildContext context) {
@@ -79,19 +86,71 @@ class ScheduleWeekNavigator extends StatelessWidget {
       return;
     }
 
-    int week = scheduleProvider.selectedWeek;
+    week = scheduleProvider.selectedWeek;
     await showDialog(
       context: context,
-      builder: (context) => ScheduleWeekPicker(
-        currentWeek: scheduleProvider.currentWeek,
-        selectedWeek: scheduleProvider.selectedWeek,
-        maxWeek: scheduleProvider.maxWeek,
+      builder: (context) => buildPicker(
+        context,
+        scheduleProvider.currentWeek,
+        week,
+        scheduleProvider.maxWeek,
       ),
     );
 
     print('Week: $week');
 
     scheduleProvider.selectWeek(week);
+  }
+
+  Widget buildPicker(context, currentWeek, selectedWeek, maxWeek) {
+    // int selected = selectedWeek;
+    final TextStyle textStyle = TextStyle(
+        fontSize: 22.0,
+        color: isDark(context) ? Colors.white : Colors.black
+    );
+    var selected = selectedWeek.clamp(1, maxWeek);
+
+    final items = List<Widget>.generate(maxWeek, (i) {
+      final String text =
+          i + 1 == currentWeek ? '第${i + 1}周 - 当前周' : '第${i + 1}周';
+
+      return Center(
+        child: Text(
+          text,
+          style: textStyle,
+        ),
+      );
+    });
+
+    final scrollController = FixedExtentScrollController(
+      initialItem: selected - 1,
+    );
+
+    final theme = AppTheme.of(context);
+
+    return SafeArea(
+      child: Column(
+        children: <Widget>[
+          Flexible(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context, selected);
+              },
+            ),
+          ),
+          Container(
+            height: 216.0,
+            child: CupertinoPicker(
+              scrollController: scrollController,
+              onSelectedItemChanged: (n) => week = n + 1,
+              children: items,
+              backgroundColor: theme.backgroundColor,
+              itemExtent: 32.0,
+            ),
+          )
+        ],
+      )
+    );
   }
 }
 

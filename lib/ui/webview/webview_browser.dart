@@ -24,22 +24,24 @@ class WebviewBrowser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isCustUrl = url.contains('cust.edu.cn');
+
     return Webview2(
       url: url,
-      onCreated: onCreated,
+      onCreated: isCustUrl ? onCreated : null,
       invalidUrlRegex: 'custed-target=blank',
       onLoadAborted: (controller, url) {
         if (url.contains('custed-target=blank')) {
           openUrl(url);
         }
       },
-      plugins: [
+      plugins: isCustUrl ? [
         PluginForMysso(),
         PluginForPortal(),
         PluginForIecard(),
         PluginForNetdisk(),
         PluginFromRemote(),
-      ],
+      ] : [],
     );
   }
 
