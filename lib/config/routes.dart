@@ -12,6 +12,8 @@ import 'package:custed2/ui/user_tab/netdisk_page.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/webview/webview_login.dart';
 
+final custccBase = 'https://cust.cc';
+
 // 因inappwebview问题 暂时使用旧版登录
 final loginPage = AppRoute(
   title: '登录',
@@ -47,7 +49,7 @@ final cetAvatarPage = AppRoute(
 
 final jwWebPage = AppRoute(
   title: '教务系统',
-  page: WebviewBrowser('https://cust.cc/go/jwgl'),
+  page: WebviewBrowser('$custccBase/go/jwgl'),
 );
 
 //final tikuWebPage = AppRoute(
@@ -79,24 +81,29 @@ final netdiskPage = AppRoute(
 
 final netdiskWebPage = AppRoute(
   title: '长理网盘',
-  page: WebviewBrowser('https://cust.cc/go/netdisk'),
+  page: WebviewBrowser('$custccBase/go/netdisk'),
 );
 
 final feedbackPage = AppRoute(
   title: '反馈',
-  page: WebviewBrowser('https://cust.cc/go/feedback')
+  page: WebviewBrowser('$custccBase/go/feedback')
+);
+
+final bbsPage = AppRoute(
+    title: '论坛',
+    page: WebviewBrowser('$custccBase/go/bbs')
 );
 
 final selfWebPage = AppRoute(
   title: '校园网',
   //page: SelfWebPage(),
-  page: WebviewBrowser('https://cust.cc/go/self'),
+  page: WebviewBrowser('$custccBase/go/self'),
 );
 
 final ticeWebPage = AppRoute(
   title: '体测成绩',
   //page: TiceWebPage(),
-  page: WebviewBrowser('https://cust.cc/go/tice'),
+  page: WebviewBrowser('$custccBase/go/tice'),
 );
 
 final gotoWechat = AppRoute(

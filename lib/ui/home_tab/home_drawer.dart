@@ -56,17 +56,7 @@ class HomeDrawer extends StatelessWidget{
             height: 64.0,
           ),
           aboutBoxChildren: <Widget>[
-            RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      style: myTheme.textTheme.bodyText1,
-                      text: '\nBy Toast Studio\n\n开源地址：'),
-                  TextSpan(
-                      style: myTheme.textTheme.bodyText1
-                          .copyWith(color: myTheme.accentColor),
-                      text: custedGithubUrl)
-                ])
-            )
+            Text('By Toast Studio.\nAll rights reserved.')
           ],
         ),
       ],
@@ -81,7 +71,7 @@ class HomeDrawer extends StatelessWidget{
           title: Text('重新登录'),
           onTap: () => _login(context),
         ) : ListTile(
-          leading: Icon(Icons.login),
+          leading: Icon(Icons.web),
           title: Text('统一登录'),
           onTap: () => loginPage.go(context),
         ),
@@ -90,7 +80,7 @@ class HomeDrawer extends StatelessWidget{
           title: Text('退出登录'),
           onTap: () => _logout(context),
         ) : ListTile(
-          leading: Icon(Icons.login),
+          leading: Icon(Icons.input),
           title: Text('传统登录'),
           onTap: () => loginPageLegacy.go(context),
         ),

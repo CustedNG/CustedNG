@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule.dart';
@@ -140,12 +139,12 @@ class ScheduleTable extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 5),
         alignment: Alignment.center,
         child: Column(children: <Widget>[
-          AutoSizeText(
+          Text(
             dateOverride ?? displayDate,
             style: shouldHighlight ? dateStyleHighlight : dateStyle,
             maxLines: 1,
           ),
-          AutoSizeText(
+          Text(
             date.weekday.weekdayInChinese(),
             style: shouldHighlight ? chsDateStyleHighlight : chsDateStyle,
             maxLines: 1,

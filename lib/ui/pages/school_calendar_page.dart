@@ -3,9 +3,9 @@ import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:photo_view/photo_view.dart';
 
 class SchoolCalendarPage extends StatelessWidget {
   @override
@@ -20,17 +20,16 @@ class SchoolCalendarPage extends StatelessWidget {
           )
         ],
       ),
-      body: ClipRect(
-        child: SafeArea(
-          child: DarkModeFilter(
-            level: 160,
-            child: PhotoView(
-              maxScale: 1.0,
-              minScale: 0.1,
-              imageProvider: ImageRes.miscSchoolCalendar,
-            ),
+      body: Center(
+        child: DarkModeFilter(
+          level: 160,
+          child: ExtendedImage(
+            height: MediaQuery.of(context).size.height,
+            mode: ExtendedImageMode.gesture,
+            fit: BoxFit.fitWidth,
+            image: ImageRes.miscSchoolCalendar,
           ),
-        ),
+        )
       ),
     );
   }

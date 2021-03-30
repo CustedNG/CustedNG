@@ -1,7 +1,7 @@
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 
 class MapPage extends StatefulWidget {
   final int index;
@@ -42,25 +42,38 @@ class _MapPageState extends State<MapPage> {
         children: <Widget>[
           Positioned(
             top: 0, left: 0, bottom: 0, right: 0,
-            child: Container(
-                child: PhotoViewGallery.builder(
-              builder: (BuildContext context, int index) {
-                return PhotoViewGalleryPageOptions(
-                  imageProvider: isDark(context)
-                      ? darkMaps[index]
-                      : maps[index],
+            child: ExtendedImageGesturePageView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                AssetImage item = isDark(context) ? darkMaps[index] : maps[index];
+                Widget image = ExtendedImage(
+                  image: item,
+                  fit: BoxFit.contain,
+                  mode: ExtendedImageMode.gesture,
+                  initGestureConfigHandler: (state) => GestureConfig(
+                    inPageView: true, 
+                    initialScale: 1.0,
+                    cacheGesture: false
+                  ),
                 );
+                image = Container(
+                  child: image,
+                  padding: EdgeInsets.all(5.0),
+                );
+                if (index == currentIndex) {
+                  return image;
+                } else {
+                  return image;
+                }
               },
               itemCount: 3,
-              backgroundDecoration: BoxDecoration(
-                color: Theme.of(context).scaffoldBackgroundColor
-              ),
-              pageController: widget.controller,
-              enableRotation: true,
-              onPageChanged: (index) {
-                setState(() => currentIndex = index);
+              onPageChanged: (int index) {
+                currentIndex = index;
               },
-            )),
+              controller: PageController(
+                initialPage: currentIndex,
+              ),
+              scrollDirection: Axis.horizontal,
+            ),
           ),
           Positioned(
             top: MediaQuery.of(context).padding.top + 15,

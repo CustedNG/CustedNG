@@ -1,8 +1,4 @@
 PODS:
-  - add_2_calendar (0.0.1):
-    - Flutter
-  - alice (0.0.1):
-    - Flutter
   - android_path_provider (0.0.1):
     - Flutter
   - connectivity (0.0.1):
@@ -17,22 +13,20 @@ PODS:
   - Flutter (1.0.0)
   - flutter_inappwebview (0.0.1):
     - Flutter
-  - flutter_local_notifications (0.0.1):
+    - flutter_inappwebview/Core (= 0.0.1)
+    - OrderedSet (~> 5.0)
+  - flutter_inappwebview/Core (0.0.1):
     - Flutter
+    - OrderedSet (~> 5.0)
   - flutter_webview_plugin (0.0.1):
-    - Flutter
-  - get_ip (0.0.1):
     - Flutter
   - install_plugin (0.0.1):
     - Flutter
+  - OrderedSet (5.0.0)
   - path_provider (0.0.1):
     - Flutter
   - Reachability (3.2)
   - save_in_gallery (0.0.1):
-    - Flutter
-  - sensors (0.0.1):
-    - Flutter
-  - share (0.0.1):
     - Flutter
   - share_extend (0.0.1):
     - Flutter
@@ -44,21 +38,15 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - add_2_calendar (from `.symlinks/plugins/add_2_calendar/ios`)
-  - alice (from `.symlinks/plugins/alice/ios`)
   - android_path_provider (from `.symlinks/plugins/android_path_provider/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - countly_flutter (from `.symlinks/plugins/countly_flutter/ios`)
   - Flutter (from `Flutter`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
-  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
-  - get_ip (from `.symlinks/plugins/get_ip/ios`)
   - install_plugin (from `.symlinks/plugins/install_plugin/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - save_in_gallery (from `.symlinks/plugins/save_in_gallery/ios`)
-  - sensors (from `.symlinks/plugins/sensors/ios`)
-  - share (from `.symlinks/plugins/share/ios`)
   - share_extend (from `.symlinks/plugins/share_extend/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - webview_cookie_manager (from `.symlinks/plugins/webview_cookie_manager/ios`)
@@ -67,13 +55,10 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Countly
+    - OrderedSet
     - Reachability
 
 EXTERNAL SOURCES:
-  add_2_calendar:
-    :path: ".symlinks/plugins/add_2_calendar/ios"
-  alice:
-    :path: ".symlinks/plugins/alice/ios"
   android_path_provider:
     :path: ".symlinks/plugins/android_path_provider/ios"
   connectivity:
@@ -84,22 +69,14 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_inappwebview:
     :path: ".symlinks/plugins/flutter_inappwebview/ios"
-  flutter_local_notifications:
-    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_webview_plugin:
     :path: ".symlinks/plugins/flutter_webview_plugin/ios"
-  get_ip:
-    :path: ".symlinks/plugins/get_ip/ios"
   install_plugin:
     :path: ".symlinks/plugins/install_plugin/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   save_in_gallery:
     :path: ".symlinks/plugins/save_in_gallery/ios"
-  sensors:
-    :path: ".symlinks/plugins/sensors/ios"
-  share:
-    :path: ".symlinks/plugins/share/ios"
   share_extend:
     :path: ".symlinks/plugins/share_extend/ios"
   url_launcher:
@@ -110,23 +87,18 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
-  add_2_calendar: c201b1c7dc0299280f1b1a8158aa80e15a8f8912
-  alice: 0f49577498c6d1abee1d488e29d0a79a3e2860a1
   android_path_provider: 708a32098dc3da99e5d0c09ec6a485833a07d28a
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   Countly: 6e4af408faaa26192227f06d27899532c4c2317b
   countly_flutter: 4c090d7f5893e02e94896ea9f9f16d0267156fdb
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_inappwebview: 69dfbac46157b336ffbec19ca6dfd4638c7bf189
-  flutter_local_notifications: 9e4738ce2471c5af910d961a6b7eadcf57c50186
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
-  get_ip: c063133e0a399ae4089048c90d6a232cb2344846
   install_plugin: a13e7ddd2bab0c701b48cd359c26d0394125b6fb
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   save_in_gallery: 75c1d76566ed1af3a266f25b38c6c19a1d019a66
-  sensors: 84eb7a30e47a649e4172b71d6e81be614c280336
-  share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   share_extend: b6748dc53695587891126a89533b862b92548c7b
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   webview_cookie_manager: eaf920722b493bd0f7611b5484771ca53fed03f7
@@ -134,4 +106,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: e78b533fd58876e6615751f61a49d346b8e35f08
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

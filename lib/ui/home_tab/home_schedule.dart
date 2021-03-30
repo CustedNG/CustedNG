@@ -17,7 +17,7 @@ class HomeSchedule extends StatelessWidget {
     if (!user.loggedIn) {
         return GestureDetector(
           child: HomeCard(
-            title: Text('你还没有登录', style: TextStyle(color: Color(0xFF889CC3))),
+            title: Text('你还没有登录', style: TextStyle(color: Colors.redAccent)),
             content: Text('点击登录'),
             trailing: Icon(Icons.keyboard_arrow_right),
           ),

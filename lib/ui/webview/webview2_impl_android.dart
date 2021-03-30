@@ -2,17 +2,17 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:custed2/core/webview/user_agent.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/webview/webview2.dart';
 import 'package:custed2/ui/webview/webview2_bottom.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_header.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart' hide Cookie;
 
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:webview_cookie_manager/webview_cookie_manager.dart';
 
 StreamSubscription<T> listen<T>(Stream<T> source, void Function(T) handler) {
   if (handler == null) {
@@ -45,12 +45,29 @@ class Webview2ControllerAndroid extends Webview2Controller {
 
   @override
   Future<void> clearCookies() {
-    return WebviewCookieManager().clearCookies();
+    return CookieManager.instance().deleteAllCookies();
   }
 
   @override
-  Future<void> setCookies(List<Cookie> cookies) {
-    return WebviewCookieManager().setCookies(cookies);
+  Future<void> setCookies(List<Cookie> cookies) async {
+    for (var cookie in cookies) {
+      final url = '${cookie.domain}${cookie.path}';
+
+      var path = '/';
+      if (cookie.path != null && cookie.path.isNotEmpty) {
+        path = cookie.path;
+      }
+
+      await CookieManager.instance().setCookie(
+        url: url.uri,
+        name: cookie.name,
+        value: cookie.value,
+        domain: cookie.domain,
+        path: path,
+        isHttpOnly: cookie.httpOnly,
+        isSecure: false,
+      );
+    }
   }
 
   @override

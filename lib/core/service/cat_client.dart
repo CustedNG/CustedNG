@@ -31,7 +31,7 @@ class CatClient {
     request.setBody(body);
     // Let's handle redirects manually and correctly :)
     request.followRedirects = false;
-    loadCookies(request);
+    await loadCookies(request);
     setUserAgent(request);
     final response = await Response.fromStream(
       await _client.send(request).timeout(timeout),
@@ -118,12 +118,12 @@ class CatClient {
     );
   }
 
-  void loadCookies(CatRequest request) {
+  Future<void> loadCookies(CatRequest request) async {
     // if (request.headers.containsKey(HttpHeaders.cookieHeader)) {
     //   return;
     // }
 
-    final cookies = findCookiesAsString(request.url);
+    final cookies = await findCookiesAsString(request.url);
     print('load cookie for ${request.url} : [${cookies.length}]');
     if (cookies.isNotEmpty) {
       request.headers[HttpHeaders.cookieHeader] = cookies;
@@ -144,8 +144,8 @@ class CatClient {
     _cookieJar.saveFromResponse(response.request.url, cookies);
   }
 
-  List<Cookie> findCookies(Uri uri) {
-    final cookies = _cookieJar.loadForRequest(uri);
+  Future<List<Cookie>> findCookies(Uri uri) async {
+    final cookies = await _cookieJar.loadForRequest(uri);
     cookies.removeWhere((cookie) {
       return cookie.expires != null && cookie.expires.isBefore(DateTime.now());
     });
@@ -156,8 +156,9 @@ class CatClient {
     _cookieJar.delete(uri);
   }
 
-  String findCookiesAsString(Uri uri) {
-    return formatCookies(findCookies(uri));
+  Future<String> findCookiesAsString(Uri uri) async {
+    final cookies = await findCookies(uri);
+    return formatCookies(cookies);
   }
 
   void setUserAgent(Request request) {

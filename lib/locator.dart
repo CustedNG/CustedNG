@@ -1,5 +1,6 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/config/commands.dart';
+import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/core/tty/engine.dart';
 import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/app_provider.dart';
@@ -28,7 +29,7 @@ import 'package:custed2/service/netdisk_service.dart';
 import 'package:custed2/service/remote_config_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
-import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -110,9 +111,9 @@ Future<void> setupLocator(String docDir) async {
     commands.forEach((c) => instance.register(c));
     return instance;
   });
-
+  
   locator.registerLazySingleton(
-    () => PersistCookieJar(dir: path.join(docDir, ".cookies/")),
+    () => PersistCookieJar(storage: FileStorage('$docDir/.cookies/')),
   );
 
 

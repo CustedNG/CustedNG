@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/download_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/webview/webview2.dart';
 import 'package:custed2/ui/webview/webview2_bottom.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
@@ -39,7 +40,7 @@ class Webview2ControllerGeneral extends Webview2Controller {
       }
 
       await CookieManager.instance().setCookie(
-        url: url,
+        url: url.uri,
         name: cookie.name,
         value: cookie.value,
         domain: cookie.domain,
@@ -52,7 +53,7 @@ class Webview2ControllerGeneral extends Webview2Controller {
 
   @override
   void loadUrl(String url) {
-    controller.loadUrl(url: url);
+    controller.loadUrl(urlRequest: url.uq);
   }
 
   @override
@@ -96,7 +97,7 @@ class Webview2StateGeneral extends Webview2State {
         onGoBack: () => controller?.goBack(),
       ),
       body: InAppWebView(
-        initialUrl: widget.url,
+        initialUrlRequest: widget.url.uq,
         initialOptions: InAppWebViewGroupOptions(
           crossPlatform: InAppWebViewOptions(
             userAgent: UserAgent.defaultUA,
@@ -110,28 +111,28 @@ class Webview2StateGeneral extends Webview2State {
         },
         onLoadStart: (controller, url) async {
           header.startLoad();
-          header.setUrl(url);
+          header.setUrl(url.toString());
 
           // pluginActivate(url);
 
-          pluginOnLoadStart(controllerAdaptor, url);
+          pluginOnLoadStart(controllerAdaptor, url.toString());
 
-          widget.onLoadStart?.call(controllerAdaptor, url);
+          widget.onLoadStart?.call(controllerAdaptor, url.toString());
 
           bottom.setCanGoBack(await controller.canGoBack());
           bottom.setCanGoForward(await controller.canGoForward());
         },
         onLoadStop: (controller, url) async {
-          pluginActivate(url);
+          pluginActivate(url.toString());
 
           await addJsChannels(controller);
 
-          pluginOnLoadStop(controllerAdaptor, url);
+          pluginOnLoadStop(controllerAdaptor, url.toString());
 
-          widget.onLoadStop?.call(controllerAdaptor, url);
+          widget.onLoadStop?.call(controllerAdaptor, url.toString());
 
           header.stopLoad();
-          header.setUrl(url);
+          header.setUrl(url.toString());
 
           bottom.setCanGoBack(await controller.canGoBack());
           bottom.setCanGoForward(await controller.canGoForward());
@@ -144,20 +145,20 @@ class Webview2StateGeneral extends Webview2State {
         },
         shouldOverrideUrlLoading: (controller, request) async {
           if (widget.invalidUrlRegex == null) {
-            return ShouldOverrideUrlLoadingAction.ALLOW;
+            return NavigationActionPolicy.ALLOW;
           }
 
           final invalidUrlRegex = RegExp(widget.invalidUrlRegex);
 
-          if (invalidUrlRegex.hasMatch(request.url)) {
-            widget.onLoadAborted?.call(controllerAdaptor, request.url);
-            return ShouldOverrideUrlLoadingAction.CANCEL;
+          if (invalidUrlRegex.hasMatch(request.request.url.toString())) {
+            widget.onLoadAborted?.call(controllerAdaptor, request.request.url.toString());
+            return NavigationActionPolicy.CANCEL;
           } else {
-            return ShouldOverrideUrlLoadingAction.ALLOW;
+            return NavigationActionPolicy.ALLOW;
           }
         },
         onDownloadStart: (controller, url) {
-          locator<DownloadProvider>().enqueue(url);
+          locator<DownloadProvider>().enqueue(url.toString());
         },
         onConsoleMessage: (controller, message) {
           print('Console: ${message.message}');

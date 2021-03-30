@@ -5,7 +5,6 @@ import 'package:custed2/core/tty/command.dart';
 import 'package:custed2/cmds/box.dart';
 import 'package:custed2/cmds/cbs.dart';
 import 'package:custed2/cmds/clear.dart';
-import 'package:custed2/cmds/cookies.dart';
 import 'package:custed2/cmds/echo.dart';
 import 'package:custed2/cmds/help.dart';
 import 'package:custed2/cmds/http.dart';
@@ -24,7 +23,6 @@ final commands = <TTYCommand>[
   TestCommand(),
   Test2Command(),
   ClearCommand(),
-  CookiesCommand(),
   LsCommand(),
   HttpCommand(),
   NewYearCommand(),

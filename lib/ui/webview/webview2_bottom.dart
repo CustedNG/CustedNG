@@ -28,7 +28,7 @@ class Webview2Bottom extends StatefulWidget {
     this.onGoForward,
   });
 
-  final Future<String> Function() url;
+  final Future<Object> Function() url;
 
   final Webview2BottomController controller;
 
@@ -38,6 +38,11 @@ class Webview2Bottom extends StatefulWidget {
 
   @override
   _Webview2BottomState createState() => _Webview2BottomState();
+}
+
+String resolveUrl(Object url) {
+  if (url is Uri) return url.toString();
+  return url;
 }
 
 class _Webview2BottomState extends State<Webview2Bottom> {
@@ -79,7 +84,7 @@ class _Webview2BottomState extends State<Webview2Bottom> {
               onPressed: () async {
                 // var url = await webview.evalJavascript('window.location.href');
                 final url = await widget.url();
-                ShareExtend.share(url, 'text');
+                ShareExtend.share(resolveUrl(url), 'text');
               },
             ),
             IconButton(
@@ -91,7 +96,7 @@ class _Webview2BottomState extends State<Webview2Bottom> {
                 // }
                 final url = await widget.url();
                 print('open in browser: $url');
-                openUrl(url);
+                openUrl(resolveUrl(url));
               },
             ),
           ],
