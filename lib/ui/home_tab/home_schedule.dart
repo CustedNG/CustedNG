@@ -2,6 +2,7 @@ import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/extension/iterablex.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
@@ -12,8 +13,19 @@ class HomeSchedule extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    final lesson = scheduleProvider.lessonsSince(DateTime.now()).firstIfExist;
+    final user = locator<UserProvider>();
+    if (!user.loggedIn) {
+        return GestureDetector(
+          child: HomeCard(
+            title: Text('你还没有登录', style: TextStyle(color: Color(0xFF889CC3))),
+            content: Text('点击登录'),
+            trailing: Icon(Icons.keyboard_arrow_right),
+          ),
+          onTap: () => Scaffold.of(context).openDrawer(),
+      );
+    }
 
+    final lesson = scheduleProvider.lessonsSince(DateTime.now()).firstIfExist;
     return GestureDetector(
       onTap: () => showDialog(
         context: context,

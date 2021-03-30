@@ -1,5 +1,4 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/ui/home_tab/home_banner.dart';
@@ -10,7 +9,6 @@ import 'package:custed2/ui/home_tab/home_notice.dart';
 import 'package:custed2/ui/home_tab/home_schedule.dart';
 import 'package:custed2/ui/home_tab/home_weather.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
