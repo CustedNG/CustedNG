@@ -34,9 +34,6 @@ class _ScheduleTabState extends State<ScheduleTab>
   final settings = locator<SettingStore>();
   final _refreshController = RefreshController(initialRefresh: false);
 
-  bool get _usingCustomProfile =>
-      locator<ScheduleProvider>().customScheduleProfile != null;
-
   @override
   void initState() {
     scrollController.addListener(onScroll);
@@ -81,7 +78,8 @@ class _ScheduleTabState extends State<ScheduleTab>
           middle: _buildNavbarMiddle(context),
           trailing: <Widget>[
             scheduleProvider.isBusy ? Container() : _showMenu(context),
-          ]),
+          ]
+      ),
       body: SmartRefresher(
         enablePullDown: true,
         enablePullUp: false,

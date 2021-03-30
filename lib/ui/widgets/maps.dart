@@ -1,6 +1,7 @@
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:extended_image/extended_image.dart';
+import 'package:custed2/ui/utils.dart';
+import 'package:custed2/ui/widgets/zoomable.dart';
 import 'package:flutter/material.dart';
 
 class CustCompusMap {
@@ -38,35 +39,29 @@ class PhotoViewMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = isDark(context);
-    return Stack(
-      children: <Widget>[
-        ExtendedImage(
-          image: isDarkMode ? map.darkImage : map.image,
-          fit: BoxFit.contain,
-          //enableLoadState: false,
-          mode: ExtendedImageMode.gesture,
-          initGestureConfigHandler: (state) {
-            return GestureConfig(
-                minScale: map.minScale,
-                animationMinScale: map.minScale - 0.5,
-                maxScale: map.maxScale,
-                animationMaxScale: map.maxScale + 0.5,
-                initialScale: map.initScale,
-                inPageView: false,
-                initialAlignment: InitialAlignment.center,
-            );
-          },
-        ),
-        Positioned(
-          top: isDarkMode ? darkPosition.dy : position.dy,
-          left: isDarkMode ? darkPosition.dx : position.dx,
-          child: Icon(
-            Icons.flag_sharp,
-            size: flagSize,
-            color: Colors.lightBlueAccent,
+    return ZoomableWidget(
+      initialOffset: offset,
+      initialScale: map.initScale,
+      minScale: map.minScale,
+      maxScale: map.maxScale,
+      child: Stack(
+        children: <Widget>[
+          FadeInImage(
+            image: isDarkMode ? map.darkImage : map.image, 
+            placeholder: MemoryImage(kTransparentImage),
+            fadeInDuration: Duration(milliseconds: 277),
           ),
-        ),
-      ],
+          Positioned(
+            top: isDarkMode ? darkPosition.dy : position.dy,
+            left: isDarkMode ? darkPosition.dx : position.dx,
+            child: Icon(
+              Icons.flag_sharp,
+              size: flagSize,
+              color: Colors.lightBlueAccent,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

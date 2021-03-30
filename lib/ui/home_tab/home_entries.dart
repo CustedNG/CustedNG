@@ -1,13 +1,10 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
-import 'package:custed2/ui/theme.dart';
-import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

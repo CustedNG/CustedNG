@@ -136,7 +136,6 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
   void _switchToProfile(CustomScheduleProfile profile) {
     final scheduleProvider =
         Provider.of<ScheduleProvider>(context, listen: false);
-    final store = locator<CustomScheduleStore>();
 
     scheduleProvider.customScheduleProfile = profile;
     scheduleProvider.loadLocalData(refreshAnyway: true, updateOnAbsent: true);
