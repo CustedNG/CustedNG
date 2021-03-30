@@ -94,7 +94,6 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
         <PopupMenuItem<String>>[
           this.SelectView(Icons.calendar_view_day, '查看校历', 'A'),
           this.SelectView(Icons.feedback, '我要反馈', 'B'),
-          this.SelectView(Icons.monitor, '状态监测', 'C'),
         ],
         onSelected: (String action) {
           switch (action) {
@@ -102,12 +101,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
               schoolCalendarPage.go(context);
               break;
             case 'B':
-              AppRoute(
-                  page: WebviewBrowser('https://cust.cc/go/feedback')
-              ).go(context);
-              break;
-            case 'C':
-              statusWebPage.go(context);
+              feedbackPage.go(context);
               break;
           }
         });

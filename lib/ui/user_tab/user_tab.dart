@@ -1,10 +1,10 @@
-import 'package:custed2/config/routes.dart';
 import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/custed_header.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
@@ -27,40 +27,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
     final user = Provider.of<UserProvider>(context);
 
     if (user.isBusy) return PlaceholderWidget(isActive: true);
-    return user.loggedIn ? _buildUserTab(context) : _buildLoginButton(context);
-  }
-
-  Widget loginBtn(String text, bool isLegacy){
-    return MaterialButton(
-      height: 47,
-      minWidth: 177,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(40.0)),
-      ),
-      color: isLegacy ? Colors.cyan : Colors.lightBlueAccent,
-      child: Text(text, style: TextStyle(color: Colors.white)),
-      onPressed: () => isLegacy
-          ? loginPageLegacy.go(context)
-          : loginPage.go(context),
-    );
-  }
-
-  Widget _buildLoginButton(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          loginBtn('统一认证登录', false),
-          SizedBox(height: 20),
-          Text(
-            '或',
-            style: TextStyle(color: Colors.grey),
-          ),
-          SizedBox(height: 20),
-          loginBtn('传统登录', true),
-        ],
-      ),
-    );
+    return _buildUserTab(context);
   }
 
   Widget _buildUserTab(BuildContext context) {
@@ -163,11 +130,8 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
 
   void _onSelection(int index) {
     if(index == 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('自动模式仅在Android 10+或iOS 13+有效'))
-      );
+      showSnackBar(context, '自动模式仅在Android 10+或iOS 13+有效');
     }
-    print(index.toString());
     final setting = locator<SettingStore>();
     setting.darkMode.put(index);
   }

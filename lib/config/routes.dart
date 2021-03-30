@@ -82,10 +82,9 @@ final netdiskWebPage = AppRoute(
   page: WebviewBrowser('https://cust.cc/go/netdisk'),
 );
 
-final statusWebPage = AppRoute(
-  title: '状态监测',
-  //page: StatusWebPage(),
-  page: WebviewBrowser('https://cust.cc/go/status'),
+final feedbackPage = AppRoute(
+  title: '反馈',
+  page: WebviewBrowser('https://cust.cc/go/feedback')
 );
 
 final selfWebPage = AppRoute(
@@ -105,7 +104,7 @@ final gotoWechat = AppRoute(
   page: GoToWechat(),
 );
 
-AppRoute examPage() => AppRoute(
+final examPage = AppRoute(
   title: '考试安排',
   page: ExamPage(),
 );

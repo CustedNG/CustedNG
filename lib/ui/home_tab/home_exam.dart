@@ -77,7 +77,7 @@ class _HomeExamState extends State<HomeExam> {
     return Column(
       children: [
         GestureDetector(
-          onTap: () => examPage().go(context),
+          onTap: () => examPage.go(context),
           child: Hero(
               tag: 'ExamCard${exam.failed ? 0 : 6 - exam.getRemainExam()}',
               transitionOnUserGestures: true,
