@@ -57,7 +57,6 @@ class HomeSchedule extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    if (scheduleProvider.isBusy) return Text('加载中...');
     if (scheduleProvider.schedule == null) return Text('无课表数据');
 
     final lesson = scheduleProvider.lessonsSince(DateTime.now()).firstIfExist;

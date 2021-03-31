@@ -1,6 +1,4 @@
-import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
-import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -84,14 +82,7 @@ class _DebugPageState extends State<DebugPage> {
 
   Widget _buildTerminal(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: <Widget>[
-          Flexible(
-            child: _buildTerminalText(context),
-          ),
-          _buildPrompt(context),
-        ],
-      ),
+      child: _buildTerminalText(context),
     );
   }
 
@@ -117,27 +108,6 @@ class _DebugPageState extends State<DebugPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildPrompt(BuildContext context) {
-    return CupertinoTextField(
-      decoration: BoxDecoration(
-        color: CupertinoColors.black,
-      ),
-      style: TextStyle(
-        color: CupertinoColors.white,
-        fontFamily: 'monospace',
-      ),
-      cursorColor: CupertinoColors.activeGreen,
-      prefix: Icon(
-        Icons.arrow_forward,
-        color: CupertinoColors.white,
-      ),
-      onSubmitted: (text) {
-        final executer = locator<TTYExecuter>();
-        executer.execute('($text)', context);
-      },
     );
   }
 }

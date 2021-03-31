@@ -1,7 +1,4 @@
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:custed2/config/commands.dart';
-import 'package:custed2/core/tty/engine.dart';
-import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/banner_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
@@ -100,20 +97,10 @@ Future<void> setupLocator(String docDir) async {
   await setupLocatorForStores();
 
   setupLocatorForProviders();
-
-  locator.registerLazySingleton(() => TTYEngine());
-
-  locator.registerLazySingleton(() {
-    final instance = TTYExecuter();
-    instance.cd(docDir);
-    commands.forEach((c) => instance.register(c));
-    return instance;
-  });
   
   locator.registerLazySingleton(
     () => PersistCookieJar(storage: FileStorage('$docDir/.cookies/')),
   );
-
 
   locator.registerSingleton(GlobalKey<NavigatorState>());
 

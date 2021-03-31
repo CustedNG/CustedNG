@@ -1,6 +1,5 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/core/tty/executer.dart';
 import 'package:custed2/core/update.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/store/setting_store.dart';
@@ -120,11 +119,13 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   void afterFirstLayout(BuildContext context) {
     if (BuildMode.isDebug) {
       print('Debug mode detected, create interface by default.');
-      locator<TTYExecuter>().execute('(debug)', context, quiet: true);
     }
 
     updateCheck(context);
+    _showNewVersionDialog();
+  }
 
+  void _showNewVersionDialog() {
     Future.delayed(Duration(seconds: 1), (){
       if(!locator<UserDataStore>().haveInit.fetch()){
         showRoundDialog(

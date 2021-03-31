@@ -41,7 +41,7 @@ dependencies:
   hive: ^2.0.0
   hive_flutter: ^1.0.0
 
-  flutter_inappwebview: ^5.0.0
+  flutter_inappwebview: ^5.3.0
 
   flutter_webview_plugin: ^0.3.11
 
@@ -63,7 +63,7 @@ dependencies:
 
   intro_slider: ^2.3.3
   pull_to_refresh: ^1.6.3
-  tuple: ^1.0.0
+  tuple: ^2.0.0
 
 dev_dependencies:
   # flutter_test:
