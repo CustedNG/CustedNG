@@ -50,28 +50,23 @@ class _ScheduleArrowState extends State<ScheduleArrow> {
       alignment: Alignment.bottomRight,
       child: SizedBox(
         height: calcTop(),
-        child: Stack(
-          clipBehavior: Clip.antiAlias,
-          children: <Widget>[
-            Positioned(
-              bottom: 0,
-              right: -13,
-              child: _buildArrow(),
-            ),
-          ],
-        ),
+        child: _buildArrow(),
       ),
     );
   }
 
   Widget _buildArrow() {
-    return Icon(Icons.forward,
-        color: Colors.red.withAlpha(200));
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Icon(Icons.forward,
+        color: Colors.red.withAlpha(200)
+      ),
+    );
   }
 
   double calcWidthFactor() {
     const total = 7;
-    final now = DateTime.now().weekday - 1;
+    final now = DateTime.now().weekday - 0.8;
     return now / total;
   }
 
