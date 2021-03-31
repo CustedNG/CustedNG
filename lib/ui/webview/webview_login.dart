@@ -7,7 +7,7 @@ import 'package:custed2/ui/webview/plugin_login.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
 import 'package:custed2/ui/webview/webview2.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class WebviewLogin extends StatefulWidget {
   @override

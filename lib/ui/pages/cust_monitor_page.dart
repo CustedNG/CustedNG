@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:flutter/material.dart';
 
 class CustMonitorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: CupertinoColors.white,
-      child: Center(
-        child: CupertinoActivityIndicator(),
-      ),
+    return Scaffold(
+      appBar: NavBar.material(),
     );
   }
 }

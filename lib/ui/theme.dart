@@ -8,7 +8,7 @@ import 'package:flutter/material.dart' show Colors, Theme;
 final _appTheme = AppTheme();
 
 bool isDark(BuildContext context) {
-  return CupertinoTheme.of(context).brightness == Brightness.dark;
+  return Theme.of(context).brightness == Brightness.dark;
 }
 
 class DarkMode {

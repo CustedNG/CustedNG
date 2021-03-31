@@ -63,7 +63,7 @@ dependencies:
 
   intro_slider: ^2.3.3
   pull_to_refresh: ^1.6.3
-  tuple: ^2.0.0
+  tuple: ^1.0.0
 
 dev_dependencies:
   # flutter_test:

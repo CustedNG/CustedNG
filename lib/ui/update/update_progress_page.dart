@@ -9,8 +9,7 @@ import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Icons;
+import 'package:flutter/material.dart';
 import 'package:install_plugin/install_plugin.dart';
 import 'package:path/path.dart' as path;
 
@@ -33,13 +32,13 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
   @override
   Widget build(BuildContext context) {
     final textStyle = TextStyle(
-      color: CupertinoColors.white,
+      color: Colors.white,
       fontSize: 20,
       height: 1.3,
     );
 
     final image = failed
-        ? Icon(Icons.error_outline, size: 40, color: CupertinoColors.white)
+        ? Icon(Icons.error_outline, size: 40, color: Colors.white)
         : Image(height: 40, width: 40, image: ImageRes.updateIndicator);
 
     final message = failed
@@ -78,15 +77,14 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     final retryText = Text(
       '重试',
       style: TextStyle(
-        color: CupertinoColors.white,
+        color: Colors.white,
         decoration: TextDecoration.underline,
       ),
     );
 
-    return CupertinoButton(
+    return TextButton(
       child: retryText,
       onPressed: doUpdate,
-      padding: EdgeInsets.zero,
     );
   }
 

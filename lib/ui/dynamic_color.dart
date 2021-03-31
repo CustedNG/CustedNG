@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,7 +9,6 @@ class DynamicColor {
   final Color dark;
 
   resolve(BuildContext context) {
-    final isDark = CupertinoTheme.brightnessOf(context) == Brightness.dark;
-    return isDark ? dark : light;
+    return isDark(context) ? dark : light;
   }
 }

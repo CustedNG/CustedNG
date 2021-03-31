@@ -6,7 +6,6 @@ import 'package:custed2/ui/webview/webview2_impl_android.dart';
 import 'package:custed2/ui/webview/webview2_impl_general.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';

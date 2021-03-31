@@ -1,5 +1,4 @@
 import 'package:custed2/ui/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class KvTable extends StatelessWidget {

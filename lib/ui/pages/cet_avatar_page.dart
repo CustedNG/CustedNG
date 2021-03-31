@@ -5,7 +5,6 @@ import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,11 +56,24 @@ class CetAvatarPage extends StatelessWidget {
           ),
         ),
         SizedBox(height: 40),
-        CupertinoButton.filled(
+        TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+                if (states.contains(MaterialState.pressed)) {
+                  return Colors.blue;
+                }
+                return Colors.blueAccent;
+              },
+            ),
+            padding: MaterialStateProperty.resolveWith(
+              (states) => EdgeInsets.all(10)
+            )
+          ),
           onPressed: () => saveImageToGallery(context, cetAvatar.avatar),
           child: Text(
             '保存到相册',
-            style: TextStyle(color: CupertinoColors.white),
+            style: TextStyle(color: Colors.white),
           ),
         )
       ],
