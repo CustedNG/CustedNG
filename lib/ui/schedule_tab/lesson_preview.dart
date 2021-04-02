@@ -7,6 +7,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/lesson_detail_page.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/maps.dart';
@@ -200,23 +201,23 @@ class LessonPreview extends StatelessWidget {
       child: Text('编辑自定义'),
       onPressed: () async {
         Navigator.of(context).pop();
-        showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                actions: List<Widget>.of(
-                    customLessons.map((selectedLesson) => TextButton(
-                          child: Text(selectedLesson.displayName),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            AppRoute(
-                              title: '编辑课程',
-                              page: AddLessonPage.editLesson(selectedLesson),
-                            ).go(context);
-                            locator<ScheduleProvider>().loadLocalData();
-                          },
-                        )
-                    )
+        showRoundDialog(
+            context,
+            '选择',
+            null,
+            List<Widget>.of(
+              customLessons.map((selectedLesson) => TextButton(
+                  child: Text(selectedLesson.displayName),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    AppRoute(
+                      title: '编辑课程',
+                      page: AddLessonPage.editLesson(selectedLesson),
+                    ).go(context);
+                    locator<ScheduleProvider>().loadLocalData();
+                  },
                 )
+              )
             )
         );
         locator<ScheduleProvider>().loadLocalData();

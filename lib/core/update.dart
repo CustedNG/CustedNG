@@ -7,6 +7,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/update/update_notice_page.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -80,33 +81,29 @@ Future<void> doTestFlightUpdate(
   final shouldShowDialog = force || isCurrentVersionTooOld;
 
   if (shouldShowDialog) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(update.title),
-          content: Text(update.content),
-          actions: [
-            TextButton(
-              child: Text('取消'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('前往TF更新'),
-              onPressed: () async {
-                for (var url in update.urls) {
-                  if (await openUrl(url)) {
-                    break;
-                  }
-                }
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
+    showRoundDialog(
+      context,
+      update.title,
+      Text(update.content),
+      [
+        TextButton(
+          child: Text('取消'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: Text('前往更新'),
+          onPressed: () async {
+            for (var url in update.urls) {
+              if (await openUrl(url)) {
+                break;
+              }
+            }
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
     );
   }
 }
