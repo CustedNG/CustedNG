@@ -28,7 +28,7 @@ class WebviewBrowser extends StatelessWidget {
 
     return Webview2(
       url: url,
-      onCreated: isCustUrl ? onCreated : null,
+      onCreated: onCreated,
       invalidUrlRegex: 'custed-target=blank',
       onLoadAborted: (controller, url) {
         if (url.contains('custed-target=blank')) {
