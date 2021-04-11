@@ -19,20 +19,18 @@ class NavTab extends StatefulWidget {
 
 class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   InAppWebViewController controller;
-  bool finishLoad = false;
 
   @override
   void didChangeDependencies() {
     setState(() => syncDarkMode());
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
-    final url = Theme.of(context).brightness == Brightness.dark
-        ? custccDark
-        : custcc;
+    final url = isDark(context) ? custccDark : custcc;
 
     return Scaffold(
       appBar: NavBar.material(
@@ -64,7 +62,6 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
       },
       onLoadStop: (controller, url) {
         syncDarkMode();
-        finishLoad = true;
       },
       shouldOverrideUrlLoading: (controller, request) async {
         print('open ${request.request.url}');
@@ -99,8 +96,8 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   Widget _showMenu(BuildContext context) {
     return PopupMenuButton<String>(
         itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-              this.SelectView(Icons.refresh, '刷新此网页', 'A'),
-              this.SelectView(Icons.open_in_browser, '浏览器打开', 'B'),
+              SelectView(Icons.refresh, '刷新此网页', 'A'),
+              SelectView(Icons.open_in_browser, '浏览器打开', 'B'),
             ],
         onSelected: (String action) {
           switch (action) {

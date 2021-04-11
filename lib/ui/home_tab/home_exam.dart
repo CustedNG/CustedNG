@@ -79,11 +79,12 @@ class _HomeExamState extends State<HomeExam> {
         GestureDetector(
           onTap: () => examPage.go(context),
           child: Hero(
-              tag: 'ExamCard${exam.failed ? 0 : 6 - exam.getRemainExam()}',
+              tag: 'ExamCard${exam.failed ? 0 : 
+                    exam.data.total - exam.getRemainExam()}',
               transitionOnUserGestures: true,
               child: HomeCard(
                 title: _buildTitle(context, time),
-                trailing: _buildArrow(),
+                trailing: true,
                 content: Text(notice),
               )
           ),
@@ -97,12 +98,5 @@ class _HomeExamState extends State<HomeExam> {
     final style = TextStyle(color: Color(0xFF889CC3));
     final title = '下场考试 $examTime';
     return Text(title, style: style);
-  }
-
-  Widget _buildArrow() {
-    return Icon(
-      Icons.keyboard_arrow_right,
-      color: Theme.of(context).iconTheme.color.withAlpha(100),
-    );
   }
 }

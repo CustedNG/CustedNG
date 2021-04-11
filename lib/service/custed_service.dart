@@ -83,4 +83,14 @@ class CustedService extends CatClient {
     if (file == null) return null;
     return file.url.startsWith('/') ? '$baseUrl${file.url}' : file.url;
   }
+
+  Future<Map> getChangeLog() async {
+    final resp = await get('$ccUrl/webview/changeLog.json');
+    final log = <String, String>{};
+    final logs = json.decode(resp.body);
+    logs.forEach((element) {
+      log[element['ver']] = element['log'];
+    });
+    return log;
+  }
 }

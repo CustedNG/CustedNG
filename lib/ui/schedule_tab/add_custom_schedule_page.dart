@@ -148,6 +148,7 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
 
   void _showBadNotice(
       {String title = '不能添加此项目', String reason = "未知原因"}) async {
+    if (mounted) setState(() {});
     showRoundDialog(
       context,
       title,

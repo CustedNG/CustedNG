@@ -19,7 +19,7 @@ class HomeSchedule extends StatelessWidget {
           child: HomeCard(
             title: Text('你还没有登录', style: TextStyle(color: Colors.redAccent)),
             content: Text('点击登录'),
-            trailing: Icon(Icons.keyboard_arrow_right),
+            trailing: true,
           ),
           onTap: () => Scaffold.of(context).openDrawer(),
       );
@@ -36,7 +36,7 @@ class HomeSchedule extends StatelessWidget {
       child: HomeCard(
         title: _buildTitle(context, lesson),
         content: _buildContent(context),
-        trailing: Icon(Icons.keyboard_arrow_right, color: Colors.black87),
+        trailing: true,
       ),
     );
   }

@@ -33,10 +33,27 @@ void showRoundDialog(BuildContext context, String title, Widget child,
   );
 }
 
-extension UriX on String {
+extension StringX on String {
   Uri get uri => Uri.parse(this);
 
   URLRequest get uq => URLRequest(url: this.uri);
+
+  bool operator < (Object x) {
+    final s = num.parse(this);
+    return x is String ? s < num.parse(x) : s < x;
+  }
+  bool operator > (Object x) {
+    final s = num.parse(this);
+    return x is String ? s > num.parse(x) : s > x;
+  }
+  bool operator <= (Object x) {
+    final s = num.parse(this);
+    return x is String ? s <= num.parse(x) : s <= x;
+  }
+  bool operator >= (Object x) {
+    final s = num.parse(this);
+    return x is String ? s >= num.parse(x) : s >= x;
+  }
 }
 
 

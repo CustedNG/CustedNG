@@ -14,11 +14,6 @@ import 'package:flutter/material.dart';
 updateCheck(BuildContext context, {bool force = false}) async {
   print('Checking for updates...');
 
-  // if (BuildMode.isDebug) {
-  //   print('Now in debug mode, skip checking updates.');
-  //   return;
-  // }
-
   if (Platform.isAndroid) {
     doAndroidUpdate(context, force: force);
     return;

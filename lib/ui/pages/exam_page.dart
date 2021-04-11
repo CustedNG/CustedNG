@@ -74,9 +74,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       content = ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          SizedBox(height: 20),
-          Text('提示: 点击考试卡片可将考试添加到课表'),
-          SizedBox(height: 15),
+          SizedBox(height: 37),
           ...list,
           SizedBox(height: 20),
         ],

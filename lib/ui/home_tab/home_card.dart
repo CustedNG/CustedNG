@@ -6,14 +6,14 @@ class HomeCard extends StatelessWidget {
   HomeCard({
     this.title,
     this.content,
-    this.trailing,
+    this.trailing = false,
     this.padding = 15,
     this.borderRadius = 7
   });
 
   final Widget title;
   final Widget content;
-  final Widget trailing;
+  final bool trailing;
   final double padding;
   final double borderRadius;
 
@@ -31,8 +31,8 @@ class HomeCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Flexible(child: _buildContent(context)),
-            if (trailing != null) trailing,
-            if (trailing != null) SizedBox(width: 7),
+            if (trailing) Icon(Icons.keyboard_arrow_right),
+            if (trailing) SizedBox(width: 7),
           ],
         )
     );
