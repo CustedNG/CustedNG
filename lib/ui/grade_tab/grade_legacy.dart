@@ -110,8 +110,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       ),
     );
 
-    print('selected grade $selected');
-
     controller.animateToPage(
       selected,
       duration: Duration(milliseconds: 500),
@@ -327,11 +325,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       mainAxisSize: MainAxisSize.min,
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Row(
-          children: <Widget>[
-            Text(value, style: textStyleInfo.copyWith(fontSize: 12)),
-          ],
-        ),
+        Text(value, style: textStyleInfo.copyWith(fontSize: 12)),
         SizedBox(height: 3),
         Text(tag, style: textStyleTag.copyWith(fontSize: 10)),
       ],
@@ -502,10 +496,7 @@ class __ReportItemState extends State<_ReportItem>
           widget.exam.lessonName,
           style: nameTextTheme,
         ),
-        Text(
-          widget.exam.rawMark,
-          style: gradeTextStyle,
-        ),
+        _buildScore(widget.exam.rawMark),
       ],
     );
     final item = AnimatedContainer(
@@ -526,6 +517,26 @@ class __ReportItemState extends State<_ReportItem>
     return GestureDetector(
       child: item,
       onTap: toggleExpansion,
+    );
+  }
+
+  Color _generateCardColor(bool pass) {
+    return pass ? null : Colors.red;
+  }
+
+  Widget _buildScore(String score) {
+    bool pass = score > 59;
+    pass ??= true;
+    return Container(
+      child: Text(
+        score,
+        style: TextStyle(color: pass ? Colors.green : Colors.white),
+      ),
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        color: _generateCardColor(pass),
+        borderRadius: BorderRadius.all(Radius.circular(40)),
+      ),
     );
   }
 

@@ -39,19 +39,23 @@ extension StringX on String {
   URLRequest get uq => URLRequest(url: this.uri);
 
   bool operator < (Object x) {
-    final s = num.parse(this);
+    final s = num.tryParse(this);
+    if (s == null) return null;
     return x is String ? s < num.parse(x) : s < x;
   }
   bool operator > (Object x) {
-    final s = num.parse(this);
+    final s = num.tryParse(this);
+    if (s == null) return null;
     return x is String ? s > num.parse(x) : s > x;
   }
   bool operator <= (Object x) {
-    final s = num.parse(this);
+    final s = num.tryParse(this);
+    if (s == null) return null;
     return x is String ? s <= num.parse(x) : s <= x;
   }
   bool operator >= (Object x) {
-    final s = num.parse(this);
+    final s = num.tryParse(this);
+    if (s == null) return null;
     return x is String ? s >= num.parse(x) : s >= x;
   }
 }
