@@ -31,10 +31,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
   }
 
   Widget _buildUserTab(BuildContext context) {
-    final theme = AppTheme.of(context);
-
     return Scaffold(
-        backgroundColor: theme.backgroundColor,
         appBar: NavBar.material(
           context: context,
           leading: Container(),

@@ -20,7 +20,6 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
     return SafeArea(
       bottom: false,
       child: Container(
@@ -53,7 +52,6 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
                 children: <Widget>[
                   Flexible(
                     child: CupertinoPicker(
-                      backgroundColor: theme.backgroundColor,
                       scrollController:
                           FixedExtentScrollController(initialItem: weekDay - 1),
                       itemExtent: 30.0,
@@ -73,7 +71,6 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
                   ),
                   Flexible(
                     child: CupertinoPicker(
-                      backgroundColor: theme.backgroundColor,
                       scrollController:
                           FixedExtentScrollController(initialItem: lesson ~/ 2),
                       itemExtent: 30.0,

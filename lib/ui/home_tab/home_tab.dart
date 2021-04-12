@@ -8,7 +8,6 @@ import 'package:custed2/ui/home_tab/home_exam.dart';
 import 'package:custed2/ui/home_tab/home_notice.dart';
 import 'package:custed2/ui/home_tab/home_schedule.dart';
 import 'package:custed2/ui/home_tab/home_weather.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,6 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
   Widget build(BuildContext context) {
     super.build(context);
     final user = Provider.of<UserProvider>(context);
-    final theme = AppTheme.of(context);
 
     if (user.isBusy) {
       return PlaceholderWidget(isActive: true);
@@ -36,7 +34,6 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
         myTheme: Theme.of(context),
         user: user,
       ),
-      backgroundColor: theme.backgroundColor,
       appBar: NavBar.material(
         context: context,
         leading: Builder(builder: (context) => IconButton(

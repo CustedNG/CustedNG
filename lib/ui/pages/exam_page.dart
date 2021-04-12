@@ -5,7 +5,6 @@ import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
@@ -87,7 +86,6 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     }
 
     return Scaffold(
-      backgroundColor: AppTheme.of(context).backgroundColor,
       body: Padding(
         padding: EdgeInsets.only(left: 27, right: 27),
         child: content,

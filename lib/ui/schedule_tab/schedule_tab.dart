@@ -11,7 +11,6 @@ import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/schedule_table.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_navigator.dart';
 import 'package:custed2/ui/schedule_tab/select_schedule_page.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
@@ -65,10 +64,8 @@ class _ScheduleTabState extends State<ScheduleTab>
   Widget build(BuildContext context) {
     super.build(context);
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
-    final theme = AppTheme.of(context);
 
     return Scaffold(
-      backgroundColor: theme.backgroundColor,
       appBar: NavBar.material(
           context: context,
           needPadding: true,
@@ -210,7 +207,6 @@ class _ScheduleTabState extends State<ScheduleTab>
     }
 
     final setting = locator<SettingStore>();
-    final theme = AppTheme.of(context);
 
     return GestureDetector(
       onHorizontalDragEnd: (DragEndDetails details) {
@@ -222,7 +218,6 @@ class _ScheduleTabState extends State<ScheduleTab>
         }
       },
       child: Container(
-        color: theme.backgroundColor,
         child: ScheduleTable(
           scheduleProvider.schedule,
           week: scheduleProvider.selectedWeek,

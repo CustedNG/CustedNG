@@ -30,11 +30,8 @@ class AppTheme {
   // 根据当前context的亮度，返回应用主题数据
   static AppThemeResolved resolve(Brightness brightness) {
     return AppThemeResolved()
-      ..backgroundColor = s(brightness, _appTheme.backgroundColor)
       ..scheduleOutlineColor = s(brightness, _appTheme.scheduleOutlineColor)
       ..scheduleTextColor = s(brightness, _appTheme.scheduleTextColor)
-      ..cardBackgroundColor = s(brightness, _appTheme.cardBackgroundColor)
-      ..cardTextColor = s(brightness, _appTheme.cardTextColor)
       ..textFieldBackgroundColor =
           s(brightness, _appTheme.textFieldBackgroundColor)
       ..textFieldBorderColor = s(brightness, _appTheme.textFieldBorderColor)
@@ -46,19 +43,14 @@ class AppTheme {
     return brightness == Brightness.dark ? color.dark : color.light;
   }
 
-  final backgroundColor = DynamicColor(
-    Colors.white,
-    Color.fromRGBO(23, 23, 23, 1),
-  );
-
   final lightTextColor = DynamicColor(
     Color(0xFF8A8A8A),
     Color(0xFF8A8A8A),
   );
 
   final scheduleOutlineColor = DynamicColor(
-    Color(0xFFE7ECEb),
-    Colors.grey[850],
+    Colors.grey[200],
+    Colors.grey[800]
   );
 
   final scheduleButtonColor = DynamicColor(
@@ -74,16 +66,6 @@ class AppTheme {
   final scheduleTextColor = DynamicColor(
     Color(0xFF898C91),
     Color(0xFF898C91),
-  );
-
-  final cardBackgroundColor = DynamicColor(
-    Colors.white,
-    Colors.grey[850],
-  );
-
-  final cardTextColor = DynamicColor(
-    Colors.black,
-    Colors.white70,
   );
 
   final textFieldBackgroundColor = DynamicColor(
@@ -103,11 +85,8 @@ class AppTheme {
 }
 
 class AppThemeResolved {
-  Color backgroundColor;
   Color scheduleOutlineColor;
   Color scheduleTextColor;
-  Color cardBackgroundColor;
-  Color cardTextColor;
   Color textFieldBackgroundColor;
   Color textFieldBorderColor;
   Color textFieldListBackgroundColor;

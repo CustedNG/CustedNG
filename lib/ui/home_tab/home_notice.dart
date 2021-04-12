@@ -82,9 +82,9 @@ class HomeNotice extends StatelessWidget {
     num newest = 0;
     changeLog.keys.forEach((ele) {if (ele > newest) newest = num.parse(ele);});
     if (newest > BuildData.build) {
-      return '最新版本：$newest，查看更新日志';
+      return '最新版本：$newest，点击查看更新日志';
     }
-    return null;
+    return '已是最新版本，点击查看更新日志';
   }
 
   Widget _buildCloseButton(context) {

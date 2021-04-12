@@ -41,7 +41,7 @@ class ScheduleTable extends StatelessWidget {
     }
 
     final rawTable = Table(
-      border: TableBorder.all(color: theme.scheduleOutlineColor, width: 2),
+      border: TableBorder.all(color: theme.scheduleOutlineColor, width: 1),
       children: rows,
     );
 

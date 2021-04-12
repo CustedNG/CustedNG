@@ -124,8 +124,6 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
       initialItem: selected - 1,
     );
 
-    final theme = AppTheme.of(context);
-
     return SafeArea(
       child: Column(
         children: <Widget>[
@@ -142,7 +140,6 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
               scrollController: scrollController,
               onSelectedItemChanged: (n) => week = n + 1,
               children: items,
-              backgroundColor: theme.backgroundColor,
               itemExtent: 32.0,
             ),
           )

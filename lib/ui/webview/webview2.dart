@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_impl_android.dart';
 import 'package:custed2/ui/webview/webview2_impl_general.dart';
@@ -56,7 +55,6 @@ abstract class Webview2State extends State<Webview2> {
 
   Widget buildLoadingWidget() {
     return Container(
-      color: AppTheme.of(context).backgroundColor,
       child: Center(
         child: CircularProgressIndicator()
       ),

@@ -24,8 +24,6 @@ class GradePicker extends StatelessWidget {
     final scrollController =
         FixedExtentScrollController(initialItem: currentIndex);
 
-    final theme = AppTheme.of(context);
-
     return Column(
       children: <Widget>[
         Flexible(
@@ -39,7 +37,6 @@ class GradePicker extends StatelessWidget {
             scrollController: scrollController,
             onSelectedItemChanged: (_) {},
             children: items,
-            backgroundColor: theme.backgroundColor,
             itemExtent: 40.0,
           ),
         )
