@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +16,6 @@ class ScheduleWeekNavigator extends StatefulWidget {
 }
 
 class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
-  int week;
-
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
@@ -84,33 +83,17 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
       return;
     }
 
-    week = scheduleProvider.selectedWeek;
-    await showDialog(
-      context: context,
-      builder: (context) => buildPicker(
-        context,
-        scheduleProvider.currentWeek,
-        week,
-        scheduleProvider.maxWeek,
-      ),
-    );
-
-    print('Week: $week');
-
-    scheduleProvider.selectWeek(week);
-  }
-
-  Widget buildPicker(context, currentWeek, selectedWeek, maxWeek) {
-    // int selected = selectedWeek;
     final TextStyle textStyle = TextStyle(
         fontSize: 22.0,
         color: isDark(context) ? Colors.white : Colors.black
     );
-    var selected = selectedWeek.clamp(1, maxWeek);
+    var selected = 
+      scheduleProvider.selectedWeek.clamp(1, scheduleProvider.maxWeek);
 
-    final items = List<Widget>.generate(maxWeek, (i) {
+    final items = List<Widget>.generate(scheduleProvider.maxWeek, (i) {
       final String text =
-          i + 1 == currentWeek ? '第${i + 1}周 - 当前周' : '第${i + 1}周';
+          i + 1 == scheduleProvider.currentWeek 
+          ? '第${i + 1}周 - 当前周' : '第${i + 1}周';
 
       return Center(
         child: Text(
@@ -124,27 +107,20 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
       initialItem: selected - 1,
     );
 
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          Flexible(
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context, selected);
-              },
-            ),
-          ),
-          Container(
-            height: 216.0,
-            child: CupertinoPicker(
-              scrollController: scrollController,
-              onSelectedItemChanged: (n) => week = n + 1,
-              children: items,
-              itemExtent: 32.0,
-            ),
-          )
-        ],
-      )
+    await showRoundDialog(
+      context,
+      '选择周数',
+      Container(
+        height: 216.0,
+        child: CupertinoPicker(
+          scrollController: scrollController,
+          onSelectedItemChanged: (n) => setState(() {
+            scheduleProvider.selectWeek(n + 1);
+          }),
+          children: items,
+          itemExtent: 32.0,
+        ),
+      ),[]
     );
   }
 }

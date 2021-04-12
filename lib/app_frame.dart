@@ -60,14 +60,14 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   static const List<NavigationItem> items = [
     NavigationItem(Icon(Icons.leaderboard, size: 29), Text('成绩')),
     NavigationItem(Icon(Icons.calendar_today, size: 27), Text('课表')),
-    NavigationItem(Icon(Icons.home, size: 30), Text('主页')),
+    NavigationItem(Icon(Icons.home, size: 31), Text('主页')),
     NavigationItem(Icon(Icons.navigation, size: 29), Text('导航')),
     NavigationItem(Icon(Icons.settings, size: 29), Text('设置'))
   ];
 
   Widget _buildItem(NavigationItem item, bool isSelected) {
     bool isDarkMode = isDark(context);
-    final width = _width / 5;
+    final width = _width / 6;
     return AnimatedContainer(
       duration: Duration(milliseconds: 377),
       curve: Curves.fastOutSlowIn,

@@ -1,4 +1,3 @@
-import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
 
 class AddLessonWeeksPicker extends StatefulWidget {
@@ -71,11 +70,10 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
       childAspectRatio: 2,
     );
     final allWeekSelected = data.values.every((week) => week == true);
-    final theme = AppTheme.of(context);
     return SafeArea(
       bottom: false,
       child: Container(
-        color: theme.textFieldListBackgroundColor,
+        color: Colors.white24,
         height: (MediaQuery.of(context).size.width - 4.0 * 6) / 5 / 2 * 5 +
             4.0 * 6 +
             60.0 +

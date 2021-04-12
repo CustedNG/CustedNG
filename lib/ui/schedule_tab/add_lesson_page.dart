@@ -106,7 +106,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
                   _addLesson();
                 },
                 child: Text('提交', style: TextStyle(
-                  color: isDark(context) ? Colors.white : Colors.black
+                  color: Colors.white
                 ))
             )
           ]

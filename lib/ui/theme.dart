@@ -34,9 +34,7 @@ class AppTheme {
       ..scheduleTextColor = s(brightness, _appTheme.scheduleTextColor)
       ..textFieldBackgroundColor =
           s(brightness, _appTheme.textFieldBackgroundColor)
-      ..textFieldBorderColor = s(brightness, _appTheme.textFieldBorderColor)
-      ..textFieldListBackgroundColor =
-          s(brightness, _appTheme.textFieldListBackgroundColor);
+      ..textFieldBorderColor = s(brightness, _appTheme.textFieldBorderColor);
   }
 
   static Color s(Brightness brightness, DynamicColor color) {
@@ -89,5 +87,4 @@ class AppThemeResolved {
   Color scheduleTextColor;
   Color textFieldBackgroundColor;
   Color textFieldBorderColor;
-  Color textFieldListBackgroundColor;
 }

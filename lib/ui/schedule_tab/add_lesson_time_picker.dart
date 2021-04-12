@@ -23,6 +23,7 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
     return SafeArea(
       bottom: false,
       child: Container(
+        color: Colors.white24,
         height: 260.0,
         child: Column(
           children: <Widget>[
