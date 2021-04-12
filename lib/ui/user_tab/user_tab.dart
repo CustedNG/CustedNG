@@ -133,7 +133,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
             return DarkModeFilter(
               child: Switch(
                   value: value, onChanged: (value) {
-                    func();
+                    if (func != null) func();
                     return prop.put(value);
                   }
               ),

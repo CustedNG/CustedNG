@@ -67,7 +67,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   Widget _buildItem(NavigationItem item, bool isSelected) {
     bool isDarkMode = isDark(context);
-    final width = _width / 6;
+    final width = _width / 5;
     return AnimatedContainer(
       duration: Duration(milliseconds: 377),
       curve: Curves.fastOutSlowIn,
