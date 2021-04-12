@@ -19,6 +19,7 @@ class NavTab extends StatefulWidget {
 
 class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   InAppWebViewController controller;
+  Future _future;
 
   @override
   void didChangeDependencies() {
@@ -27,10 +28,14 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _future = _buildFuture();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
-
-    final url = isDark(context) ? custccDark : custcc;
 
     return Scaffold(
       appBar: NavBar.material(
@@ -42,11 +47,35 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
         middle: NavbarMiddle(textAbove: '资源导航', textBelow: 'cust.cc'),
         trailing: [_showMenu(context)],
       ),
-      body: buildBrowser(url),
+      body: FutureBuilder(
+        builder: _buildBuilder,
+        future: _future,
+      ),
     );
   }
 
-  Widget buildBrowser(String url) {
+  Future _buildFuture() async {
+    return Future.delayed(Duration(milliseconds: 377));
+  }
+
+  Widget _buildBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    final url = isDark(context) ? custccDark : custcc;
+
+    switch (snapshot.connectionState) {
+      case ConnectionState.done:
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        return _buildBrowser(url);
+      case ConnectionState.none:
+      case ConnectionState.active:
+      case ConnectionState.waiting:
+      default:
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+    }
+  }
+
+  Widget _buildBrowser(String url) {
     return InAppWebView(
       initialOptions: InAppWebViewGroupOptions(
         crossPlatform: InAppWebViewOptions(
