@@ -1,6 +1,5 @@
 import 'package:custed2/core/route.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
@@ -10,7 +9,6 @@ class IssuePage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppTheme.of(context).backgroundColor,
       appBar: NavBar.material(
         context: context,
         middle: NavbarText('反馈👉'),

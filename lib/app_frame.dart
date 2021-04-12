@@ -1,7 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/update.dart';
-import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
@@ -117,17 +116,14 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   @override
   void afterFirstLayout(BuildContext context) {
-    if (BuildMode.isDebug) {
-      print('Debug mode detected, create interface by default.');
-    }
-
     updateCheck(context);
     _showNewVersionDialog();
   }
 
   void _showNewVersionDialog() {
+    final user = locator<UserDataStore>();
     Future.delayed(Duration(seconds: 1), (){
-      if(!locator<UserDataStore>().haveInit.fetch()){
+      if(!user.haveInit.fetch()){
         showRoundDialog(
             context,
             '提示',
@@ -151,7 +147,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
               )
             ]
         );
-        locator<UserDataStore>().haveInit.put(true);
+        user.haveInit.put(true);
       }
     });
   }

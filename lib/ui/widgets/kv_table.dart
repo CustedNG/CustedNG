@@ -1,4 +1,3 @@
-import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
 
 class KvTable extends StatelessWidget {
@@ -8,14 +7,11 @@ class KvTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = isDark(context);
     final keyFont = TextStyle(
-        fontWeight: FontWeight.bold,
-        color: isDarkMode ? Colors.white : Colors.black);
+        fontWeight: FontWeight.bold);
 
     final valueFont = TextStyle(
-        fontWeight: FontWeight.normal,
-        color: isDarkMode ? Colors.white : Colors.black);
+        fontWeight: FontWeight.normal);
 
     final lines = <Widget>[];
 

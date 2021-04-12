@@ -2,13 +2,14 @@ import 'package:custed2/config/routes.dart';
 import 'package:custed2/constants.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:flutter/material.dart';
 
 class HomeDrawer extends StatelessWidget{
   final version;
   final myTheme;
-  final user;
+  final UserProvider user;
 
   const HomeDrawer({
     Key key, this.version, this.myTheme, this.user
@@ -45,6 +46,11 @@ class HomeDrawer extends StatelessWidget{
             netdiskPage.go(context);
           },
         ) : Container(),
+        ListTile(
+          leading: Icon(Icons.info),
+          title: Text('版本信息'),
+          onTap: () => aboutPage.go(context),
+        ),
         AboutListTile(
           icon: Icon(Icons.text_snippet),
           child: Text('开源证书'),
@@ -69,7 +75,7 @@ class HomeDrawer extends StatelessWidget{
         isLoggedIn ? ListTile(
           leading: Icon(Icons.login),
           title: Text('重新登录'),
-          onTap: () => _login(context),
+          onTap: () => loginPage.go(context),
         ) : ListTile(
           leading: Icon(Icons.web),
           title: Text('统一登录'),
@@ -78,7 +84,7 @@ class HomeDrawer extends StatelessWidget{
         isLoggedIn ? ListTile(
           leading: Icon(Icons.logout),
           title: Text('退出登录'),
-          onTap: () => _logout(context),
+          onTap: () async => await user.logout(),
         ) : ListTile(
           leading: Icon(Icons.input),
           title: Text('传统登录'),
@@ -103,14 +109,5 @@ class HomeDrawer extends StatelessWidget{
             ]
         )
     );
-  }
-
-
-  void _login(BuildContext context) {
-    loginPage.go(context);
-  }
-
-  void _logout(BuildContext context) {
-    user.logout();
   }
 }

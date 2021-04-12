@@ -1,5 +1,5 @@
 import 'package:custed2/data/providers/debug_provider.dart';
-import 'package:custed2/ui/widgets/back_icon.dart';
+import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,12 +25,10 @@ class _DebugPageState extends State<DebugPage> {
     final content =
         permitted ? _buildTerminal(context) : _buildLockScreen(context);
 
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-          backgroundColor: CupertinoColors.black,
-          leading: BackIcon(),
+    return Scaffold(
+      appBar: NavBar.material(
           middle: NavbarText('Terminal')),
-      child: content,
+      body: content,
     );
   }
 
@@ -81,32 +79,22 @@ class _DebugPageState extends State<DebugPage> {
   }
 
   Widget _buildTerminal(BuildContext context) {
-    return SafeArea(
-      child: _buildTerminalText(context),
-    );
-  }
-
-  Widget _buildTerminalText(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      color: CupertinoColors.black,
+      color: Colors.black,
       child: DefaultTextStyle(
         style: TextStyle(
           fontFamily: 'monospace',
-          color: CupertinoColors.white,
+          color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
-        child: SafeArea(
-          child: SizedBox.expand(
-            child: SingleChildScrollView(
+        child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: debug.widgets,
               ),
             ),
-          ),
-        ),
       ),
     );
   }

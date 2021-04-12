@@ -1,4 +1,3 @@
-import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
 
 class NavbarText extends StatelessWidget {
@@ -8,12 +7,9 @@ class NavbarText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
-
     final baseFont = TextStyle(
       fontSize: 16.0,
       fontWeight: FontWeight.bold,
-      color: theme.navBarActionsColor,
     );
 
     return Text(

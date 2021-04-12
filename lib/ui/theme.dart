@@ -1,4 +1,4 @@
-import 'package:custed2/core/util/build_mode.dart';
+import 'package:custed2/ui/dynamic_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Colors, Theme;
 
@@ -24,23 +24,13 @@ class AppTheme {
 
   // 根据当前context的亮度，返回应用主题数据
   static AppThemeResolved of(BuildContext context) {
-    if (BuildMode.isDebug) {
-      return resolve(Theme.of(context).brightness);
-    }
-
     return isDark(context) ? dark : bright;
   }
 
   // 根据当前context的亮度，返回应用主题数据
   static AppThemeResolved resolve(Brightness brightness) {
     return AppThemeResolved()
-      ..primaryColor = s(brightness, _appTheme.primaryColor)
-      ..secondaryHeaderColor = s(brightness, _appTheme.secondaryHeaderColor)
       ..backgroundColor = s(brightness, _appTheme.backgroundColor)
-      ..btnPrimaryColor = s(brightness, _appTheme.btnPrimaryColor)
-      ..navBarColor = s(brightness, _appTheme.navBarColor)
-      ..navBarColorAlternative = s(brightness, _appTheme.navBarColorAlternative)
-      ..navBarActionsColor = s(brightness, _appTheme.navBarActionsColor)
       ..webviewNavBarColor = s(brightness, _appTheme.webviewNavBarColor)
       ..textColor = s(brightness, _appTheme.textColor)
       ..textColorInversed = s(brightness, _appTheme.textColorInversed)
@@ -62,129 +52,93 @@ class AppTheme {
           s(brightness, _appTheme.textFieldListBackgroundColor);
   }
 
-  static Color s(Brightness brightness, CupertinoDynamicColor color) {
-    return brightness == Brightness.dark ? color.darkColor : color.color;
+  static Color s(Brightness brightness, DynamicColor color) {
+    return brightness == Brightness.dark ? color.dark : color.light;
   }
 
-  final primaryColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.activeBlue,
-    darkColor: CupertinoColors.activeBlue,
+  final backgroundColor = DynamicColor(
+    CupertinoColors.white,
+    CupertinoColors.darkBackgroundGray,
   );
 
-  final secondaryHeaderColor = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF3D93F8),
-    darkColor: Color(0xFF264f70),
+  final webviewNavBarColor = DynamicColor(
+    Color(0xFF153E50),
+    Color(0xFF153E50),
   );
 
-  final backgroundColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.white,
-    darkColor: CupertinoColors.darkBackgroundGray,
+  final textColor = DynamicColor(
+    CupertinoColors.black,
+    CupertinoColors.white,
   );
 
-  final btnPrimaryColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.activeBlue,
-    darkColor: CupertinoColors.activeBlue,
+  final textColorInversed = DynamicColor(
+    CupertinoColors.white,
+    CupertinoColors.black,
   );
 
-  final navBarColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.activeBlue,
-    darkColor: Color(0xFF113f67),
+  final lightTextColor = DynamicColor(
+    Color(0xFF8A8A8A),
+    Color(0xFF8A8A8A),
   );
 
-  final navBarColorAlternative = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.darkBackgroundGray,
-    darkColor: CupertinoColors.black,
+  final scheduleOutlineColor = DynamicColor(
+    Color(0xFFE7ECEb),
+    Colors.grey[850],
   );
 
-  final navBarActionsColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.white,
-    darkColor: CupertinoColors.white,
+  final scheduleButtonColor = DynamicColor(
+    Color(0xFFF0EFF3),
+    Color(0xFF2F2F2F),
   );
 
-  final webviewNavBarColor = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF153E50),
-    darkColor: Color(0xFF153E50),
+  final scheduleBackgroundColor = DynamicColor(
+    CupertinoColors.white,
+    CupertinoColors.darkBackgroundGray,
   );
 
-  final textColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.black,
-    darkColor: CupertinoColors.white,
+  final scheduleButtonTextColor = DynamicColor(
+    Color(0xFF83868E),
+    Color(0xFF83868E),
   );
 
-  final textColorInversed = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.white,
-    darkColor: CupertinoColors.black,
+  final scheduleTextColor = DynamicColor(
+    Color(0xFF898C91),
+    Color(0xFF898C91),
   );
 
-  final lightTextColor = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF8A8A8A),
-    darkColor: Color(0xFF8A8A8A),
+  final cardBackgroundColor = DynamicColor(
+    CupertinoColors.white,
+    Colors.grey[850],
   );
 
-  final scheduleOutlineColor = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFE7ECEb),
-    darkColor: Colors.grey[850],
+  final cardTextColor = DynamicColor(
+    CupertinoColors.black,
+    Colors.white70,
   );
 
-  final scheduleButtonColor = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFF0EFF3),
-    darkColor: Color(0xFF2F2F2F),
+  final homeBackgroundColor = DynamicColor(
+    Color(0xFFFEFEFE),
+    CupertinoColors.darkBackgroundGray,
   );
 
-  final scheduleBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.white,
-    darkColor: CupertinoColors.darkBackgroundGray,
+  final textFieldBackgroundColor = DynamicColor(
+    CupertinoColors.white,
+    Colors.transparent,
   );
 
-  final scheduleButtonTextColor = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF83868E),
-    darkColor: Color(0xFF83868E),
+  final textFieldBorderColor = DynamicColor(
+    CupertinoColors.lightBackgroundGray,
+    Colors.grey[850],
   );
 
-  final scheduleTextColor = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFF898C91),
-    darkColor: Color(0xFF898C91),
-  );
-
-  final cardBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.white,
-    darkColor: Colors.grey[850],
-  );
-
-  final cardTextColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.black,
-    darkColor: Colors.white70,
-  );
-
-  final homeBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: Color(0xFFFEFEFE),
-    darkColor: CupertinoColors.darkBackgroundGray,
-  );
-
-  final textFieldBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.white,
-    darkColor: Colors.transparent,
-  );
-
-  final textFieldBorderColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.lightBackgroundGray,
-    darkColor: Colors.grey[850],
-  );
-
-  final textFieldListBackgroundColor = CupertinoDynamicColor.withBrightness(
-    color: CupertinoColors.lightBackgroundGray,
-    darkColor: CupertinoColors.darkBackgroundGray,
+  final textFieldListBackgroundColor = DynamicColor(
+    CupertinoColors.lightBackgroundGray,
+    CupertinoColors.darkBackgroundGray,
   );
 }
 
 class AppThemeResolved {
-  Color primaryColor;
-  Color secondaryHeaderColor;
   Color backgroundColor;
-  Color btnPrimaryColor;
-  Color navBarColor;
-  Color navBarColorAlternative;
-  Color navBarActionsColor;
   Color webviewNavBarColor;
   Color textColor;
   Color textColorInversed;

@@ -67,8 +67,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
           title: '显示非当前周课程',
           titleStyle: settingTextStyle,
           isShowArrow: false,
-          rightBtn:
-          _buildSwitch(context, setting.showInactiveLessons),
+          rightBtn: _buildSwitch(context, setting.showInactiveLessons),
         ),
         SettingItem(
           title: '绩点不计选修',
@@ -128,15 +127,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
     );
   }
 
-  void _onSelection(int index) {
-    if(index == 0) {
-      showSnackBar(context, '自动模式仅在Android 10+或iOS 13+有效');
-    }
-    final setting = locator<SettingStore>();
-    setting.darkMode.put(index);
-  }
-
-  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop) {
+  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop, {Function func}) {
     return Positioned(
         right: 0,
         child: ValueListenableBuilder(
@@ -144,11 +135,23 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
           builder: (context, value, widget) {
             return DarkModeFilter(
               child: Switch(
-                  value: value, onChanged: (value) => prop.put(value)),
+                  value: value, onChanged: (value) {
+                    func();
+                    return prop.put(value);
+                  }
+              ),
             );
           },
         )
     );
+  }
+
+  void _onSelection(int index) {
+    if(index == 0) {
+      showSnackBar(context, '自动模式仅在Android 10+或iOS 13+有效');
+    }
+    final setting = locator<SettingStore>();
+    setting.darkMode.put(index);
   }
 
   @override

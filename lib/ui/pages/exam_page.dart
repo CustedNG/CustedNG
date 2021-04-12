@@ -7,7 +7,6 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
-import 'package:custed2/ui/widgets/back_icon.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +94,6 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       ),
       appBar: NavBar.material(
         context: context,
-        leading: BackIcon(),
         middle: NavbarText('考试安排'),
       ),
     );

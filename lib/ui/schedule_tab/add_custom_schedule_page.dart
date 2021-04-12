@@ -1,13 +1,12 @@
 import 'package:custed2/data/models/custom_schedule_profile.dart';
 import 'package:custed2/data/store/custom_schedule_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 
-import '../../locator.dart';
-import '../utils.dart';
 
 class AddCustomSchedulePage extends StatefulWidget {
   @override
@@ -17,68 +16,54 @@ class AddCustomSchedulePage extends StatefulWidget {
 class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
   final customScheduleStore = locator<CustomScheduleStore>();
 
-  AppThemeResolved theme;
   final _studentNumberTextFieldController = TextEditingController();
   bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    theme = AppTheme.of(context);
     final navBarText = TextStyle(
-      color: theme.navBarActionsColor,
       fontWeight: FontWeight.bold,
     );
 
     // final profile = await user.getProfile();
 
     return Scaffold(
-      backgroundColor: theme.textFieldListBackgroundColor,
       appBar: NavBar.material(
         context: context,
-        leading: TextButton(
-            child: Text('取消', style: navBarText),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
         middle: Text('添加课表', style: navBarText),
       ),
-      body: DefaultTextStyle(
-        style: TextStyle(
-          color: theme.textColor,
-        ),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-              minWidth: double.infinity, minHeight: double.infinity),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                child: TextField(
-                  controller: _studentNumberTextFieldController,
-                  decoration: InputDecoration(
-                    labelText: '学号',
-                    icon: Icon(Icons.person)
-                  ),
+      body: ConstrainedBox(
+        constraints: BoxConstraints(
+            minWidth: double.infinity, minHeight: double.infinity),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: TextField(
+                controller: _studentNumberTextFieldController,
+                decoration: InputDecoration(
+                  labelText: '学号',
+                  icon: Icon(Icons.person)
                 ),
               ),
-              Center(
-                child: TextButton(
-                  child: Text(
-                    _isLoading ? '加载中...' : '完成',
-                    style: TextStyle(
-                        color: _isLoading
-                            ? Colors.grey
-                            : Colors.blue),
-                  ),
-                  onPressed: () async {
-                    if (!_isLoading) _handleInput();
-                    // Navigator.pop(context);
-                  },
+            ),
+            Center(
+              child: TextButton(
+                child: Text(
+                  _isLoading ? '加载中...' : '完成',
+                  style: TextStyle(
+                      color: _isLoading
+                          ? Colors.grey
+                          : (isDark(context) ? Colors.white : Colors.black)),
                 ),
+                onPressed: () async {
+                  if (!_isLoading) _handleInput();
+                  // Navigator.pop(context);
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

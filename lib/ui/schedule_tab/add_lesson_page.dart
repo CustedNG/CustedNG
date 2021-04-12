@@ -7,6 +7,7 @@ import 'package:custed2/ui/schedule_tab/add_lesson_field.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time_picker.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_weeks_picker.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -104,7 +105,9 @@ class _AddLessonPageState extends State<AddLessonPage> {
                   }
                   _addLesson();
                 },
-                child: Text('提交')
+                child: Text('提交', style: TextStyle(
+                  color: isDark(context) ? Colors.white : Colors.black
+                ))
             )
           ]
       ),

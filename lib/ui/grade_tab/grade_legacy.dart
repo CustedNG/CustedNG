@@ -69,6 +69,8 @@ final textStyleRankingBoxContext = TextStyle(
   fontSize: 13,
 );
 
+final setting = locator<SettingStore>();
+
 class GradeReportLegacy extends StatefulWidget {
   @override
   _GradeReportLegacyState createState() => _GradeReportLegacyState();
@@ -210,7 +212,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   }
 
   static String gradePoint(int level, GradeTerm term) {
-    final setting = locator<SettingStore>();
     final dontCountElective = setting.dontCountElectiveCourseGrade.fetch();
 
     final gp = dontCountElective
@@ -227,6 +228,10 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     }
 
     return 'N/A';
+  }
+
+  void refresh() {
+    setState(() {});
   }
 
   Widget _buildFullData(BuildContext context, int level, GradeTerm term) {

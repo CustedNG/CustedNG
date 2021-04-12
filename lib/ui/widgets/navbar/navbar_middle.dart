@@ -1,4 +1,3 @@
-import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
 
 class NavbarMiddle extends StatelessWidget {
@@ -14,11 +13,9 @@ class NavbarMiddle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
-
     final baseFont = TextStyle(
       fontSize: 12,
-      color: colorOverride ?? theme.navBarActionsColor,
+      color: colorOverride,
     );
 
     final content = Column(

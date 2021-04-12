@@ -12,7 +12,7 @@ class SchoolCalendarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NavBar.material(
-        middle: Text('校历', style: TextStyle(color: Colors.white)),
+        middle: Text('校历'),
         trailing: [
           IconButton(
             onPressed: () => _showMenu(context),

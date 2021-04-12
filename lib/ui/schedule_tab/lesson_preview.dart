@@ -177,6 +177,7 @@ class LessonPreview extends StatelessWidget {
   }
 
   Widget _buildActions(BuildContext context) {
+    final schedule = locator<ScheduleProvider>();
     final confirm = TextButton(
       child: Text('确定'),
       onPressed: () {
@@ -193,7 +194,7 @@ class LessonPreview extends StatelessWidget {
           title: '编辑课程',
           page: AddLessonPage.editLesson(lesson),
         ).go(context);
-        locator<ScheduleProvider>().loadLocalData();
+        schedule.loadLocalData();
       },
     );
 
@@ -214,13 +215,13 @@ class LessonPreview extends StatelessWidget {
                       title: '编辑课程',
                       page: AddLessonPage.editLesson(selectedLesson),
                     ).go(context);
-                    locator<ScheduleProvider>().loadLocalData();
+                    schedule.loadLocalData();
                   },
                 )
               )
             )
         );
-        locator<ScheduleProvider>().loadLocalData();
+        schedule.loadLocalData();
       },
     );
 

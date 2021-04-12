@@ -48,12 +48,7 @@ class SettingItem extends StatelessWidget {
                       SizedBox(width: 10.0),
                       this.icon ?? Container(),
                       SizedBox(width: 10.0),
-                      Text(this.title,
-                          style: this.titleStyle ??
-                              TextStyle(
-                                color: Color(0xFF333333),
-                                fontSize: 14.0,
-                              )),
+                      Text(this.title),
                       Expanded(
                         child: Container(
                           padding: EdgeInsets.only(left: 16, right: 16),
@@ -62,8 +57,7 @@ class SettingItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: this.contentStyle ??
                                   TextStyle(
-                                    fontSize: 14.0,
-                                    color: Color(0xFFCCCCCC),
+                                    fontSize: 14.0
                                   )),
                         ),
                       ),

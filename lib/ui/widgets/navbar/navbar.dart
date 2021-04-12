@@ -14,7 +14,7 @@ class NavBar {
       leading: needPadding
           ? Padding(
               padding: EdgeInsets.only(left: 10.0),
-              child: leading??BackIcon()
+              child: leading ?? BackIcon()
           )
           : leading ?? BackIcon(),
       title: middle,
