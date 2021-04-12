@@ -6,7 +6,6 @@ import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/lesson_detail_page.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
@@ -81,8 +80,6 @@ class LessonInfo extends StatelessWidget {
   }
 
   Widget _buildTitle(BuildContext context) {
-    final theme = AppTheme.of(context);
-
     final titleText = TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.bold,
@@ -107,7 +104,6 @@ class LessonInfo extends StatelessWidget {
               Icon(
                 Icons.chevron_right,
                 size: 20,
-                color: theme.textColor.withAlpha(100),
               ),
               SizedBox(height: 3)
             ],

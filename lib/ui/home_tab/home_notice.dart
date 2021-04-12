@@ -20,7 +20,7 @@ class HomeNotice extends StatelessWidget {
         [_buildCloseButton(context)]
       ),
       child: HomeCard(
-        title: Text('通知'),
+        title: Text('通知' , style: TextStyle(fontWeight: FontWeight.bold)),
         content: _buildContent(context, notification, changeLog),
         trailing: true,
       ),
@@ -44,7 +44,10 @@ class HomeNotice extends StatelessWidget {
   }
 
   Widget _buildContent(context, notification, Map changeLog) {
-    final noti = Text(_buildNotification(context, notification));
+    final style = TextStyle(
+      fontSize: 13
+    );
+    final noti = Text(_buildNotification(context, notification), style: style);
     if (changeLog == null) {
       return noti;
     }
@@ -54,7 +57,7 @@ class HomeNotice extends StatelessWidget {
       children: [
         noti,
         SizedBox(height: 7),
-        Text(log)
+        Text(log, style: style)
       ],
     );
   }

@@ -44,6 +44,7 @@ class HomeSchedule extends StatelessWidget {
   Widget _buildTitle(BuildContext context, ScheduleLesson lesson) {
     final style = TextStyle(
       color: Color(0xFF889CC3),
+      fontWeight: FontWeight.bold
     );
 
     final detail = lesson == null
@@ -57,11 +58,12 @@ class HomeSchedule extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    if (scheduleProvider.schedule == null) return Text('无课表数据');
+    final style = TextStyle(fontSize: 13);
+    if (scheduleProvider.schedule == null) return Text('无课表数据', style: style);
 
     final lesson = scheduleProvider.lessonsSince(DateTime.now()).firstIfExist;
     return lesson == null
-        ? const Text('本学期没有课了')
-        : Text('${lesson.name}@${lesson.roomRaw}');
+        ? Text('本学期没有课了', style: style)
+        : Text('${lesson.name}@${lesson.roomRaw}', style: style);
   }
 }

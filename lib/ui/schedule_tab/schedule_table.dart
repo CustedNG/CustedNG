@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/store/setting_store.dart';
@@ -118,18 +117,12 @@ class ScheduleTable extends StatelessWidget {
       fontSize: 15,
     );
 
-    final dateStyleHighlight = dateStyle.copyWith(color: theme.textColor);
-    final chsDateStyleHighlight = chsDateStyle.copyWith(color: theme.textColor);
-
-    final today = DateTime.now();
     for (var i = 0; i < 7; i++) {
       final dayOffset = (week - 1) * 7 + i;
       final date = schedule.startDate.add(Duration(days: dayOffset));
       final shouldShowMonth = i == 0 || date.day == 1;
       final displayDate =
       shouldShowMonth ? '${date.month}/${date.day}' : '${date.day}';
-      final shouldHighlight =
-      highLightToday ? date.isInSameDayAs(today) : false;
 
       final dateOverride = showFestivalAndHoliday
           ? ScheduleDates.getHoliday(date) ?? ScheduleDates.getSolarTerm(date)
@@ -141,12 +134,12 @@ class ScheduleTable extends StatelessWidget {
         child: Column(children: <Widget>[
           Text(
             dateOverride ?? displayDate,
-            style: shouldHighlight ? dateStyleHighlight : dateStyle,
+            style: dateStyle,
             maxLines: 1,
           ),
           Text(
             date.weekday.weekdayInChinese(),
-            style: shouldHighlight ? chsDateStyleHighlight : chsDateStyle,
+            style: chsDateStyle,
             maxLines: 1,
           ),
         ]),

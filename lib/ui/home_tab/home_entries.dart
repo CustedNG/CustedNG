@@ -30,6 +30,7 @@ class _HomeEntriesState extends State<HomeEntries> {
 
   @override
   Widget build(BuildContext context) {
+    final style = TextStyle(fontSize: 13);
     loadUserName();
 
     return HomeCard(
@@ -37,25 +38,25 @@ class _HomeEntriesState extends State<HomeEntries> {
       content: Table(children: [
         TableRow(children: [
           HomeEntry(
-            name: Text('我的教务'),
+            name: Text('我的教务', style: style),
             icon: Image(image: ImageRes.manageIcon),
             action: () => jwWebPage.go(context),
           ),
           HomeEntry(
-            name: Text('论坛'),
+            name: Text('论坛', style: style),
             icon: Image(image: ImageRes.ecardIcon),
             // action: () => iecardWebPage.go(context),
             // action: () => openIecard(context),
             action: () => bbsPage.go(context)
           ),
           HomeEntry(
-            name: Text('体测成绩'),
+            name: Text('体测成绩', style: style),
             icon: Image(image: ImageRes.runningReportIcon),
             // action: () => runScript('sport_grade.cl', context),
             action: () => ticeWebPage.go(context),
           ),
           HomeEntry(
-            name: Text('充网费'),
+            name: Text('充网费', style: style),
             icon: Image(image: ImageRes.networkIcon),
             // action: () => ecardWebPage.go(context),
             action: () => gotoWechat.go(context),
@@ -63,23 +64,23 @@ class _HomeEntriesState extends State<HomeEntries> {
         ]),
         TableRow(children: [
           HomeEntry(
-            name: Text('题库'),
+            name: Text('题库', style: style),
             icon: Image(image: ImageRes.tikuIcon),
             action: () => tiku2WebPage.go(context),
           ),
           HomeEntry(
-            name: Text('地图'),
+            name: Text('地图', style: style),
             icon: Image(image: ImageRes.mapIcon),
             action: () => mapPage.go(context),
           ),
           HomeEntry(
-            name: Text('校园网'),
+            name: Text('校园网', style: style),
             icon: Image(image: ImageRes.networkIcon),
             // action: () => runScript('network_manage.cl', context),
             action: () => selfWebPage.go(context),
           ),
           HomeEntry(
-            name: Text('快速联网'),
+            name: Text('快速联网', style: style),
             icon: Image(image: ImageRes.wifiIcon),
             action: () => ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('该功能暂时不可用'))

@@ -36,7 +36,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
         myTheme: Theme.of(context),
         user: user,
       ),
-      backgroundColor: theme.homeBackgroundColor,
+      backgroundColor: theme.backgroundColor,
       appBar: NavBar.material(
         context: context,
         leading: Builder(builder: (context) => IconButton(

@@ -1,4 +1,3 @@
-import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
 
 class PlaceholderWidget extends StatelessWidget {
@@ -14,12 +13,9 @@ class PlaceholderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
-
     final textStyle = TextStyle(
       fontSize: 14,
       fontWeight: light ? FontWeight.normal : FontWeight.bold,
-      color: theme.lightTextColor,
     );
 
     return Container(

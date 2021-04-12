@@ -31,20 +31,10 @@ class AppTheme {
   static AppThemeResolved resolve(Brightness brightness) {
     return AppThemeResolved()
       ..backgroundColor = s(brightness, _appTheme.backgroundColor)
-      ..webviewNavBarColor = s(brightness, _appTheme.webviewNavBarColor)
-      ..textColor = s(brightness, _appTheme.textColor)
-      ..textColorInversed = s(brightness, _appTheme.textColorInversed)
-      ..lightTextColor = s(brightness, _appTheme.lightTextColor)
       ..scheduleOutlineColor = s(brightness, _appTheme.scheduleOutlineColor)
-      ..scheduleButtonColor = s(brightness, _appTheme.scheduleButtonColor)
-      ..scheduleBackgroundColor =
-          s(brightness, _appTheme.scheduleBackgroundColor)
-      ..scheduleButtonTextColor =
-          s(brightness, _appTheme.scheduleButtonTextColor)
       ..scheduleTextColor = s(brightness, _appTheme.scheduleTextColor)
       ..cardBackgroundColor = s(brightness, _appTheme.cardBackgroundColor)
       ..cardTextColor = s(brightness, _appTheme.cardTextColor)
-      ..homeBackgroundColor = s(brightness, _appTheme.homeBackgroundColor)
       ..textFieldBackgroundColor =
           s(brightness, _appTheme.textFieldBackgroundColor)
       ..textFieldBorderColor = s(brightness, _appTheme.textFieldBorderColor)
@@ -57,23 +47,8 @@ class AppTheme {
   }
 
   final backgroundColor = DynamicColor(
-    CupertinoColors.white,
-    CupertinoColors.darkBackgroundGray,
-  );
-
-  final webviewNavBarColor = DynamicColor(
-    Color(0xFF153E50),
-    Color(0xFF153E50),
-  );
-
-  final textColor = DynamicColor(
-    CupertinoColors.black,
-    CupertinoColors.white,
-  );
-
-  final textColorInversed = DynamicColor(
-    CupertinoColors.white,
-    CupertinoColors.black,
+    Colors.white,
+    Color.fromRGBO(23, 23, 23, 1),
   );
 
   final lightTextColor = DynamicColor(
@@ -91,11 +66,6 @@ class AppTheme {
     Color(0xFF2F2F2F),
   );
 
-  final scheduleBackgroundColor = DynamicColor(
-    CupertinoColors.white,
-    CupertinoColors.darkBackgroundGray,
-  );
-
   final scheduleButtonTextColor = DynamicColor(
     Color(0xFF83868E),
     Color(0xFF83868E),
@@ -107,18 +77,13 @@ class AppTheme {
   );
 
   final cardBackgroundColor = DynamicColor(
-    CupertinoColors.white,
+    Colors.white,
     Colors.grey[850],
   );
 
   final cardTextColor = DynamicColor(
-    CupertinoColors.black,
+    Colors.black,
     Colors.white70,
-  );
-
-  final homeBackgroundColor = DynamicColor(
-    Color(0xFFFEFEFE),
-    CupertinoColors.darkBackgroundGray,
   );
 
   final textFieldBackgroundColor = DynamicColor(
@@ -139,18 +104,10 @@ class AppTheme {
 
 class AppThemeResolved {
   Color backgroundColor;
-  Color webviewNavBarColor;
-  Color textColor;
-  Color textColorInversed;
-  Color lightTextColor;
   Color scheduleOutlineColor;
-  Color scheduleButtonColor;
-  Color scheduleBackgroundColor;
-  Color scheduleButtonTextColor;
   Color scheduleTextColor;
   Color cardBackgroundColor;
   Color cardTextColor;
-  Color homeBackgroundColor;
   Color textFieldBackgroundColor;
   Color textFieldBorderColor;
   Color textFieldListBackgroundColor;

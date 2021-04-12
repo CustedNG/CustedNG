@@ -1,5 +1,4 @@
 import 'package:custed2/constants.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
 
 class HomeCard extends StatelessWidget {
@@ -19,10 +18,7 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
-
     return Card(
-        color: theme.cardBackgroundColor,
         elevation: 3.0,
         shape: roundShape,
         clipBehavior: Clip.antiAlias,
@@ -39,13 +35,6 @@ class HomeCard extends StatelessWidget {
   }
 
   _buildContent(BuildContext context) {
-    final theme = AppTheme.of(context);
-    final textStyle = TextStyle(
-      fontSize: 13,
-      fontWeight: FontWeight.normal,
-      color: theme.cardTextColor,
-    );
-
     return Padding(
       padding: EdgeInsets.all(padding),
       child: Column(
@@ -53,25 +42,18 @@ class HomeCard extends StatelessWidget {
         children: <Widget>[
           if (title != null) _buildTitle(context),
           if (title != null) SizedBox(height: 5),
-          if (content != null) DefaultTextStyle(style: textStyle, child: content),
+          if (content != null) content,
         ],
       ),
     );
   }
 
   _buildTitle(BuildContext context) {
-    final theme = AppTheme.of(context);
-
-    final textStyle = TextStyle(
-      fontWeight: FontWeight.bold,
-      color: theme.textColor.withAlpha(220),
-    );
-
     return Row(
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        DefaultTextStyle(child: title, style: textStyle),
+        title,
       ],
     );
   }

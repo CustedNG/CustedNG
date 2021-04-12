@@ -74,6 +74,10 @@ class _HomeExamState extends State<HomeExam> {
       }
     }
 
+    final style = TextStyle(
+      fontSize: 13
+    );
+
     return Column(
       children: [
         GestureDetector(
@@ -85,7 +89,7 @@ class _HomeExamState extends State<HomeExam> {
               child: HomeCard(
                 title: _buildTitle(context, time),
                 trailing: true,
-                content: Text(notice),
+                content: Text(notice, style: style),
               )
           ),
         ),
@@ -95,7 +99,10 @@ class _HomeExamState extends State<HomeExam> {
   }
 
   Widget _buildTitle(BuildContext context, String examTime) {
-    final style = TextStyle(color: Color(0xFF889CC3));
+    final style = TextStyle(
+      color: Color(0xFF889CC3), 
+      fontWeight: FontWeight.bold
+    );
     final title = '下场考试 $examTime';
     return Text(title, style: style);
   }

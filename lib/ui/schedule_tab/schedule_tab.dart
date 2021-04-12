@@ -68,7 +68,7 @@ class _ScheduleTabState extends State<ScheduleTab>
     final theme = AppTheme.of(context);
 
     return Scaffold(
-      backgroundColor: theme.scheduleBackgroundColor,
+      backgroundColor: theme.backgroundColor,
       appBar: NavBar.material(
           context: context,
           needPadding: true,
@@ -222,7 +222,7 @@ class _ScheduleTabState extends State<ScheduleTab>
         }
       },
       child: Container(
-        color: theme.scheduleBackgroundColor,
+        color: theme.backgroundColor,
         child: ScheduleTable(
           scheduleProvider.schedule,
           week: scheduleProvider.selectedWeek,

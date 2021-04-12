@@ -80,10 +80,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
               borderRadius: const BorderRadius.all(Radius.circular(50))
           )
           : null,
-      child: IconTheme(
-        data: IconThemeData(color: isDarkMode ? Colors.white : Colors.black),
-        child: item.icon,
-      ),
+      child: item.icon,
     );
   }
 
@@ -91,6 +88,9 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     return SafeArea(
         child: Container(
           height: 56,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20))
+          ),
           padding: const EdgeInsets.only(left: 8, top: 4, bottom: 4, right: 8),
           width: _width,
           child: Row(
@@ -117,6 +117,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   @override
   void afterFirstLayout(BuildContext context) {
     updateCheck(context);
+    WidgetsFlutterBinding.ensureInitialized();
     _showNewVersionDialog();
   }
 

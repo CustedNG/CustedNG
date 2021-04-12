@@ -17,7 +17,6 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
   }
 
   Widget weekItem(int key, {bool active = false}) {
-    final theme = AppTheme.of(context);
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -33,10 +32,7 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
             child: Text(
               key.toString(),
               style: TextStyle(
-                  fontSize: 15.0,
-                  color: active && !isDark(context)
-                      ? theme.textColorInversed
-                      : theme.textColor),
+                  fontSize: 15.0),
               textAlign: TextAlign.center,
             ),
             decoration: BoxDecoration(

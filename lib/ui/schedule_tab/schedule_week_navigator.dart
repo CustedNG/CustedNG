@@ -59,20 +59,18 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
     onPressed(),
     onLongPress(),
   }) {
-    final theme = AppTheme.of(context);
-
     return GestureDetector(
       onLongPress: onLongPress,
+      onTap: onPressed,
       child: SizedBox(
         height: 35,
         width: 100,
-        child: TextButton(
-          onPressed: onPressed,
+        child: Center(
           child: Text(
             text,
             style: TextStyle(
-              color: theme.scheduleButtonTextColor,
               fontWeight: FontWeight.bold,
+              color: Theme.of(context).textTheme.bodyText1.color.withAlpha(127)
             ),
           ),
         ),

@@ -1,4 +1,3 @@
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
@@ -11,8 +10,6 @@ class LessonDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = AppTheme.of(context);
-
     // final classes = lesson.classes?.toList();
     // classes?.sort();
 
@@ -20,23 +17,18 @@ class LessonDetailPage extends StatelessWidget {
       appBar: NavBar.material(
         middle: NavbarText('课程详情')
       ),
-      body: DefaultTextStyle(
-        style: TextStyle(
-          color: theme.textColor,
-        ),
-        child: ListView(
-          children: <Widget>[
-            _LessonInfo({
-              '课程名称': lesson.name,
-              '上课地点': lesson.roomRaw,
-              '上课时间': '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}',
-              '任课教师': lesson.teacherName ?? '',
-              '上课周数': lesson.weeks.join(','),
-              // if (classes != null) '上课班级': classes.join('\n'),
-              if (lesson.classRaw != null) '上课班级': lesson.classRaw,
-            }),
-          ],
-        ),
+      body: ListView(
+        children: <Widget>[
+          _LessonInfo({
+            '课程名称': lesson.name,
+            '上课地点': lesson.roomRaw,
+            '上课时间': '${lesson.startTime ?? ''}~${lesson.endTime ?? ''}',
+            '任课教师': lesson.teacherName ?? '',
+            '上课周数': lesson.weeks.join(','),
+            // if (classes != null) '上课班级': classes.join('\n'),
+            if (lesson.classRaw != null) '上课班级': lesson.classRaw,
+          }),
+        ],
       ),
     );
   }
