@@ -10,7 +10,7 @@ class HomeNotice extends StatelessWidget {
   Widget build(BuildContext context) {
     final notification = Provider.of<AppProvider>(context).notification;
     final changeLog = Provider.of<AppProvider>(context).changeLog;
-    if (notification == null && changeLog == null) return Container();
+    if (notification == null && changeLog == null) return HomeCard.loading();
     
     return GestureDetector(
       onTap: () => showRoundDialog(

@@ -10,6 +10,14 @@ class HomeCard extends StatelessWidget {
     this.borderRadius = 7
   });
 
+  HomeCard.loading({
+    this.title = const Center(),
+    this.content = const Center(child: CircularProgressIndicator()), 
+    this.trailing = false, 
+    this.padding = 15, 
+    this.borderRadius = 7,
+  });
+
   final Widget title;
   final Widget content;
   final bool trailing;
@@ -19,19 +27,19 @@ class HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 3.0,
-        shape: roundShape,
-        clipBehavior: Clip.antiAlias,
-        semanticContainer: false,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Flexible(child: _buildContent(context)),
-            if (trailing) Icon(Icons.keyboard_arrow_right),
-            if (trailing) SizedBox(width: 7),
-          ],
-        )
-    );
+          elevation: 3.0,
+          shape: roundShape,
+          clipBehavior: Clip.antiAlias,
+          semanticContainer: false,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Flexible(child: _buildContent(context)),
+              if (trailing) Icon(Icons.keyboard_arrow_right),
+              if (trailing) SizedBox(width: 7),
+            ],
+          )
+      );
   }
 
   _buildContent(BuildContext context) {

@@ -11,6 +11,7 @@ import 'package:custed2/ui/home_tab/home_weather.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 
 class HomeTab extends StatefulWidget {
@@ -48,23 +49,33 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
   }
 
   Widget _buildContent(BuildContext context) {
-    Widget widget = Column(
-      children: <Widget>[
-        HomeBanner(),
-        SizedBox(height: 15),
-        HomeNotice(),
-        SizedBox(height: 15),
-        HomeSchedule(),
-        SizedBox(height: 15),
-        HomeExam(),
-        HomeEntries(),
-      ],
-    );
+    List<Widget> widgets = [
+      HomeBanner(),
+      HomeNotice(),
+      HomeSchedule(),
+      HomeExam(),
+      HomeEntries(),
+    ];
 
-    widget = ListView(
-      children: <Widget>[
-        Container(margin: EdgeInsets.all(20), child: widget),
-      ],
+    Widget widget = AnimationLimiter(
+      child: ListView.builder(
+        itemCount: widgets.length,
+        itemBuilder: (BuildContext context, int index) {
+          return AnimationConfiguration.staggeredList(
+            position: index,
+            duration: const Duration(milliseconds: 375),
+            child: SlideAnimation(
+              verticalOffset: 50.0,
+              child: FadeInAnimation(
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(20, 15, 20, 0), 
+                  child: widgets[index]
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
 
     return widget;

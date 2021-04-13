@@ -1,7 +1,6 @@
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:otp/otp.dart';
 import 'package:provider/provider.dart';
@@ -43,21 +42,15 @@ class _DebugPageState extends State<DebugPage> {
               SizedBox(
                 height: 50,
               ),
-              CupertinoTextField(
+              TextField(
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
                 onChanged: (otp) => otpInput = otp,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: CupertinoColors.inactiveGray.withAlpha(200),
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                ),
               ),
               SizedBox(
                 height: 15,
               ),
-              CupertinoButton(
+              TextButton(
                 child: Text('Unlock'),
                 onPressed: () {
                   final otp = OTP.generateTOTPCode(

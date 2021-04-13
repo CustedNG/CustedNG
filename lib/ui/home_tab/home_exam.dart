@@ -23,26 +23,8 @@ class _HomeExamState extends State<HomeExam> {
       return Container();
     }
 
-    Widget loading = Column(
-      children: [
-        HomeCard(
-          content: Padding(
-            padding: EdgeInsets.all(7),
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-        ),
-        SizedBox(height: 15)
-      ],
-    );
-
-    if (exam.isBusy) {
-      return loading;
-    }
-
-    if (exam == null) {
-      return loading;
+    if (exam.isBusy || exam == null) {
+      return HomeCard.loading();
     }
 
     String time = '';
@@ -78,23 +60,18 @@ class _HomeExamState extends State<HomeExam> {
       fontSize: 13
     );
 
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () => examPage.go(context),
-          child: Hero(
-              tag: 'ExamCard${exam.failed ? 0 : 
-                    exam.data.total - exam.getRemainExam()}',
-              transitionOnUserGestures: true,
-              child: HomeCard(
-                title: _buildTitle(context, time),
-                trailing: true,
-                content: Text(notice, style: style),
-              )
-          ),
-        ),
-        SizedBox(height: 15),
-      ],
+    return GestureDetector(
+      onTap: () => examPage.go(context),
+      child: Hero(
+          tag: 'ExamCard${exam.failed ? 0 : 
+                exam.data.total - exam.getRemainExam()}',
+          transitionOnUserGestures: true,
+          child: HomeCard(
+            title: _buildTitle(context, time),
+            trailing: true,
+            content: Text(notice, style: style),
+          )
+      ),
     );
   }
 

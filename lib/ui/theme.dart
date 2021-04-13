@@ -1,6 +1,5 @@
 import 'package:custed2/ui/dynamic_color.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Colors, Theme;
+import 'package:flutter/material.dart';
 
 // should be material.Theme.of(context).backgroundColor
 // scheduleButtonColor: Color(0xFFF0EFF3),
@@ -67,18 +66,18 @@ class AppTheme {
   );
 
   final textFieldBackgroundColor = DynamicColor(
-    CupertinoColors.white,
+    Colors.white,
     Colors.transparent,
   );
 
   final textFieldBorderColor = DynamicColor(
-    CupertinoColors.lightBackgroundGray,
+    Colors.grey[200],
     Colors.grey[850],
   );
 
   final textFieldListBackgroundColor = DynamicColor(
-    CupertinoColors.lightBackgroundGray,
-    CupertinoColors.darkBackgroundGray,
+    Colors.grey[200],
+    Colors.grey[800],
   );
 }
 

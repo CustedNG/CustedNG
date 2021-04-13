@@ -16,6 +16,7 @@ import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -364,13 +365,22 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     }
 
     final items = term.grades.map((exam) => _ReportItem(exam)).toList();
-    final report = Column(
-      mainAxisSize: MainAxisSize.min,
-      children: items,
-    );
     return Container(
       padding: EdgeInsets.all(15.0),
-      child: report,
+      child: AnimationLimiter(
+          child: Column(
+            children: AnimationConfiguration.toStaggeredList(
+              duration: const Duration(milliseconds: 375),
+              childAnimationBuilder: (widget) => SlideAnimation(
+                horizontalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: widget,
+                ),
+              ),
+              children: items,
+            ),
+          ),
+        ),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/ui/widgets/progress_bar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class SnakebarProvider extends ProviderBase {
   static const kSnakebarDefaultHeight = 25;
@@ -13,7 +13,7 @@ class SnakebarProvider extends ProviderBase {
     // add a placeholder
     _content = SnakeBarContent(
       widget: Container(),
-      bgColor: CupertinoColors.activeBlue,
+      bgColor: Colors.blue,
     );
     _startLoop();
   }
@@ -48,7 +48,7 @@ class SnakebarProvider extends ProviderBase {
 
   add(
     Widget widget, {
-    Color bgColor = CupertinoColors.activeBlue,
+    Color bgColor = Colors.blue,
     Duration duration = kDefaultDuration,
   }) {
     final content = SnakeBarContent.duration(
@@ -69,7 +69,7 @@ class SnakebarProvider extends ProviderBase {
       message,
       style: TextStyle(
         fontSize: 15,
-        color: CupertinoColors.white,
+        color: Colors.white,
       ),
     ));
   }
@@ -80,10 +80,10 @@ class SnakebarProvider extends ProviderBase {
         message,
         style: TextStyle(
           fontSize: 15,
-          color: CupertinoColors.white,
+          color: Colors.white,
         ),
       ),
-      bgColor: CupertinoColors.activeOrange,
+      bgColor: Colors.orange,
     );
   }
 
@@ -92,7 +92,7 @@ class SnakebarProvider extends ProviderBase {
     final future = callback(widget.controller);
     final content = SnakeBarContent(
       widget: widget,
-      bgColor: CupertinoColors.activeBlue,
+      bgColor: Colors.blue,
       future: future,
     );
     _contentQueue.sink.add(content);

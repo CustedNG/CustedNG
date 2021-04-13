@@ -65,6 +65,7 @@ dependencies:
   pull_to_refresh: ^1.6.3
   tuple: ^2.0.0
   webview_cookie_manager: ^2.0.0-nullsafety.0
+  flutter_staggered_animations: ^1.0.0
 
 dev_dependencies:
   # flutter_test:

@@ -88,9 +88,6 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     return SafeArea(
         child: Container(
           height: 56,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20))
-          ),
           padding: const EdgeInsets.only(left: 8, top: 4, bottom: 4, right: 8),
           width: _width,
           child: Row(

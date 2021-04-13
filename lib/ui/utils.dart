@@ -19,9 +19,9 @@ void showCatchSnackBar(BuildContext context, Function func, String message){
   Future.sync(func).catchError((e) => showSnackBar(context, message ?? '$e'));
 }
 
-void showRoundDialog(BuildContext context, String title, Widget child, 
+Future<T> showRoundDialog<T>(BuildContext context, String title, Widget child, 
                     List<Widget> actions){
-  showDialog(
+  return showDialog(
       context: context,
       builder: (ctx) {
         return CardDialog(

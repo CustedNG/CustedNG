@@ -1,5 +1,5 @@
 import 'package:custed2/core/provider/provider_base.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class DebugProvider extends ProviderBase {
   final widgets = <Widget>[];
@@ -19,15 +19,15 @@ class DebugProvider extends ProviderBase {
   }
 
   void _addError(Object error) {
-    _addMultiline(error, CupertinoColors.destructiveRed);
+    _addMultiline(error, Colors.red);
   }
 
-  void addMultiline(Object data, [Color color = CupertinoColors.activeBlue]) {
+  void addMultiline(Object data, [Color color = Colors.blue]) {
     _addMultiline(data, color);
     notifyListeners();
   }
 
-  void _addMultiline(Object data, [Color color = CupertinoColors.activeBlue]) {
+  void _addMultiline(Object data, [Color color = Colors.blue]) {
     final widget = Text(
       '$data',
       style: TextStyle(
@@ -50,7 +50,7 @@ class DebugProvider extends ProviderBase {
       margin: EdgeInsets.symmetric(vertical: 2),
       decoration: BoxDecoration(
         border: Border.all(
-          color: CupertinoColors.activeGreen,
+          color: Colors.green,
         ),
       ),
       child: widget,

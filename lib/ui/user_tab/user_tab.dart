@@ -11,6 +11,7 @@ import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:custed2/ui/widgets/setting_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 
 class UserTab extends StatefulWidget {
@@ -37,9 +38,8 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
           leading: Container(),
           middle: NavbarText('设置'),
         ),
-        body: SingleChildScrollView(
-          child: _buildSetting()
-        ));
+        body: _buildSetting()
+    );
   }
 
   Widget _buildSetting(){
@@ -48,53 +48,74 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
           ? Colors.white
           : Colors.black
     );
-    return Column(
-      children: [
-        CustedHeader(),
-        SizedBox(height: 10.0),
-        Text('设置'),
-        SizedBox(height: 10.0),
-        SettingItem(
-          title: '将课表设置为首页',
-          titleStyle: settingTextStyle,
-          isShowArrow: false,
-          rightBtn: _buildSwitch(context, setting.useScheduleAsHome),
-        ),
-        SettingItem(
-          title: '显示非当前周课程',
-          titleStyle: settingTextStyle,
-          isShowArrow: false,
-          rightBtn: _buildSwitch(context, setting.showInactiveLessons),
-        ),
-        SettingItem(
-          title: '绩点不计选修',
-          titleStyle: settingTextStyle,
-          isShowArrow: false,
-          rightBtn: _buildSwitch(
-              context, setting.dontCountElectiveCourseGrade),
-        ),
-        SettingItem(
-          title: '启动时自动更新课表',
-          titleStyle: settingTextStyle,
-          isShowArrow: false,
-          rightBtn: _buildSwitch(
-              context, setting.autoUpdateSchedule),
-        ),
-        SettingItem(
-          title: '持续自动更新天气',
-          titleStyle: settingTextStyle,
-          isShowArrow: false,
-          rightBtn: _buildSwitch(
-              context, setting.autoUpdateWeather),
-        ),
-        SettingItem(
-          title: '黑暗模式',
-          titleStyle: settingTextStyle,
-          isShowArrow: false,
-          rightBtn: _buildDarkModeRadio(),
-        ),
-        SizedBox(height: 40.0)
-      ],
+
+    final widgets = [
+      CustedHeader(),
+      SizedBox(height: 10.0),
+      Text('设置'),
+      SizedBox(height: 10.0),
+      SettingItem(
+        title: '将课表设置为首页',
+        titleStyle: settingTextStyle,
+        isShowArrow: false,
+        rightBtn: _buildSwitch(context, setting.useScheduleAsHome),
+      ),
+      SettingItem(
+        title: '显示非当前周课程',
+        titleStyle: settingTextStyle,
+        isShowArrow: false,
+        rightBtn: _buildSwitch(context, setting.showInactiveLessons),
+      ),
+      SettingItem(
+        title: '绩点不计选修',
+        titleStyle: settingTextStyle,
+        isShowArrow: false,
+        rightBtn: _buildSwitch(
+            context, setting.dontCountElectiveCourseGrade),
+      ),
+      SettingItem(
+        title: '启动时自动更新课表',
+        titleStyle: settingTextStyle,
+        isShowArrow: false,
+        rightBtn: _buildSwitch(
+            context, setting.autoUpdateSchedule),
+      ),
+      SettingItem(
+        title: '持续自动更新天气',
+        titleStyle: settingTextStyle,
+        isShowArrow: false,
+        rightBtn: _buildSwitch(
+            context, setting.autoUpdateWeather),
+      ),
+      SettingItem(
+        title: '黑暗模式',
+        titleStyle: settingTextStyle,
+        isShowArrow: false,
+        rightBtn: _buildDarkModeRadio(),
+      ),
+      SizedBox(height: 40.0)
+    ];
+
+    return AnimationLimiter(
+      child: ListView.builder(
+        itemCount: widgets.length,
+        itemBuilder: (BuildContext context, int index) {
+          return AnimationConfiguration.staggeredList(
+            position: index,
+            duration: const Duration(milliseconds: 375),
+            child: SlideAnimation(
+              verticalOffset: 50.0,
+              child: FadeInAnimation(
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(bottom: 3), 
+                  child: widgets[index]
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
