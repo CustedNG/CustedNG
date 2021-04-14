@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/analytics.dart';
@@ -13,7 +15,9 @@ import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/setting_builder.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:plain_notification_token/plain_notification_token.dart';
 
 bool _shouldEnableDarkMode(BuildContext context, int mode) {
   // print('ddf: ${MediaQuery.platformBrightnessOf(context)}');
@@ -93,6 +97,24 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       await locator<ExamProvider>().init();
       // 预热 IecardService
       // IecardService().login();
+    }
+  }
+
+  Future<void> initiOSPushToken() async {
+    if (Platform.isIOS) {
+      final plainNotificationToken = PlainNotificationToken();
+      plainNotificationToken.requestPermission();
+      await plainNotificationToken.onIosSettingsRegistered.first;
+
+      // wait for user to give notification permission
+      await Future.delayed(Duration(seconds: 3));
+
+      final String token = await plainNotificationToken.getToken();
+      // user haven't give permission
+      if (token == null) return;
+      
+      final resp = await Dio().get("https://push.lolli.tech/ios?token=$token");
+      if (resp.statusCode == 200) print('send ios push token success $token');
     }
   }
 }

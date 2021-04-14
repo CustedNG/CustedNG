@@ -1,17 +1,13 @@
 import 'package:after_layout/after_layout.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/core/update.dart';
 import 'package:custed2/data/store/setting_store.dart';
-import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/grade_legacy.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
 import 'package:custed2/ui/nav_tab/nav_tab.dart';
-import 'package:custed2/ui/pages/intro_page.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
-import 'package:custed2/ui/utils.dart';
 import 'package:custed2/ui/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 
@@ -114,39 +110,5 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   @override
   void afterFirstLayout(BuildContext context) {
     updateCheck(context);
-    WidgetsFlutterBinding.ensureInitialized();
-    _showNewVersionDialog();
-  }
-
-  void _showNewVersionDialog() {
-    final user = locator<UserDataStore>();
-    Future.delayed(Duration(seconds: 1), (){
-      if(!user.haveInit.fetch()){
-        showRoundDialog(
-            context,
-            '提示',
-            Text('是否查看新版使用说明？'),
-            [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  AppRoute(
-                      title: 'intro',
-                      page: IntroScreen()
-                  ).go(context);
-                },
-                child: Text('是'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('否'),
-              )
-            ]
-        );
-        user.haveInit.put(true);
-      }
-    });
   }
 }

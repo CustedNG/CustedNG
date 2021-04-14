@@ -23,6 +23,8 @@ PODS:
   - OrderedSet (5.0.0)
   - path_provider (0.0.1):
     - Flutter
+  - plain_notification_token (0.0.1):
+    - Flutter
   - Reachability (3.2)
   - save_in_gallery (0.0.1):
     - Flutter
@@ -41,6 +43,7 @@ DEPENDENCIES:
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - install_plugin (from `.symlinks/plugins/install_plugin/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - plain_notification_token (from `.symlinks/plugins/plain_notification_token/ios`)
   - save_in_gallery (from `.symlinks/plugins/save_in_gallery/ios`)
   - share_extend (from `.symlinks/plugins/share_extend/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
@@ -67,6 +70,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/install_plugin/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  plain_notification_token:
+    :path: ".symlinks/plugins/plain_notification_token/ios"
   save_in_gallery:
     :path: ".symlinks/plugins/save_in_gallery/ios"
   share_extend:
@@ -86,6 +91,7 @@ SPEC CHECKSUMS:
   install_plugin: a13e7ddd2bab0c701b48cd359c26d0394125b6fb
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  plain_notification_token: b36467dc91939a7b6754267c701bbaca14996ee1
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   save_in_gallery: 75c1d76566ed1af3a266f25b38c6c19a1d019a66
   share_extend: b6748dc53695587891126a89533b862b92548c7b
