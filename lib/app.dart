@@ -59,10 +59,8 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   // 在这里进行初始化，避免启动掉帧
   @override
   void afterFirstLayout(BuildContext context) async {
-    final path = await getAppDocDir.invoke();
     final setting = locator<SettingStore>();
     final weatherProvider = locator<WeatherProvider>();
-    print('AppDocDir: $path');
 
     final debug = locator<DebugProvider>();
     debug.addMultiline(r'''
@@ -98,6 +96,8 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       // 预热 IecardService
       // IecardService().login();
     }
+
+    initiOSPushToken();
   }
 
   Future<void> initiOSPushToken() async {
@@ -109,7 +109,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       // wait for user to give notification permission
       await Future.delayed(Duration(seconds: 3));
 
-      final String token = await plainNotificationToken.getToken();
+      final token = await plainNotificationToken.getToken();
       // user haven't give permission
       if (token == null) return;
       

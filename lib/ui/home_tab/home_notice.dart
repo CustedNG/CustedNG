@@ -9,61 +9,38 @@ class HomeNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notification = Provider.of<AppProvider>(context).notification;
-    final changeLog = Provider.of<AppProvider>(context).changeLog;
-    if (notification == null && changeLog == null) return HomeCard.loading();
+    if (notification == null) return HomeCard.loading();
     
-    return GestureDetector(
-      onTap: () => showRoundDialog(
-        context, 
-        '更新日志', 
-        _buildChangeLogDialog(changeLog), 
-        [_buildCloseButton(context)]
-      ),
-      child: HomeCard(
-        title: Text('通知' , style: TextStyle(fontWeight: FontWeight.bold)),
-        content: _buildContent(context, notification, changeLog),
-        trailing: true,
-      ),
+    return HomeCard(
+      title: Text('通知' , style: TextStyle(fontWeight: FontWeight.bold)),
+      content: _buildContent(context, notification)
     );
   }
 
-  Widget _buildChangeLogDialog(Map changeLog) {
-    final child = <Widget>[];
-    for (var item in changeLog.entries) {
-      child.add(Text(item.key, style: TextStyle(fontWeight: FontWeight.bold)));
-      child.add(Text(item.value));
-      child.add(SizedBox(height: 17));
-    }
-
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: child,
-      ),
-    );
-  }
-
-  Widget _buildContent(context, notification, Map changeLog) {
+  Widget _buildContent(context, notification) {
     final style = TextStyle(
       fontSize: 13
     );
-    final noti = Text(_buildNotification(context, notification), style: style);
-    if (changeLog == null) {
-      return noti;
-    }
-    final log = _buildChangeLog(changeLog);
+
+    final noti = _buildNotification(context, notification);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        noti,
-        SizedBox(height: 7),
-        Text(log, style: style)
+        Text(' ' * 7 + noti[0], style: style),
+        if (noti.length != 1) Container(
+          alignment: Alignment.bottomRight,
+          child: Text(
+            noti[1], 
+            style: style, 
+            textAlign: TextAlign.right
+          ),
+        )
       ],
     );
   }
 
-  String _buildNotification(context, String notification) {
-    String content;
+  List<String> _buildNotification(context, String notification) {
     if (notification.startsWith('!')) {
       showRoundDialog(
         context, 
@@ -71,20 +48,10 @@ class HomeNotice extends StatelessWidget {
         Text(notification.substring(1)), 
         [_buildCloseButton(context)]
       );
-      content = notification.substring(1);
-    } else {
-      content = notification ?? '<版本号 TechnicalPreview#${BuildData.build}>';
+      return notification.substring(1).split('发布于：');
     }
-    return content;
-  }
-
-  String _buildChangeLog(Map<String, String> changeLog) {
-    num newest = 0;
-    changeLog.keys.forEach((ele) {if (ele > newest) newest = num.parse(ele);});
-    if (newest > BuildData.build) {
-      return '最新版本：$newest，点击查看更新日志';
-    }
-    return '已是最新版本，点击查看更新日志';
+    return notification.split('发布于：') 
+            ?? ['<版本号 TechnicalPreview#${BuildData.build}>'];
   }
 
   Widget _buildCloseButton(context) {
