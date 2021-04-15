@@ -33,12 +33,6 @@ class VersionPage extends StatelessWidget{
       Text(appName),
       SizedBox(height: 20),
       SettingItem(
-        title: '下载地址',
-        onTap: () => AppRoute(
-          page: WebviewBrowser(custedAppUrl),
-        ).go(context),
-      ),
-      SettingItem(
         title: '开源地址',
         onTap: () => AppRoute(
           page: WebviewBrowser(custedGithubUrl),

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/analytics.dart';
-import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
@@ -12,6 +11,7 @@ import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/setting_builder.dart';
@@ -82,21 +82,20 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     if(setting.autoUpdateWeather.fetch()) weatherProvider.startAutoUpdate();
     weatherProvider.update();
 
+    final user = locator<UserProvider>();
     // 加载核心数据
     await Future.wait([
       locator<ScheduleProvider>().loadLocalData(resetWeek: true),
       locator<GradeProvider>().loadLocalData(),
-      locator<UserProvider>().loadLocalData(),
+      user.loadLocalData(),
     ]);
 
-    final user = locator<UserProvider>();
     await user.initialized;
     if (user.loggedIn) {
       await locator<ExamProvider>().init();
       // 预热 IecardService
       // IecardService().login();
     }
-
     initiOSPushToken();
   }
 
@@ -112,9 +111,13 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       final token = await plainNotificationToken.getToken();
       // user haven't give permission
       if (token == null) return;
+
+      final userName = locator<UserDataStore>().username.fetch();
+      if (userName == null || userName.length < 10) return;
       
-      final resp = await Dio().get("https://push.lolli.tech/ios?token=$token");
-      if (resp.statusCode == 200) print('send ios push token success $token');
+      final resp = 
+        await Dio().get("https://push.lolli.tech/ios?token=$token&id=$userName");
+      if (resp.statusCode == 200) print('send ios push token success: $token');
     }
   }
 }
