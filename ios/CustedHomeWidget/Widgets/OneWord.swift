@@ -9,15 +9,15 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-struct OneWordProvider: IntentTimelineProvider {
+struct OneWordProvider: TimelineProvider {
     func placeholder(in context: Context) -> OneWordEntry {
         return  OneWordEntry(date: Date(),data: OneWord(content: "人类的悲欢并不相通，我只觉得他们吵闹", length: 18))
     }
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (OneWordEntry) -> Void) {
+    func getSnapshot(in context: Context, completion: @escaping (OneWordEntry) -> Void) {
         let entry = OneWordEntry(date: Date(),data: OneWord(content: "人类的悲欢并不相通，我只觉得他们吵闹", length: 18))
         completion(entry)
     }
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         let currentDate = Date()
         let refreshDate = Calendar.current.date(byAdding: .minute, value: 60, to: currentDate)!
         OneWordLoader.fetch { result in
@@ -60,7 +60,7 @@ struct OneWordEntryView : View {
 struct OneWordWidget: Widget {
     private let kind: String = "OneWordWidget"
     public var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: OneWordProvider()) { entry in
+        StaticConfiguration(kind: kind, provider: OneWordProvider()) { entry in
             OneWordEntryView(entry: entry)
         }
         .configurationDisplayName("一言")
@@ -102,6 +102,7 @@ struct OneWordView: View {
         Text(content)
             .multilineTextAlignment(.center)
             .padding()
+            .background(LinearGradient(gradient: Gradient(colors: [.orange, .yellow]), startPoint: .top, endPoint: .bottom))
     }
 }
 

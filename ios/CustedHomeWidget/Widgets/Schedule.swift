@@ -9,9 +9,18 @@ import WidgetKit
 import SwiftUI
 import Intents
 
+
+func date2String(_ date:Date, dateFormat:String = "yyyy-MM-dd HH:mm:ss") -> String {
+    let formatter = DateFormatter()
+    formatter.locale = Locale.init(identifier: "zh_CN")
+    formatter.dateFormat = dateFormat
+    let date = formatter.string(from: date)
+    return date
+}
+
 struct ScheduleProvider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (ScheduleEntry) -> Void) {
-        let entry = ScheduleEntry(date: Date(),data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "14:00")
+        let entry = ScheduleEntry(date: Date(), data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "14:00", updateTime: "13:00"))
         completion(entry)
     }
     
@@ -20,13 +29,12 @@ struct ScheduleProvider: TimelineProvider {
         
         let currentDate = Date()
         let refreshDate = Calendar.current.date(byAdding: .minute, value: 6, to: currentDate)!
-        //逃逸闭包传入匿名函数 当调用completion时调用该匿名函数刷新Widget
         ScheduleLoader.fetch { result in
             let oneWord: Schedule
             if case .success(let fetchedData) = result {
                 oneWord = fetchedData
             } else {
-                oneWord = Schedule(teacher: "抱歉", position: "刷新失败", course: "稍后再试", time: "")
+                oneWord = Schedule(teacher: "建议稍后再试", position: "刷新失败", course: "抱歉", time: "", updateTime: date2String(currentDate, dateFormat: "HH:mm"))
             }
             let entry = ScheduleEntry(date: currentDate, data: oneWord)
             let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
@@ -35,7 +43,7 @@ struct ScheduleProvider: TimelineProvider {
     }
 
     func placeholder(in context: Context) -> ScheduleEntry {
-        return ScheduleEntry(date: Date(), data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论"， time: ""))
+        return ScheduleEntry(date: Date(), data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "13:00", updateTime: "13:00"))
     }
 }
 
@@ -70,7 +78,7 @@ struct ScheduleWidget: Widget {
         }
         .configurationDisplayName("课表")
         .description("便捷查看下节课")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([.systemSmall])
     }
 }
 
@@ -79,11 +87,12 @@ struct Schedule {
     let position: String
     let course: String
     let time: String
+    let updateTime: String
 }
 
 struct ScheduleLoader {
     static func fetch(completion: @escaping (Result<Schedule, Error>) -> Void) {
-        let oneWordURL = URL(string: "https://v1.hitokoto.cn/")!
+        let oneWordURL = URL(string: "https://push.lolli.tech/")!
         let task = URLSession.shared.dataTask(with: oneWordURL) { (data, response, error) in
             guard error == nil else {
                 completion(.failure(error!))
@@ -96,36 +105,42 @@ struct ScheduleLoader {
     }
 
     static func getScheduleInfo(fromData data: Foundation.Data) -> Schedule {
-        return Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "")
+        return Schedule(teacher: "还在开发中", position: "此功能", course: "抱歉", time: "敬请期待", updateTime: date2String(Date(), dateFormat: "HH:mm"))
     }
 }
 
 struct ScheduleView: View {
     let entry: ScheduleEntry
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 5) {
             Text(entry.data.course)
-                        .font(.system(.title3))
-                        .foregroundColor(.black)
-                        .frame(width: .none, height: .none, alignment: .topLeading)
-                    Text(entry.data.teacher)
-                        .font(.system(.caption2))
-                        .foregroundColor(.black)
-                    Text(entry.data.position)
-                        .font(.system(.caption2))
-                        .foregroundColor(.black)
-                    Text(entry.data.time)
-                        .font(.system(.caption2))
-                        .foregroundColor(.black)
-        }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+                .font(.system(.title2))
+                .foregroundColor(.white)
+                .frame(width: .none, height: .none, alignment: .topLeading)
+            Spacer()
+            Text(entry.data.position)
+                .font(.system(.caption))
+                .foregroundColor(.white)
+            Text(entry.data.teacher)
+                .font(.system(.caption))
+                .foregroundColor(.white)
+            Text(entry.data.time)
+                .font(.system(.caption))
+                .foregroundColor(.white)
+            Spacer()
+            Text("更新于\(entry.data.updateTime)")
+                .font(.system(.caption2))
+                .foregroundColor(.white)
+                .frame(width: .none, height: .none, alignment: .bottom)
+        }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
             .padding()
-            .background(LinearGradient(gradient: Gradient(colors: [.orange, .yellow]), startPoint: .top, endPoint: .bottom))
+        .background(LinearGradient(gradient: Gradient(colors: [.pink, .purple, .pink]), startPoint: .topLeading, endPoint: .bottom))
     }
 }
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(entry: ScheduleEntry(date: Date(), data: Schedule(teacher: "1", position: "2", course: "3", time: "")))
+        ScheduleView(entry: ScheduleEntry(date: Date(), data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "13:00", updateTime: date2String(Date(), dateFormat: "HH:mm"))))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

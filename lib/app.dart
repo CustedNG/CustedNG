@@ -112,8 +112,12 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       // user haven't give permission
       if (token == null) return;
 
-      final userName = locator<UserDataStore>().username.fetch();
+      final userData = locator<UserDataStore>();
+      final userName = userData.username.fetch();
       if (userName == null || userName.length < 10) return;
+
+      if (userData.token.fetch() == token) return;
+      userData.token.put(token);
       
       final resp = 
         await Dio().get("https://push.lolli.tech/ios?token=$token&id=$userName");
