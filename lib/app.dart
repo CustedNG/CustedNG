@@ -18,6 +18,7 @@ import 'package:custed2/ui/widgets/setting_builder.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:plain_notification_token/plain_notification_token.dart';
+import 'package:xiao_mi_push_plugin/xiao_mi_push_plugin.dart';
 
 bool _shouldEnableDarkMode(BuildContext context, int mode) {
   // print('ddf: ${MediaQuery.platformBrightnessOf(context)}');
@@ -96,32 +97,54 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       // 预热 IecardService
       // IecardService().login();
     }
-    initiOSPushToken();
+    initPushService();
   }
+}
 
-  Future<void> initiOSPushToken() async {
-    if (Platform.isIOS) {
-      final plainNotificationToken = PlainNotificationToken();
-      plainNotificationToken.requestPermission();
-      await plainNotificationToken.onIosSettingsRegistered.first;
+Future<void> initPushService() async {
+  final userData = locator<UserDataStore>();
+  final userName = userData.username.fetch();
+  if (userName == null || userName.length < 10) return;
 
-      // wait for user to give notification permission
-      await Future.delayed(Duration(seconds: 3));
+  String token = await getToken();
+  if (token == null) return;
 
-      final token = await plainNotificationToken.getToken();
-      // user haven't give permission
-      if (token == null) return;
+  if (userData.token.fetch() == token) return;
 
-      final userData = locator<UserDataStore>();
-      final userName = userData.username.fetch();
-      if (userName == null || userName.length < 10) return;
-
-      if (userData.token.fetch() == token) return;
-      userData.token.put(token);
-      
-      final resp = 
-        await Dio().get("https://push.lolli.tech/ios?token=$token&id=$userName");
-      if (resp.statusCode == 200) print('send ios push token success: $token');
-    }
+  if(await sendToken(token, userName)) {
+    userData.token.put(token);
   }
+}
+
+Future<String> getToken() async {
+  if (Platform.isIOS) {
+    final plainNotificationToken = PlainNotificationToken();
+    plainNotificationToken.requestPermission();
+    await plainNotificationToken.onIosSettingsRegistered.first;
+
+    // wait for user to give notification permission
+    await Future.delayed(Duration(seconds: 3));
+
+    return await plainNotificationToken.getToken();
+  } else {
+    await XiaoMiPushPlugin.init(
+          appId: "2882303761518813144", appKey: "5601881368144");
+    return await XiaoMiPushPlugin.getRegId();
+  }
+}
+
+Future<bool> sendToken(String token, String userName) async {
+  final pushServer = "https://push.lolli.tech";
+  String url;
+  if (Platform.isIOS) {
+    url = "$pushServer/ios?token=$token&id=$userName";
+  } else {
+    url = "$pushServer/android?token=$token&id=$userName";
+  }
+  final resp = await Dio().get(url);
+  if (resp.statusCode == 200) {
+    print('send push token success: $token');
+    return true;
+  }
+  return false;
 }
