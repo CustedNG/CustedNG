@@ -8,6 +8,7 @@ class NavBar {
     Widget leading,
     Widget middle,
     List<Widget> trailing,
+    Color backgroundColor
   }) {
 
     return AppBar(
@@ -21,6 +22,7 @@ class NavBar {
       centerTitle: true,
       actions: trailing,
       brightness: Brightness.dark,
+      backgroundColor: backgroundColor,
     );
   }
 }

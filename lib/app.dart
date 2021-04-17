@@ -144,11 +144,15 @@ Future<bool> sendToken(String token, String userName) async {
   final pushServer = "https://push.lolli.tech";
   String url;
   if (Platform.isIOS) {
-    url = "$pushServer/ios?token=$token&id=$userName";
+    url = "$pushServer/ios";
   } else {
-    url = "$pushServer/android?token=$token&id=$userName";
+    url = "$pushServer/android";
   }
-  final resp = await Dio().get(url);
+  Map<String, dynamic> queryParams = {
+    "token": token,
+    "id": userName
+  };
+  final resp = await Dio().get(url, queryParameters: queryParams);
   if (resp.statusCode == 200) {
     print('send push token success: $token');
     return true;

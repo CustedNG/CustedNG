@@ -23,7 +23,6 @@ class CatClient {
     Duration timeout = kDefaultTimeout,
   }) async {
     url = resolveUri(url);
-    print('Cat Request: $method $url');
     final request = CatRequest(method, url);
     request.headers.addAll(headers);
     request.headers.putIfAbsent('Accept-Language',
@@ -107,8 +106,6 @@ class CatClient {
       // headers['Host'] =
     }
 
-    print('Cat Redirect: $uri');
-
     return await rawRequest(
       method,
       uri,
@@ -124,7 +121,6 @@ class CatClient {
     // }
 
     final cookies = await findCookiesAsString(request.url);
-    print('load cookie for ${request.url} : [${cookies.length}]');
     if (cookies.isNotEmpty) {
       request.headers[HttpHeaders.cookieHeader] = cookies;
     }

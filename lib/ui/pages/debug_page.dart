@@ -26,8 +26,11 @@ class _DebugPageState extends State<DebugPage> {
 
     return Scaffold(
       appBar: NavBar.material(
-          middle: NavbarText('Terminal')),
+          middle: NavbarText('Terminal'),
+          backgroundColor: Colors.black
+        ),
       body: content,
+      backgroundColor: Colors.black,
     );
   }
 

@@ -89,7 +89,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
 
       if (list.isEmpty) {
         content = Center(
-          child: Text(exam.failed ? '暂时无法获取考场信息' : '没有考试啦～'),
+          child: Text(exam.data == null ? '暂时无法获取考场信息' : '没有考试啦～'),
         );
       }
     }

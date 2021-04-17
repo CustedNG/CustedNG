@@ -34,7 +34,7 @@ class _HomeExamState extends State<HomeExam> {
       notice = '点击查看考场信息';
     } else {
       final nextExam = exam.getNextExam();
-      if (exam.failed && nextExam == null) {
+      if (exam.data == null) {
         notice = '刷新失败，暂时无法获取考试信息';
       }
       if (nextExam == null) {
@@ -54,8 +54,8 @@ class _HomeExamState extends State<HomeExam> {
 
         time = examTime;
         if (exam.failed) {
-          final failedTip = '提示：刷新失败，正在使用缓存数据，可能不准确';
-          notice = '$examName \n$examPosition  $examType\n$failedTip';
+          final failedTip = '(缓存)';
+          notice = '$examName \n$examPosition  $examType $failedTip';
         } else {
           notice = '$examName \n$examPosition  $examType';
         }
@@ -66,18 +66,22 @@ class _HomeExamState extends State<HomeExam> {
       fontSize: 13
     );
 
+    final card = HomeCard(
+      title: _buildTitle(context, time),
+      trailing: true,
+      content: Text(notice, style: style),
+    );
+
+    final child = exam.data == null ? 
+      Hero(
+        tag: 'ExamCard${exam.data.total - exam.getRemainExam()}',
+        transitionOnUserGestures: true,
+        child: card
+      ) : card;
+
     return GestureDetector(
       onTap: () => examPage.go(context),
-      child: Hero(
-          tag: 'ExamCard${exam.failed ? 0 : 
-                exam.data.total - exam.getRemainExam()}',
-          transitionOnUserGestures: true,
-          child: HomeCard(
-            title: _buildTitle(context, time),
-            trailing: true,
-            content: Text(notice, style: style),
-          )
-      ),
+      child: child,
     );
   }
 
