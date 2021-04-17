@@ -4,6 +4,6 @@ class BuildData {
   static String name = "CustedNG";
   static int build = 532;
   static String engine = "Flutter 2.0.4 • channel stable • https://github.com/flutter/flutter.git\nFramework • revision b1395592de (2 周前) • 2021-04-01 14:25:01 -0700\nEngine • revision 2dce47073a\nTools • Dart 2.12.2\n";
-  static String buildAt = "2021-04-16 18:28:09.586489";
-  static int modifications = 5;
+  static String buildAt = "2021-04-16 21:15:24.101378";
+  static int modifications = 3;
 }

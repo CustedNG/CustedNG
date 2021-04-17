@@ -8,7 +8,7 @@ class UserDataStore with PersistentStore {
   StoreProperty<String> get username => property('username');
   StoreProperty<String> get password => property('password');
   StoreProperty<UserProfile> get profile => property('profile');
-  StoreProperty<String> get token => property('token');
+  StoreProperty<DateTime> get tokenDate => property('tokenDate');
   StoreProperty<bool> get loggedIn => property('loggedIn', defaultValue: false);
   StoreProperty<bool> get haveInit => property('init327', defaultValue: false);
 }

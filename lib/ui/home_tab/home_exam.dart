@@ -32,10 +32,11 @@ class _HomeExamState extends State<HomeExam> {
 
     if (setting.agreeToShowExam.fetch() == false) {
       notice = '点击查看考场信息';
-    } else if (exam.failed) {
-      notice = '暂时无法获取考场信息';
     } else {
       final nextExam = exam.getNextExam();
+      if (exam.failed && nextExam == null) {
+        notice = '刷新失败，暂时无法获取考试信息';
+      }
       if (nextExam == null) {
         notice = '没有考试啦～';
       } else {
@@ -52,7 +53,12 @@ class _HomeExamState extends State<HomeExam> {
             .replaceFirst(' ', '日 ');
 
         time = examTime;
-        notice = '$examName \n$examPosition  $examType';
+        if (exam.failed) {
+          final failedTip = '提示：刷新失败，正在使用缓存数据，可能不准确';
+          notice = '$examName \n$examPosition  $examType\n$failedTip';
+        } else {
+          notice = '$examName \n$examPosition  $examType';
+        }
       }
     }
 

@@ -14,6 +14,7 @@ import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/data/store/banner_store.dart';
 import 'package:custed2/data/store/custom_lesson_store.dart';
 import 'package:custed2/data/store/custom_schedule_store.dart';
+import 'package:custed2/data/store/exam_store.dart';
 import 'package:custed2/data/store/grade_store.dart';
 import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
@@ -82,6 +83,12 @@ Future<void> setupLocatorForStores() async {
 
   locator.registerSingletonAsync<BannerStore>(() async {
     final store = BannerStore();
+    await store.init();
+    return store;
+  });
+
+  locator.registerSingletonAsync<ExamStore>(() async {
+    final store = ExamStore();
     await store.init();
     return store;
   });

@@ -9,6 +9,7 @@ import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/webvpn_service.dart';
 import 'package:custed2/service/wrdvpn_service.dart';
 import 'package:custed2/ui/webview/plugin_iecard.dart';
+import 'package:custed2/ui/webview/plugin_nav.dart';
 import 'package:custed2/ui/webview/plugin_remote.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
 import 'package:custed2/ui/webview/plugin_netdisk.dart';
@@ -24,8 +25,6 @@ class WebviewBrowser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCustUrl = url.contains('cust.edu.cn');
-
     return Webview2(
       url: url,
       onCreated: onCreated,
@@ -35,13 +34,14 @@ class WebviewBrowser extends StatelessWidget {
           openUrl(url);
         }
       },
-      plugins: isCustUrl ? [
+      plugins: [
         PluginForMysso(),
         PluginForPortal(),
         PluginForIecard(),
         PluginForNetdisk(),
         PluginFromRemote(),
-      ] : [],
+        PluginForNav()
+      ],
     );
   }
 

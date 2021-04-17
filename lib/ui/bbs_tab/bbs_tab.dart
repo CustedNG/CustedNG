@@ -9,17 +9,16 @@ import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-const custcc = 'https://cust.cc/?custed=1';
-const custccDark = 'https://cust.cc/?custed=1&dark=1';
 
-class NavTab extends StatefulWidget {
+class BBSTab extends StatefulWidget {
   @override
-  _NavTabState createState() => _NavTabState();
+  _BBSTabState createState() => _BBSTabState();
 }
 
-class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
+class _BBSTabState extends State<BBSTab> with AutomaticKeepAliveClientMixin {
   InAppWebViewController controller;
   Future _future;
+  final bbsUrl = 'https://bbs.cust.app';
 
   @override
   void didChangeDependencies() {
@@ -40,11 +39,8 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
     return Scaffold(
       appBar: NavBar.material(
         context: context,
-        leading: GestureDetector(
-          onTap: toggleSideMenu,
-          child: Icon(Icons.toggle_off),
-        ),
-        middle: NavbarMiddle(textAbove: '资源导航', textBelow: 'cust.cc'),
+        leading: Container(),
+        middle: NavbarMiddle(textAbove: '校内论坛', textBelow: 'bbs.cust.app'),
         trailing: [_showMenu(context)],
       ),
       body: FutureBuilder(
@@ -59,12 +55,10 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _buildBuilder(BuildContext context, AsyncSnapshot snapshot) {
-    final url = isDark(context) ? custccDark : custcc;
-
     switch (snapshot.connectionState) {
       case ConnectionState.done:
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-        return _buildBrowser(url);
+        return _buildBrowser(bbsUrl);
       case ConnectionState.none:
       case ConnectionState.active:
       case ConnectionState.waiting:
@@ -134,7 +128,7 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
               controller.reload();
               break;
             case 'B':
-              openUrl(custcc);
+              openUrl(bbsUrl);
               break;
           }
         });
@@ -148,12 +142,8 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
     }
   }
 
-  void toggleSideMenu() {
-    controller?.evaluateJavascript(source: 'toggleSideMenu()');
-  }
-
   void goHome() {
-    controller?.loadUrl(urlRequest: custcc.uq);
+    controller?.loadUrl(urlRequest: bbsUrl.uq);
   }
 
   @override

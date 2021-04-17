@@ -4,7 +4,7 @@ import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/grade_legacy.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
-import 'package:custed2/ui/nav_tab/nav_tab.dart';
+import 'package:custed2/ui/bbs_tab/bbs_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
@@ -45,7 +45,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
           GradeReportLegacy(),
           ScheduleTab(),
           HomeTab(),
-          NavTab(),
+          BBSTab(),
           UserTab(),
         ],
       ),

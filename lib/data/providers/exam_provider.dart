@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/data/models/jw_exam.dart';
+import 'package:custed2/data/store/exam_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 
@@ -24,15 +26,8 @@ class ExamProvider extends BusyProvider {
     }
 
     setBusyState(true);
-
-    try {
-      await refreshData();
-      startAutoRefresh();
-    } catch (e) {
-      failed = true;
-    } finally {
-      setBusyState(false);
-    }
+    await refreshData();
+    startAutoRefresh();
   }
 
   JwExamRows getNextExam() {
@@ -71,8 +66,18 @@ class ExamProvider extends BusyProvider {
   }
 
   void refreshData() async {
-    final exam = await JwService().getExam();
-    data = exam.data;
+    final examStore = await locator.getAsync<ExamStore>();
+    try {
+      final exam = await JwService().getExam();
+      data = exam.data;
+      examStore.put(data);
+    } catch(e) {
+      failed = true;
+      print('use cached exam data.');
+      data = examStore.fetch();
+    } finally {
+      setBusyState(false);
+    }
     data.rows.sort((a, b) => sortExamByTime(a, b));
   }
 

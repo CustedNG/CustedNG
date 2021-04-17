@@ -29,13 +29,18 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     // 2.不同意
     // 3.教务炸了
 
-    if (exam.failed) {
-      content = Center(
-        child: Text('暂时无法获取考场信息～'),
-      );
-    } else if (setting.agreeToShowExam.fetch() == true) {
+    if (setting.agreeToShowExam.fetch() == true) {
       final rows = exam?.data?.rows ?? <JwExamRows>[];
       final list = <Widget>[];
+
+      if (exam.failed) {
+        list.add(
+          Text(
+            '请注意：刷新失败，正在使用缓存，可能考试表不准确',
+            style: TextStyle(color: Colors.red),
+          )
+        );
+      }
 
       for (JwExamRows eachExam in rows) {
         final examTime = (eachExam.examTask.beginDate.substring(5, 11) +
@@ -50,10 +55,14 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
         final homeCard = HomeCard(
           title: Text(
               examTime,
-              style: TextStyle(color: Color(0xFF889CC3))
+              style: TextStyle(
+                color: Color(0xFF889CC3), 
+                fontWeight: FontWeight.bold
+              )
           ),
           content: Text(
-              '$examName\n$examPosition  $examType'
+              '$examName\n$examPosition  $examType',
+              style: TextStyle(fontSize: 13),
           ),
         );
 
@@ -80,7 +89,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
 
       if (list.isEmpty) {
         content = Center(
-          child: Text('没有考试啦～'),
+          child: Text(exam.failed ? '暂时无法获取考场信息' : '没有考试啦～'),
         );
       }
     }
@@ -105,7 +114,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       return;
     }
 
-    Future.delayed(Duration(milliseconds: 377), () =>
+    Future.delayed(Duration(milliseconds: 777), () =>
         showRoundDialog(
             context,
             '提示',

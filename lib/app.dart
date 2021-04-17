@@ -109,10 +109,17 @@ Future<void> initPushService() async {
   String token = await getToken();
   if (token == null) return;
 
-  if (userData.token.fetch() == token) return;
+  final now = DateTime.now();
+  DateTime cacheTokenDate = userData.tokenDate.fetch();
+  cacheTokenDate ??= now;
+  
+  if (cacheTokenDate.add(Duration(days: 2)).isAfter(now)) {
+    print('ignore send token due to $cacheTokenDate.');
+    return;
+  }
 
   if(await sendToken(token, userName)) {
-    userData.token.put(token);
+    userData.tokenDate.put(now);
   }
 }
 
@@ -127,7 +134,7 @@ Future<String> getToken() async {
 
     return await plainNotificationToken.getToken();
   } else {
-    await XiaoMiPushPlugin.init(
+    XiaoMiPushPlugin.init(
           appId: "2882303761518813144", appKey: "5601881368144");
     return await XiaoMiPushPlugin.getRegId();
   }

@@ -89,9 +89,9 @@ final feedbackPage = AppRoute(
   page: WebviewBrowser('$custccBase/go/feedback')
 );
 
-final bbsPage = AppRoute(
-    title: '论坛',
-    page: WebviewBrowser('$custccBase/go/bbs')
+final navPage = AppRoute(
+    title: '校内导航',
+    page: WebviewBrowser('$custccBase?custed=1')
 );
 
 final selfWebPage = AppRoute(
