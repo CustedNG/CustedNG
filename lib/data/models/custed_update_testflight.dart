@@ -5,8 +5,8 @@ part 'custed_update_testflight.g.dart';
 // ignore_for_file: non_constant_identifier_names
 
 @JsonSerializable()
-class CustedUpdateTestflight {
-  CustedUpdateTestflight();
+class CustedUpdateiOS {
+  CustedUpdateiOS();
 
   /// 最低版本，低于此版本每次启动均提示更新
   int min;
@@ -23,7 +23,7 @@ class CustedUpdateTestflight {
   /// alert content
   String content;
 
-  factory CustedUpdateTestflight.fromJson(Map<String, dynamic> json) =>
+  factory CustedUpdateiOS.fromJson(Map<String, dynamic> json) =>
       _$CustedUpdateTestflightFromJson(json);
 
   Map<String, dynamic> toJson() => _$CustedUpdateTestflightToJson(this);

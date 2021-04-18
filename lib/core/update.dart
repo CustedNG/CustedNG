@@ -18,7 +18,7 @@ updateCheck(BuildContext context, {bool force = false}) async {
     doAndroidUpdate(context, force: force);
     return;
   }
-  doTestFlightUpdate(context, force: force);
+  doiOSUpdate(context, force: force);
 }
 
 Future<bool> isFileAvailable(String url) async {
@@ -47,9 +47,8 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
   }
 
   if (!force && update.build <= BuildData.build) {
-    print('Update build ${update.build}');
-    print('However current build is ${BuildData.build}');
-    print('Update Ignored.');
+    print('Update Ignored due to current: ${BuildData.build}, '
+          'update: ${update.build}');
     return;
   }
 
@@ -63,11 +62,11 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
   ).go(context);
 }
 
-Future<void> doTestFlightUpdate(
+Future<void> doiOSUpdate(
   BuildContext context, {
   bool force = false,
 }) async {
-  final update = await locator<CustedService>().getTestFlightUpdate();
+  final update = await locator<CustedService>().getiOSUpdate();
   if (update == null) return;
 
   print('Update available: $update');

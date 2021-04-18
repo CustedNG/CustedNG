@@ -89,7 +89,7 @@ void flutterBuildAndroid() async {
 
   if (exitCode == 0) {
     final copySource = './build/app/outputs/apk/release/app-release.apk';
-    final copyTarget = './CustedNG_${build}_Arm.apk';
+    final copyTarget = './CustedNG_${build}_Arm${build64Bit ? 64 : ""}.apk';
     print('Copying from $copySource to $copyTarget');
 
     await File(copySource).copy(copyTarget);

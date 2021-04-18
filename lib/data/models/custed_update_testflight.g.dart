@@ -6,9 +6,9 @@ part of 'custed_update_testflight.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CustedUpdateTestflight _$CustedUpdateTestflightFromJson(
+CustedUpdateiOS _$CustedUpdateTestflightFromJson(
     Map<String, dynamic> json) {
-  return CustedUpdateTestflight()
+  return CustedUpdateiOS()
     ..min = json['min'] as int
     ..newest = json['newest'] as int
     ..urls = (json['urls'] as List)?.map((e) => e as String)?.toList()
@@ -17,7 +17,7 @@ CustedUpdateTestflight _$CustedUpdateTestflightFromJson(
 }
 
 Map<String, dynamic> _$CustedUpdateTestflightToJson(
-        CustedUpdateTestflight instance) =>
+        CustedUpdateiOS instance) =>
     <String, dynamic>{
       'min': instance.min,
       'newest': instance.newest,

@@ -49,8 +49,9 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
           : Colors.black
     );
 
-    final widgets = [
-      CustedHeader(),
+    return Column(
+      children: [
+        CustedHeader(),
       SizedBox(height: 10.0),
       Text('设置'),
       SizedBox(height: 10.0),
@@ -94,28 +95,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
         rightBtn: _buildDarkModeRadio(),
       ),
       SizedBox(height: 40.0)
-    ];
-
-    return AnimationLimiter(
-      child: ListView.builder(
-        itemCount: widgets.length,
-        itemBuilder: (BuildContext context, int index) {
-          return AnimationConfiguration.staggeredList(
-            position: index,
-            duration: const Duration(milliseconds: 375),
-            child: SlideAnimation(
-              verticalOffset: 50.0,
-              child: FadeInAnimation(
-                child: Container(
-                  alignment: Alignment.center,
-                  margin: EdgeInsets.only(bottom: 3), 
-                  child: widgets[index]
-                ),
-              ),
-            ),
-          );
-        },
-      ),
+      ],
     );
   }
 
