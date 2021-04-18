@@ -210,11 +210,12 @@ class _HomeEntriesState extends State<HomeEntries> {
           userData.wifiPassword.put(pwd);
         }
         Navigator.pop(ctx);
+        showSnackBar(context, '校园网登录成功');
       } else {
         showSnackBar(ctx, '校园网认证失败');
       }
     } catch (e) {
-      print(e);
+      print('catch exception during connect to campus wifi');
     } finally {
       setState(() => isBusy = false);
     }

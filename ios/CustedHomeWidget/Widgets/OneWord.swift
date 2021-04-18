@@ -102,7 +102,6 @@ struct OneWordView: View {
         Text(content)
             .multilineTextAlignment(.center)
             .padding()
-            .background(LinearGradient(gradient: Gradient(colors: [.orange, .yellow]), startPoint: .top, endPoint: .bottom))
     }
 }
 
