@@ -66,14 +66,14 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
           ),
         );
 
+        final heroIndex = exam.failed ? list.length ~/ 2 : (list.length - 1) ~/ 2;
+
         list.add(
-            list.isEmpty
-                ? Hero(
-                    child: homeCard,
-                    transitionOnUserGestures: true,
-                    tag: 'ExamCard${list.length ~/ 2}',
-                )
-                : homeCard
+          Hero(
+            child: homeCard,
+            transitionOnUserGestures: true,
+            tag: 'ExamCard$heroIndex'
+          )
         );
         list.add(SizedBox(height: 15));
       }

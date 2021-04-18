@@ -11,4 +11,5 @@ class UserDataStore with PersistentStore {
   StoreProperty<DateTime> get tokenDate => property('tokenDate');
   StoreProperty<bool> get loggedIn => property('loggedIn', defaultValue: false);
   StoreProperty<bool> get haveInit => property('init327', defaultValue: false);
+  StoreProperty<String> get wifiPassword => property('wifiPaswword');
 }

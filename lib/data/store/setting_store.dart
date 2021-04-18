@@ -40,4 +40,7 @@ class SettingStore with PersistentStore {
   StoreProperty<int> get ignoreUpdate => property('ignoreUpdate');
 
   StoreProperty<String> get notification => property('notification');
+
+  StoreProperty<bool> get saveWiFiPassword => 
+      property('saveCampusWiFi', defaultValue: true);
 }

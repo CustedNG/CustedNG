@@ -72,12 +72,14 @@ class _HomeExamState extends State<HomeExam> {
       content: Text(notice, style: style),
     );
 
-    final child = exam.data == null ? 
-      Hero(
-        tag: 'ExamCard${exam.data.total - exam.getRemainExam()}',
-        transitionOnUserGestures: true,
-        child: card
-      ) : card;
+    final heroIndex = exam.data == null ? 
+          0 : exam.data.total - exam.getRemainExam();
+
+    final child = Hero(
+      tag: 'ExamCard$heroIndex',
+      transitionOnUserGestures: true,
+      child: card
+    );
 
     return GestureDetector(
       onTap: () => examPage.go(context),

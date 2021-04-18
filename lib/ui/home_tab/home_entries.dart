@@ -1,11 +1,16 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/providers/user_provider.dart';
+import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
+import 'package:custed2/service/campus_wifi_service.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
+import 'package:custed2/ui/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class HomeEntries extends StatefulWidget {
@@ -15,6 +20,26 @@ class HomeEntries extends StatefulWidget {
 
 class _HomeEntriesState extends State<HomeEntries> {
   String tikuUrl = 'https://tiku.lacus.site';
+  bool isBusy = false;
+
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final passwordFocusNode = FocusNode();
+  UserDataStore userData;
+  SettingStore setting;
+
+  Future<void> init() async {
+    await GetIt.instance.allReady();
+    WidgetsFlutterBinding.ensureInitialized();
+    userData = locator<UserDataStore>();
+    setting = locator<SettingStore>();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
 
   Future<void> loadUserName() async {
     final user = Provider.of<UserProvider>(context);
@@ -82,12 +107,116 @@ class _HomeEntriesState extends State<HomeEntries> {
           HomeEntry(
             name: Text('快速联网', style: style),
             icon: Image(image: ImageRes.wifiIcon),
-            action: () => ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('该功能暂时不可用'))
-            ),
+            action: () => _showConnectWiFiDialog(),
           ),
         ])
       ]),
     );
+  }
+
+  void _showConnectWiFiDialog() {
+    showRoundDialog(
+      context, 
+      '连接校园网', 
+      _buildTextInputField(context), 
+      [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(), 
+          child: Text('关闭')
+        ),
+        isBusy ? CircularNotchedRectangle() : TextButton(
+          onPressed: () => tryLogin(context), 
+          child: Text('连接')
+        )
+      ]
+    );
+    loadUserLoginInfo();
+  }
+
+  InputDecoration _buildDecoration(String label, {TextStyle textStyle}){
+    return InputDecoration(
+      labelText: label,
+      labelStyle: textStyle
+    );
+  }
+
+  Widget _buildTextInputField(BuildContext ctx){
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: usernameController,
+          keyboardType: TextInputType.number,
+          decoration: _buildDecoration('校园网账户'),
+          onSubmitted: (_) => FocusScope.of(context).requestFocus(passwordFocusNode),
+        ),
+        SizedBox(height: 15),
+        TextField(
+          controller: passwordController,
+          focusNode: passwordFocusNode,
+          obscureText: true,
+          decoration: _buildDecoration('校园网密码'),
+          onSubmitted: (_) => tryLogin(ctx),
+        ),
+        Row(
+          children: [
+            Text('保存校园网密码'),
+            _buildSwitch(context, setting.saveWiFiPassword)
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop, {Function func}) {
+    return ValueListenableBuilder(
+      valueListenable: prop.listenable(),
+      builder: (context, value, widget) {
+        return Switch(
+            value: value, onChanged: (value) {
+              if (func != null) func();
+              return prop.put(value);
+            }
+        );
+      },
+    );
+  }
+
+  void loadUserLoginInfo() async {
+    final username = userData.username.fetch();
+    final password = userData.wifiPassword.fetch();
+    if (username != null || password != null) {
+      usernameController.text = username;
+      passwordController.text = password;
+    }
+  }
+
+  Future<void> tryLogin(BuildContext ctx) async {
+    if (isBusy) return;
+
+    setState(() => isBusy = true);
+
+    try {
+      String user = usernameController.text;
+      String pwd = passwordController.text;
+
+      final suc = await CampusWiFiService().login(user, pwd).timeout(
+        Duration(seconds: 10)
+      );
+
+      if (suc) {
+        if (setting.saveWiFiPassword.fetch()) {
+          userData.wifiPassword.put(pwd);
+        }
+        Navigator.pop(ctx);
+      } else {
+        showSnackBar(ctx, '校园网认证失败');
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() => isBusy = false);
+    }
   }
 }

@@ -34,6 +34,8 @@ PODS:
     - Flutter
   - webview_cookie_manager (0.0.1):
     - Flutter
+  - wifi_ip (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
@@ -48,6 +50,7 @@ DEPENDENCIES:
   - share_extend (from `.symlinks/plugins/share_extend/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - webview_cookie_manager (from `.symlinks/plugins/webview_cookie_manager/ios`)
+  - wifi_ip (from `.symlinks/plugins/wifi_ip/ios`)
 
 SPEC REPOS:
   trunk:
@@ -80,6 +83,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher/ios"
   webview_cookie_manager:
     :path: ".symlinks/plugins/webview_cookie_manager/ios"
+  wifi_ip:
+    :path: ".symlinks/plugins/wifi_ip/ios"
 
 SPEC CHECKSUMS:
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
@@ -97,6 +102,7 @@ SPEC CHECKSUMS:
   share_extend: b6748dc53695587891126a89533b862b92548c7b
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   webview_cookie_manager: eaf920722b493bd0f7611b5484771ca53fed03f7
+  wifi_ip: a97652dceba35b28465dcf89781f300c91f22de7
 
 PODFILE CHECKSUM: e78b533fd58876e6615751f61a49d346b8e35f08
 

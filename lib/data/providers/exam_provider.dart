@@ -78,6 +78,7 @@ class ExamProvider extends BusyProvider {
     } finally {
       setBusyState(false);
     }
+    if (data == null) return;
     data.rows.sort((a, b) => sortExamByTime(a, b));
   }
 
