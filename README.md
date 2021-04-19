@@ -9,23 +9,34 @@
     <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/CustedNG/CustedNG">
 </p>
 
-## CustedNG
+# CustedNG
 
-**图为深色模式**
+## 截屏
 
 <table>
   <tr>
     <td>
-		<img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/home.png">
+		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/home.png">
     </td>
     <td>
-       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/schedule.png">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/schedule.png">
     </td>
     <td>
-       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/lesson.png">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/grade.png">
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/bbs.png">
     </td>
     <td>
-       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/tiku.png">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/tiku.png">
+    </td>
+    <td>
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/setting.png">
     </td>
   </tr>
 </table>
@@ -53,7 +64,8 @@
 
 **iOS**
 
-[点击下载(via Testflight)](https://cust.app/ios)
+[AppStore](https://apps.apple.com/cn/app/custed/id1483085363)  OR 
+[Testflight](https://cust.app/ios)
 
 **桌面客户端**
 
@@ -69,11 +81,6 @@
 
 - [ ] 当前仅支持本科生使用
 - [x] <del>由于教务尚未开放相关功能 无法查询成绩</del>
-
-
-## Contributers
-
-[![](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/images/0)](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/links/0)[![](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/images/1)](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/links/1)[![](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/images/2)](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/links/2)[![](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/images/3)](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/links/3)[![](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/images/4)](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/links/4)[![](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/images/5)](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/links/5)[![](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/images/6)](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/links/6)[![](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/images/7)](https://sourcerer.io/fame/xtyxtyx/CustedNG/CustedNG/links/7)
 
 
 ## Licence
