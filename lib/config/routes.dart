@@ -1,5 +1,4 @@
 import 'package:custed2/core/route.dart';
-import 'package:custed2/ui/home_tab/about_page.dart';
 import 'package:custed2/ui/home_tab/home_go_to_wechat.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
@@ -35,11 +34,6 @@ final debugPage = AppRoute(
 final cbsPage = AppRoute(
   title: 'CBS',
   page: CbsPage(),
-);
-
-final aboutPage = AppRoute(
-  title: '关于',
-  page: AboutPage(),
 );
 
 final cetAvatarPage = AppRoute(

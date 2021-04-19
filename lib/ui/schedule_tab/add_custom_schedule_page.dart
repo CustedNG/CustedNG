@@ -3,7 +3,7 @@ import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:custed2/ui/utils.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 

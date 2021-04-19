@@ -1,4 +1,6 @@
+import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
+import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/fade_in.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -101,3 +103,23 @@ final Uint8List kTransparentImage = new Uint8List.fromList(<int>[
   0x9C,0x63,0x00,0x01,0x00,0x00,0x05,0x00,0x01,0x0D,0x0A,0x2D,0xB4,0x00,
   0x00,0x00,0x00,0x49,0x45,0x4E,0x44,0xAE,
 ]);
+
+Widget buildSwitch(BuildContext context, 
+                    StoreProperty<bool> prop, {Function func}) {
+  return Positioned(
+      right: 0,
+      child: ValueListenableBuilder(
+        valueListenable: prop.listenable(),
+        builder: (context, value, widget) {
+          return DarkModeFilter(
+            child: Switch(
+                value: value, onChanged: (value) {
+                  if (func != null) func();
+                  return prop.put(value);
+                }
+            ),
+          );
+        },
+      )
+  );
+}

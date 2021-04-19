@@ -1,6 +1,6 @@
 import 'package:custed2/core/route.dart';
 import 'package:custed2/res/build_data.dart';
-import 'package:custed2/ui/user_tab/version_page.dart';
+import 'package:custed2/ui/user_tab/custed_more_page.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class _CustedHeaderState extends State<CustedHeader> {
     return Padding(
         padding: EdgeInsets.all(20.0),
         child: GestureDetector(
-            onTap: () => AppRoute(page: VersionPage()).go(context),
+            onTap: () => AppRoute(page: CustedMorePage()).go(context),
             child: Card(
               elevation: 10.0,
               shape: RoundedRectangleBorder(

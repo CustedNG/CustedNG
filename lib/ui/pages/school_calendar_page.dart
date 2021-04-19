@@ -1,5 +1,5 @@
 import 'package:custed2/core/util/save_image.dart';
-import 'package:custed2/ui/utils.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';

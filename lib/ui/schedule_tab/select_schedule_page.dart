@@ -6,7 +6,7 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_custom_schedule_page.dart';
-import 'package:custed2/ui/utils.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

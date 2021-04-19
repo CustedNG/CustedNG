@@ -1,11 +1,9 @@
-import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/custed_header.dart';
-import 'package:custed2/ui/utils.dart';
-import 'package:custed2/ui/widgets/dark_mode_filter.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
@@ -58,33 +56,33 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
         title: '将课表设置为首页',
         titleStyle: settingTextStyle,
         isShowArrow: false,
-        rightBtn: _buildSwitch(context, setting.useScheduleAsHome),
+        rightBtn: buildSwitch(context, setting.useScheduleAsHome),
       ),
       SettingItem(
         title: '显示非当前周课程',
         titleStyle: settingTextStyle,
         isShowArrow: false,
-        rightBtn: _buildSwitch(context, setting.showInactiveLessons),
+        rightBtn: buildSwitch(context, setting.showInactiveLessons),
       ),
       SettingItem(
         title: '绩点不计选修',
         titleStyle: settingTextStyle,
         isShowArrow: false,
-        rightBtn: _buildSwitch(
+        rightBtn: buildSwitch(
             context, setting.dontCountElectiveCourseGrade),
       ),
       SettingItem(
         title: '启动时自动更新课表',
         titleStyle: settingTextStyle,
         isShowArrow: false,
-        rightBtn: _buildSwitch(
+        rightBtn: buildSwitch(
             context, setting.autoUpdateSchedule),
       ),
       SettingItem(
         title: '持续自动更新天气',
         titleStyle: settingTextStyle,
         isShowArrow: false,
-        rightBtn: _buildSwitch(
+        rightBtn: buildSwitch(
             context, setting.autoUpdateWeather),
       ),
       SettingItem(
@@ -121,25 +119,6 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
             onChanged: _onSelection
         )
       ],
-    );
-  }
-
-  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop, {Function func}) {
-    return Positioned(
-        right: 0,
-        child: ValueListenableBuilder(
-          valueListenable: prop.listenable(),
-          builder: (context, value, widget) {
-            return DarkModeFilter(
-              child: Switch(
-                  value: value, onChanged: (value) {
-                    if (func != null) func();
-                    return prop.put(value);
-                  }
-              ),
-            );
-          },
-        )
     );
   }
 

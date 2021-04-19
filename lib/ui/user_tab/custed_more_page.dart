@@ -10,7 +10,7 @@ import 'package:custed2/ui/widgets/setting_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class VersionPage extends StatelessWidget{
+class CustedMorePage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     final widgets = [

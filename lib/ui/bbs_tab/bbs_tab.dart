@@ -2,7 +2,7 @@ import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:custed2/ui/utils.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';

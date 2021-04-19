@@ -498,7 +498,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/CustedNG.entitlements;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 540;
 				DEVELOPMENT_TEAM = BA88US33G6;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -515,7 +515,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 1.0.538;
+				MARKETING_VERSION = 1.0.540;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tusi.app;
 				PRODUCT_NAME = CustedNG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -537,7 +537,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = CustedHomeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 540;
 				DEVELOPMENT_TEAM = BA88US33G6;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CustedHomeWidget/Info.plist;
@@ -547,7 +547,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.538;
+				MARKETING_VERSION = 1.0.540;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tusi.app.CustedHomeWidget;
@@ -572,7 +572,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = CustedHomeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 540;
 				DEVELOPMENT_TEAM = BA88US33G6;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CustedHomeWidget/Info.plist;
@@ -582,7 +582,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.538;
+				MARKETING_VERSION = 1.0.540;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tusi.app.CustedHomeWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -604,7 +604,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = CustedHomeWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 540;
 				DEVELOPMENT_TEAM = BA88US33G6;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = CustedHomeWidget/Info.plist;
@@ -614,7 +614,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.538;
+				MARKETING_VERSION = 1.0.540;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tusi.app.CustedHomeWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -743,7 +743,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/CustedNG.entitlements;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 540;
 				DEVELOPMENT_TEAM = BA88US33G6;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -760,7 +760,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 1.0.538;
+				MARKETING_VERSION = 1.0.540;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tusi.app;
 				PRODUCT_NAME = CustedNG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -779,7 +779,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/CustedNG.entitlements;
-				CURRENT_PROJECT_VERSION = 538;
+				CURRENT_PROJECT_VERSION = 540;
 				DEVELOPMENT_TEAM = BA88US33G6;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -796,7 +796,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				MARKETING_VERSION = 1.0.538;
+				MARKETING_VERSION = 1.0.540;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tusi.app;
 				PRODUCT_NAME = CustedNG;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

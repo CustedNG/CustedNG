@@ -1,7 +1,7 @@
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/ui/utils.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/webview/plugin_debug.dart';
 import 'package:custed2/ui/webview/plugin_login.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';

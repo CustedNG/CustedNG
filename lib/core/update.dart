@@ -7,7 +7,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/update/update_notice_page.dart';
-import 'package:custed2/ui/utils.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 

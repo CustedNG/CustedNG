@@ -1,5 +1,4 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
@@ -8,7 +7,7 @@ import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/campus_wifi_service.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
-import 'package:custed2/ui/utils.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -161,24 +160,10 @@ class _HomeEntriesState extends State<HomeEntries> {
         Row(
           children: [
             Text('保存登录信息'),
-            _buildSwitch(context, setting.saveWiFiPassword)
+            buildSwitch(context, setting.saveWiFiPassword)
           ],
         )
       ],
-    );
-  }
-
-  Widget _buildSwitch(BuildContext context, StoreProperty<bool> prop, {Function func}) {
-    return ValueListenableBuilder(
-      valueListenable: prop.listenable(),
-      builder: (context, value, widget) {
-        return Switch(
-            value: value, onChanged: (value) {
-              if (func != null) func();
-              return prop.put(value);
-            }
-        );
-      },
     );
   }
 

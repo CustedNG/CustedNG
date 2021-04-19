@@ -7,7 +7,7 @@ import 'package:custed2/core/platform/os/app_tmp_dir.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/custed_service.dart';
-import 'package:custed2/ui/utils.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:install_plugin/install_plugin.dart';
