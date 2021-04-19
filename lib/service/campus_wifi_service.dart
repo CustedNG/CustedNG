@@ -42,14 +42,19 @@ class CampusWiFiService extends CatClient {
       queryParameters: param,
       options: Options(
         followRedirects: false,
-        validateStatus: (code) => code < 500
+        validateStatus: (code) => code < 400
       )
     );
-    if (resp.statusCode < 400) {
+    if (isSuccess(resp)) {
       print('campus wifi login success');
       return true;
     }
     return false;
+  }
+
+  bool isSuccess(Response resp) {
+    return resp.headers['Set-Cookie'].isNotEmpty
+        || resp.requestOptions.headers['Cookie'].toString().length > 10;
   }
 
   Future<String> getIP() async {

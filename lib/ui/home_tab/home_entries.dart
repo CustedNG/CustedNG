@@ -20,7 +20,6 @@ class HomeEntries extends StatefulWidget {
 
 class _HomeEntriesState extends State<HomeEntries> {
   String tikuUrl = 'https://tiku.lacus.site';
-  bool isBusy = false;
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -124,7 +123,7 @@ class _HomeEntriesState extends State<HomeEntries> {
           onPressed: () => Navigator.of(context).pop(), 
           child: Text('关闭')
         ),
-        isBusy ? CircularNotchedRectangle() : TextButton(
+        TextButton(
           onPressed: () => tryLogin(context), 
           child: Text('连接')
         )
@@ -161,7 +160,7 @@ class _HomeEntriesState extends State<HomeEntries> {
         ),
         Row(
           children: [
-            Text('保存校园网密码'),
+            Text('保存登录信息'),
             _buildSwitch(context, setting.saveWiFiPassword)
           ],
         )
@@ -184,8 +183,10 @@ class _HomeEntriesState extends State<HomeEntries> {
   }
 
   void loadUserLoginInfo() async {
-    final username = userData.username.fetch() ?? '';
-    final password = userData.wifiPassword.fetch() ?? '';
+    final info = (userData.wifiCampusInfo.fetch() ?? '').split(' | ');
+    if (info.length != 2) return;
+    final username = info[0];
+    final password = info[1];
     if (username != null || password != null) {
       usernameController.text = username;
       passwordController.text = password;
@@ -193,21 +194,13 @@ class _HomeEntriesState extends State<HomeEntries> {
   }
 
   Future<void> tryLogin(BuildContext ctx) async {
-    if (isBusy) return;
-
-    setState(() => isBusy = true);
+    String user = usernameController.text;
+    String pwd = passwordController.text;
 
     try {
-      String user = usernameController.text;
-      String pwd = passwordController.text;
-
       final suc = await CampusWiFiService().login(user, pwd);
 
       if (suc) {
-        if (setting.saveWiFiPassword.fetch()) {
-          userData.wifiPassword.put(pwd);
-        }
-        Navigator.pop(ctx);
         showSnackBar(context, '校园网登录成功');
       } else {
         showSnackBar(ctx, '校园网认证失败');
@@ -215,7 +208,10 @@ class _HomeEntriesState extends State<HomeEntries> {
     } catch (e) {
       rethrow;
     } finally {
-      setState(() => isBusy = false);
+      Navigator.pop(ctx);
+      if (setting.saveWiFiPassword.fetch()) {
+        userData.wifiCampusInfo.put('$user | $pwd');
+      }
     }
   }
 }
