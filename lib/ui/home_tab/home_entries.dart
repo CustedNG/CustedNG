@@ -184,8 +184,8 @@ class _HomeEntriesState extends State<HomeEntries> {
   }
 
   void loadUserLoginInfo() async {
-    final username = userData.username.fetch();
-    final password = userData.wifiPassword.fetch();
+    final username = userData.username.fetch() ?? '';
+    final password = userData.wifiPassword.fetch() ?? '';
     if (username != null || password != null) {
       usernameController.text = username;
       passwordController.text = password;
@@ -201,9 +201,7 @@ class _HomeEntriesState extends State<HomeEntries> {
       String user = usernameController.text;
       String pwd = passwordController.text;
 
-      final suc = await CampusWiFiService().login(user, pwd).timeout(
-        Duration(seconds: 10)
-      );
+      final suc = await CampusWiFiService().login(user, pwd);
 
       if (suc) {
         if (setting.saveWiFiPassword.fetch()) {
@@ -215,7 +213,7 @@ class _HomeEntriesState extends State<HomeEntries> {
         showSnackBar(ctx, '校园网认证失败');
       }
     } catch (e) {
-      print('catch exception during connect to campus wifi');
+      rethrow;
     } finally {
       setState(() => isBusy = false);
     }

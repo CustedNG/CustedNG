@@ -36,8 +36,16 @@ class CampusWiFiService extends CatClient {
       'jsVersion': '2.4.3',
       'loginMethod': 1
     };
-    final resp = await Dio().post(loginUrl, data: data, queryParameters: param);
-    if (resp.statusCode == 200) {
+    final resp = await Dio().post(
+      loginUrl, 
+      data: data, 
+      queryParameters: param,
+      options: Options(
+        followRedirects: false,
+        validateStatus: (code) => code < 500
+      )
+    );
+    if (resp.statusCode < 400) {
       print('campus wifi login success');
       return true;
     }

@@ -42,6 +42,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       builder: (context, mode) {
         return MaterialApp(
           title: 'Custed',
+          debugShowCheckedModeBanner: false,
           home: AppFrame(),
           builder: (context, child) {
             bool isDarkMode = _shouldEnableDarkMode(context, mode);
