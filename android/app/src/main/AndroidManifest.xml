@@ -24,6 +24,7 @@
 
     <application
         android:label="Custed NG"
+        tools:replace="android:label"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         android:allowBackup="true">
@@ -74,6 +75,25 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_install_paths"/>
         </provider> -->
+
+        <service android:name="cc.xuty.custed2.PushService"
+                android:enabled="true"
+                android:exported="false"
+                android:process=":pushcore">
+                <intent-filter>
+                    <action android:name="cn.jiguang.user.service.action" />
+                </intent-filter>
+        </service> 
+
+        <receiver
+            android:name="cc.xuty.custed2.PushReceriver"
+            android:enabled="true" 
+            android:exported="false">
+            <intent-filter>
+                    <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                    <category android:name="cc.xuty.custed2" />
+            </intent-filter>
+        </receiver>
 
         <provider android:name="androidx.core.content.FileProvider"
             tools:replace="android:authorities"

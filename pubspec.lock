@@ -405,6 +405,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.3.4"
+  jpush_flutter:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: bfff1f37e675a52c84acadfcb2dccc2815ccdb21
+      url: "git://github.com/jpush/jpush-flutter-plugin.git"
+    source: git
+    version: "2.0.1"
   js:
     dependency: transitive
     description:
@@ -809,13 +818,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.0"
-  xiao_mi_push_plugin:
-    dependency: "direct main"
-    description:
-      name: xiao_mi_push_plugin
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.0.0"
   yaml:
     dependency: transitive
     description:

@@ -67,7 +67,10 @@ dependencies:
   webview_cookie_manager: ^2.0.0-nullsafety.0
   flutter_staggered_animations: ^1.0.0
   plain_notification_token: ^0.0.1
-  xiao_mi_push_plugin: ^2.0.0
+  jpush_flutter:
+    git:
+      url: git://github.com/jpush/jpush-flutter-plugin.git
+      ref: master
   wifi_ip: ^0.0.1
 
 dev_dependencies:

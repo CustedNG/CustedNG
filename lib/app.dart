@@ -17,8 +17,8 @@ import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/setting_builder.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:plain_notification_token/plain_notification_token.dart';
-import 'package:xiao_mi_push_plugin/xiao_mi_push_plugin.dart';
 
 bool _shouldEnableDarkMode(BuildContext context, int mode) {
   // print('ddf: ${MediaQuery.platformBrightnessOf(context)}');
@@ -112,9 +112,9 @@ Future<void> initPushService() async {
 
   final now = DateTime.now();
   DateTime cacheTokenDate = userData.tokenDate.fetch();
-  cacheTokenDate ??= now;
+  cacheTokenDate ??= now.subtract(Duration(days: 3));
   
-  if (cacheTokenDate.add(Duration(days: 2)).isAfter(now)) {
+  if (cacheTokenDate.add(Duration(seconds: 10)).isAfter(now)) {
     print('ignore send token due to $cacheTokenDate.');
     return;
   }
@@ -135,9 +135,14 @@ Future<String> getToken() async {
 
     return await plainNotificationToken.getToken();
   } else if (Platform.isAndroid) {
-    XiaoMiPushPlugin.init(
-          appId: "2882303761518813144", appKey: "5601881368144");
-    return await XiaoMiPushPlugin.getRegId();
+    JPush jpush = new JPush();
+    jpush.setup(
+      appKey: "09dc461a0f268ddb989152f6",
+      channel: "web",
+      production: true,
+      debug: true, // 设置是否打印 debug 日志
+    );
+    return await jpush.getRegistrationID();
   }
   return null;
 }

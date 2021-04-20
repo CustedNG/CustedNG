@@ -50,6 +50,18 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+	        abiFilters 'armeabi', 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'       
+        }
+    
+        manifestPlaceholders = [
+            JPUSH_PKGNAME : applicationId,
+            JPUSH_APPKEY : "09dc461a0f268ddb989152f6", // NOTE: JPush 上注册的包名对应的 Appkey.
+            JPUSH_CHANNEL : "web", //暂时填写默认值即可.
+            XIAOMI_APPID : "MI-2882303761518813144",
+            XIAOMI_APPKEY : "MI-5601881368144",
+        ]
     }
 
     signingConfigs {
@@ -65,6 +77,9 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false        
             shrinkResources false     
+        }
+        debug {
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -82,4 +97,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.huawei.hms:push:4.0.2.300'
+    implementation 'cn.jiguang.sdk.plugin:huawei:4.0.0'
+    implementation 'cn.jiguang.sdk.plugin:xiaomi:4.0.0'
 }
+
+apply plugin: 'com.huawei.agconnect'
