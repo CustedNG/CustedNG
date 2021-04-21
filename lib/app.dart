@@ -140,7 +140,7 @@ Future<String> getToken() async {
       appKey: "09dc461a0f268ddb989152f6",
       channel: "web",
       production: true,
-      debug: true, // 设置是否打印 debug 日志
+      debug: false,
     );
     return await jpush.getRegistrationID();
   }

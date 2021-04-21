@@ -57,10 +57,12 @@ android {
     
         manifestPlaceholders = [
             JPUSH_PKGNAME : applicationId,
-            JPUSH_APPKEY : "09dc461a0f268ddb989152f6", // NOTE: JPush 上注册的包名对应的 Appkey.
-            JPUSH_CHANNEL : "web", //暂时填写默认值即可.
+            JPUSH_APPKEY : "09dc461a0f268ddb989152f6",
+            JPUSH_CHANNEL : "web",
             XIAOMI_APPID : "MI-2882303761518813144",
             XIAOMI_APPKEY : "MI-5601881368144",
+            MEIZU_APPKEY : "MZ-6894522c1f1049bc972ce4fa05a46d96",
+            MEIZU_APPID : "MZ-140751",
         ]
     }
 
@@ -101,6 +103,9 @@ dependencies {
     implementation 'com.huawei.hms:push:4.0.2.300'
     implementation 'cn.jiguang.sdk.plugin:huawei:4.0.0'
     implementation 'cn.jiguang.sdk.plugin:xiaomi:4.0.0'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'cn.jiguang.sdk.plugin:fcm:4.0.0'
+    implementation 'cn.jiguang.sdk.plugin:meizu:4.0.0'
 }
 
 apply plugin: 'com.huawei.agconnect'
