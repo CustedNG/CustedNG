@@ -70,7 +70,10 @@ class SettingItem extends StatelessWidget {
                       SizedBox(width: 10.0),
                     ],
                   ),
-                  this.rightBtn ?? Container()
+                  Positioned(
+                    child: this.rightBtn ?? Container(),
+                    right: 0,
+                  )
                 ],
               )),
         )

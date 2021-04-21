@@ -106,20 +106,17 @@ final Uint8List kTransparentImage = new Uint8List.fromList(<int>[
 
 Widget buildSwitch(BuildContext context, 
                     StoreProperty<bool> prop, {Function func}) {
-  return Positioned(
-      right: 0,
-      child: ValueListenableBuilder(
-        valueListenable: prop.listenable(),
-        builder: (context, value, widget) {
-          return DarkModeFilter(
-            child: Switch(
-                value: value, onChanged: (value) {
-                  if (func != null) func();
-                  return prop.put(value);
-                }
-            ),
-          );
-        },
-      )
+  return ValueListenableBuilder(
+    valueListenable: prop.listenable(),
+    builder: (context, value, widget) {
+      return DarkModeFilter(
+        child: Switch(
+            value: value, onChanged: (value) {
+              if (func != null) func();
+              return prop.put(value);
+            }
+        ),
+      );
+    },
   );
 }

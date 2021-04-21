@@ -114,7 +114,7 @@ Future<void> initPushService() async {
   DateTime cacheTokenDate = userData.tokenDate.fetch();
   cacheTokenDate ??= now.subtract(Duration(days: 3));
   
-  if (cacheTokenDate.add(Duration(seconds: 10)).isAfter(now)) {
+  if (cacheTokenDate.add(Duration(days: 2)).isAfter(now)) {
     print('ignore send token due to $cacheTokenDate.');
     return;
   }
