@@ -15,6 +15,7 @@ class ExamProvider extends BusyProvider {
   JwExamData data;
   var show = false;
   var failed = false;
+  bool useCache = false;
 
   Timer _updateTimer;
 
@@ -70,11 +71,15 @@ class ExamProvider extends BusyProvider {
     try {
       final exam = await JwService().getExam();
       data = exam.data;
-      examStore.put(data);
+      if (data != null) examStore.put(data);
     } catch(e) {
       failed = true;
-      print('use cached exam data.');
-      data = examStore.fetch();
+      var cacheExamData = examStore.fetch();
+      if (cacheExamData != null) {
+        print('use cached exam data.');
+        data = cacheExamData;
+        useCache = true;
+      }
     } finally {
       setBusyState(false);
     }
