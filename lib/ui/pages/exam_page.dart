@@ -66,7 +66,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
           ),
         );
 
-        final heroIndex = exam.failed ? list.length ~/ 2 : (list.length - 1) ~/ 2;
+        final heroIndex = list.length ~/ 2;
 
         list.add(
           Hero(
