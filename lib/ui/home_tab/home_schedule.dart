@@ -8,9 +8,22 @@ import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
 import 'package:flutter/material.dart';
 
-class HomeSchedule extends StatelessWidget {
+class HomeSchedule extends StatefulWidget {
+  @override
+  _HomeScheduleState createState() => _HomeScheduleState();
+}
+
+class _HomeScheduleState extends State<HomeSchedule> {
   final scheduleProvider = locator<ScheduleProvider>();
-  
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future<void> init() async => await scheduleProvider.loadLocalData();
+
   @override
   Widget build(BuildContext context) {
     final user = locator<UserProvider>();

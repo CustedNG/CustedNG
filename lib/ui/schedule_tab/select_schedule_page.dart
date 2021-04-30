@@ -99,8 +99,8 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
           if (profile != null) {
             showRoundDialog(
               context,
-              '想要删除此记录吗？',
-              Container(),
+              '确定删除吗？',
+              Text('${profile.name}-${profile.studentNumber}'),
               [
                   TextButton(
                     child: Text('取消'),

@@ -43,7 +43,7 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
               child: TextField(
                 controller: _studentNumberTextFieldController,
                 decoration: InputDecoration(
-                  labelText: '学号',
+                  labelText: '学号/姓名',
                   icon: Icon(Icons.person)
                 ),
               ),
@@ -150,7 +150,7 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
   }
 
   void _showProfileSelectorMenu(List<CustomScheduleProfile> profiles) async {
-    final child = List.empty();
+    final List<Widget> child = [];
     for (final profile in profiles) {
       child.add(
         TextButton(
@@ -167,7 +167,10 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
     showRoundDialog(
         context,
         '请选择',
-        Column(children: child),
+        Column(
+          children: child,
+          mainAxisSize: MainAxisSize.min,
+        ),
         [
           TextButton(
             child: Text('取消'),
