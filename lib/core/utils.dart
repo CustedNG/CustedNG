@@ -22,7 +22,7 @@ void showCatchSnackBar(BuildContext context, Function func, String message){
 }
 
 Future<T> showRoundDialog<T>(BuildContext context, String title, Widget child, 
-                    List<Widget> actions){
+                    List<Widget> actions, {EdgeInsets padding}){
   return showDialog(
       context: context,
       builder: (ctx) {
@@ -30,6 +30,7 @@ Future<T> showRoundDialog<T>(BuildContext context, String title, Widget child,
           title: Text(title),
           content: child,
           actions: actions,
+          padding: padding,
         );
       }
   );

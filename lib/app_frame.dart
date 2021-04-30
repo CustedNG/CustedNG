@@ -61,7 +61,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     NavigationItem(Icon(Icons.settings, size: 29), Text('设置'))
   ];
 
-  Widget _buildItem(NavigationItem item, bool isSelected) {
+  Widget _buildItem(int idx, NavigationItem item, bool isSelected) {
     bool isDarkMode = isDark(context);
     final width = _width / 5;
     return AnimatedContainer(
@@ -69,14 +69,26 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       curve: Curves.fastOutSlowIn,
       height: 50,
       width: isSelected ? width : width - 17,
-      padding: isSelected ? const EdgeInsets.only(left: 1, right: 1) : null,
       decoration: isSelected
           ? BoxDecoration(
               color: isDarkMode ? Colors.white12 : Colors.black12,
               borderRadius: const BorderRadius.all(Radius.circular(50))
           )
           : null,
-      child: item.icon,
+      child: IconButton(
+        icon: item.icon,
+        splashRadius: width / 3.3,
+        padding: EdgeInsets.only(left: 17, right: 17), 
+        onPressed: () {
+          setState(() {
+            _selectIndex = idx;
+            _pageController.animateToPage(
+              idx,
+              duration: Duration(milliseconds: 677),
+              curve: Curves.fastLinearToSlowEaseIn);
+          });
+        },
+      ),
     );
   }
 
@@ -90,17 +102,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: items.map((item) {
               int itemIndex = items.indexOf(item);
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectIndex = itemIndex;
-                    _pageController.animateToPage(itemIndex,
-                        duration: Duration(milliseconds: 677),
-                        curve: Curves.fastLinearToSlowEaseIn);
-                  });
-                },
-                child: _buildItem(item, _selectIndex == itemIndex),
-              );
+              return _buildItem(itemIndex, item, _selectIndex == itemIndex);
             }).toList(),
           ),
         )

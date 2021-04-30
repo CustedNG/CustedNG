@@ -7,13 +7,13 @@ import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/dynamic_color.dart';
-import 'package:custed2/ui/grade_tab/grade_picker.dart';
 import 'package:custed2/ui/grade_tab/sliver_header_delegate.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -105,19 +105,48 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     final terms = grade.terms.map((t) => t.termName).toList();
     final current = currentPage.round().clamp(0, terms.length - 1);
 
-    final selected = await showDialog<int>(
-      context: context,
-      builder: (context) => GradePicker(
-        currentIndex: current,
-        terms: terms,
+    await showRoundDialog(
+      context,
+      '选择学期',
+      buildTermPicker(
+        current,
+        terms,
       ),
+      null,
+      padding: EdgeInsets.all(0)
     );
+  }
 
-    controller.animateToPage(
-      selected,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.easeOut,
-    );
+  Widget buildTermPicker(currentIndex, List<String> terms) {
+    List<Widget> items = terms.map((term) {
+      return Center(
+        child: Text(
+          term,
+          style: TextStyle(
+              color: isDark(context) ? Colors.white : Colors.black,
+              fontSize: 22.0),
+        ),
+      );
+    }).toList();
+
+    final scrollController =
+        FixedExtentScrollController(initialItem: currentIndex);
+
+    return Container(
+          height: 216.0,
+          child: CupertinoPicker(
+            scrollController: scrollController,
+            onSelectedItemChanged: (selected) {
+              controller.animateToPage(
+                selected,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeOut,
+              );
+            },
+            children: items,
+            itemExtent: 40.0,
+          ),
+        );
   }
 
   @override
