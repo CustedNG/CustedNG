@@ -66,11 +66,11 @@ class _HomeEntriesState extends State<HomeEntries> {
             action: () => jwWebPage.go(context),
           ),
           HomeEntry(
-            name: Text('校内导航', style: style),
+            name: Text('校内论坛', style: style),
             icon: Image(image: ImageRes.ecardIcon),
             // action: () => iecardWebPage.go(context),
             // action: () => openIecard(context),
-            action: () => navPage.go(context)
+            action: () => bbsPage.go(context)
           ),
           HomeEntry(
             name: Text('体测成绩', style: style),

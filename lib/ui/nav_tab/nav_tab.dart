@@ -9,16 +9,17 @@ import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+const custcc = 'https://cust.cc/?custed=1';
+const custccDark = 'https://cust.cc/?custed=1&dark=1';
 
-class BBSTab extends StatefulWidget {
+class NavTab extends StatefulWidget {
   @override
-  _BBSTabState createState() => _BBSTabState();
+  _NavTabState createState() => _NavTabState();
 }
 
-class _BBSTabState extends State<BBSTab> with AutomaticKeepAliveClientMixin {
+class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   InAppWebViewController controller;
   Future _future;
-  final bbsUrl = 'https://bbs.cust.app';
 
   @override
   void didChangeDependencies() {
@@ -39,8 +40,11 @@ class _BBSTabState extends State<BBSTab> with AutomaticKeepAliveClientMixin {
     return Scaffold(
       appBar: NavBar.material(
         context: context,
-        leading: Container(),
-        middle: NavbarMiddle(textAbove: '校内论坛', textBelow: 'bbs.cust.app'),
+        leading: GestureDetector(
+          onTap: toggleSideMenu,
+          child: Icon(Icons.toggle_off),
+        ),
+        middle: NavbarMiddle(textAbove: '资源导航', textBelow: 'cust.cc'),
         trailing: [_showMenu(context)],
       ),
       body: FutureBuilder(
@@ -55,10 +59,12 @@ class _BBSTabState extends State<BBSTab> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _buildBuilder(BuildContext context, AsyncSnapshot snapshot) {
+    final url = isDark(context) ? custccDark : custcc;
+
     switch (snapshot.connectionState) {
       case ConnectionState.done:
         if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-        return _buildBrowser(bbsUrl);
+        return _buildBrowser(url);
       case ConnectionState.none:
       case ConnectionState.active:
       case ConnectionState.waiting:
@@ -128,7 +134,7 @@ class _BBSTabState extends State<BBSTab> with AutomaticKeepAliveClientMixin {
               controller.reload();
               break;
             case 'B':
-              openUrl(bbsUrl);
+              openUrl(custcc);
               break;
           }
         });
@@ -142,8 +148,12 @@ class _BBSTabState extends State<BBSTab> with AutomaticKeepAliveClientMixin {
     }
   }
 
+  void toggleSideMenu() {
+    controller?.evaluateJavascript(source: 'toggleSideMenu()');
+  }
+
   void goHome() {
-    controller?.loadUrl(urlRequest: bbsUrl.uq);
+    controller?.loadUrl(urlRequest: custcc.uq);
   }
 
   @override
