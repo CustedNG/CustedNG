@@ -40,9 +40,9 @@ class UpdateNoticePage extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        Text('有更新可用', style: textStyle),
+        Text('可用更新：${update.build}', style: textStyle),
         SizedBox(height: 10),
-        Text('使用旧版本可能导致某些功能无法使用'),
+        Text(update.changelog),
         Text('安装包大小：${(update.file.size / 1024).toStringAsFixed(2)} MB')
       ],
     );

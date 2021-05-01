@@ -1,11 +1,14 @@
 import 'package:after_layout/after_layout.dart';
+import 'package:custed2/core/route.dart';
 import 'package:custed2/core/util/time_point.dart';
 import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
+import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/core/utils.dart';
+import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
@@ -68,13 +71,40 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
 
         final heroIndex = list.length ~/ 2;
 
-        list.add(
-          Hero(
-            child: homeCard,
-            transitionOnUserGestures: true,
-            tag: 'ExamCard$heroIndex'
-          )
+        final content = Hero(
+          child: homeCard,
+          transitionOnUserGestures: true,
+          tag: 'ExamCard$heroIndex'
         );
+
+        final card = GestureDetector(
+          child: content,
+          onTap: () {
+            final schedule = locator<ScheduleProvider>();
+            final beginDate = DateTime.tryParse(eachExam.examTask.beginDate);
+            final week = schedule.schedule.calculateWeekSinceStart(beginDate);
+            final startTime = eachExam.examTask.beginTime.substring(0, 5);
+            final endTime = eachExam.examTask.beginTime.substring(6, 11);
+            final startSection = assumeStartSection(startTime);
+            final endSection = startSection + 1;
+            AppRoute(
+              title: '添加课程',
+              page: AddLessonPage(
+                name: examName,
+                room: examPosition,
+                teacher: examType,
+                weekday: beginDate?.weekday,
+                weeks: [week],
+                startTime: startTime,
+                endTime: endTime,
+                startSection: startSection,
+                endSection: endSection,
+              ),
+            ).go(context);
+          },
+        );
+
+        list.add(card);
         list.add(SizedBox(height: 15));
       }
 
@@ -102,6 +132,12 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       appBar: NavBar.material(
         context: context,
         middle: NavbarText('考试安排'),
+        trailing: [
+          IconButton(
+            icon: Icon(Icons.info), 
+            onPressed: () => showSnackBar(context, '点击卡片可添加至课表')
+          )
+        ]
       ),
     );
   }
