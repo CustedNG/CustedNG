@@ -67,8 +67,8 @@ class _MapPageState extends State<MapPage> {
                 }
               },
               itemCount: 3,
-              onPageChanged: (int index) {
-                currentIndex = index;
+              onPageChanged: (index) {
+                setState(() => currentIndex = index);
               },
               controller: PageController(
                 initialPage: currentIndex,
@@ -85,10 +85,14 @@ class _MapPageState extends State<MapPage> {
             ),
           ),
           Positioned(
-            right: 10,
+            left: 10,
             top: MediaQuery.of(context).padding.top,
             child: IconButton(
-              icon: Icon(Icons.close, size: 30),
+              icon: Icon(
+                Icons.close, 
+                size: 30, 
+                color: Colors.white,
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),

@@ -46,53 +46,56 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
           : Colors.black
     );
 
-    return Column(
-      children: [
-        CustedHeader(),
-      SizedBox(height: 10.0),
-      Text('设置'),
-      SizedBox(height: 10.0),
-      SettingItem(
-        title: '将课表设置为首页',
-        titleStyle: settingTextStyle,
-        isShowArrow: false,
-        rightBtn: buildSwitch(context, setting.useScheduleAsHome),
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(
+        children: [
+          CustedHeader(),
+          SizedBox(height: 10.0),
+          Text('设置'),
+          SizedBox(height: 10.0),
+          SettingItem(
+            title: '将课表设置为首页',
+            titleStyle: settingTextStyle,
+            isShowArrow: false,
+            rightBtn: buildSwitch(context, setting.useScheduleAsHome),
+          ),
+          SettingItem(
+            title: '显示非当前周课程',
+            titleStyle: settingTextStyle,
+            isShowArrow: false,
+            rightBtn: buildSwitch(context, setting.showInactiveLessons),
+          ),
+          SettingItem(
+            title: '绩点不计选修',
+            titleStyle: settingTextStyle,
+            isShowArrow: false,
+            rightBtn: buildSwitch(
+                context, setting.dontCountElectiveCourseGrade),
+          ),
+          SettingItem(
+            title: '启动时自动更新课表',
+            titleStyle: settingTextStyle,
+            isShowArrow: false,
+            rightBtn: buildSwitch(
+                context, setting.autoUpdateSchedule),
+          ),
+          SettingItem(
+            title: '持续自动更新天气',
+            titleStyle: settingTextStyle,
+            isShowArrow: false,
+            rightBtn: buildSwitch(
+                context, setting.autoUpdateWeather),
+          ),
+          SettingItem(
+            title: '黑暗模式',
+            titleStyle: settingTextStyle,
+            isShowArrow: false,
+            rightBtn: _buildDarkModeRadio(),
+          ),
+          SizedBox(height: 40.0)
+        ],
       ),
-      SettingItem(
-        title: '显示非当前周课程',
-        titleStyle: settingTextStyle,
-        isShowArrow: false,
-        rightBtn: buildSwitch(context, setting.showInactiveLessons),
-      ),
-      SettingItem(
-        title: '绩点不计选修',
-        titleStyle: settingTextStyle,
-        isShowArrow: false,
-        rightBtn: buildSwitch(
-            context, setting.dontCountElectiveCourseGrade),
-      ),
-      SettingItem(
-        title: '启动时自动更新课表',
-        titleStyle: settingTextStyle,
-        isShowArrow: false,
-        rightBtn: buildSwitch(
-            context, setting.autoUpdateSchedule),
-      ),
-      SettingItem(
-        title: '持续自动更新天气',
-        titleStyle: settingTextStyle,
-        isShowArrow: false,
-        rightBtn: buildSwitch(
-            context, setting.autoUpdateWeather),
-      ),
-      SettingItem(
-        title: '黑暗模式',
-        titleStyle: settingTextStyle,
-        isShowArrow: false,
-        rightBtn: _buildDarkModeRadio(),
-      ),
-      SizedBox(height: 40.0)
-      ],
     );
   }
 

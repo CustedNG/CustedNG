@@ -93,4 +93,9 @@ class CustedService extends CatClient {
     });
     return log;
   }
+
+  Future<String> getSchoolCalendarString() async {
+    final resp = await get('$ccUrl/webview/schoolCalendar.txt');
+    return resp.body;
+  }
 }

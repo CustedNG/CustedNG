@@ -539,6 +539,7 @@ class __ReportItemState extends State<_ReportItem>
         Text(
           widget.exam.lessonName,
           style: nameTextTheme,
+          overflow: TextOverflow.fade,
         ),
         _buildScore(widget.exam.rawMark),
       ],

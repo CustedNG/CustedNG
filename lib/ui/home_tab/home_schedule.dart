@@ -39,6 +39,13 @@ class _HomeScheduleState extends State<HomeSchedule> {
     }
 
     final lesson = scheduleProvider.lessonsSince(DateTime.now()).firstIfExist;
+    final card = HomeCard(
+      title: _buildTitle(context, lesson),
+      content: _buildContent(context),
+      trailing: lesson != null,
+    );
+    
+    if (lesson == null) return card;
     return GestureDetector(
       onTap: () => showDialog(
         context: context,
@@ -46,11 +53,7 @@ class _HomeScheduleState extends State<HomeSchedule> {
           return LessonPreview(lesson);
         },
       ),
-      child: HomeCard(
-        title: _buildTitle(context, lesson),
-        content: _buildContent(context),
-        trailing: true,
-      ),
+      child: card
     );
   }
 
