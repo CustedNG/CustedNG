@@ -234,8 +234,13 @@ class _AddLessonPageState extends State<AddLessonPage> {
       ..startTime = widget.startTime
       ..endTime = widget.endTime;
 
-    final store = await locator.getAsync<CustomLessonStore>();
+    final store = await locator<CustomLessonStore>();
 
+    if (store.getIndex(lesson) != -1) {
+      showSnackBar(context, '该课程已添加至课表，请检查');
+      return;
+    }
+    
     store.addLesson(lesson);
     locator<ScheduleProvider>().loadLocalData();
 

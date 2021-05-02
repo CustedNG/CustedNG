@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
+import 'package:custed2/data/store/custom_lesson_store.dart';
+import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/lesson_detail_page.dart';
@@ -194,10 +196,9 @@ class LessonPreview extends StatelessWidget {
       },
     );
 
-    final deleteCustom = TextButton(
+    final editCustom = TextButton(
       child: Text('编辑自定义'),
       onPressed: () async {
-        Navigator.of(context).pop();
         showRoundDialog(
             context,
             '选择',
@@ -206,7 +207,6 @@ class LessonPreview extends StatelessWidget {
               customLessons.map((selectedLesson) => TextButton(
                   child: Text(selectedLesson.displayName),
                   onPressed: () {
-                    Navigator.of(context).pop();
                     AppRoute(
                       title: '编辑课程',
                       page: AddLessonPage.editLesson(selectedLesson),
@@ -226,14 +226,28 @@ class LessonPreview extends StatelessWidget {
       onPressed: () {},
     );
 
+    final deleteCustom = TextButton(
+      onPressed: () {
+        if (locator<CustomLessonStore>().deleteLesson(lesson)) {
+          schedule.loadLocalData();
+          showSnackBar(context, '删除成功');
+          Navigator.of(context).pop();
+        } else {
+          showSnackBar(context, '删除失败');
+        }
+      }, 
+      child: Text('删除', style: TextStyle(color: Colors.red))
+    );
+
     if (noConflict) {
       if (!lesson.isCustom) {
         return confirm;
       } else {
         return Row(
           children: <Widget>[
-            Flexible(child: delete),
-            Flexible(child: confirm),
+            deleteCustom,
+            delete,
+            confirm,
           ],
         );
       }
@@ -241,15 +255,16 @@ class LessonPreview extends StatelessWidget {
       if (customLessons.isEmpty) {
         return Row(
           children: <Widget>[
-            Flexible(child: helpMe),
-            Flexible(child: confirm),
+            helpMe,
+            confirm,
           ],
         );
       } else {
         return Row(
           children: <Widget>[
-            Flexible(child: deleteCustom),
-            Flexible(child: confirm),
+            deleteCustom,
+            editCustom,
+            confirm,
           ],
         );
       }
