@@ -37,6 +37,7 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
           _buildRoundButton(context, '第${scheduleProvider.selectedWeek}周',
               onPressed: () => _openPicker(context),
               onLongPress: scheduleProvider.gotoCurrentWeek),
+          Text('${scheduleProvider.activeLessonCount ?? 0} 节'),
           _ArrowButton(
               icon: scheduleProvider.selectedWeek > (scheduleProvider.minWeek ?? 0)
                   ? Icon(Icons.arrow_back_ios)
@@ -58,12 +59,21 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
     onPressed(),
     onLongPress(),
   }) {
-    return GestureDetector(
+    return TextButton(
       onLongPress: onLongPress,
-      onTap: onPressed,
+      onPressed: onPressed,
+      style: ButtonStyle(
+        enableFeedback: true,
+        backgroundColor: MaterialStateProperty.all(Colors.black12),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50.0),
+          )
+        )
+      ),
       child: SizedBox(
-        height: 35,
-        width: 100,
+        height: 27,
+        width: 87,
         child: Center(
           child: Text(
             text,
