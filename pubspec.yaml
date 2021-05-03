@@ -28,10 +28,10 @@ dependencies:
 
   extended_image: ^4.0.0
 
-#  alice:
-#    git:
-#      url: https://github.com/xtyxtyx/alice.git
-#      ref: master
+  alice:
+    git:
+      url: https://github.com/CustedNG/alice.git
+      ref: master
 
   after_layout: ^1.1.0
 
@@ -72,6 +72,7 @@ dependencies:
       url: git://github.com/jpush/jpush-flutter-plugin.git
       ref: master
   wifi_ip: ^0.0.1
+  add_2_calendar: ^2.1.0
 
 dev_dependencies:
   # flutter_test:

@@ -1,3 +1,4 @@
+import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/banner_provider.dart';
@@ -111,14 +112,11 @@ Future<void> setupLocator(String docDir) async {
 
   locator.registerSingleton(GlobalKey<NavigatorState>());
 
-  /*locator.registerLazySingleton(
+  locator.registerLazySingleton(
     () => Alice(
-      // I will fix darkTheme someday...
-      darkTheme: false,
-      showNotification: false,
       navigatorKey: locator<GlobalKey<NavigatorState>>(),
     ),
-  );*/
+  );
 
   setupLocatorForServices();
 }

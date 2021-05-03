@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:after_layout/after_layout.dart';
+import 'package:alice/alice.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/analytics.dart';
 import 'package:custed2/core/util/build_mode.dart';
@@ -42,6 +43,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       builder: (context, mode) {
         return MaterialApp(
           title: 'Custed',
+          navigatorKey: locator<Alice>().getNavigatorKey(),
           debugShowCheckedModeBanner: false,
           home: AppFrame(),
           builder: (context, child) {

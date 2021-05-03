@@ -4,7 +4,6 @@ import 'package:custed2/core/route.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/store/custom_lesson_store.dart';
-import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/lesson_detail_page.dart';

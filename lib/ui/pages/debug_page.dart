@@ -1,4 +1,7 @@
+import 'package:alice/alice.dart';
+import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +30,13 @@ class _DebugPageState extends State<DebugPage> {
     return Scaffold(
       appBar: NavBar.material(
           middle: NavbarText('Terminal'),
+          trailing: [IconButton(
+            icon: Icon(Icons.network_cell), 
+            onPressed: () => AppRoute(
+              page: locator<Alice>().buildInspector(),
+              title: 'alice'
+            ).go(context)
+          )],
           backgroundColor: Colors.black
         ),
       body: content,
