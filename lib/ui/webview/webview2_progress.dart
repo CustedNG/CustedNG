@@ -24,7 +24,7 @@ class Webview2Progress extends StatelessWidget {
 //   _Webview2ProgressState createState() => _Webview2ProgressState();
 
 //   @override
-//   Size get preferredSize => CupertinoNavigationBar().preferredSize;
+//   Size get preferredSize => AppBar().preferredSize;
 // }
 
 // class _Webview2ProgressState extends State<Webview2Progress> {

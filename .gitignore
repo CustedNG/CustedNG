@@ -41,3 +41,5 @@ lib/generated_plugin_registrant.dart
 /android/app/*.json
 
 *.apk
+countly_config
+lib/config/countly.dart

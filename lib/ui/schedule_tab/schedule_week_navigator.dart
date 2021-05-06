@@ -4,7 +4,6 @@ import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/core/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -94,8 +93,7 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
     }
 
     final TextStyle textStyle = TextStyle(
-        fontSize: 22.0,
-        color: isDark(context) ? Colors.white : Colors.black
+        fontSize: 17.0,
     );
     var selected = 
       scheduleProvider.selectedWeek.clamp(1, scheduleProvider.maxWeek);
@@ -113,24 +111,44 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
       );
     });
 
-    final scrollController = FixedExtentScrollController(
-      initialItem: selected - 1,
-    );
-
     await showRoundDialog(
       context,
       '选择周数',
-      Container(
-        height: 216.0,
-        child: CupertinoPicker(
-          scrollController: scrollController,
-          onSelectedItemChanged: (n) => setState(() {
-            scheduleProvider.selectWeek(n + 1);
-          }),
-          children: items,
-          itemExtent: 32.0,
-        ),
-      ),[]
+      Stack(
+        children: [
+          Positioned(
+            child: Container(
+              height: 37,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(7)),
+                color: Colors.black12,
+              ),
+            ),
+            top: 55,
+            bottom: 55,
+            left: 0,
+            right: 0,
+          ),
+          Container(
+            height: 150.0,
+            child: ListWheelScrollView.useDelegate(
+              itemExtent: 37,
+              diameterRatio: 1.2,
+              onSelectedItemChanged: (n) => setState(() {
+                scheduleProvider.selectWeek(n + 1);
+              }),
+              controller: FixedExtentScrollController(initialItem: selected - 1),
+              physics: FixedExtentScrollPhysics(),
+              childDelegate: ListWheelChildBuilderDelegate(
+                  builder: (context, index) =>
+                      items[index],
+                  childCount: items.length
+              ),
+            ),
+          ),
+        ],
+      ),
+      []
     );
   }
 }

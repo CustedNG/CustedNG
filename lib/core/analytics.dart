@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:countly_flutter/countly_flutter.dart';
+import 'package:custed2/config/countly.dart';
 
 class Analytics {
-  static const _url = '';
-  static const _key = '';
+  static const _url = CountlyConfig.url;
+  static const _key = CountlyConfig.key;
 
   static bool _enabled = false;
 
@@ -18,6 +19,7 @@ class Analytics {
     await Countly.start();
     await Countly.enableCrashReporting();
     await Countly.giveAllConsent();
+    print('Countly init successfully.');
   }
 
   static set isDebug(bool value) {

@@ -1,5 +1,5 @@
 extension IntX on int {
-  String weekdayInChinese([String prefix = '星期']) {
+  String weekdayInChinese([String prefix = '周']) {
     assert(this != null);
     assert(this >= 1);
     assert(this <= 7);

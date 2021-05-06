@@ -1,7 +1,6 @@
 import 'package:custed2/ui/webview/webview2_progress.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Webview2HeaderController with ChangeNotifier {
@@ -50,7 +49,7 @@ class Webview2Header extends StatefulWidget with PreferredSizeWidget {
   _Webview2HeaderState createState() => _Webview2HeaderState();
 
   @override
-  Size get preferredSize => CupertinoNavigationBar().preferredSize;
+  Size get preferredSize => AppBar().preferredSize;
 }
 
 class _Webview2HeaderState extends State<Webview2Header> {

@@ -13,7 +13,6 @@ import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -105,48 +104,58 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     final terms = grade.terms.map((t) => t.termName).toList();
     final current = currentPage.round().clamp(0, terms.length - 1);
 
-    await showRoundDialog(
-      context,
-      '选择学期',
-      buildTermPicker(
-        current,
-        terms,
-      ),
-      null,
-      padding: EdgeInsets.all(0)
-    );
-  }
-
-  Widget buildTermPicker(currentIndex, List<String> terms) {
     List<Widget> items = terms.map((term) {
       return Center(
         child: Text(
           term,
-          style: TextStyle(
-              color: isDark(context) ? Colors.white : Colors.black,
-              fontSize: 22.0),
+          style: TextStyle(fontSize: 17.0),
         ),
       );
     }).toList();
 
-    final scrollController =
-        FixedExtentScrollController(initialItem: currentIndex);
-
-    return Container(
-          height: 216.0,
-          child: CupertinoPicker(
-            scrollController: scrollController,
-            onSelectedItemChanged: (selected) {
-              controller.animateToPage(
-                selected,
-                duration: Duration(milliseconds: 500),
-                curve: Curves.easeOut,
-              );
-            },
-            children: items,
-            itemExtent: 40.0,
+    await showRoundDialog(
+      context,
+      '选择周数',
+      Stack(
+        children: [
+          Positioned(
+            child: Container(
+              height: 37,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(7)),
+                color: Colors.black12,
+              ),
+            ),
+            top: 55,
+            bottom: 55,
+            left: 0,
+            right: 0,
           ),
-        );
+          Container(
+            height: 150.0,
+            child: ListWheelScrollView.useDelegate(
+              itemExtent: 37,
+              diameterRatio: 1.2,
+              onSelectedItemChanged: (n) => setState(() {
+                controller.animateToPage(
+                  n,
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.easeOut,
+                );
+              }),
+              controller: FixedExtentScrollController(initialItem: current),
+              physics: FixedExtentScrollPhysics(),
+              childDelegate: ListWheelChildBuilderDelegate(
+                  builder: (context, index) =>
+                      items[index],
+                  childCount: items.length
+              ),
+            ),
+          ),
+        ],
+      ),
+      []
+    );
   }
 
   @override
