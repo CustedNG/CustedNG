@@ -43,3 +43,5 @@ lib/generated_plugin_registrant.dart
 *.apk
 countly_config
 lib/config/countly.dart
+ios/build
+.vscode

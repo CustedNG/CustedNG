@@ -80,17 +80,18 @@ class _ScheduleTabState extends State<ScheduleTab>
       body: SmartRefresher(
         enablePullDown: true,
         enablePullUp: false,
+        physics: BouncingScrollPhysics(),
         header: MaterialClassicHeader(),
         controller: _refreshController,
         onRefresh: _onRefresh,
         child: ListView(
-        controller: scrollController,
-        children: <Widget>[
-            _buildCloseAutoUpdateTip(),
-            ScheduleWeekNavigator(),
-            _buildTable(context),
-          ],
-        ),
+          controller: scrollController,
+          children: <Widget>[
+              _buildCloseAutoUpdateTip(),
+              ScheduleWeekNavigator(),
+              _buildTable(context),
+            ],
+          ),
       ),
     );
   }

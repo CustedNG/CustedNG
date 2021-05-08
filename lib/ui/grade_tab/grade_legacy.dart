@@ -78,6 +78,7 @@ class GradeReportLegacy extends StatefulWidget {
 
 class _GradeReportLegacyState extends State<GradeReportLegacy> {
   PageController controller;
+  bool isRefreshing = false;
 
   double currentPage;
   final _refreshController = RefreshController(initialRefresh: false);
@@ -179,6 +180,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
                 SmartRefresher(
                   enablePullDown: true,
                   enablePullUp: false,
+                  physics: BouncingScrollPhysics(),
                   header: MaterialClassicHeader(),
                   controller: _refreshController,
                   onRefresh: _onRefresh,
@@ -192,12 +194,16 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
 
   void _onRefresh() async{
     try {
+      if (isRefreshing) return;
+      isRefreshing = true;
       await gradeProvider.updateGradeData();
       _refreshController.refreshCompleted();
       showSnackBar(context, '刷新成功');
+      isRefreshing = false;
     } catch(e) {
       _refreshController.refreshFailed();
       showSnackBar(context, '刷新失败');
+      isRefreshing = false;
     }
   }
 
