@@ -98,4 +98,9 @@ class CustedService extends CatClient {
     final resp = await get('$ccUrl/webview/schoolCalendar.txt');
     return resp.body;
   }
+
+  Future<bool> needVerifyCode4Login() async {
+    final resp = await get('$ccUrl/webview/needVerifyCode4Login');
+    return resp.body != '0';
+  }
 }

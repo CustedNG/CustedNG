@@ -30,11 +30,12 @@ class _DebugPageState extends State<DebugPage> {
     return Scaffold(
       appBar: NavBar.material(
           middle: NavbarText('Terminal'),
-          trailing: [GestureDetector( 
-            onDoubleTap: () => AppRoute(
+          trailing: [TextButton( 
+            onPressed: () => AppRoute(
               page: locator<Alice>().buildInspector(),
               title: 'alice'
-            ).go(context)
+            ).go(context),
+            child: Text(''),
           )],
           backgroundColor: Colors.black
         ),

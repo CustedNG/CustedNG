@@ -1,9 +1,11 @@
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/service/custed_service.dart';
+import 'package:flutter/widgets.dart';
 
 class AppProvider extends ProviderBase {
   String _notification;
   Map _changeLog;
+  BuildContext ctx;
 
   String get notification => _notification;
   Map get changeLog => _changeLog; 
@@ -17,7 +19,7 @@ class AppProvider extends ProviderBase {
     notifyListeners();
   }
 
-  void setTab(int index, {bool refresh = true}) {
-    if (refresh) notifyListeners();
+  void setContext(c) {
+    ctx = c;
   }
 }

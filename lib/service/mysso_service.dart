@@ -4,10 +4,14 @@ import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/core/service/cat_service.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/models/mysso_profile.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/service/jw_service.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:html/parser.dart' show parse;
 
 class MyssoService extends CatService {
@@ -26,6 +30,7 @@ class MyssoService extends CatService {
 
   final sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
   final loginSuccessTest = RegExp(r'(登录成功|成功登录|Log In Successful|进入校园门户)');
+  final needCaptchaTest = RegExp(r'验证码');
 
   Future<CatLoginResult<String>> login({bool force = false}) async {
     if (force) clearCookieFor(baseUrl.toUri());
@@ -69,19 +74,59 @@ class MyssoService extends CatService {
       maxRedirects: 0,
     );
 
-    // if (loginSuccessTest.hasMatch(resp.body)) {
-    //   print('Mysso Manual Login Success');
-    //   return CatLoginResult.ok();
-    // }
+    if (needCaptchaTest.hasMatch(resp.body)) {
+      final controller = TextEditingController();
+      final ctx = locator<AppProvider>().ctx;
+      await showRoundDialog(
+        ctx, 
+        '请输入验证码', 
+        TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            icon: Icon(Icons.security),
+            labelText: '验证码',
+          ),
+        ), 
+        [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(), 
+            child: Text('确定')
+          ),
+          TextButton(
+            onPressed: () {
+              showRoundDialog(
+                ctx, 
+                '关于验证码', 
+                Text('近期由于学校提升了账户安全登记，登录教务需要验证码\n验证码需要在企业微信获取，具体步骤可以在信息化中心获取，或者加入用户群：1057534645询问热心好群友'), 
+                [TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(), 
+                  child: Text('确定')
+                )]
+              );
+            }, 
+            child: Text('验证码？', style: TextStyle(color: Colors.red),)
+          )
+        ]
+      );
+      final captchaPageParsed = parse(resp.body);
+      final captchaResp = await post(
+        loginUrlWithService,
+        body: {
+          'vc': controller.text,
+          'execution': captchaPageParsed.querySelector('input[name=execution]')
+                                      .attributes['value'],
+          '_eventId': 'submit',
+          'submit': '%E6%8F%90%E4%BA%A4'
+        }
+      );
 
-    print('resp.isRedirect ${resp.isRedirect}');
-    print("resp.headers['location'] ${resp.headers['location']}");
-
-    if (resp.statusCode.isWithin(300, 399) &&
-        resp.headers['location'].contains(loginService)) {
-      print('Mysso Manual Login Success');
-      return CatLoginResult.ok();
+      if (captchaResp.statusCode.isWithin(300, 399)) {
+        print('Mysso Manual Login Success');
+        return CatLoginResult.ok();
+      }
+      return CatLoginResult.failed('验证失败');
     }
+    
 
     final reason =
         parse(resp.body).querySelector('.alert-danger')?.text?.trim() ?? '未知原因';
