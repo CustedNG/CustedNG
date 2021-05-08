@@ -82,6 +82,7 @@ class MyssoService extends CatService {
         '请输入验证码', 
         TextField(
           controller: controller,
+          keyboardType: TextInputType.visiblePassword,
           decoration: InputDecoration(
             icon: Icon(Icons.security),
             labelText: '验证码',
@@ -89,15 +90,11 @@ class MyssoService extends CatService {
         ), 
         [
           TextButton(
-            onPressed: () => Navigator.of(ctx).pop(), 
-            child: Text('确定')
-          ),
-          TextButton(
             onPressed: () {
               showRoundDialog(
                 ctx, 
                 '关于验证码', 
-                Text('近期由于学校提升了账户安全登记，登录教务需要验证码\n验证码需要在企业微信获取，具体步骤可以在信息化中心获取，或者加入用户群：1057534645询问热心好群友'), 
+                Text('近期由于学校提升了账户安全等级，登录教务需要验证码\n验证码需要在企业微信获取，具体步骤可以在信息化中心获取，或者加入用户群：1057534645询问热心好群友'), 
                 [TextButton(
                   onPressed: () => Navigator.of(ctx).pop(), 
                   child: Text('确定')
@@ -105,7 +102,12 @@ class MyssoService extends CatService {
               );
             }, 
             child: Text('验证码？', style: TextStyle(color: Colors.red),)
-          )
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(), 
+            child: Text('确定')
+          ),
+          
         ]
       );
       final captchaPageParsed = parse(resp.body);

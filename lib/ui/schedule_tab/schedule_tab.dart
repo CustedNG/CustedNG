@@ -1,7 +1,5 @@
-import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
@@ -26,7 +24,7 @@ class ScheduleTab extends StatefulWidget {
 }
 
 class _ScheduleTabState extends State<ScheduleTab>
-    with AfterLayoutMixin, AutomaticKeepAliveClientMixin<ScheduleTab> {
+    with AutomaticKeepAliveClientMixin<ScheduleTab> {
   final scrollController = ScrollController();
   var showWeekInTitle = false;
   final scheduleProvider = locator<ScheduleProvider>();
@@ -114,7 +112,7 @@ class _ScheduleTabState extends State<ScheduleTab>
   Widget _buildCloseAutoUpdateTip(){
     return !settings.autoUpdateSchedule.fetch() ? Center(
       child: Text(
-        '温馨提示：课表已关闭自动更新',
+        '鉴于教务验证机制，已关闭自动更新',
         style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Theme.of(context).textTheme.bodyText1.color.withOpacity(0.5)
@@ -153,18 +151,18 @@ class _ScheduleTabState extends State<ScheduleTab>
         });
   }
 
-  @override
-  void afterFirstLayout(BuildContext context) async {
-    final user = locator<UserProvider>();
-    await user.initialized;
-    if (!user.loggedIn) return;
+  // @override
+  // void afterFirstLayout(BuildContext context) async {
+  //   final user = locator<UserProvider>();
+  //   await user.initialized;
+  //   if (!user.loggedIn) return;
 
-    if (scheduleProvider.isBusy || BuildMode.isDebug) return;
+  //   if (scheduleProvider.isBusy || BuildMode.isDebug) return;
 
-    if(settings.autoUpdateSchedule.fetch()){
-      scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
-    }
-  }
+  //   if(settings.autoUpdateSchedule.fetch()){
+  //     scheduleProvider.updateScheduleData().timeout(Duration(seconds: 20));
+  //   }
+  // }
 
   Widget _buildNavbarMiddle(BuildContext context) {
     final scheduleTitleProvider = Provider.of<ScheduleTitleProvider>(context);

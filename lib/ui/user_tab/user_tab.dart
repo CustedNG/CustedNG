@@ -73,13 +73,13 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
             rightBtn: buildSwitch(
                 context, setting.dontCountElectiveCourseGrade),
           ),
-          SettingItem(
-            title: '启动时自动更新课表',
-            titleStyle: settingTextStyle,
-            isShowArrow: false,
-            rightBtn: buildSwitch(
-                context, setting.autoUpdateSchedule),
-          ),
+          // SettingItem(
+          //   title: '启动时自动更新课表',
+          //   titleStyle: settingTextStyle,
+          //   isShowArrow: false,
+          //   rightBtn: buildSwitch(
+          //       context, setting.autoUpdateSchedule),
+          // ),
           SettingItem(
             title: '持续自动更新天气',
             titleStyle: settingTextStyle,
