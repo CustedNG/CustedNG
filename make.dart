@@ -133,7 +133,7 @@ void main(List<String> args) async {
     case 'run':
       return flutterRun();
     case 'build':
-      if (command.length > 1) {
+      if (args.length > 1) {
         if (args[1] == 'arm64') {
           print("Building android-arm64 variant");
           build64Bit = true;

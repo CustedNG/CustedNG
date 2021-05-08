@@ -48,6 +48,7 @@ class ScheduleProvider extends BusyProvider {
       {bool resetWeek = false,
       bool refreshAnyway = false,
       bool updateOnAbsent = false}) async {
+    print("Loading local data");
     Schedule head;
     if (customScheduleProfile == null) {
       final scheduleStore = await locator.getAsync<ScheduleStore>();

@@ -47,7 +47,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
 
     try {
       final login =
-          await mysso.login(force: true).timeout(Duration(minutes: 1));
+          await mysso.login(force: true);
       if (login.ok) {
         user.login();
         Navigator.pop(ctx);
@@ -55,7 +55,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
         showSnackBar(ctx, '登录失败[${login.data}]');
       }
     } catch (e) {
-      showSnackBar(ctx, '登录失败[认证系统超时]');
+      showSnackBar(ctx, '登录失败[$e]');
       rethrow;
     } finally {
       setState(() => isBusy = false);
