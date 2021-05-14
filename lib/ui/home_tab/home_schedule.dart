@@ -6,6 +6,7 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
+import 'package:custed2/ui/webview/webview_login.dart';
 import 'package:flutter/material.dart';
 
 class HomeSchedule extends StatefulWidget {
@@ -34,7 +35,9 @@ class _HomeScheduleState extends State<HomeSchedule> {
             content: Text('点击登录'),
             trailing: true,
           ),
-          onTap: () => Scaffold.of(context).openDrawer(),
+          onTap: () {
+            WebviewLogin.begin(context);
+          },
       );
     }
 
