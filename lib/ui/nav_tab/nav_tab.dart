@@ -79,6 +79,7 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
     return InAppWebView(
       initialOptions: InAppWebViewGroupOptions(
         crossPlatform: InAppWebViewOptions(
+          useShouldOverrideUrlLoading: true,
           userAgent: UserAgent.defaultUA,
         ),
         android: AndroidInAppWebViewOptions(
