@@ -121,6 +121,7 @@ void flutterBuildAndroid() async {
 
 void main(List<String> args) async {
   await updateBuildData();
+  await generateCountlyConfig();
 
   if (args.isEmpty) {
     print('No action. Exit.');
