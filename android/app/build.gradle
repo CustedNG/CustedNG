@@ -80,9 +80,9 @@ android {
             minifyEnabled false        
             shrinkResources false     
         }
-        debug {
-            signingConfig signingConfigs.release
-        }
+        // debug {
+            // signingConfig signingConfigs.release
+        // }
     }
 }
 
@@ -100,13 +100,13 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.huawei.hms:push:4.0.2.300'
-    implementation 'cn.jiguang.sdk.plugin:huawei:4.0.0'
-    implementation 'cn.jiguang.sdk.plugin:xiaomi:4.0.0'
-    implementation 'com.google.firebase:firebase-messaging:21.0.1'
-    implementation 'cn.jiguang.sdk.plugin:fcm:4.0.0'
-    implementation 'cn.jiguang.sdk.plugin:meizu:4.0.0'
+    // implementation 'com.huawei.hms:push:4.0.2.300'
+    // implementation 'cn.jiguang.sdk.plugin:huawei:4.0.0'
+    // implementation 'cn.jiguang.sdk.plugin:xiaomi:4.0.0'
+    // implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    // implementation 'cn.jiguang.sdk.plugin:fcm:4.0.0'
+    // implementation 'cn.jiguang.sdk.plugin:meizu:4.0.0'
 }
 
-apply plugin: 'com.huawei.agconnect'
-apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'com.huawei.agconnect'
+// apply plugin: 'com.google.gms.google-services'
