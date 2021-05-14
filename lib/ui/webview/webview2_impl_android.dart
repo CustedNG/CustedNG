@@ -38,8 +38,8 @@ class Webview2ControllerAndroid extends Webview2Controller {
   }
 
   @override
-  void loadUrl(String url) {
-    FlutterWebviewPlugin().reloadUrl(url);
+  Future<void> loadUrl(String url) {
+    return FlutterWebviewPlugin().reloadUrl(url);
   }
 
   @override
@@ -50,6 +50,11 @@ class Webview2ControllerAndroid extends Webview2Controller {
   @override
   Future<void> setCookies(List<Cookie> cookies) {
     return WebviewCookieManager().setCookies(cookies);
+  }
+
+  @override
+  Future<List<Cookie>> getCookies(String url) {
+    return WebviewCookieManager().getCookies(url);
   }
 
   @override

@@ -6,18 +6,16 @@ import 'package:flutter/material.dart';
 class AppRoute {
   final String title;
   final Widget page;
-  FutureOr Function(dynamic value) then;
 
-  AppRoute({this.title, this.page, this.then});
+  AppRoute({this.title, this.page});
 
-  void go(BuildContext context, {bool rootNavigator = false}) {
+  Future go(BuildContext context, {bool rootNavigator = false}) {
     Analytics.recordView(title);
-    final nav = Navigator.of(context, rootNavigator: rootNavigator).push(
+    return Navigator.of(context, rootNavigator: rootNavigator).push(
       MaterialPageRoute(
         builder: (_) => page,
       ),
     );
-    if (then != null) nav.then(then);
   }
 
   void exception(e) {}

@@ -14,17 +14,17 @@ import 'package:custed2/ui/webview/webview_login.dart';
 final custccBase = 'https://cust.cc';
 
 // 因inappwebview问题 暂时使用旧版登录
-final loginPage = AppRoute(
-  title: '登录',
-  page: WebviewLogin(),
+// final loginPage = AppRoute(
+//   title: '登录',
+//   page: WebviewLogin(),
   // page: LoginWebPage(),
-);
+// );
 
 // 因webview, 提供传统登录方式
-final loginPageLegacy = AppRoute(
-  title: '登录(Legacy)',
-  page: LoginPageLegacy(),
-);
+// final loginPageLegacy = AppRoute(
+//   title: '登录(Legacy)',
+//   page: LoginPageLegacy(),
+// );
 
 final debugPage = AppRoute(
   title: 'Terminal',

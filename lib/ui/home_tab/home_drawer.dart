@@ -1,3 +1,4 @@
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/config/routes.dart';
 import 'package:custed2/constants.dart';
 import 'package:custed2/core/route.dart';
@@ -8,6 +9,7 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/ui/pages/kv_table_page.dart';
+import 'package:custed2/ui/webview/webview_login.dart';
 import 'package:flutter/material.dart';
 
 class HomeDrawer extends StatelessWidget{
@@ -101,21 +103,24 @@ class HomeDrawer extends StatelessWidget{
         isLoggedIn ? ListTile(
           leading: Icon(Icons.login),
           title: Text('重新登录'),
-          onTap: () => loginPage.go(context),
+          onTap: () async {
+            await WebviewLogin.begin(context);
+          },
         ) : ListTile(
           leading: Icon(Icons.web),
           title: Text('统一登录'),
-          onTap: () => loginPage.go(context),
+          onTap: () async {
+            await WebviewLogin.begin(context, clearCookies: true);
+          },
         ),
-        isLoggedIn ? ListTile(
+        if (isLoggedIn) ListTile(
           leading: Icon(Icons.logout),
           title: Text('退出登录'),
-          onTap: () async => await user.logout(),
-        ) : ListTile(
-          leading: Icon(Icons.input),
-          title: Text('传统登录'),
-          onTap: () => loginPageLegacy.go(context),
-        ),
+          onTap: () async {
+            await locator<PersistCookieJar>().deleteAll();
+            await user.logout();
+          },
+        ) 
       ],
     );
   }

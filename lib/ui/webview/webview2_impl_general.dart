@@ -30,6 +30,23 @@ class Webview2ControllerGeneral extends Webview2Controller {
   }
 
   @override
+  Future<List<Cookie>> getCookies(String url) async {
+    final uri = Uri.parse(url);
+    final cookies = await CookieManager.instance().getCookies(url: uri);
+
+    final result = <Cookie>[];
+    for (var cookie in cookies) {
+      final dartCookie = Cookie(cookie.name, cookie.value);
+      dartCookie.domain = cookie.domain;
+      dartCookie.httpOnly = cookie.isHttpOnly;
+      dartCookie.path = cookie.path;
+      result.add(dartCookie);
+    }
+
+    return result;
+  }
+
+  @override
   Future<void> setCookies(List<Cookie> cookies) async {
     for (var cookie in cookies) {
       final url = '${cookie.domain}${cookie.path}';
@@ -52,8 +69,8 @@ class Webview2ControllerGeneral extends Webview2Controller {
   }
 
   @override
-  void loadUrl(String url) {
-    controller.loadUrl(urlRequest: url.uq);
+  Future<void> loadUrl(String url) {
+    return controller.loadUrl(urlRequest: url.uq);
   }
 
   @override
@@ -151,7 +168,8 @@ class Webview2StateGeneral extends Webview2State {
           final invalidUrlRegex = RegExp(widget.invalidUrlRegex);
 
           if (invalidUrlRegex.hasMatch(request.request.url.toString())) {
-            widget.onLoadAborted?.call(controllerAdaptor, request.request.url.toString());
+            widget.onLoadAborted
+                ?.call(controllerAdaptor, request.request.url.toString());
             return NavigationActionPolicy.CANCEL;
           } else {
             return NavigationActionPolicy.ALLOW;

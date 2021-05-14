@@ -17,9 +17,11 @@ abstract class Webview2Controller {
 
   Future<void> clearCookies();
 
+  Future<List<Cookie>> getCookies(String url);
+
   Future<void> setCookies(List<Cookie> cookies);
 
-  void loadUrl(String url);
+  Future<void> loadUrl(String url);
 
   Future<void> close();
 }

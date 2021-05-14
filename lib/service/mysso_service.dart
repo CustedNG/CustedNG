@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:custed2/config/routes.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
@@ -10,6 +11,7 @@ import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/jw_service.dart';
+import 'package:custed2/ui/webview/webview_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:html/parser.dart' show parse;
@@ -31,8 +33,8 @@ class MyssoService extends CatService {
 
   final sessionExpirationTest = RegExp(r'(用户登录|登录后可|微信扫码|账号密码)');
   final loginSuccessTest = RegExp(r'(登录成功|成功登录|Log In Successful|进入校园门户)');
-  final needCaptchaTest = RegExp(r'验证码');
-  final captchaVerificationFailureTest = RegExp(r'验证码错误');
+  // final needCaptchaTest = RegExp(r'验证码');
+  // final captchaVerificationFailureTest = RegExp(r'验证码错误');
 
   Future<CatLoginResult<String>> login({bool force = false}) async {
     if (force) clearCookieFor(baseUrl.toUri());
@@ -46,117 +48,124 @@ class MyssoService extends CatService {
     //   return CatLoginResult.ok();
     // }
 
-    final loginPage = await get(
+    final loginPageData = await get(
       loginUrlWithService,
       maxRedirects: 0,
     );
 
-    if (loginPage.statusCode.isWithin(300, 399) &&
-        loginPage.headers['location'].contains(loginService)) {
+    if (loginPageData.statusCode.isWithin(300, 399) &&
+        loginPageData.headers['location'].contains(loginService)) {
       print('Mysso Manual Login Success');
+    }
+
+    final context = locator<AppProvider>().ctx;
+    final ok = await WebviewLogin.begin(context, noLogin: true);
+    if (ok) {
       return CatLoginResult.ok();
     }
 
-    final userData = await locator.getAsync<UserDataStore>();
 
-    final loginPageParsed = parse(loginPage.body);
-    final execution = loginPageParsed
-        .querySelector('input[name=execution]')
-        .attributes['value'];
+    // final userData = await locator.getAsync<UserDataStore>();
 
-    final resp = await post(
-      loginUrlWithService,
-      body: {
-        'username': userData.username.fetch(),
-        'password': userData.password.fetch(),
-        'execution': execution,
-        '_eventId': 'submit',
-        'geolocation': '',
-      },
-      maxRedirects: 0,
-    );
+    // final loginPageParsed = parse(loginPageData.body);
+    // final execution = loginPageParsed
+    //     .querySelector('input[name=execution]')
+    //     .attributes['value'];
 
-    if (needCaptchaTest.hasMatch(resp.body)) {
-      print("Captcha Required");
-      final userInputCaptcha = await _showCaptchaInputDialog();
-      final captchaPageParsed = parse(resp.body);
-      final captchaResp = await post(
-        loginUrlWithService,
-        body: {
-          'vc': userInputCaptcha,
-          'execution': captchaPageParsed.querySelector('input[name=execution]')
-                                      .attributes['value'],
-          '_eventId': 'submit',
-          'submit': '%E6%8F%90%E4%BA%A4'
-        }
-      );
+    // final resp = await post(
+    //   loginUrlWithService,
+    //   body: {
+    //     'username': userData.username.fetch(),
+    //     'password': userData.password.fetch(),
+    //     'execution': execution,
+    //     '_eventId': 'submit',
+    //     'geolocation': '',
+    //   },
+    //   maxRedirects: 0,
+    // );
 
-      try {
-        _ensureSuccessfulCaptchaResponse(captchaResp);
-        print('MySSO Manual Login Success');
-        return CatLoginResult.ok();
-      } on _VerificationException catch (e) {
-        return CatLoginResult.failed(e.message);
-      }
-    }
+    // if (needCaptchaTest.hasMatch(resp.body)) {
+    //   print("Captcha Required");
+    //   final userInputCaptcha = await _showCaptchaInputDialog();
+    //   final captchaPageParsed = parse(resp.body);
+    //   final captchaResp = await post(
+    //     loginUrlWithService,
+    //     body: {
+    //       'vc': userInputCaptcha,
+    //       'execution': captchaPageParsed.querySelector('input[name=execution]')
+    //                                   .attributes['value'],
+    //       '_eventId': 'submit',
+    //       'submit': '%E6%8F%90%E4%BA%A4'
+    //     }
+    //   );
 
-    final reason =
-        parse(resp.body).querySelector('.alert-danger')?.text?.trim() ?? '未知原因';
-    print('Mysso Manual Login Failed：$reason');
-    return CatLoginResult.failed(reason);
+    //   try {
+    //     print('MySSO Manual Login Success');
+    //     return CatLoginResult.ok();
+    //   } on _VerificationException catch (e) {
+    //     return CatLoginResult.failed(e.message);
+    //   }
+    // }
+
+    // final reason =
+    //     parse(resp.body).querySelector('.alert-danger')?.text?.trim() ?? '未知原因';
+    // print('Mysso Manual Login Failed：$reason');
+    return CatLoginResult.failed();
   }
 
-  void _ensureSuccessfulCaptchaResponse(final Response captchaResp) {
-    final captchaRespCode = captchaResp.statusCode;
-    print("Captcha Response Code: $captchaRespCode");
-    if (captchaRespCode.isWithin(300, 399)) return;
-    if (captchaRespCode == 200){
-      if(captchaVerificationFailureTest.hasMatch(captchaResp.body)){
-        throw _VerificationException("验证码错误");
-      }
-      return;
-    }
-    throw _VerificationException("验证失败/未知原因");
-  }
+  // void _ensureSuccessfulCaptchaResponse(final Response captchaResp) {
+  //   final captchaRespCode = captchaResp.statusCode;
+  //   print("Captcha Response Code: $captchaRespCode");
+  //   if (captchaRespCode.isWithin(300, 399)) return;
+  //   if (captchaRespCode == 200){
+  //     if(captchaVerificationFailureTest.hasMatch(captchaResp.body)){
+  //       throw _VerificationException("验证码错误");
+  //     }
+  //     return;
+  //   }
+  //   throw _VerificationException("验证失败/未知原因");
+  // }
 
-  Future<String> _showCaptchaInputDialog() async {
-    final controller = TextEditingController();
-    final ctx = locator<AppProvider>().ctx;
-    await showRoundDialog(
-        ctx,
-        '请输入验证码',
-        TextField(
-          controller: controller,
-          keyboardType: TextInputType.visiblePassword,
-          decoration: InputDecoration(
-            icon: Icon(Icons.security),
-            labelText: '验证码',
-          ),
-        ),
-        [
-          TextButton(
-              onPressed: () {
-                showRoundDialog(
-                    ctx,
-                    '关于验证码',
-                    Text('近期由于学校提升了账户安全等级，登录教务需要验证码\n验证码需要在企业微信获取，具体步骤可以在信息化中心获取，或者加入用户群：1057534645询问热心好群友'),
-                    [TextButton(
-                        onPressed: () => Navigator.of(ctx).pop(),
-                        child: Text('确定')
-                    )]
-                );
-              },
-              child: Text('验证码？', style: TextStyle(color: Colors.red),)
-          ),
-          TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: Text('确定')
-          ),
+  // Future<String> _showCaptchaInputDialog() async {
+  //   final controller = TextEditingController();
+  //   final ctx = locator<AppProvider>().ctx;
 
-        ]
-    );
-    return controller.text;
-  }
+  //   loginPage.go(ctx);
+  //   await showRoundDialog(
+  //       ctx,
+  //       '请输入验证码',
+  //       TextField(
+  //         controller: controller,
+  //         keyboardType: TextInputType.visiblePassword,
+  //         decoration: InputDecoration(
+  //           icon: Icon(Icons.security),
+  //           labelText: '验证码',
+  //         ),
+  //       ),
+  //       [
+  //         TextButton(
+  //             onPressed: () {
+  //               showRoundDialog(
+  //                   ctx,
+  //                   '关于验证码',
+  //                   Text('近期由于学校提升了账户安全等级，登录教务需要验证码\n验证码需要在企业微信获取，具体步骤可以在信息化中心获取，或者加入用户群：1057534645询问热心好群友'),
+  //                   [TextButton(
+  //                       onPressed: () => Navigator.of(ctx).pop(),
+  //                       child: Text('确定')
+  //                   )]
+  //               );
+  //             },
+  //             child: Text('验证码？', style: TextStyle(color: Colors.red),)
+  //         ),
+  //         TextButton(
+  //             onPressed: () => Navigator.of(ctx).pop(),
+  //             child: Text('确定')
+  //         ),
+
+  //       ]
+  //   );
+  //   return controller.text;
+  // }
 
   Future<MyssoProfile> getProfile() async {
     final document = parse((await xRequest('GET', loginUrl.toUri())).body);
@@ -220,13 +229,13 @@ class MyssoService extends CatService {
       getTicket('http://tx.cust.edu.cn/ucsso/shiro-cas');
 }
 
-class _VerificationException implements Exception{
-  final String message;
+// class _VerificationException implements Exception {
+//   final String message;
 
-  _VerificationException(this.message);
+//   _VerificationException(this.message);
 
-  @override
-  String toString() {
-    return message;
-  }
-}
+//   @override
+//   String toString() {
+//     return message;
+//   }
+// }

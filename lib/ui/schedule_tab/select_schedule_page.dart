@@ -11,14 +11,12 @@ import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class SelectSchedulePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SelectSchedulePageState();
 }
 
 class _SelectSchedulePageState extends State<SelectSchedulePage> {
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context, listen: false);
@@ -28,35 +26,33 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
     // final profile = await user.getProfile();
 
     return Scaffold(
-      appBar: NavBar.material(
-        context: context,
-        middle: Text('选择课表'),
-        trailing: [
-          IconButton(
-              onPressed: () {
-                AppRoute(
+        appBar: NavBar.material(
+          context: context,
+          middle: Text('选择课表'),
+          trailing: [
+            IconButton(
+              onPressed: () async {
+                await AppRoute(
                   title: '添加',
                   page: AddCustomSchedulePage(),
-                  then: (result) {
-                    setState(() {});
-                  },
                 ).go(context);
+                setState(() {});
               },
               icon: Icon(Icons.add),
-        )],
-      ),
-      body: ConstrainedBox(
-        constraints: BoxConstraints(minWidth: double.infinity),
-        child: ListView(
-          children: <Widget>[
-            _buildListItem(null, "当前用户", user.profile.studentNumber),
-            for (final profile in profiles)
-              _buildListItem(profile, profile.name, profile.studentNumber,
-                  displayUUID: profile.uuid),
+            )
           ],
         ),
-      )
-    );
+        body: ConstrainedBox(
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: ListView(
+            children: <Widget>[
+              _buildListItem(null, "当前用户", user.profile.studentNumber),
+              for (final profile in profiles)
+                _buildListItem(profile, profile.name, profile.studentNumber,
+                    displayUUID: profile.uuid),
+            ],
+          ),
+        ));
   }
 
   Widget _buildListItem(
@@ -66,10 +62,10 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
       padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: GestureDetector(
         child: Card(
-        elevation: 3.0,
-        shape: roundShape,
-        clipBehavior: Clip.antiAlias,
-        semanticContainer: false,
+          elevation: 3.0,
+          shape: roundShape,
+          clipBehavior: Clip.antiAlias,
+          semanticContainer: false,
           child: Padding(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -84,8 +80,7 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
                     Text(studentNumber ?? "")
                   ],
                 ),
-                if (displayUUID != null)
-                  Text(displayUUID),
+                if (displayUUID != null) Text(displayUUID),
               ],
             ),
             padding: EdgeInsets.all(17),
@@ -102,18 +97,18 @@ class _SelectSchedulePageState extends State<SelectSchedulePage> {
               '确定删除吗？',
               Text('${profile.name}-${profile.studentNumber}'),
               [
-                  TextButton(
-                    child: Text('取消'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  TextButton(
-                    child: Text('确定', style: TextStyle(color: Colors.pinkAccent)),
-                    onPressed: () {
-                      _removeProfile(profile);
-                    },
-                  ),
+                TextButton(
+                  child: Text('取消'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('确定', style: TextStyle(color: Colors.pinkAccent)),
+                  onPressed: () {
+                    _removeProfile(profile);
+                  },
+                ),
               ],
             );
           }

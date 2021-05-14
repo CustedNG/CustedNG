@@ -51,8 +51,6 @@ class WebviewBrowser extends StatelessWidget {
       return;
     }
 
-    await WebvpnService().login();
-    await WrdvpnService().login();
     await loadCookieFor(controller, WrdvpnService.baseUrl);
 
     await loadCookieFor(controller, MyssoService.loginUrl);
