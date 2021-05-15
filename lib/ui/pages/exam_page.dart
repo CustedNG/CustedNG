@@ -169,9 +169,9 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
   @override
   void afterFirstLayout(BuildContext context) {
     final setting = locator<SettingStore>();
+    final exam = Provider.of<ExamProvider>(context, listen: false);
 
     if (setting.agreeToShowExam.fetch() == true) {
-      final exam = Provider.of<ExamProvider>(context, listen: false);
       exam.refreshData();
       return;
     }
@@ -195,7 +195,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
             child: Text('好的'),
             onPressed: () {
               setting.agreeToShowExam.put(true);
-              setState(() {});
+              exam.refreshData();
               Navigator.of(context).pop();
             },
           ),
