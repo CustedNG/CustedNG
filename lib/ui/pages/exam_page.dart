@@ -13,6 +13,7 @@ import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ExamPage extends StatefulWidget {
   @override
@@ -20,6 +21,8 @@ class ExamPage extends StatefulWidget {
 }
 
 class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
+  final refreshController = RefreshController(initialRefresh: false);
+
   @override
   Widget build(BuildContext context) {
     final setting = locator<SettingStore>();
@@ -32,40 +35,44 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     // 2.不同意
     // 3.教务炸了
 
-    if (setting.agreeToShowExam.fetch() == true) {
+    if (exam.isBusy) {
+      content = Center(child: CircularProgressIndicator());
+    } else if (setting.agreeToShowExam.fetch() == true) {
       final rows = exam?.data?.rows ?? <JwExamRows>[];
       final list = <Widget>[];
 
       if (exam.failed) {
+        final hint = rows.isEmpty
+            ? '数据获取失败 可尝试下拉刷新' //
+            : '请注意：刷新失败，正在使用缓存，可能考试表不准确';
+
         list.add(
-          Text(
-            '请注意：刷新失败，正在使用缓存，可能考试表不准确',
-            style: TextStyle(color: Colors.red),
-          )
+          Text(hint, style: TextStyle(color: Colors.red)),
         );
       }
 
       for (JwExamRows eachExam in rows) {
         final examTime = (eachExam.examTask.beginDate.substring(5, 11) +
-            eachExam.examTask.beginTime)
+                eachExam.examTask.beginTime)
             .replaceFirst('-', ' ~ ', 6)
             .replaceFirst('-', '月')
-            .replaceFirst(' ', '日 ');;
+            .replaceFirst(' ', '日 ');
+
         final examPosition = eachExam.examTask.examRoom.name;
         final examType = eachExam.examTask.type;
         final examName = eachExam.examTask.beginLesson.lessonInfo.name;
 
         final homeCard = HomeCard(
           title: Text(
-              examTime,
-              style: TextStyle(
-                color: Color(0xFF889CC3), 
-                fontWeight: FontWeight.bold
-              )
+            examTime,
+            style: TextStyle(
+              color: Color(0xFF889CC3),
+              fontWeight: FontWeight.bold,
+            ),
           ),
           content: Text(
-              '$examName\n$examPosition  $examType',
-              style: TextStyle(fontSize: 13),
+            '$examName\n$examPosition  $examType',
+            style: TextStyle(fontSize: 13),
           ),
         );
 
@@ -74,7 +81,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
         final content = Hero(
           child: homeCard,
           transitionOnUserGestures: true,
-          tag: 'ExamCard$heroIndex'
+          tag: 'ExamCard$heroIndex',
         );
 
         final card = GestureDetector(
@@ -122,6 +129,23 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
           child: Text(exam.data == null ? '暂时无法获取考场信息' : '没有考试啦～'),
         );
       }
+
+      content = SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: false,
+        physics: BouncingScrollPhysics(),
+        header: MaterialClassicHeader(),
+        controller: refreshController,
+        child: content,
+        onRefresh: () async {
+          await exam.refreshData();
+          if (exam.failed) {
+            refreshController.refreshFailed();
+          } else {
+            refreshController.refreshCompleted();
+          }
+        },
+      );
     }
 
     return Scaffold(
@@ -134,10 +158,10 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
         middle: NavbarText('考试安排'),
         trailing: [
           IconButton(
-            icon: Icon(Icons.info), 
-            onPressed: () => showSnackBar(context, '点击卡片可添加至课表')
+            icon: Icon(Icons.info),
+            onPressed: () => showSnackBar(context, '点击卡片可添加至课表'),
           )
-        ]
+        ],
       ),
     );
   }
@@ -147,33 +171,36 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     final setting = locator<SettingStore>();
 
     if (setting.agreeToShowExam.fetch() == true) {
+      final exam = Provider.of<ExamProvider>(context, listen: false);
+      exam.refreshData();
       return;
     }
 
-    Future.delayed(Duration(milliseconds: 777), () =>
-        showRoundDialog(
-            context,
-            '提示',
-            Text('考场信息仅供参考\n请与教务系统中信息核对后使用'),
-            [
-              TextButton(
-                child: Text('取消'),
-                onPressed: () async {
-                  await Navigator.of(context).pop();
-                  await Future.delayed(Duration(milliseconds: 377));
-                  await Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: Text('好的'),
-                onPressed: () {
-                  setting.agreeToShowExam.put(true);
-                  setState(() {});
-                  Navigator.of(context).pop();
-                },
-              ),
-            ]
-        )
+    Future.delayed(
+      Duration(milliseconds: 777),
+      () => showRoundDialog(
+        context,
+        '提示',
+        Text('考场信息仅供参考\n请与教务系统中信息核对后使用'),
+        [
+          TextButton(
+            child: Text('取消'),
+            onPressed: () async {
+              await Navigator.of(context).pop();
+              await Future.delayed(Duration(milliseconds: 377));
+              await Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('好的'),
+            onPressed: () {
+              setting.agreeToShowExam.put(true);
+              setState(() {});
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
     );
   }
 }

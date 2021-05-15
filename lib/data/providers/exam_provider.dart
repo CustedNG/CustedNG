@@ -26,8 +26,9 @@ class ExamProvider extends BusyProvider {
       return;
     }
 
-    setBusyState(true);
-    await refreshData();
+    // setBusyState(true);
+    // await refreshData();
+    notifyListeners();
     startAutoRefresh();
   }
 
@@ -37,9 +38,8 @@ class ExamProvider extends BusyProvider {
     }
 
     for (JwExamRows exam in data.rows) {
-      final examTime =
-          exam.examTask.beginDate.substring(0, 11)
-              + exam.examTask.beginTime.substring(6);
+      final examTime = exam.examTask.beginDate.substring(0, 11) +
+          exam.examTask.beginTime.substring(6);
 
       if (DateTime.parse(examTime).isAfter(DateTime.now())) {
         return exam;
@@ -49,7 +49,7 @@ class ExamProvider extends BusyProvider {
     return null;
   }
 
-  int getRemainExam(){
+  int getRemainExam() {
     if (data == null) {
       return null;
     }
@@ -66,13 +66,14 @@ class ExamProvider extends BusyProvider {
     return 0;
   }
 
-  void refreshData() async {
+  Future<void> refreshData() async {
+    setBusyState(true);
     final examStore = await locator.getAsync<ExamStore>();
     try {
       final exam = await JwService().getExam();
       data = exam.data;
       if (data != null) examStore.put(data);
-    } catch(e) {
+    } catch (e) {
       failed = true;
       var cacheExamData = examStore.fetch();
       if (cacheExamData != null) {
@@ -92,7 +93,7 @@ class ExamProvider extends BusyProvider {
       return;
     }
 
-    _updateTimer = Timer.periodic(Duration(minutes: 1), (timer) async {
+    _updateTimer = Timer.periodic(Duration(minutes: 1), (_) {
       notifyListeners();
     });
   }

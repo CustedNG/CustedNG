@@ -30,11 +30,13 @@ class _HomeExamState extends State<HomeExam> {
     String time = '';
     String notice = '';
 
-    if (setting.agreeToShowExam.fetch() == false) {
+    if (exam.data == null || exam.failed) {
       notice = '点击查看考场信息';
-    } else if (exam.failed && !exam.useCache) {
-      notice = '刷新失败，暂时无法获取考试信息';
-    } else {
+    }
+    // else if (exam.failed && !exam.useCache) {
+    //   notice = '刷新失败，暂时无法获取考试信息';
+    // }
+    else {
       var nextExam = exam.getNextExam();
       if (nextExam == null) {
         notice = '没有考试啦～ ${(exam.failed && exam.useCache) ? "(缓存)" : ""}';
@@ -62,7 +64,7 @@ class _HomeExamState extends State<HomeExam> {
     }
 
     final style = TextStyle(
-      fontSize: 13
+      fontSize: 13,
     );
 
     final card = HomeCard(
@@ -71,13 +73,13 @@ class _HomeExamState extends State<HomeExam> {
       content: Text(notice, style: style),
     );
 
-    final heroIndex = exam.data == null ? 
-          0 : exam.data.total - exam.getRemainExam();
+    final heroIndex =
+        exam.data == null ? 0 : exam.data.total - exam.getRemainExam();
 
     final child = Hero(
       tag: 'ExamCard$heroIndex',
       transitionOnUserGestures: true,
-      child: card
+      child: card,
     );
 
     return GestureDetector(
@@ -88,8 +90,8 @@ class _HomeExamState extends State<HomeExam> {
 
   Widget _buildTitle(BuildContext context, String examTime) {
     final style = TextStyle(
-      color: Color(0xFF889CC3), 
-      fontWeight: FontWeight.bold
+      color: Color(0xFF889CC3),
+      fontWeight: FontWeight.bold,
     );
     final title = '下场考试 $examTime';
     return Text(title, style: style);
