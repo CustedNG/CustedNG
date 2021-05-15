@@ -14,7 +14,6 @@
 		413F0BED26272F0B00AC9A62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 413F0BEC26272F0B00AC9A62 /* Assets.xcassets */; };
 		413F0BEF26272F0B00AC9A62 /* CustedHomeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 413F0BEB26272F0A00AC9A62 /* CustedHomeWidget.intentdefinition */; };
 		413F0BF026272F0B00AC9A62 /* CustedHomeWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 413F0BEB26272F0A00AC9A62 /* CustedHomeWidget.intentdefinition */; };
-		413F0BF326272F0B00AC9A62 /* CustedHomeWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 413F0BE326272F0A00AC9A62 /* CustedHomeWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		41CF5593262843BE00B5C65C /* OneWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C53B692628041B0008274E /* OneWord.swift */; };
 		73B61D3535FA8F9267B7979D /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EA52FB586FAC0C2738D693C /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -26,28 +25,7 @@
 		D529C513264EC3BF0065E6E0 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 413F0BE626272F0A00AC9A62 /* SwiftUI.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		413F0BF126272F0B00AC9A62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 413F0BE226272F0A00AC9A62;
-			remoteInfo = CustedHomeWidgetExtension;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
-		413F0BF426272F0B00AC9A62 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				413F0BF326272F0B00AC9A62 /* CustedHomeWidgetExtension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -254,12 +232,10 @@
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				5CB9242EE839FC26A4010F48 /* [CP] Embed Pods Frameworks */,
-				413F0BF426272F0B00AC9A62 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				413F0BF226272F0B00AC9A62 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -423,14 +399,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		413F0BF226272F0B00AC9A62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 413F0BE226272F0A00AC9A62 /* CustedHomeWidgetExtension */;
-			targetProxy = 413F0BF126272F0B00AC9A62 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		97C146FA1CF9000F007C117D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -507,7 +475,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/CustedNG.entitlements;
@@ -752,7 +719,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/CustedNG.entitlements;
@@ -788,7 +754,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/CustedNG.entitlements;
