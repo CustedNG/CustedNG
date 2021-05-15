@@ -65,10 +65,6 @@ class _WebviewLoginState extends State<WebviewLogin> {
       await controller.clearCookies();
     }
 
-    await loadCookieFor(controller, 'https://mysso.cust.edu.cn/cas/login');
-    await loadCookieFor(controller, 'http://wwwn.cust.edu.cn');
-    await loadCookieFor(controller, 'http://webvpn.cust.edu.cn');
-
     Timer(Duration(milliseconds: 500), () async {
       await controller.loadUrl(
         'https://mysso.cust.edu.cn/cas/login?service=https://portal.cust.edu.cn/custp/shiro-cas',
@@ -93,12 +89,21 @@ class _WebviewLoginState extends State<WebviewLogin> {
   }
 
   Future<void> loginSuccessCallback(Webview2Controller controller) async {
-    const mysso = 'https://mysso.cust.edu.cn/cas/login';
-    final cookies = await controller.getCookies(mysso);
+    const syncDomains = [
+      'https://mysso.cust.edu.cn/',
+      'https://mysso.cust.edu.cn/cas/login',
+      'https://wwwn.cust.edu.cn/',
+      'https://vpn.cust.edu.cn/',
+      'https://webvpn.cust.edu.cn/',
+    ];
 
     final cookieJar = locator<PersistCookieJar>();
-    await cookieJar.delete(Uri.parse(mysso));
-    await cookieJar.saveFromResponse(Uri.parse(mysso), cookies);
+
+    for (var domain in syncDomains) {
+      final cookies = await controller.getCookies(domain);
+      await cookieJar.delete(Uri.parse(domain));
+      await cookieJar.saveFromResponse(Uri.parse(domain), cookies);
+    }
 
     final userData = await locator.getAsync<UserDataStore>();
     userData.username.put(this.username);
@@ -119,38 +124,5 @@ class _WebviewLoginState extends State<WebviewLogin> {
       showSnackBar(context, '登录出错啦 等下再试吧');
       rethrow;
     }
-  }
-
-  Future<void> loadCookieFor(
-    Webview2Controller controller,
-    String url, {
-    String urlOverride,
-  }) async {
-    final rawCookies =
-        await locator<PersistCookieJar>().loadForRequest(url.toUri());
-    final cookies = <Cookie>[];
-
-    final uri = Uri.tryParse(url);
-    final uriOverride = urlOverride != null ? Uri.tryParse(urlOverride) : null;
-
-    if (uri == null) {
-      print('no cookie for bad url $url');
-    }
-
-    for (var rawCookie in rawCookies) {
-      final cookie = Cookie(rawCookie.name, rawCookie.value)
-        ..domain = uriOverride?.host ?? uri.host
-        ..path = uriOverride?.path ?? rawCookie.path
-        ..expires = rawCookie.expires
-        ..maxAge = rawCookie.maxAge
-        ..httpOnly = rawCookie.httpOnly
-        ..secure = false;
-
-      cookies.add(cookie);
-    }
-
-    print('cookies $url $cookies');
-    // final uriOverride = urlOverride?.toUri();
-    await controller.setCookies(cookies);
   }
 }
