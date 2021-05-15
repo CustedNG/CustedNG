@@ -66,7 +66,7 @@ class _HomeEntriesState extends State<HomeEntries> {
             action: () => jwWebPage.go(context),
           ),
           HomeEntry(
-            name: Text('校内论坛', style: style),
+            name: Text('使用指南', style: style),
             icon: Image(image: ImageRes.ecardIcon),
             // action: () => iecardWebPage.go(context),
             // action: () => openIecard(context),
