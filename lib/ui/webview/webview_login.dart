@@ -97,6 +97,7 @@ class _WebviewLoginState extends State<WebviewLogin> {
     final cookies = await controller.getCookies(mysso);
 
     final cookieJar = locator<PersistCookieJar>();
+    await cookieJar.delete(Uri.parse(mysso));
     await cookieJar.saveFromResponse(Uri.parse(mysso), cookies);
 
     final userData = await locator.getAsync<UserDataStore>();
