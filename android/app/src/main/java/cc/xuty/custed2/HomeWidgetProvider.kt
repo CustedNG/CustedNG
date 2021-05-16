@@ -9,6 +9,8 @@ import es.antonborri.home_widget.HomeWidgetProvider
 import okhttp3.Request
 import java.io.IOException
 import java.util.concurrent.Future
+import java.util.Date
+import java.text.SimpleDateFormat
 
 @Suppress("ArrayInDataClass")
 data class NextSchedule(
@@ -76,11 +78,11 @@ class HomeWidgetProvider : HomeWidgetProvider() {
 
             appWidgetIds.forEach { widgetId ->
                 val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
+                    setTextViewText(R.id.widget_time, jsonObj.startTime)
                     setTextViewText(R.id.widget_course, jsonObj.courseName)
-                    setTextViewText(
-                        R.id.widget_position,
-                        "${jsonObj.position}, ${jsonObj.startTime}"
-                    )
+                    setTextViewText(R.id.widget_position, jsonObj.position)
+                    setTextViewText(R.id.widget_teacher, jsonObj.teacherName)
+                    setTextViewText(R.id.widget_update, "更新于 ${SimpleDateFormat("HH:mm").format(Date())}")
                 }
 
                 appWidgetManager.updateAppWidget(widgetId, views)

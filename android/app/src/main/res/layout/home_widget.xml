@@ -9,33 +9,69 @@
     android:id="@+id/widget_container">
 
     <TextView
+        android:id="@+id/widget_blank"
+        android:layout_width="match_parent"
+        android:layout_height="7sp"
+        android:textSize="27sp"
+        android:textColor="#FFFFFF"
+        tools:text="" />
+    
+    <TextView
+        android:id="@+id/widget_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="27sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        tools:text="Time" />
+    
+    <TextView
+        android:id="@+id/widget_blank"
+        android:layout_width="match_parent"
+        android:layout_height="7sp"
+        android:textSize="13sp"
+        android:textColor="#FFFFFF"
+        tools:text="" />
+    
+    <TextView
         android:id="@+id/widget_course"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="36sp"
-        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="#FFFFFF"
         tools:text="Course" />
 
     <TextView
         android:id="@+id/widget_position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="13sp"
+        android:textColor="#FFFFFF"
         tools:text="Position" />
 
     <TextView
         android:id="@+id/widget_teacher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="13sp"
+        android:textColor="#FFFFFF"
         tools:text="Teacher" />
 
     <TextView
-        android:id="@+id/widget_time"
+        android:id="@+id/widget_blank"
+        android:layout_width="match_parent"
+        android:layout_height="7sp"
+        android:textSize="13sp"
+        android:textColor="#FFFFFF"
+        tools:text="" />
+
+    <TextView
+        android:id="@+id/widget_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        tools:text="Time" />
+        android:textSize="13sp"
+        android:layout_marginBottom="17dp"
+        android:textColor="#FFFFFF"
+        tools:text="UpdateTime" />
     
-
 </LinearLayout>
