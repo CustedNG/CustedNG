@@ -30,13 +30,11 @@ class _HomeExamState extends State<HomeExam> {
     String time = '';
     String notice = '';
 
-    if (exam.data == null || exam.failed) {
+    if (setting.agreeToShowExam.fetch() == false) {
       notice = '点击查看考场信息';
-    }
-    // else if (exam.failed && !exam.useCache) {
-    //   notice = '刷新失败，暂时无法获取考试信息';
-    // }
-    else {
+    } else if (exam.failed && !exam.useCache) {
+      notice = '刷新失败，暂时无法获取考试信息';
+    } else {
       var nextExam = exam.getNextExam();
       if (nextExam == null) {
         notice = '没有考试啦～ ${(exam.failed && exam.useCache) ? "(缓存)" : ""}';

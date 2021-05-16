@@ -61,7 +61,6 @@ class _ScheduleTabState extends State<ScheduleTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final scheduleProvider = Provider.of<ScheduleProvider>(context);
 
     return Scaffold(
       appBar: NavBar.material(

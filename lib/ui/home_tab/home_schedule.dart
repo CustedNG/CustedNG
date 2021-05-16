@@ -8,6 +8,7 @@ import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
 import 'package:custed2/ui/webview/webview_login.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeSchedule extends StatefulWidget {
   @override
@@ -15,19 +16,12 @@ class HomeSchedule extends StatefulWidget {
 }
 
 class _HomeScheduleState extends State<HomeSchedule> {
-  final scheduleProvider = locator<ScheduleProvider>();
-
-  @override
-  void initState() {
-    init();
-    super.initState();
-  }
-
-  Future<void> init() async => await scheduleProvider.loadLocalData();
+  ScheduleProvider scheduleProvider;
 
   @override
   Widget build(BuildContext context) {
     final user = locator<UserProvider>();
+    scheduleProvider = Provider.of<ScheduleProvider>(context);
     if (!user.loggedIn) {
         return GestureDetector(
           child: HomeCard(
