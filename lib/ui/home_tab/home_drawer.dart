@@ -110,7 +110,7 @@ class HomeDrawer extends StatelessWidget{
           leading: Icon(Icons.web),
           title: Text('统一登录'),
           onTap: () async {
-            await WebviewLogin.begin(context, clearCookies: true);
+            await WebviewLogin.begin(context);
           },
         ),
         if (isLoggedIn) ListTile(

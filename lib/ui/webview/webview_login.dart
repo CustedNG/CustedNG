@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
@@ -18,23 +16,20 @@ import 'package:flutter/material.dart';
 class WebviewLogin extends StatefulWidget {
   WebviewLogin({
     this.noLogin = false,
-    this.clearCookies = false,
   });
 
   static Future<bool> begin(
     BuildContext context, {
     noLogin = false,
-    clearCookies = false,
   }) async {
     final result = await AppRoute(
       title: '登录(560+)',
-      page: WebviewLogin(noLogin: noLogin, clearCookies: clearCookies),
+      page: WebviewLogin(noLogin: noLogin),
     ).go(context);
     return result == true;
   }
 
   final bool noLogin;
-  final bool clearCookies;
 
   @override
   _WebviewLoginState createState() => _WebviewLoginState();
@@ -61,9 +56,7 @@ class _WebviewLoginState extends State<WebviewLogin> {
   }
 
   void onCreated(Webview2Controller controller) async {
-    if (widget.clearCookies) {
-      await controller.clearCookies();
-    }
+    await controller.clearCookies();
 
     Timer(Duration(milliseconds: 500), () async {
       await controller.loadUrl(
