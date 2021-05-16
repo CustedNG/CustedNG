@@ -10,7 +10,9 @@ import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/jw_student_info.dart';
 import 'package:custed2/data/models/jw_week_time.dart';
+import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/remote_config_service.dart';
 import 'package:custed2/service/wrdvpn_based_service.dart';
@@ -66,6 +68,19 @@ class JwService extends WrdvpnBasedService {
       body: encodeParams({}),
       headers: {'content-type': 'application/json'},
     );
+
+    final ecardId = locator<UserDataStore>().username.fetch();
+
+    if (resp.statusCode == 200) {
+      final result4SendChedule = 
+          await CustedService().updateScheduleCache2Backend(ecardId, resp.body);
+      print('send cache schedule to backend: $result4SendChedule');
+    } else {
+      final cache = await CustedService().getCacheScheduleFromBackend(ecardId);
+      print('use cached schedule from backend: ${cache.statusCode}');
+      if (cache.statusCode == 200) return cache;
+    }
+
     return resp;
   }
 

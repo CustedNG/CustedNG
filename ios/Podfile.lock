@@ -22,15 +22,10 @@ PODS:
     - OrderedSet (~> 5.0)
   - flutter_webview_plugin (0.0.1):
     - Flutter
+  - home_widget (0.0.1):
+    - Flutter
   - install_plugin (0.0.1):
     - Flutter
-  - JCore (2.4.0)
-  - JPush (3.4.0):
-    - JCore (< 3.0.0, >= 2.0.0)
-  - jpush_flutter (0.0.2):
-    - Flutter
-    - JCore (= 2.4.0)
-    - JPush (= 3.4.0)
   - OrderedSet (5.0.0)
   - path_provider (0.0.1):
     - Flutter
@@ -60,8 +55,8 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
+  - home_widget (from `.symlinks/plugins/home_widget/ios`)
   - install_plugin (from `.symlinks/plugins/install_plugin/ios`)
-  - jpush_flutter (from `.symlinks/plugins/jpush_flutter/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - plain_notification_token (from `.symlinks/plugins/plain_notification_token/ios`)
   - save_in_gallery (from `.symlinks/plugins/save_in_gallery/ios`)
@@ -75,8 +70,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Countly
-    - JCore
-    - JPush
     - OrderedSet
     - Reachability
 
@@ -95,10 +88,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_webview_plugin:
     :path: ".symlinks/plugins/flutter_webview_plugin/ios"
+  home_widget:
+    :path: ".symlinks/plugins/home_widget/ios"
   install_plugin:
     :path: ".symlinks/plugins/install_plugin/ios"
-  jpush_flutter:
-    :path: ".symlinks/plugins/jpush_flutter/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   plain_notification_token:
@@ -127,10 +120,8 @@ SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
+  home_widget: 2829415127ee92e876f816cbbe44c0b6601b8a37
   install_plugin: a13e7ddd2bab0c701b48cd359c26d0394125b6fb
-  JCore: a29e4b0ee54e1301446dc02d8e1c350404108b34
-  JPush: defaa108c38806f6efdcfaf4c416854d25fca8e5
-  jpush_flutter: 364b245849348e05377d67295d0896ddd664a896
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   plain_notification_token: b36467dc91939a7b6754267c701bbaca14996ee1

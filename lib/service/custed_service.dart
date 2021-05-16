@@ -8,10 +8,12 @@ import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/models/custed_update_testflight.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/res/build_data.dart';
+import 'package:http/http.dart' show Response;
 
 class CustedService extends CatClient {
   static const baseUrl = 'https://cust.app';
   static const ccUrl = 'https://cust.cc';
+  static const backendUrl = 'https://push.lolli.tech';
   static const defaultTimeout = Duration(seconds: 100);
 
   Future<WeatherData> getWeather() async {
@@ -99,8 +101,15 @@ class CustedService extends CatClient {
     return resp.body;
   }
 
-  Future<bool> needVerifyCode4Login() async {
-    final resp = await get('$ccUrl/webview/needVerifyCode4Login');
-    return resp.body != '0';
+  Future<String> updateScheduleCache2Backend(String ecardId, String body) async {
+    final resp = await post(
+      '$backendUrl/schedule/$ecardId',
+      body: body,
+    );
+    return '${resp.statusCode} ${resp.body}';
+  }
+
+  Future<Response> getCacheScheduleFromBackend(String ecardId) async {
+    return await get('$backendUrl/schedule/$ecardId');
   }
 }

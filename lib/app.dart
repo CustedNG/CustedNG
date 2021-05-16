@@ -12,11 +12,14 @@ import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/setting_builder.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
+import 'package:plain_notification_token/plain_notification_token.dart';
 // import 'package:jpush_flutter/jpush_flutter.dart';
 // import 'package:plain_notification_token/plain_notification_token.dart';
 
@@ -98,55 +101,52 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       await locator<ExamProvider>().init();
       // 预热 IecardService
       // IecardService().login();
+
+      final userData = locator<UserDataStore>();
+
+      initPushService(userData);
+      if (Platform.isIOS) HomeWidget.setAppGroupId('group.com.tusi.app');
+      HomeWidget.saveWidgetData('ecardId', userData.username.fetch());
     }
-    // initPushService();
   }
 }
 
-// Future<void> initPushService() async {
-//   final userData = locator<UserDataStore>();
-//   final userName = userData.username.fetch();
-//   if (userName == null || userName.length < 10) return;
+Future<void> initPushService(UserDataStore user) async {
+  String token = await getToken();
+  if (token == null) return;
+  final now = DateTime.now();
+  DateTime cacheTokenDate = user.tokenDate.fetch();
+  cacheTokenDate ??= now.subtract(Duration(days: 3));
 
-//   String token = await getToken();
-//   if (token == null) return;
+  if (cacheTokenDate.add(Duration(days: 2)).isAfter(now)) {
+    print('ignore send token due to $cacheTokenDate.');
+    return;
+  }
+  if(await sendToken(token, user.username.fetch())) {
+    user.tokenDate.put(now);
+  }
+}
 
-//   final now = DateTime.now();
-//   DateTime cacheTokenDate = userData.tokenDate.fetch();
-//   cacheTokenDate ??= now.subtract(Duration(days: 3));
-  
-//   if (cacheTokenDate.add(Duration(days: 2)).isAfter(now)) {
-//     print('ignore send token due to $cacheTokenDate.');
-//     return;
-//   }
-
-//   if(await sendToken(token, userName)) {
-//     userData.tokenDate.put(now);
-//   }
-// }
-
-// Future<String> getToken() async {
-//   if (Platform.isIOS) {
-//     final plainNotificationToken = PlainNotificationToken();
-//     plainNotificationToken.requestPermission();
-//     await plainNotificationToken.onIosSettingsRegistered.first;
-
-//     // wait for user to give notification permission
-//     await Future.delayed(Duration(seconds: 3));
-
-//     return await plainNotificationToken.getToken();
-//   } else if (Platform.isAndroid) {
-//     JPush jpush = new JPush();
-//     jpush.setup(
-//       appKey: "09dc461a0f268ddb989152f6",
-//       channel: "web",
-//       production: true,
-//       debug: false,
-//     );
-//     return await jpush.getRegistrationID();
-//   }
-//   return null;
-// }
+Future<String> getToken() async {
+  if (Platform.isIOS) {
+    final plainNotificationToken = PlainNotificationToken();
+    plainNotificationToken.requestPermission();
+    await plainNotificationToken.onIosSettingsRegistered.first;
+    // wait for user to give notification permission
+    await Future.delayed(Duration(seconds: 3));
+    return await plainNotificationToken.getToken();
+  } //else if (Platform.isAndroid) {
+  //   JPush jpush = new JPush();
+  //   jpush.setup(
+  //     appKey: "09dc461a0f268ddb989152f6",
+  //     channel: "web",
+  //     production: true,
+  //     debug: false,
+  //   );
+  //   return await jpush.getRegistrationID();
+  // }
+  return null;
+}
 
 Future<bool> sendToken(String token, String userName) async {
   final pushServer = "https://push.lolli.tech";

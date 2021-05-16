@@ -3,7 +3,6 @@ import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
-import 'package:custed2/data/store/schedule_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
@@ -96,14 +95,14 @@ class _ScheduleTabState extends State<ScheduleTab>
   }
 
   Future<void> _onRefresh() async {
+      await scheduleProvider.updateScheduleData();
+      _refreshController.refreshCompleted();
     try {
       if(!Provider.of<UserProvider>(context, listen: false).loggedIn) {
         showSnackBar(context, '请登录');
         _refreshController.refreshFailed();
         return;
       }
-      await scheduleProvider.updateScheduleData();
-      _refreshController.refreshCompleted();
       showSnackBar(context, '更新成功');
     } catch (e) {
       print(e);

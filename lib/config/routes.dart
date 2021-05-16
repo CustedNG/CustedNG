@@ -4,12 +4,10 @@ import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/exam_page.dart';
-import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/pages/map_page.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
 import 'package:custed2/ui/user_tab/netdisk_page.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
-import 'package:custed2/ui/webview/webview_login.dart';
 
 final custccBase = 'https://cust.cc';
 
