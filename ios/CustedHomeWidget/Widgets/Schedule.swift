@@ -96,7 +96,7 @@ struct ScheduleLoader {
         let data = UserDefaults.init(suiteName: widgetGroupId)
         let ecardId = data?.string(forKey: "ecardId")
         guard ecardId != nil else {
-            completion(.success(Schedule(teacher: "然后登陆", position: "请打开App", course: "无数据", time: "并等待下一次刷新", updateTime: date2String(Date(), dateFormat: "HH:mm"))))
+            completion(.success(Schedule(teacher: "登录、刷新课表", position: "请打开App", course: "无数据", time: "并等待下一次刷新", updateTime: date2String(Date(), dateFormat: "HH:mm"))))
             return
         }
         let scheduleURL = URL(string: "https://push.lolli.tech/schedule/next/" + ecardId!)!
