@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/user_profile.dart';

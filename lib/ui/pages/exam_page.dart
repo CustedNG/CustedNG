@@ -10,7 +10,7 @@ import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -35,19 +35,15 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     // 2.不同意
     // 3.教务炸了
 
-    if (exam.isBusy) {
-      content = Center(child: CircularProgressIndicator());
-    } else if (setting.agreeToShowExam.fetch() == true) {
+    if (setting.agreeToShowExam.fetch() == true) {
       final rows = exam?.data?.rows ?? <JwExamRows>[];
       final list = <Widget>[];
 
-      if (exam.failed) {
-        final hint = rows.isEmpty
-            ? '数据获取失败 可尝试下拉刷新' //
-            : '请注意：刷新失败，正在使用缓存，可能考试表不准确';
+      if (exam.useCache) {
+        final hint = '正在使用缓存，可能考表不准确，可尝试下拉刷新\n';
 
         list.add(
-          Text(hint, style: TextStyle(color: Colors.red)),
+          Center(child: Text(hint, style: TextStyle(color: Colors.red))),
         );
       }
 
@@ -118,7 +114,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       content = ListView(
         physics: BouncingScrollPhysics(),
         children: [
-          SizedBox(height: 37),
+          SizedBox(height: 17),
           ...list,
           SizedBox(height: 20),
         ],
@@ -155,7 +151,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       ),
       appBar: NavBar.material(
         context: context,
-        middle: NavbarText('考试安排'),
+        middle: NavbarMiddle(textAbove: '考试安排', textBelow: '可下拉刷新'),
         trailing: [
           IconButton(
             icon: Icon(Icons.info),
@@ -169,10 +165,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
   @override
   void afterFirstLayout(BuildContext context) {
     final setting = locator<SettingStore>();
-    final exam = Provider.of<ExamProvider>(context, listen: false);
-
     if (setting.agreeToShowExam.fetch() == true) {
-      exam.refreshData();
       return;
     }
 
@@ -195,7 +188,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
             child: Text('好的'),
             onPressed: () {
               setting.agreeToShowExam.put(true);
-              exam.refreshData();
+              locator<ExamProvider>().refreshData();
               Navigator.of(context).pop();
             },
           ),

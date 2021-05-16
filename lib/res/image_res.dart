@@ -39,4 +39,6 @@ class ImageRes {
   static const wechatStep1 = AssetImage('assets/wechat/step1.jpg');
   static const wechatStep2 = AssetImage('assets/wechat/step2.jpg');
   static const wechatStep3 = AssetImage('assets/wechat/step3.jpg');
+
+  static const jwCaptchaHelp = AssetImage('assets/jw_captcha_help.jpg');
 }

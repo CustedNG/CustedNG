@@ -66,13 +66,14 @@ dependencies:
   tuple: ^2.0.0
   webview_cookie_manager: ^2.0.0-nullsafety.0
   flutter_staggered_animations: ^1.0.0
-  # plain_notification_token: ^0.0.1
+  plain_notification_token: ^0.0.1
   # jpush_flutter:
   #   git:
   #     url: git://github.com/jpush/jpush-flutter-plugin.git
   #     ref: master
   wifi_ip: ^0.0.1
   add_2_calendar: ^2.1.0
+  home_widget: ^0.1.2+1
 
 dev_dependencies:
   # flutter_test:
@@ -132,3 +133,4 @@ flutter:
     - assets/wechat/
     - assets/intro/
     - assets/user_group.jpg
+    - assets/jw_captcha_help.jpg

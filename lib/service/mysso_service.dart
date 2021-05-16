@@ -1,21 +1,15 @@
 import 'dart:io';
 
-import 'package:custed2/config/routes.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/core/service/cat_service.dart';
-import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/models/mysso_profile.dart';
 import 'package:custed2/data/providers/app_provider.dart';
-import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/webview/webview_login.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:html/parser.dart' show parse;
-import 'package:http/http.dart' show Response;
 
 class MyssoService extends CatService {
   static const baseUrl = 'https://mysso.cust.edu.cn';

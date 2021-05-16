@@ -25,6 +25,7 @@ class ExamProvider extends BusyProvider {
     if (!show) {
       return;
     }
+    loadLocalData();
 
     // setBusyState(true);
     // await refreshData();
@@ -64,6 +65,17 @@ class ExamProvider extends BusyProvider {
     }
 
     return 0;
+  }
+
+  Future<void> loadLocalData() async {
+    final examStore = await locator.getAsync<ExamStore>();
+    var cacheExamData = examStore.fetch();
+    if (cacheExamData != null) {
+      print('use cached exam data.');
+      data = cacheExamData;
+      useCache = true;
+    }
+    notifyListeners();
   }
 
   Future<void> refreshData() async {

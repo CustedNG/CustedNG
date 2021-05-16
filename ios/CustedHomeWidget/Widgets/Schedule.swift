@@ -9,6 +9,7 @@ import WidgetKit
 import SwiftUI
 import Intents
 
+private let widgetGroupId = "group.com.tusi.app"
 
 func date2String(_ date:Date, dateFormat:String = "yyyy-MM-dd HH:mm:ss") -> String {
     let formatter = DateFormatter()
@@ -92,20 +93,35 @@ struct Schedule {
 
 struct ScheduleLoader {
     static func fetch(completion: @escaping (Result<Schedule, Error>) -> Void) {
-        let oneWordURL = URL(string: "https://push.lolli.tech/")!
-        let task = URLSession.shared.dataTask(with: oneWordURL) { (data, response, error) in
+        let data = UserDefaults.init(suiteName: widgetGroupId)
+        let ecardId = data?.string(forKey: "ecardId")
+        guard ecardId != nil else {
+            completion(.success(Schedule(teacher: "然后登陆", position: "请打开App", course: "无数据", time: "并等待下一次刷新", updateTime: date2String(Date(), dateFormat: "HH:mm"))))
+            return
+        }
+        let scheduleURL = URL(string: "https://push.lolli.tech/schedule/next/" + ecardId!)!
+        let task = URLSession.shared.dataTask(with: scheduleURL) { (data, response, error) in
             guard error == nil else {
                 completion(.failure(error!))
                 return
             }
-            let oneWord = getScheduleInfo(fromData: data!)
-            completion(.success(oneWord))
+            let schedule = getScheduleInfo(fromData: data!)
+            completion(.success(schedule))
         }
         task.resume()
     }
 
     static func getScheduleInfo(fromData data: Foundation.Data) -> Schedule {
-        return Schedule(teacher: "还在开发中", position: "此功能", course: "抱歉", time: "敬请期待", updateTime: date2String(Date(), dateFormat: "HH:mm"))
+        let str = String(decoding: data, as: UTF8.self)
+        if (str == "today have no more lesson") {
+            return Schedule(teacher: "去放松一下吧", position: "没有课啦", course: "今天", time: "(｡ì _ í｡)", updateTime: date2String(Date(), dateFormat: "HH:mm"))
+        }
+        let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+        let name = json["Name"] as! String
+        let teacher = json["Teacher"] as! String
+        let time = json["StartTime"] as! String
+        let position = json["Position"] as! String
+        return Schedule(teacher: teacher, position: position, course: name, time: time, updateTime: date2String(Date(), dateFormat: "HH:mm"))
     }
 }
 

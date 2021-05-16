@@ -20,6 +20,7 @@ class NavTab extends StatefulWidget {
 class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   InAppWebViewController controller;
   Future _future;
+  bool shouldOverrideUrlLoading = false;
 
   @override
   void didChangeDependencies() {
@@ -91,9 +92,14 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
         this.controller = controller;
       },
       onLoadStop: (controller, url) {
+        setState(() {
+          shouldOverrideUrlLoading = true;
+        });
         syncDarkMode();
       },
       shouldOverrideUrlLoading: (controller, request) async {
+        if (!shouldOverrideUrlLoading) return NavigationActionPolicy.ALLOW;
+
         print('open ${request.request.url}');
 
         if (request.request.url.toString().contains('custed-target=blank')) {

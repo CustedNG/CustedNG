@@ -6,6 +6,7 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/core/utils.dart';
+import 'package:custed2/ui/pages/captcha_help_page.dart';
 import 'package:custed2/ui/webview/plugin_debug.dart';
 import 'package:custed2/ui/webview/plugin_login.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
@@ -63,6 +64,16 @@ class _WebviewLoginState extends State<WebviewLogin> {
         'https://mysso.cust.edu.cn/cas/login?service=https://portal.cust.edu.cn/custp/shiro-cas',
       );
     });
+
+    Future.delayed(Duration(seconds: 1), () => showSnackBarWithPage(
+      context, 
+      '不知验证码为何物？',
+      AppRoute(
+        page: JwCaptchaHelpPage(),
+        title: '验证码帮助'
+      ),
+      '点我查看'
+    ));
   }
 
   void onLoadAborted(Webview2Controller controller, String url) async {

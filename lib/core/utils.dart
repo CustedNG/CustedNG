@@ -1,3 +1,4 @@
+import 'package:custed2/core/route.dart';
 import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
@@ -13,6 +14,21 @@ void showSnackBar(BuildContext context, String content){
   ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(content),
+      )
+  );
+}
+
+void showSnackBarWithPage(BuildContext context, 
+                            String content, 
+                            AppRoute route,
+                            String actionText){
+  ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(content),
+        action: SnackBarAction(
+          onPressed: () => route.go(context), 
+          label: actionText,
+        ),
       )
   );
 }

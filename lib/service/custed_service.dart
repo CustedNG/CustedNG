@@ -8,10 +8,13 @@ import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/models/custed_update_testflight.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/res/build_data.dart';
+import 'package:dio/dio.dart' show Dio;
+import 'package:http/http.dart' show Response;
 
 class CustedService extends CatClient {
   static const baseUrl = 'https://cust.app';
   static const ccUrl = 'https://cust.cc';
+  static const backendUrl = 'https://push.lolli.tech';
   static const defaultTimeout = Duration(seconds: 100);
 
   Future<WeatherData> getWeather() async {
@@ -28,11 +31,6 @@ class CustedService extends CatClient {
     final body = resp.body;
     if (body == '') return null;
     return body;
-  }
-
-  Future<String> getScript(String name) async {
-    final resp = await get('$baseUrl/hub/$name.cl', timeout: defaultTimeout);
-    return resp.body;
   }
 
   Future<CustedUpdate> getUpdate() async {
@@ -63,7 +61,7 @@ class CustedService extends CatClient {
 
   Future<bool> getShouldShowExam() async {
     final resp =
-        await get('$ccUrl/api/haveExam', timeout: defaultTimeout);
+        await get('$backendUrl/res/haveExam', timeout: defaultTimeout);
     if (resp.body != null) return resp.body == '1' ? true : false;
     return false;
   }
@@ -85,7 +83,7 @@ class CustedService extends CatClient {
   }
 
   Future<Map> getChangeLog() async {
-    final resp = await get('$ccUrl/webview/changeLog.json');
+    final resp = await get('$backendUrl/res/changeLog.json');
     final log = <String, String>{};
     final logs = json.decode(resp.body);
     logs.forEach((element) {
@@ -95,12 +93,39 @@ class CustedService extends CatClient {
   }
 
   Future<String> getSchoolCalendarString() async {
-    final resp = await get('$ccUrl/webview/schoolCalendar.txt');
+    final resp = await get('$backendUrl/res/schoolCalendar.txt');
     return resp.body;
   }
 
-  Future<bool> needVerifyCode4Login() async {
-    final resp = await get('$ccUrl/webview/needVerifyCode4Login');
-    return resp.body != '0';
+  Future<String> updateScheduleCache2Backend(String ecardId, String body) async {
+    final resp = await post(
+      '$backendUrl/schedule/$ecardId',
+      body: body,
+    );
+    return '${resp.statusCode} ${resp.body}';
+  }
+
+  Future<Response> getCacheScheduleFromBackend(String ecardId) async {
+    return await get('$backendUrl/schedule/$ecardId');
+  }
+
+  Future<bool> sendToken(String token, String userName, bool isIOS) async {
+    String url;
+    if (isIOS) {
+      url = "$backendUrl/ios";
+    } else {
+      url = "$backendUrl/android";
+    }
+    Map<String, dynamic> queryParams = {
+      "token": token,
+      // 一卡通号， eg：2019003373
+      "id": userName,
+    };
+    final resp = await Dio().get(url, queryParameters: queryParams);
+    if (resp.statusCode == 200) {
+      print('send push token success: $token');
+      return true;
+    }
+    return false;
   }
 }
