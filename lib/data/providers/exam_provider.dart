@@ -73,6 +73,7 @@ class ExamProvider extends BusyProvider {
       final exam = await JwService().getExam();
       data = exam.data;
       if (data != null) examStore.put(data);
+      failed = false;
     } catch (e) {
       failed = true;
       var cacheExamData = examStore.fetch();
