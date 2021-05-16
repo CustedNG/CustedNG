@@ -73,7 +73,36 @@ class HomeWidgetProvider : HomeWidgetProvider() {
     ) {
         try {
             val result = fetchNextLessonBlocking(urlString)
-            if (!result.successful) return
+            if (!result.successful) {
+                appWidgetIds.forEach { widgetId ->
+                    val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
+                        setTextViewText(R.id.widget_time, "更新失败")
+                        setTextViewText(R.id.widget_course, "")
+                        setTextViewText(R.id.widget_position, "")
+                        setTextViewText(R.id.widget_teacher, "")
+                        setTextViewText(R.id.widget_update, "更新于 ${SimpleDateFormat("HH:mm").format(Date())}")
+                    }
+    
+                    appWidgetManager.updateAppWidget(widgetId, views)
+                    return
+                }
+            }
+
+            if (result.result!! == "today have no more lesson") {
+                appWidgetIds.forEach { widgetId ->
+                    val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
+                        setTextViewText(R.id.widget_time, "今天")
+                        setTextViewText(R.id.widget_course, "没有课了")
+                        setTextViewText(R.id.widget_position, "放松一下吧")
+                        setTextViewText(R.id.widget_teacher, "(｡ì _ í｡)")
+                        setTextViewText(R.id.widget_update, "更新于 ${SimpleDateFormat("HH:mm").format(Date())}")
+                    }
+    
+                    appWidgetManager.updateAppWidget(widgetId, views)
+                }
+                return
+            }
+
             val jsonObj = result.result!!.parseNextScheduleJson()
 
             appWidgetIds.forEach { widgetId ->
