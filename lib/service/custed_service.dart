@@ -27,7 +27,7 @@ class CustedService extends CatClient {
   Future<String> getNotify() async {
     final build = BuildData.build;
     final resp =
-        await get('$ccUrl/api/notify?build=$build', timeout: defaultTimeout);
+        await get('$backendUrl/notify?build=$build', timeout: defaultTimeout);
     final body = resp.body;
     if (body == '') return null;
     return body;
@@ -44,7 +44,7 @@ class CustedService extends CatClient {
 
   Future<CustedUpdateiOS> getiOSUpdate() async {
     final build = BuildData.build;
-    final resp = await get('$ccUrl/api/update/ios?build=$build',
+    final resp = await get('$backendUrl/ios/update?build=$build',
         timeout: defaultTimeout);
     return CustedUpdateiOS.fromJson(
         json.decode(resp.body) as Map<String, dynamic>);
@@ -68,7 +68,7 @@ class CustedService extends CatClient {
 
   Future<String> getRemoteConfigJson() async {
     final resp =
-        await get('$ccUrl/api/config', timeout: defaultTimeout);
+        await get('$backendUrl/jw/randomUrl', timeout: defaultTimeout);
     return resp.body;
   }
 
@@ -112,16 +112,16 @@ class CustedService extends CatClient {
   Future<bool> sendToken(String token, String userName, bool isIOS) async {
     String url;
     if (isIOS) {
-      url = "$backendUrl/ios";
+      url = "$backendUrl/ios/token";
     } else {
-      url = "$backendUrl/android";
+      url = "$backendUrl/android/token";
     }
     Map<String, dynamic> queryParams = {
       "token": token,
       // 一卡通号， eg：2019003373
       "id": userName,
     };
-    final resp = await Dio().get(url, queryParameters: queryParams);
+    final resp = await Dio().post(url, queryParameters: queryParams);
     if (resp.statusCode == 200) {
       print('send push token success: $token');
       return true;

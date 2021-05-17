@@ -30,6 +30,6 @@ class CustedUpdateiOS {
 
   @override
   String toString() {
-    return 'tf_${newest}_$urls';
+    return 'ios_${newest}_$urls';
   }
 }

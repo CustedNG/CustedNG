@@ -42,7 +42,10 @@ class UpdateNoticePage extends StatelessWidget {
       children: <Widget>[
         Text('Ver：${update.build}', style: textStyle),
         SizedBox(height: 37),
-        Text(update.changelog),
+        Padding(
+          padding: EdgeInsets.all(17), 
+          child: Text(update.changelog, textAlign: TextAlign.center),
+        ),
         SizedBox(height: 37),
         Text('安装包大小：${(update.file.size / 1024).toStringAsFixed(2)} MB')
       ],

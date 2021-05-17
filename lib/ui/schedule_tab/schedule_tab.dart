@@ -94,14 +94,14 @@ class _ScheduleTabState extends State<ScheduleTab>
   }
 
   Future<void> _onRefresh() async {
-      await scheduleProvider.updateScheduleData();
-      _refreshController.refreshCompleted();
     try {
       if(!Provider.of<UserProvider>(context, listen: false).loggedIn) {
         showSnackBar(context, '请登录');
         _refreshController.refreshFailed();
         return;
       }
+      await scheduleProvider.updateScheduleData();
+      _refreshController.refreshCompleted();
       showSnackBar(context, '更新成功');
     } catch (e) {
       print(e);
