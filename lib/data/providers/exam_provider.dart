@@ -74,6 +74,7 @@ class ExamProvider extends BusyProvider {
       print('use cached exam data.');
       data = cacheExamData;
       useCache = true;
+      data.rows.sort((a, b) => sortExamByTime(a, b));
     }
     notifyListeners();
   }
