@@ -5,17 +5,19 @@ import 'package:flutter/widgets.dart';
 class AppProvider extends ProviderBase {
   String _notification;
   Map _changeLog;
+  bool _showRealUI = true;
   BuildContext ctx;
 
   String get notification => _notification;
   Map get changeLog => _changeLog; 
+  bool get showRealUI => _showRealUI;
 
   Future<void> loadLocalData() async {
-    final notification = await CustedService().getNotify();
-    final changeLog = await CustedService().getChangeLog();
+    final service = CustedService();
+    _notification = await service.getNotify();
+    _changeLog = await service.getChangeLog();
+    _showRealUI = await service.showRealCustedUI();
 
-    _notification = notification;
-    _changeLog = changeLog;
     notifyListeners();
   }
 

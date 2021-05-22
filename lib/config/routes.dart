@@ -52,7 +52,7 @@ final jwWebPage = AppRoute(
 final tiku2WebPage = AppRoute(
   title: '考试题库',
   //page: Tiku2WebPage(),
-  page: WebviewBrowser('https://tiku.lacus.site'),
+  page: WebviewBrowser('https://tiku-ng.lacus.site'),
 );
 
 final schoolCalendarPage = AppRoute(

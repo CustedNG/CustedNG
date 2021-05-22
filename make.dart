@@ -89,6 +89,7 @@ void flutterRun() {
 }
 
 void flutterBuildAndroid() async {
+  final startTime = DateTime.now();
   final build = await getGitCommitCount();
   await generateCountlyConfig();
 
@@ -117,6 +118,8 @@ void flutterBuildAndroid() async {
     print(buildResult.stderr.toString());
     print('\nBuild failed with exit code $exitCode');
   }
+  final endTime = DateTime.now();
+  print('Spent time: ${endTime.difference(startTime).toString()}');
 }
 
 void main(List<String> args) async {

@@ -69,7 +69,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     userData.username.put(usernameController.text);
     userData.password.put(passwordController.text);
 
-    user.login();
+    user.login(force: true);
     Navigator.pop(ctx);
   }
 
@@ -123,7 +123,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           style: TextStyle(color: Colors.white),
           obscureText: true,
           decoration: _buildDecoration('统一认证密码', TextStyle(color: Color(0x55FFFFFF))),
-          onSubmitted: (_) => tryLogin(ctx),
+          onSubmitted: (_) => forceLogin(ctx),
         ),
         SizedBox(height: 90),
       ],
@@ -147,7 +147,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
               ),
               child: GestureDetector(
                 onLongPress: () => forceLogin(context),
-                onTap: () => tryLogin(context),
+                onTap: () => forceLogin(context),
                 child: Material(
                   borderRadius: BorderRadius.all(Radius.circular(100)),
                   child: Center(

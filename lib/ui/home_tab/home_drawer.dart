@@ -9,8 +9,10 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/ui/pages/kv_table_page.dart';
+import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/webview/webview_login.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeDrawer extends StatelessWidget{
   final version;
@@ -100,19 +102,7 @@ class HomeDrawer extends StatelessWidget{
   Widget _buildLoginEntries(BuildContext context, bool isLoggedIn) {
     return Column(
       children: [
-        isLoggedIn ? ListTile(
-          leading: Icon(Icons.login),
-          title: Text('重新登录'),
-          onTap: () async {
-            await WebviewLogin.begin(context);
-          },
-        ) : ListTile(
-          leading: Icon(Icons.web),
-          title: Text('统一登录'),
-          onTap: () async {
-            await WebviewLogin.begin(context);
-          },
-        ),
+        _buildLoginTile(context, isLoggedIn),
         if (isLoggedIn) ListTile(
           leading: Icon(Icons.logout),
           title: Text('退出登录'),
@@ -123,6 +113,33 @@ class HomeDrawer extends StatelessWidget{
         ) 
       ],
     );
+  }
+
+  Widget _buildLoginTile(BuildContext context, bool isLoggedIn) {
+    if (isLoggedIn) {
+      return ListTile(
+          leading: Icon(Icons.login),
+          title: Text('重新登录'),
+          onTap: () async {
+            await WebviewLogin.begin(context);
+          },
+        );
+    } else if (Provider.of<AppProvider>(context).showRealUI) {
+      return ListTile(
+          leading: Icon(Icons.web),
+          title: Text('统一登录'),
+          onTap: () async {
+            await WebviewLogin.begin(context);
+          },
+        );
+    }
+    return ListTile(
+          leading: Icon(Icons.web),
+          title: Text('传统登录'),
+          onTap: () {
+            AppRoute(page: LoginPageLegacy()).go(context);
+          },
+        );
   }
 
   @override

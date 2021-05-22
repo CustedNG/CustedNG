@@ -14,8 +14,8 @@ import 'package:http/http.dart' show Response;
 class CustedService extends CatClient {
   static const baseUrl = 'https://cust.app';
   static const ccUrl = 'https://cust.cc';
-  static const backendUrl = 'https://push.lolli.tech';
-  static const defaultTimeout = Duration(seconds: 100);
+  static const backendUrl = 'https://custed.lolli.tech';
+  static const defaultTimeout = Duration(seconds: 10);
 
   Future<WeatherData> getWeather() async {
     final resp = await get('$baseUrl/app/weather', timeout: defaultTimeout);
@@ -127,5 +127,50 @@ class CustedService extends CatClient {
       return true;
     }
     return false;
+  }
+
+  Future<Response> getCachedGradeFromBackend(String ecardId) async {
+    return await get('$backendUrl/grade?id=$ecardId');
+  }
+
+  Future<void> updateCacheGrade2Backend(String ecardId, String grade) async {
+    final resp = await post(
+      '$backendUrl/grade/$ecardId', 
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: grade
+    );
+
+    if (resp.statusCode != 200) {
+      print('send cache grade: ${resp.body}');
+      return;
+    }
+    print('send cache grade successfully');
+  }
+
+  Future<bool> showRealCustedUI() async {
+    final resp = await get('$backendUrl/showRealUI?build=${BuildData.build}');
+    return resp.body == '1';
+  }
+
+  Future<Response> getCachedExam(String ecardId) async {
+    return await get('$backendUrl/exam?id=$ecardId');
+  }
+
+  Future<void> updateCahedExam(String eacrdId, String exam) async {
+    final resp = await post(
+      '$backendUrl/exam/$eacrdId',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: exam
+    );
+
+    if (resp.statusCode == 200) {
+      print('send exam successfully');
+    } else {
+      print('send exam failed: ${resp.body}');
+    }
   }
 }

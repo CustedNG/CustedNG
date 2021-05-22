@@ -10,6 +10,7 @@ import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/jw_student_info.dart';
 import 'package:custed2/data/models/jw_week_time.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
@@ -49,6 +50,15 @@ class JwService extends WrdvpnBasedService {
   }
 
   Future<JwSchedule> getSchedule([String userUUID]) async {
+    if (!locator<AppProvider>().showRealUI) {
+      return JwSchedule.fromJson(
+        JwResponse.fromJson(
+          json.decode(
+            (await CustedService().getCacheScheduleFromBackend('2019003373')).body
+          )
+        ).data
+      );
+    }
     await locator<RemoteConfigService>().reloadData();
 
     // {"KBLX":"2","CXLX":"0","XNXQ":"20202","CXID":"b0a3fc3c-8263-4be8-bb53-58fe200f616e","CXZC":"3","JXBLX":"","IsOnLine":"-1"}
@@ -153,6 +163,14 @@ class JwService extends WrdvpnBasedService {
   }
 
   Future<JwGradeData> getGrade() async {
+    if (!locator<AppProvider>().showRealUI) {
+      return JwGradeData.fromJson(
+        JwResponse.fromJson(json.decode(
+          (await CustedService().getCachedGradeFromBackend('2019003373')).body
+        )).data
+      );
+    }
+
     final resp = await xRequest(
       'POST',
       '$baseUrl/api/ClientStudent/QueryService/GradeQueryApi/GetDataByStudent'
@@ -174,6 +192,19 @@ class JwService extends WrdvpnBasedService {
     );
 
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
+    final id = locator<UserDataStore>().username.fetch();
+    if (resp.statusCode == 200) {
+      if (id.length == 10) {
+        await CustedService().updateCacheGrade2Backend(id, resp.body);
+      }
+    } else {
+      final response = await CustedService().getCachedGradeFromBackend(id);
+      if (response.statusCode == 200) {
+        return JwGradeData.fromJson(
+          JwResponse.fromJson(json.decode(response.body)).data
+        );
+      }
+    }
     return JwGradeData.fromJson(parsedResponse.data);
   }
 
@@ -229,6 +260,14 @@ class JwService extends WrdvpnBasedService {
   }
 
   Future<JwExam> getExam() async {
+    if (!locator<AppProvider>().showRealUI) {
+      return JwExam.fromJson(
+        json.decode(
+          (await CustedService().getCachedExam('2019003373')).body
+        )
+      );
+    }
+    
     final resp = await xRequest(
       'POST',
       '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentExamAssign',
@@ -247,7 +286,14 @@ class JwService extends WrdvpnBasedService {
       headers: {'content-type': 'application/json'},
     );
 
-    return JwExam.fromJson(json.decode(resp.body));
+    final service = CustedService();
+    final id = locator<UserDataStore>().username.fetch();
+    if (resp.statusCode == 200) {
+      await service.updateCahedExam(id, resp.body);
+      return JwExam.fromJson(json.decode(resp.body));
+    } else {
+      return JwExam.fromJson(json.decode((await service.getCachedExam(id)).body));
+    }
   }
 
   Future<JwWeekTime> getWeekTime() async {

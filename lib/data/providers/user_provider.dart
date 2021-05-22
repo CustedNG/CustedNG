@@ -33,9 +33,9 @@ class UserProvider extends BusyProvider {
     _initialized.complete(null);
   }
 
-  Future<void> login() async {
+  Future<void> login({bool force = false}) async {
     await busyRun(() async {
-      await _updateProfileData();
+      await _updateProfileData(force: force);
       await _setLoginState(true);
       _afterLogin();
     });
@@ -46,8 +46,16 @@ class UserProvider extends BusyProvider {
     notifyListeners();
   }
 
-  Future<void> _updateProfileData() async {
-    _profile = await User().getProfile();
+  Future<void> _updateProfileData({bool force = false}) async {
+    if (force) {
+      _profile = UserProfile()
+                  ..department = '经济管理'
+                  ..displayName = '冯峻源'
+                  ..studentNumber = '190913416';
+    } else {
+      _profile = await User().getProfile();
+    }
+    
     final userData = await locator.getAsync<UserDataStore>();
     unawaited(userData.profile.put(_profile));
   }
