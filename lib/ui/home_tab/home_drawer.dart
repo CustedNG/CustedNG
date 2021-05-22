@@ -12,9 +12,8 @@ import 'package:custed2/ui/pages/kv_table_page.dart';
 import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/webview/webview_login.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class HomeDrawer extends StatelessWidget{
+class HomeDrawer extends StatefulWidget{
   final version;
   final myTheme;
   final UserProvider user;
@@ -23,12 +22,19 @@ class HomeDrawer extends StatelessWidget{
     Key key, this.version, this.myTheme, this.user
   }) : super(key: key);
 
+  @override
+  _HomeDrawerState createState() => _HomeDrawerState();
+}
+
+class _HomeDrawerState extends State<HomeDrawer> {
+  bool showRealUI = locator<AppProvider>().showRealUI;
+
   Widget _buildUserHeader(bool isLoggedIn) {
     return UserAccountsDrawerHeader(
       accountName:
-      Text(isLoggedIn ? ' ' + user.profile.displayName : '请登录'),
+      Text(isLoggedIn ? ' ' + widget.user.profile.displayName : '请登录'),
       accountEmail:
-      Text(isLoggedIn ? user.profile.department : '(´･ω･`)'),
+      Text(isLoggedIn ? widget.user.profile.department : '(´･ω･`)'),
       currentAccountPicture: CircleAvatar(
         backgroundImage: AssetImage('assets/icon/custed_lite.png'),
       ),
@@ -48,7 +54,7 @@ class HomeDrawer extends StatelessWidget{
 
     return Column(
       children: [
-        isLoggedIn ? ListTile(
+        (isLoggedIn && showRealUI) ? ListTile(
           leading: Icon(Icons.photo_camera),
           title: Text('四六级照片'),
           onTap: () {
@@ -56,7 +62,7 @@ class HomeDrawer extends StatelessWidget{
             cetAvatarPage.go(context);
           },
         ) : Container(),
-        isLoggedIn ? ListTile(
+        (isLoggedIn && showRealUI) ? ListTile(
           leading: Icon(Icons.cloud),
           title: Text('校园网盘'),
           onTap: () {
@@ -64,7 +70,7 @@ class HomeDrawer extends StatelessWidget{
             netdiskPage.go(context);
           },
         ) : Container(),
-        isLoggedIn ? Divider() : Container(),
+        (isLoggedIn && showRealUI) ? Divider() : Container(),
         ListTile(
           leading: Icon(Icons.info),
           title: Text('版本信息'),
@@ -108,7 +114,7 @@ class HomeDrawer extends StatelessWidget{
           title: Text('退出登录'),
           onTap: () async {
             await locator<PersistCookieJar>().deleteAll();
-            await user.logout();
+            await widget.user.logout();
           },
         ) 
       ],
@@ -124,7 +130,7 @@ class HomeDrawer extends StatelessWidget{
             await WebviewLogin.begin(context);
           },
         );
-    } else if (Provider.of<AppProvider>(context).showRealUI) {
+    } else if (showRealUI) {
       return ListTile(
           leading: Icon(Icons.web),
           title: Text('统一登录'),
@@ -144,7 +150,7 @@ class HomeDrawer extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    bool isLoggedIn = user.loggedIn;
+    bool isLoggedIn = widget.user.loggedIn;
 
     return Drawer(
         child: ListView(

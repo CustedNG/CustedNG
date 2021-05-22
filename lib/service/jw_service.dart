@@ -26,6 +26,7 @@ class JwService extends WrdvpnBasedService {
   }
 
   final MyssoService _mysso = locator<MyssoService>();
+  final custed = CustedService();
 
   @override
   final Pattern sessionExpirationTest = '过期';
@@ -54,7 +55,7 @@ class JwService extends WrdvpnBasedService {
       return JwSchedule.fromJson(
         JwResponse.fromJson(
           json.decode(
-            (await CustedService().getCacheScheduleFromBackend('2019003373')).body
+            (await custed.getCacheSchedule('2019003373')).body
           )
         ).data
       );
@@ -83,10 +84,10 @@ class JwService extends WrdvpnBasedService {
 
     if (resp.statusCode == 200) {
       final result4SendChedule = 
-          await CustedService().updateScheduleCache2Backend(ecardId, resp.body);
+          await custed.updateCachedSchedule(ecardId, resp.body);
       print('send cache schedule to backend: $result4SendChedule');
     } else {
-      final cache = await CustedService().getCacheScheduleFromBackend(ecardId);
+      final cache = await custed.getCacheSchedule(ecardId);
       print('use cached schedule from backend: ${cache.statusCode}');
       if (cache.statusCode == 200) return cache;
     }
@@ -166,7 +167,7 @@ class JwService extends WrdvpnBasedService {
     if (!locator<AppProvider>().showRealUI) {
       return JwGradeData.fromJson(
         JwResponse.fromJson(json.decode(
-          (await CustedService().getCachedGradeFromBackend('2019003373')).body
+          (await custed.getCachedGrade('2019003373')).body
         )).data
       );
     }
@@ -195,10 +196,10 @@ class JwService extends WrdvpnBasedService {
     final id = locator<UserDataStore>().username.fetch();
     if (resp.statusCode == 200) {
       if (id.length == 10) {
-        await CustedService().updateCacheGrade2Backend(id, resp.body);
+        await custed.updateCacheGrade(id, resp.body);
       }
     } else {
-      final response = await CustedService().getCachedGradeFromBackend(id);
+      final response = await custed.getCachedGrade(id);
       if (response.statusCode == 200) {
         return JwGradeData.fromJson(
           JwResponse.fromJson(json.decode(response.body)).data
@@ -263,11 +264,11 @@ class JwService extends WrdvpnBasedService {
     if (!locator<AppProvider>().showRealUI) {
       return JwExam.fromJson(
         json.decode(
-          (await CustedService().getCachedExam('2019003373')).body
+          (await custed.getCachedExam('2019003373')).body
         )
       );
     }
-    
+
     final resp = await xRequest(
       'POST',
       '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentExamAssign',
@@ -286,13 +287,12 @@ class JwService extends WrdvpnBasedService {
       headers: {'content-type': 'application/json'},
     );
 
-    final service = CustedService();
     final id = locator<UserDataStore>().username.fetch();
     if (resp.statusCode == 200) {
-      await service.updateCahedExam(id, resp.body);
+      await custed.updateCahedExam(id, resp.body);
       return JwExam.fromJson(json.decode(resp.body));
     } else {
-      return JwExam.fromJson(json.decode((await service.getCachedExam(id)).body));
+      return JwExam.fromJson(json.decode((await custed.getCachedExam(id)).body));
     }
   }
 

@@ -97,7 +97,7 @@ class CustedService extends CatClient {
     return resp.body;
   }
 
-  Future<String> updateScheduleCache2Backend(String ecardId, String body) async {
+  Future<String> updateCachedSchedule(String ecardId, String body) async {
     final resp = await post(
       '$backendUrl/schedule/$ecardId',
       body: body,
@@ -105,7 +105,7 @@ class CustedService extends CatClient {
     return '${resp.statusCode} ${resp.body}';
   }
 
-  Future<Response> getCacheScheduleFromBackend(String ecardId) async {
+  Future<Response> getCacheSchedule(String ecardId) async {
     return await get('$backendUrl/schedule/$ecardId');
   }
 
@@ -129,11 +129,11 @@ class CustedService extends CatClient {
     return false;
   }
 
-  Future<Response> getCachedGradeFromBackend(String ecardId) async {
+  Future<Response> getCachedGrade(String ecardId) async {
     return await get('$backendUrl/grade?id=$ecardId');
   }
 
-  Future<void> updateCacheGrade2Backend(String ecardId, String grade) async {
+  Future<void> updateCacheGrade(String ecardId, String grade) async {
     final resp = await post(
       '$backendUrl/grade/$ecardId', 
       headers: {

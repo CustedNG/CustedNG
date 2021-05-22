@@ -87,6 +87,7 @@ class ExamProvider extends BusyProvider {
       data = exam.data;
       if (data != null) examStore.put(data);
       failed = false;
+      useCache = false;
     } catch (e) {
       failed = true;
       var cacheExamData = examStore.fetch();

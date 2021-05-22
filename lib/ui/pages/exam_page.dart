@@ -136,8 +136,10 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
         onRefresh: () async {
           await exam.refreshData();
           if (exam.failed) {
+            showSnackBar(context, '刷新成功');
             refreshController.refreshFailed();
           } else {
+            showSnackBar(context, '刷新成功');
             refreshController.refreshCompleted();
           }
         },
