@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:crypto/crypto.dart';
+import 'package:custed2/core/open.dart';
 import 'package:custed2/core/platform/os/app_tmp_dir.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/res/image_res.dart';
@@ -42,7 +43,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
         : Image(height: 40, width: 40, image: ImageRes.updateIndicator);
 
     final message = failed
-        ? _buildRetryButton(context)
+        ? _buildFailedButton(context)
         : Text('${(progress * 100).ceil()}% 已完成');
 
     Widget content = Container(
@@ -73,7 +74,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     );
   }
 
-  Widget _buildRetryButton(BuildContext context) {
+  Widget _buildFailedButton(BuildContext context) {
     final retryText = Text(
       '重试',
       style: TextStyle(
@@ -81,10 +82,28 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
         decoration: TextDecoration.underline,
       ),
     );
+    final openUrlText = Text(
+      '手动',
+      style: TextStyle(
+        color: Colors.white,
+        decoration: TextDecoration.underline,
+      ),
+    );
 
-    return TextButton(
-      child: retryText,
-      onPressed: doUpdate,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton(
+          child: retryText,
+          onPressed: doUpdate,
+        ),
+        Text('或'),
+        TextButton(
+          child: openUrlText,
+          onPressed: () async => await openUrl('https://cust.app/apk'),
+        ),
+      ],
     );
   }
 

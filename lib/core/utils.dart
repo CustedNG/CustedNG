@@ -18,6 +18,19 @@ void showSnackBar(BuildContext context, String content){
   );
 }
 
+void showSnackBarWithAction(BuildContext context, String content, 
+                            String action, FutureOr onTap) {
+  ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(content),
+        action: SnackBarAction(
+          label: action,
+          onPressed: onTap,
+        ),
+      )
+  );
+}
+
 void showSnackBarWithPage(BuildContext context, 
                             String content, 
                             AppRoute route,

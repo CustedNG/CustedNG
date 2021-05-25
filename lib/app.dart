@@ -105,7 +105,9 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 
       initPushService(userData);
       if (Platform.isIOS) HomeWidget.setAppGroupId('group.com.tusi.app');
-      HomeWidget.saveWidgetData('ecardId', userData.username.fetch());
+      final success = 
+          await HomeWidget.saveWidgetData('ecardId', userData.username.fetch());
+      print('set ecardId for home widget: ${success ? "success" : "failed"}');
     }
   }
 }
