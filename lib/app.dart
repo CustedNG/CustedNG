@@ -54,6 +54,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
             bool isDarkMode = _shouldEnableDarkMode(context, mode);
             return Theme(
                 data: ThemeData(
+                  primaryColor: isDarkMode ? null : Color(setting.appPrimaryColor.fetch()),
                   brightness: isDarkMode ? Brightness.dark : Brightness.light,
                 ),
                 child: child);

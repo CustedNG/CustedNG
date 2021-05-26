@@ -94,10 +94,19 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             rightBtn: _buildDarkModeRadio(),
           ),
           SettingItem(
-            title: '选择课表主题',
+            title: '课表主题',
             titleStyle: settingTextStyle,
             isShowArrow: false,
             rightBtn: _showMenu(context),
+          ),
+          SettingItem(
+            title: 'App主要强调色',
+            titleStyle: settingTextStyle,
+            isShowArrow: false,
+            rightBtn: Padding(
+              padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
+              child: _buildAppColorPreview(),
+            ),
           ),
           !!BuildMode.isRelease ? SettingItem(
             title: '推送上课提醒',
@@ -123,6 +132,20 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
     );
   }
 
+  Widget _buildAppColorPreview() {
+    final nowAppColor = setting.appPrimaryColor.fetch();
+    return GestureDetector(
+      child: ClipOval(
+        child: Container(
+          color: Color(setting.appPrimaryColor.fetch()),
+          height: 27,
+          width: 27,
+        ),
+      ),
+      onTap: () => _showAppColorPicker(Color(nowAppColor)),
+    );
+  }
+
   Widget _showMenu(BuildContext context) {
   return PopupMenuButton<int>(
     icon: Icon(Icons.color_lens),
@@ -136,7 +159,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
         SelectViewText('蒙克·尖叫', 5),
       ],
       onSelected: (int idx) {
-        locator<SettingStore>().scheduleTheme.put(idx);
+        setting.scheduleTheme.put(idx);
         setState(() {});
       });
   }
@@ -204,6 +227,31 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
         ),
       ),
       onTap: () => _showColorPicker(color, index),
+    );
+  }
+
+  void _showAppColorPicker(Color selected) {
+    showRoundDialog(
+      context,
+      '选择颜色',
+      MaterialColorPicker(
+        shrinkWrap: true,
+        onColorChange: (Color color) {
+          setting.appPrimaryColor.put(color.value);
+        },
+        selectedColor: selected
+      ),
+      [
+        TextButton(
+          onPressed: () async {
+            final dark = setting.darkMode.fetch();
+            setting.darkMode.put(dark);
+            setState(() {});
+            Navigator.of(context).pop();
+          },
+          child: Text('关闭')
+        )
+      ]
     );
   }
 

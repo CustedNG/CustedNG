@@ -123,7 +123,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             height: 64.0,
           ),
           aboutBoxChildren: <Widget>[
-            Text('Made with ❤️\nBy Toast Studio.\nAll rights reserved.')
+            Text('Made with ❤️ by Toast Studio.\nAll rights reserved.')
           ],
         ),
       ],

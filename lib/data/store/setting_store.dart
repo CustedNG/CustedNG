@@ -1,4 +1,5 @@
 import 'package:custed2/core/store/persistent_store.dart';
+import 'package:flutter/material.dart';
 
 class SettingStore with PersistentStore {
   @override
@@ -52,4 +53,7 @@ class SettingStore with PersistentStore {
 
   StoreProperty<int> get scheduleTheme =>
       property('scheduleTheme', defaultValue: 0);
+
+  StoreProperty<int> get appPrimaryColor =>
+      property('appPrimaryColor');
 }

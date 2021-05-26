@@ -22,11 +22,12 @@ const nihong = [
 
 const lipstick = [
   Color.fromARGB(255, 248, 226, 203),
-  Color.fromARGB(255, 248, 226, 203),
   Color.fromARGB(255, 207, 108, 126),
   Color.fromARGB(255, 207, 108, 126),
   Color.fromARGB(255, 181, 85, 87),
   Color.fromARGB(255, 181, 55, 93),
+  Color.fromARGB(255, 181, 55, 93),
+  Color.fromARGB(255, 166, 39, 60),
   Color.fromARGB(255, 166, 39, 60),
 ];
 
