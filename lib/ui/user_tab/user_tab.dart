@@ -1,3 +1,4 @@
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -9,6 +10,8 @@ import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:custed2/ui/widgets/setting_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
 
 class UserTab extends StatefulWidget {
@@ -16,8 +19,9 @@ class UserTab extends StatefulWidget {
   State<StatefulWidget> createState() => _UseTabState();
 }
 
-class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
+class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   final setting = locator<SettingStore>();
+  List<Color> widgetColors = [];
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +39,12 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
           leading: Container(),
           middle: NavbarText('设置'),
         ),
-        body: _buildSetting()
-    );
+        body: _buildSetting());
   }
 
-  Widget _buildSetting(){
-    final settingTextStyle = TextStyle(
-      color: isDark(context)
-          ? Colors.white
-          : Colors.black
-    );
+  Widget _buildSetting() {
+    final settingTextStyle =
+        TextStyle(color: isDark(context) ? Colors.white : Colors.black);
 
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
@@ -70,8 +70,8 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
             title: '绩点不计选修',
             titleStyle: settingTextStyle,
             isShowArrow: false,
-            rightBtn: buildSwitch(
-                context, setting.dontCountElectiveCourseGrade),
+            rightBtn:
+                buildSwitch(context, setting.dontCountElectiveCourseGrade),
           ),
           // SettingItem(
           //   title: '启动时自动更新课表',
@@ -84,8 +84,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
             title: '持续自动更新天气',
             titleStyle: settingTextStyle,
             isShowArrow: false,
-            rightBtn: buildSwitch(
-                context, setting.autoUpdateWeather),
+            rightBtn: buildSwitch(context, setting.autoUpdateWeather),
           ),
           SettingItem(
             title: '黑暗模式',
@@ -93,13 +92,83 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
             isShowArrow: false,
             rightBtn: _buildDarkModeRadio(),
           ),
+          !BuildMode.isRelease
+              ? SettingItem(
+                  title: '桌面课表颜色',
+                  titleStyle: settingTextStyle,
+                  isShowArrow: false,
+                  rightBtn: _buildColorRow(),
+                )
+              : Container(),
           SizedBox(height: 40.0)
         ],
       ),
     );
   }
 
-  Widget _buildDarkModeRadio(){
+  void _showColorPicker(Color selected, int index) {
+    showRoundDialog(
+        context,
+        '选择颜色',
+        MaterialColorPicker(
+            shrinkWrap: true,
+            onColorChange: (Color color) {
+              widgetColors[index] = color;
+            },
+            selectedColor: selected),
+        [
+          TextButton(
+              onPressed: () async {
+                final colorInt = widgetColors[index].value;
+                final colorString =
+                    widgetColors[index].toString().substring(8, 16);
+                final suc = await HomeWidget.saveWidgetData<String>(
+                    'color$index', colorString);
+                if (index == 0) {
+                  setting.homeWidgetColor1.put(colorInt);
+                } else {
+                  setting.homeWidgetColor2.put(colorInt);
+                }
+                print('set custom widget color successlly? $suc');
+                setState(() {});
+                Navigator.of(context).pop();
+              },
+              child: Text('关闭'))
+        ]);
+  }
+
+  Widget _buildColorRow() {
+    widgetColors.add(Color(setting.homeWidgetColor1.fetch()));
+    widgetColors.add(Color(setting.homeWidgetColor2.fetch()));
+    return Container(
+      height: 46,
+      width: 73,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildColorCircle(widgetColors[0], 0),
+          SizedBox(width: 3),
+          _buildColorCircle(widgetColors[1], 1),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildColorCircle(Color color, int index) {
+    return GestureDetector(
+      child: ClipOval(
+        child: Container(
+          color: color,
+          height: 27,
+          width: 27,
+        ),
+      ),
+      onTap: () => _showColorPicker(color, index),
+    );
+  }
+
+  Widget _buildDarkModeRadio() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -107,26 +176,23 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin{
         Radio(
             value: 0,
             groupValue: setting.darkMode.fetch(),
-            onChanged: _onSelection
-        ),
+            onChanged: _onSelection),
         Text('开'),
         Radio(
             value: 1,
             groupValue: setting.darkMode.fetch(),
-            onChanged: _onSelection
-        ),
+            onChanged: _onSelection),
         Text('关'),
         Radio(
             value: 2,
             groupValue: setting.darkMode.fetch(),
-            onChanged: _onSelection
-        )
+            onChanged: _onSelection)
       ],
     );
   }
 
   void _onSelection(int index) {
-    if(index == 0) {
+    if (index == 0) {
       showSnackBar(context, '自动模式仅在Android 10+或iOS 13+有效');
     }
     final setting = locator<SettingStore>();

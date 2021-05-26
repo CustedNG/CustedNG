@@ -12,8 +12,6 @@ class ImageRes {
   static const custEMapSimpleDark = AssetImage('assets/map/simple/Dark-CustE.png');
   static const custSMapSimpleDark = AssetImage('assets/map/simple/Dark-CustS.png');
 
-  static const defaultAvatar = AssetImage('assets/avatar/default.jpg');
-
   static const networkIcon = AssetImage('assets/icon/network.png');
   static const timetableIcon = AssetImage('assets/icon/timetable.png');
   static const calendarIcon = AssetImage('assets/icon/calendar.png');
@@ -33,7 +31,6 @@ class ImageRes {
   static const testPaperIcon = AssetImage('assets/icon/test_paper.png');
   static const tikuIcon = AssetImage('assets/icon/tiku.png');
 
-  static const updateIndicator = AssetImage('assets/updating.gif');
   static const miscSchoolCalendar = AssetImage('assets/calendar/2020-2021-1.png');
 
   static const wechatStep1 = AssetImage('assets/wechat/step1.jpg');

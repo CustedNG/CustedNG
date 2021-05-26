@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:crypto/crypto.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/platform/os/app_tmp_dir.dart';
 import 'package:custed2/data/models/custed_update.dart';
-import 'package:custed2/res/image_res.dart';
+import 'package:custed2/res/hitokoto.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:dio/dio.dart';
@@ -29,6 +30,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
   String outputPath;
   double progress = 0.0;
   bool failed = false;
+  String hikotoko = hitokoto[Random().nextInt(hitokoto.length)];
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,9 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
 
     final image = failed
         ? Icon(Icons.error_outline, size: 40, color: Colors.white)
-        : Image(height: 40, width: 40, image: ImageRes.updateIndicator);
+        : Center(
+          child: CircularProgressIndicator(),
+        );
 
     final message = failed
         ? _buildFailedButton(context)
@@ -52,8 +56,12 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(27),
+            child: Text(hikotoko, textAlign: TextAlign.center),
+          ),
           image,
-          SizedBox(height: 20),
+          SizedBox(height: 37),
           Text(msg),
           message,
         ],

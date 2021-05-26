@@ -20,6 +20,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   provider: ^5.0.0
   get_it: ^6.0.0
@@ -61,7 +63,6 @@ dependencies:
       url: https://github.com/Countly/countly-sdk-flutter-bridge.git
       ref: master
 
-  intro_slider: ^2.3.3
   pull_to_refresh: ^1.6.3
   tuple: ^2.0.0
   webview_cookie_manager: ^2.0.0-nullsafety.0
@@ -74,6 +75,7 @@ dependencies:
   wifi_ip: ^0.0.1
   add_2_calendar: ^2.1.0
   home_widget: ^0.1.2+1
+  flutter_material_color_picker: ^1.0.5
 
 dev_dependencies:
   # flutter_test:
@@ -125,12 +127,9 @@ flutter:
 
   assets:
     - assets/map/simple/
-    - assets/avatar/
     - assets/icon/
-    - assets/updating.gif
     - assets/calendar/2020-2021-1.png
     - assets/bg/
     - assets/wechat/
-    - assets/intro/
     - assets/user_group.jpg
     - assets/jw_captcha_help.jpg

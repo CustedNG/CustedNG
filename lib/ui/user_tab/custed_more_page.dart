@@ -1,6 +1,5 @@
 import 'package:custed2/constants.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/ui/pages/intro_page.dart';
 import 'package:custed2/ui/pages/issue_page.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
@@ -50,12 +49,6 @@ class CustedMorePage extends StatelessWidget{
           page: IssuePage(),
         ).go(context),
       ),
-      SettingItem(
-        title: '查看新版指引',
-        onTap: () => AppRoute(
-            page: IntroScreen()
-        ).go(context),
-      )
     ];
 
     return Scaffold(

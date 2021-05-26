@@ -1,7 +1,9 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/config/routes.dart';
 import 'package:custed2/constants.dart';
+import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
@@ -87,6 +89,25 @@ class _HomeDrawerState extends State<HomeDrawer> {
             page: KVTablePage('更新日志', locator<AppProvider>().changeLog),
           ).go(context),
         ),
+        ListTile(
+          leading: Icon(Icons.hardware),
+          title: Text('贡献名单'),
+          onTap: () => showRoundDialog(
+            context, 
+            '感谢以下贡献者', 
+            Text(locator<AppProvider>().testerNameList), 
+            [
+              TextButton(
+                onPressed: () => openUrl(''), 
+                child: Text('加入用户群')
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(), 
+                child: Text('关闭')
+              )
+            ]
+          ),
+        ),
         AboutListTile(
           icon: Icon(Icons.text_snippet),
           child: Text('开源证书'),
@@ -98,7 +119,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             height: 64.0,
           ),
           aboutBoxChildren: <Widget>[
-            Text('By Toast Studio.\nAll rights reserved.')
+            Text('Made with ❤️\nBy Toast Studio.\nAll rights reserved.')
           ],
         ),
       ],

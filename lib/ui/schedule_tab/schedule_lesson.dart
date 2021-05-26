@@ -7,6 +7,7 @@ import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleLessonWidget extends StatelessWidget {
@@ -49,40 +50,37 @@ class ScheduleLessonWidget extends StatelessWidget {
       return null;
     }
 
+    final textStyle = TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.bold,
+      color: isActive ? Colors.white : (isDark(context) ? Colors.white24 : Colors.grey)
+    );
+
     final content = <Widget>[];
-    content.add(Text(lesson.name, maxLines: 2));
+    content.add(Text(lesson.name, maxLines: 2, style: textStyle));
 
     if (conflict.isEmpty) {
       content.add(SizedBox(height: 2));
-      content.add(Text('@' + lesson.roomRaw, maxLines: 3));
+      content.add(Text('@' + lesson.roomRaw, maxLines: 3, style: textStyle));
     } else {
       final divider = Divider(height: 1, color: Colors.white);
       for (var lesson in conflict) {
         content.add(SizedBox(height: 5));
         content.add(divider);
         content.add(SizedBox(height: 5));
-        content.add(Text(lesson.name, maxLines: 2));
+        content.add(Text(lesson.name, maxLines: 2, style: textStyle));
       }
       if (conflict.length >= 2) {
         content.add(SizedBox(height: 3));
         content.add(divider);
         final more = conflict.length - 1;
-        content.add(Text("... +${more}"));
+        content.add(Text("... +${more}", style: textStyle));
       }
     }
 
-    final textStyle = TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.bold,
-      color: isActive ? Colors.white : Color(0xFF9C9C9C),
-    );
-
-    return DefaultTextStyle(
-      style: textStyle,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: content,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: content,
     );
   }
 

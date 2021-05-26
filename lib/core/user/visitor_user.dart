@@ -18,5 +18,5 @@ class VisitorUser implements User {
     ..department = null;
 
   @override
-  Future<ImageProvider> getAvatar() async => ImageRes.defaultAvatar;
+  Future<ImageProvider> getAvatar() async => ImageRes.custedLiteIcon;
 }

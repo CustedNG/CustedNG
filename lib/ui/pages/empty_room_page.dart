@@ -12,6 +12,7 @@ class EmptyRoomPage extends StatefulWidget {
 }
 
 class _EmptyRoomPageState extends State<EmptyRoomPage> {
+  bool isBusy = false;
   final now = DateTime.now();
   String dateStr = '';
   int selectedSection = 0;
@@ -47,6 +48,9 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
 
   Widget _buildEmptyRoomList(JwEmptyRoom data) {
     List<Widget> children = [];
+    if (data.data.pagingResult.total == 0) {
+      return Text('该建筑在此时间段，无空教室。');
+    }
     for (var item in data.data.pagingResult.rows) {
       children.add(Center(child: Text(item.jsmc)));
     }
@@ -56,14 +60,23 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
     );
   }
 
-  Future<void> getData() async {
+  Future<JwEmptyRoom> sendRequest() async {
     final sectionSplit = sections[selectedSection].split('-');
-
-
-    final result = await JwService().getEmptyRoom(
+    return await JwService().getEmptyRoom(
         dateStr,
         ['${fitLength(sectionSplit[0])}${fitLength(sectionSplit[1])}'],
         buildingIDs[selectedBuildingKey]);
+  }
+
+  Future<void> getData() async {
+    setState(() {
+      isBusy = true;
+    });
+
+    JwEmptyRoom result = await sendRequest();
+    if (result.state != 0 && result.message.contain('页面超时已过期')) {
+      result = await sendRequest();
+    }
     if (result.state == 0) {
       showRoundDialog(
         context, 
@@ -77,6 +90,9 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
     } else {
       showSnackBar(context, result.message);
     }
+    setState(() {
+      isBusy = false;
+    });
   }
 
   @override
@@ -114,7 +130,9 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
             placeholder: '教学楼',
             controller: buildingController,
             onTap: () => _showBuildingPicker(),
-          )
+          ),
+          isBusy ? SizedBox(height: 77) : Container(),
+          isBusy ? Center(child: CircularProgressIndicator()) : Container()
         ],
       ),
     );
@@ -146,6 +164,7 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
                 diameterRatio: 1.2,
                 onSelectedItemChanged: (n) => setState(() {
                   selectedBuildingKey = buildingIDs.keys.elementAt(n);
+                  buildingController.text = selectedBuildingKey;
                 }),
                 controller: FixedExtentScrollController(
                     initialItem:
@@ -188,6 +207,7 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
                 diameterRatio: 1.2,
                 onSelectedItemChanged: (n) => setState(() {
                   selectedSection = n;
+                  sectionController.text = sections[selectedSection] + '节';
                 }),
                 controller:
                     FixedExtentScrollController(initialItem: selectedSection),
@@ -213,6 +233,7 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
     setState(() {
       if (result != null) {
         dateStr = result.toString().substring(0, 10);
+        dayController.text = dateStr;
       }
     });
   }

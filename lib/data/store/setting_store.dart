@@ -31,8 +31,13 @@ class SettingStore with PersistentStore {
   StoreProperty<bool> get gradeSafeMode =>
       property('gradeSafeMode', defaultValue: false);
 
-  StoreProperty<int> get darkMode =>
-      property('darkMode', defaultValue: 0);
+  StoreProperty<int> get darkMode => property('darkMode', defaultValue: 0);
+
+  StoreProperty<int> get homeWidgetColor1 =>
+      property('homeWidgetColor1', defaultValue: 0x0000ff);
+
+  StoreProperty<int> get homeWidgetColor2 =>
+      property('homeWidgetColor2', defaultValue: 0x0000ff);
 
   StoreProperty<bool> get allowCustomProfile =>
       property('allowCustomProfile', defaultValue: false);
@@ -41,6 +46,6 @@ class SettingStore with PersistentStore {
 
   StoreProperty<String> get notification => property('notification');
 
-  StoreProperty<bool> get saveWiFiPassword => 
+  StoreProperty<bool> get saveWiFiPassword =>
       property('saveCampusWiFi', defaultValue: true);
 }

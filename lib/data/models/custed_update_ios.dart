@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'custed_update_testflight.g.dart';
+part 'custed_update_ios.g.dart';
 
 // ignore_for_file: non_constant_identifier_names
 
@@ -13,10 +13,10 @@ class CustedUpdateiOS {
 
   /// 最新版本
   int newest;
-  
+
   /// Testflight链接地址, 依次尝试打开 直到打开为止
   List<String> urls;
-  
+
   /// alert title
   String title;
 
@@ -24,9 +24,9 @@ class CustedUpdateiOS {
   String content;
 
   factory CustedUpdateiOS.fromJson(Map<String, dynamic> json) =>
-      _$CustedUpdateTestflightFromJson(json);
+      _$CustedUpdateiOSFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CustedUpdateTestflightToJson(this);
+  Map<String, dynamic> toJson() => _$CustedUpdateiOSToJson(this);
 
   @override
   String toString() {

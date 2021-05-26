@@ -15,5 +15,5 @@ abstract class CustUser {
       ..studentNumber = profile.sno;
   }
 
-  Future<ImageProvider> getAvatar() async => ImageRes.defaultAvatar;
+  Future<ImageProvider> getAvatar() async => ImageRes.custedLiteIcon;
 }

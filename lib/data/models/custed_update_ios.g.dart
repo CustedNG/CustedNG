@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'custed_update_testflight.dart';
+part of 'custed_update_ios.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CustedUpdateiOS _$CustedUpdateTestflightFromJson(
-    Map<String, dynamic> json) {
+CustedUpdateiOS _$CustedUpdateiOSFromJson(Map<String, dynamic> json) {
   return CustedUpdateiOS()
     ..min = json['min'] as int
     ..newest = json['newest'] as int
@@ -16,8 +15,7 @@ CustedUpdateiOS _$CustedUpdateTestflightFromJson(
     ..content = json['content'] as String;
 }
 
-Map<String, dynamic> _$CustedUpdateTestflightToJson(
-        CustedUpdateiOS instance) =>
+Map<String, dynamic> _$CustedUpdateiOSToJson(CustedUpdateiOS instance) =>
     <String, dynamic>{
       'min': instance.min,
       'newest': instance.newest,
