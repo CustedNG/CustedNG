@@ -55,5 +55,5 @@ class SettingStore with PersistentStore {
       property('scheduleTheme', defaultValue: 0);
 
   StoreProperty<int> get appPrimaryColor =>
-      property('appPrimaryColor');
+      property('appPrimaryColor', defaultValue: Colors.blueAccent.value);
 }
