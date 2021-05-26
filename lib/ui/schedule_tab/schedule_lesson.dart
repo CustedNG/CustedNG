@@ -5,6 +5,7 @@ import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/res/theme_colors.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
 import 'package:custed2/ui/theme.dart';
@@ -12,12 +13,13 @@ import 'package:flutter/material.dart';
 
 class ScheduleLessonWidget extends StatelessWidget {
   ScheduleLessonWidget(this.lesson,
-      {this.isActive = true, this.occupancyRate = 1.0});
+      {this.isActive = true, this.occupancyRate = 1.0, this.themeIdx = 0});
   
   final ScheduleLesson lesson;
   final List<ScheduleLesson> conflict = [];
   final bool isActive;
   final double occupancyRate;
+  final int themeIdx;
 
   @override
   Widget build(BuildContext context) {
@@ -104,16 +106,6 @@ class ScheduleLessonWidget extends StatelessWidget {
       return null;
     }
 
-    const colors = [
-      DynamicColor(Color(0xFFED4239), Color(0xFF847577)),
-      DynamicColor(Color(0xFF3EC9FE), Color(0xFF4c6f73)),
-      DynamicColor(Color(0xFF7B8AFF), Color(0xFF3c535e)),
-      DynamicColor(Color(0xFFFFA988), Color(0xFF3f422e)),
-      DynamicColor(Color(0xFF33C2FF), Color(0xFF525174)),
-      DynamicColor(Color(0xFFFC789C), Color(0xFF364958)),
-      DynamicColor(Color(0xFF7786FE), Color(0xFFa2a573)),
-    ];
-
     //final inactiveColor =
     //    DynamicColor(Color(0xFFEBEFF5), Colors.grey[800]);
     final inactiveColorLight = DynamicColor(Color(0xFFFAFAFAFA), Colors.grey[900]);
@@ -124,7 +116,9 @@ class ScheduleLessonWidget extends StatelessWidget {
           inactiveColorDense.resolve(context), occupancyRate);
     }
 
-    return colors[lesson.name.hashCode % colors.length].resolve(context);
+    final colors = themes[themeIdx];
+
+    return colors[lesson.hashCode % colors.length];
   }
 
   void _showLessonPreview(BuildContext context) {

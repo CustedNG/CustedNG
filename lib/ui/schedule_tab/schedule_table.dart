@@ -16,12 +16,14 @@ class ScheduleTable extends StatelessWidget {
     this.week = 1,
     this.showInactive = true,
     this.highLightToday = true,
+    this.themeIdx = 0
   });
 
   final Schedule schedule;
   final int week;
   final bool showInactive;
   final bool highLightToday;
+  final int themeIdx;
 
   final placeholder = ScheduleLessonWidget(null);
 
@@ -71,7 +73,9 @@ class ScheduleTable extends StatelessWidget {
       final weekIndex = lesson.weekday - 1;
       final lessonWidget = rows[slotIndex].children[weekIndex];
       if (lessonWidget == placeholder) {
-        rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(lesson);
+        rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(
+          lesson, themeIdx: themeIdx
+        );
       } else {
         final lw = (lessonWidget as ScheduleLessonWidget);
         lw.conflict.add(lesson);

@@ -6,6 +6,7 @@ import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
+import 'package:custed2/ui/widgets/select_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
@@ -116,25 +117,12 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  SelectView(IconData icon, String text, String id) {
-    return PopupMenuItem<String>(
-        value: id,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Icon(icon, color: Colors.blue),
-            SizedBox(width: 5.0),
-            Text(text),
-          ],
-        ));
-  }
-
   Widget _showMenu(BuildContext context) {
     return PopupMenuButton<String>(
         itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-              SelectView(Icons.refresh, '刷新此网页', 'A'),
-              SelectView(Icons.open_in_browser, '浏览器打开', 'B'),
-            ],
+          SelectView(Icons.refresh, '刷新此网页', 'A'),
+          SelectView(Icons.open_in_browser, '浏览器打开', 'B'),
+        ],
         onSelected: (String action) {
           switch (action) {
             case 'A':

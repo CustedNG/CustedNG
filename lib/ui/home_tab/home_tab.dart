@@ -10,6 +10,7 @@ import 'package:custed2/ui/home_tab/home_schedule.dart';
 import 'package:custed2/ui/home_tab/home_weather.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
+import 'package:custed2/ui/widgets/select_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
@@ -81,25 +82,12 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
     return widget;
   }
 
-  SelectView(IconData icon, String text, String id) {
-    return PopupMenuItem<String>(
-        value: id,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Icon(icon, color: Colors.blue),
-            SizedBox(width: 10.0),
-            Text(text),
-          ],
-        ));
-  }
-
   Widget _showMenu(BuildContext context) {
     return PopupMenuButton<String>(
         itemBuilder: (BuildContext context) =>
         <PopupMenuItem<String>>[
-          this.SelectView(Icons.calendar_view_day, '查看校历', 'A'),
-          this.SelectView(Icons.feedback, '我要反馈', 'B'),
+          SelectView(Icons.calendar_view_day, '查看校历', 'A'),
+          SelectView(Icons.feedback, '我要反馈', 'B'),
         ],
         onSelected: (String action) {
           switch (action) {

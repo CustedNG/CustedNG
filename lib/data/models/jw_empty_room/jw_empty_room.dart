@@ -2,7 +2,7 @@ import 'data.dart';
 
 class JwEmptyRoom {
   int state;
-  dynamic message;
+  String message;
   Data data;
 
   JwEmptyRoom({

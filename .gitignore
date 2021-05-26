@@ -45,3 +45,4 @@ countly_config
 lib/config/countly.dart
 ios/build
 .vscode
+models.jsonc

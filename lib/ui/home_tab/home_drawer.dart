@@ -95,7 +95,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
           onTap: () => showRoundDialog(
             context, 
             '感谢以下贡献者', 
-            Text(locator<AppProvider>().testerNameList), 
+            ListView(
+              children: [
+                Text(locator<AppProvider>().testerNameList)
+              ],
+            ), 
             [
               TextButton(
                 onPressed: () => openUrl(''), 

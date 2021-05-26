@@ -74,7 +74,7 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
     });
 
     JwEmptyRoom result = await sendRequest();
-    if (result.state != 0 && result.message.contain('页面超时已过期')) {
+    if (result.state != 0 && result.message.contains('页面超时已过期')) {
       result = await sendRequest();
     }
     if (result.state == 0) {

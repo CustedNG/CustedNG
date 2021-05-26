@@ -169,4 +169,8 @@ class CustedService extends CatClient {
     }
     return '名单加载失败';
   }
+
+  Future<bool> setPushScheduleNotification() async {
+    final resp = await get('$backendUrl/');
+  }
 }
