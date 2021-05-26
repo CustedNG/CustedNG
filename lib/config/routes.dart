@@ -3,6 +3,7 @@ import 'package:custed2/ui/home_tab/home_go_to_wechat.dart';
 import 'package:custed2/ui/pages/cbs_page.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
+import 'package:custed2/ui/pages/empty_room_page.dart';
 import 'package:custed2/ui/pages/exam_page.dart';
 import 'package:custed2/ui/pages/map_page.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
@@ -84,6 +85,11 @@ final feedbackPage = AppRoute(
 final bbsPage = AppRoute(
     title: '校内导航',
     page: WebviewBrowser('https://bbs.cust.app')
+);
+
+final emptyRoomPage = AppRoute(
+  title: '空教室',
+  page: EmptyRoomPage()
 );
 
 final selfWebPage = AppRoute(

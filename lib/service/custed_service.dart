@@ -5,7 +5,7 @@ import 'package:custed2/data/models/custed_banner.dart';
 import 'package:custed2/data/models/custed_file.dart';
 import 'package:custed2/data/models/custed_response.dart';
 import 'package:custed2/data/models/custed_update.dart';
-import 'package:custed2/data/models/custed_update_testflight.dart';
+import 'package:custed2/data/models/custed_update_ios.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:dio/dio.dart' show Dio;
@@ -60,15 +60,13 @@ class CustedService extends CatClient {
   }
 
   Future<bool> getShouldShowExam() async {
-    final resp =
-        await get('$backendUrl/res/haveExam', timeout: defaultTimeout);
+    final resp = await get('$backendUrl/res/haveExam', timeout: defaultTimeout);
     if (resp.body != null) return resp.body == '1' ? true : false;
     return false;
   }
 
   Future<String> getRemoteConfigJson() async {
-    final resp =
-        await get('$backendUrl/jw/randomUrl', timeout: defaultTimeout);
+    final resp = await get('$backendUrl/jw/randomUrl', timeout: defaultTimeout);
     return resp.body;
   }
 
@@ -134,13 +132,8 @@ class CustedService extends CatClient {
   }
 
   Future<void> updateCacheGrade(String ecardId, String grade) async {
-    final resp = await post(
-      '$backendUrl/grade/$ecardId', 
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: grade
-    );
+    final resp = await post('$backendUrl/grade/$ecardId',
+        headers: {'content-type': 'application/json'}, body: grade);
 
     if (resp.statusCode != 200) {
       print('send cache grade: ${resp.body}');
@@ -159,18 +152,21 @@ class CustedService extends CatClient {
   }
 
   Future<void> updateCahedExam(String eacrdId, String exam) async {
-    final resp = await post(
-      '$backendUrl/exam/$eacrdId',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: exam
-    );
+    final resp = await post('$backendUrl/exam/$eacrdId',
+        headers: {'content-type': 'application/json'}, body: exam);
 
     if (resp.statusCode == 200) {
       print('send exam successfully');
     } else {
       print('send exam failed: ${resp.body}');
     }
+  }
+
+  Future<String> getTesterNameList() async {
+    final resp = await get('$backendUrl/res/tester');
+    if (resp.statusCode == 200) {
+      return resp.body;
+    }
+    return '名单加载失败';
   }
 }

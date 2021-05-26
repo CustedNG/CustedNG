@@ -4,6 +4,7 @@ import 'package:convert/convert.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/data/models/custom_schedule_profile.dart';
+import 'package:custed2/data/models/jw_empty_room/jw_empty_room.dart';
 import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_response.dart';
@@ -52,19 +53,16 @@ class JwService extends WrdvpnBasedService {
 
   Future<JwSchedule> getSchedule([String userUUID]) async {
     if (!locator<AppProvider>().showRealUI) {
-      return JwSchedule.fromJson(
-        JwResponse.fromJson(
-          json.decode(
-            (await custed.getCacheSchedule('2019003373')).body
-          )
-        ).data
-      );
+      return JwSchedule.fromJson(JwResponse.fromJson(
+              json.decode((await custed.getCacheSchedule('2019003373')).body))
+          .data);
     }
     await locator<RemoteConfigService>().reloadData();
 
     // {"KBLX":"2","CXLX":"0","XNXQ":"20202","CXID":"b0a3fc3c-8263-4be8-bb53-58fe200f616e","CXZC":"3","JXBLX":"","IsOnLine":"-1"}
-    final resp =
-        await (userUUID == null ? getSelfSchedule() : getScheduleByUUID(userUUID));
+    final resp = await (userUUID == null
+        ? getSelfSchedule()
+        : getScheduleByUUID(userUUID));
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
     return JwSchedule.fromJson(parsedResponse.data);
   }
@@ -83,7 +81,7 @@ class JwService extends WrdvpnBasedService {
     final ecardId = locator<UserDataStore>().username.fetch();
 
     if (resp.statusCode == 200) {
-      final result4SendChedule = 
+      final result4SendChedule =
           await custed.updateCachedSchedule(ecardId, resp.body);
       print('send cache schedule to backend: $result4SendChedule');
     } else {
@@ -165,11 +163,9 @@ class JwService extends WrdvpnBasedService {
 
   Future<JwGradeData> getGrade() async {
     if (!locator<AppProvider>().showRealUI) {
-      return JwGradeData.fromJson(
-        JwResponse.fromJson(json.decode(
-          (await custed.getCachedGrade('2019003373')).body
-        )).data
-      );
+      return JwGradeData.fromJson(JwResponse.fromJson(
+              json.decode((await custed.getCachedGrade('2019003373')).body))
+          .data);
     }
 
     final resp = await xRequest(
@@ -202,11 +198,41 @@ class JwService extends WrdvpnBasedService {
       final response = await custed.getCachedGrade(id);
       if (response.statusCode == 200) {
         return JwGradeData.fromJson(
-          JwResponse.fromJson(json.decode(response.body)).data
-        );
+            JwResponse.fromJson(json.decode(response.body)).data);
       }
     }
     return JwGradeData.fromJson(parsedResponse.data);
+  }
+
+  Future<JwEmptyRoom> getEmptyRoom(
+      String date, List<String> sections, String buildingID) async {
+    final resp = await xRequest('POST',
+        '$baseUrl/api/ClientTeacher/QueryService/EmptyRoomQueryApi/GetEmptyRoomDataByPage',
+        body: {
+          'param': encodeParamValue({
+            'EmptyRoomParam': {'SJ': date, 'JCs': sections},
+            'PagingParam': {
+              'isPaging': 1,
+              'Offset': 0,
+              'Limit': 50,
+              'Conditions': {
+                'PropertyParams': [
+                  {'Field': 'BDJXLXXID', 'Value': buildingID}
+                ]
+              }
+            }
+          }),
+          '__permission': {
+            'MenuID': 'E93957BB-C05C-4D97-90F6-7839E1A77B62',
+            'Operation': 0
+          },
+          '__log': {
+            'Logtype': 6,
+            'MenuID': 'E93957BB-C05C-4D97-90F6-7839E1A77B62',
+            'Context': '查询'
+          }
+        });
+    return JwEmptyRoom.fromJson(json.decode(resp.body));
   }
 
   Future<JwStudentInfo> getStudentInfo() async {
@@ -263,10 +289,7 @@ class JwService extends WrdvpnBasedService {
   Future<JwExam> getExam() async {
     if (!locator<AppProvider>().showRealUI) {
       return JwExam.fromJson(
-        json.decode(
-          (await custed.getCachedExam('2019003373')).body
-        )
-      );
+          json.decode((await custed.getCachedExam('2019003373')).body));
     }
 
     final resp = await xRequest(
@@ -292,7 +315,8 @@ class JwService extends WrdvpnBasedService {
       await custed.updateCahedExam(id, resp.body);
       return JwExam.fromJson(json.decode(resp.body));
     } else {
-      return JwExam.fromJson(json.decode((await custed.getCachedExam(id)).body));
+      return JwExam.fromJson(
+          json.decode((await custed.getCachedExam(id)).body));
     }
   }
 

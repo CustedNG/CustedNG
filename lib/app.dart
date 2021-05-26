@@ -18,6 +18,7 @@ import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/setting_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:plain_notification_token/plain_notification_token.dart';
 // import 'package:jpush_flutter/jpush_flutter.dart';
@@ -44,17 +45,18 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       builder: (context, mode) {
         return MaterialApp(
           title: 'Custed',
+          localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+          supportedLocales: [const Locale('zh')],
           navigatorKey: locator<Alice>().getNavigatorKey(),
           debugShowCheckedModeBanner: false,
           home: AppFrame(),
           builder: (context, child) {
             bool isDarkMode = _shouldEnableDarkMode(context, mode);
             return Theme(
-              data: ThemeData(
-                brightness: isDarkMode ? Brightness.dark : Brightness.light,
-              ),
-              child: child
-            );
+                data: ThemeData(
+                  brightness: isDarkMode ? Brightness.dark : Brightness.light,
+                ),
+                child: child);
           },
         );
       },
@@ -84,7 +86,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       Analytics.init();
       Analytics.isDebug = false;
     }
-    if(setting.autoUpdateWeather.fetch()) weatherProvider.startAutoUpdate();
+    if (setting.autoUpdateWeather.fetch()) weatherProvider.startAutoUpdate();
     weatherProvider.update();
 
     final user = locator<UserProvider>();
@@ -105,7 +107,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 
       initPushService(userData);
       if (Platform.isIOS) HomeWidget.setAppGroupId('group.com.tusi.app');
-      final success = 
+      final success =
           await HomeWidget.saveWidgetData('ecardId', userData.username.fetch());
       print('set ecardId for home widget: ${success ? "success" : "failed"}');
     }
@@ -124,8 +126,8 @@ Future<void> initPushService(UserDataStore user) async {
     return;
   }
   final sendSuccess = await CustedService()
-                        .sendToken(token, user.username.fetch(), Platform.isIOS);
-  if(sendSuccess) {
+      .sendToken(token, user.username.fetch(), Platform.isIOS);
+  if (sendSuccess) {
     user.tokenDate.put(now);
   }
 }

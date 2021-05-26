@@ -42,7 +42,7 @@ class _HomeEntriesState extends State<HomeEntries> {
   Future<void> loadUserName() async {
     final user = Provider.of<UserProvider>(context);
 
-    if(!user.loggedIn) return;
+    if (!user.loggedIn) return;
 
     final userData = await locator.getAsync<UserDataStore>();
     final username = userData.username.fetch();
@@ -66,12 +66,9 @@ class _HomeEntriesState extends State<HomeEntries> {
             action: () => jwWebPage.go(context),
           ),
           HomeEntry(
-            name: Text('使用指南', style: style),
-            icon: Image(image: ImageRes.ecardIcon),
-            // action: () => iecardWebPage.go(context),
-            // action: () => openIecard(context),
-            action: () => bbsPage.go(context)
-          ),
+              name: Text('空教室', style: style),
+              icon: Image(image: ImageRes.ecardIcon),
+              action: () => emptyRoomPage.go(context)),
           HomeEntry(
             name: Text('体测成绩', style: style),
             icon: Image(image: ImageRes.runningReportIcon),
@@ -113,32 +110,19 @@ class _HomeEntriesState extends State<HomeEntries> {
   }
 
   void _showConnectWiFiDialog() {
-    showRoundDialog(
-      context, 
-      '连接校园网', 
-      _buildTextInputField(context), 
-      [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(), 
-          child: Text('关闭')
-        ),
-        TextButton(
-          onPressed: () => tryLogin(context), 
-          child: Text('连接')
-        )
-      ]
-    );
+    showRoundDialog(context, '连接校园网', _buildTextInputField(context), [
+      TextButton(
+          onPressed: () => Navigator.of(context).pop(), child: Text('关闭')),
+      TextButton(onPressed: () => tryLogin(context), child: Text('连接'))
+    ]);
     loadUserLoginInfo();
   }
 
-  InputDecoration _buildDecoration(String label, {TextStyle textStyle}){
-    return InputDecoration(
-      labelText: label,
-      labelStyle: textStyle
-    );
+  InputDecoration _buildDecoration(String label, {TextStyle textStyle}) {
+    return InputDecoration(labelText: label, labelStyle: textStyle);
   }
 
-  Widget _buildTextInputField(BuildContext ctx){
+  Widget _buildTextInputField(BuildContext ctx) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,7 +131,8 @@ class _HomeEntriesState extends State<HomeEntries> {
           controller: usernameController,
           keyboardType: TextInputType.number,
           decoration: _buildDecoration('校园网账户'),
-          onSubmitted: (_) => FocusScope.of(context).requestFocus(passwordFocusNode),
+          onSubmitted: (_) =>
+              FocusScope.of(context).requestFocus(passwordFocusNode),
         ),
         SizedBox(height: 15),
         TextField(
