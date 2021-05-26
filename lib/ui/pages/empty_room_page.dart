@@ -99,6 +99,7 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NavBar.material(
+        context: context,
         middle: NavbarText('空教室'),
         trailing: [
           IconButton(

@@ -164,6 +164,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     return Scaffold(
       appBar: NavBar.material(
           leading: Container(),
+          context: context,
           middle: NavbarText('成绩'),
           trailing: [
             grade?.terms?.isNotEmpty == true

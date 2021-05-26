@@ -21,6 +21,7 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: NavBar.material(
+        context: context,
         middle: Text('校历'),
         trailing: [
           IconButton(

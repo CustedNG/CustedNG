@@ -92,6 +92,7 @@ class _Webview2HeaderState extends State<Webview2Header> {
 
   Widget buildNavigationBar(BuildContext context) {
     return NavBar.material(
+      context: context,
       leading: Container(
         alignment: Alignment.centerLeft,
         width: 70,

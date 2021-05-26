@@ -8,7 +8,8 @@ class GoToWechat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NavBar.material(
-          middle: NavbarText('一卡通'),
+        context: context,
+        middle: NavbarText('一卡通'),
       ),
       body: ListView(
         children: [

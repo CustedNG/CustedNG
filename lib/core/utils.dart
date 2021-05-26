@@ -150,3 +150,10 @@ Widget buildSwitch(BuildContext context,
     },
   );
 }
+
+Brightness getBrightnessFromColor(Color c) {
+  if (c.red * 0.299 + c.green * 0.578 + c.blue * 0.114 >= 155) {
+    return Brightness.light;
+  }
+  return Brightness.dark;
+}

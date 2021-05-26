@@ -5,7 +5,9 @@ class CustMonitorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar.material(),
+      appBar: NavBar.material(
+        context: context
+      ),
     );
   }
 }

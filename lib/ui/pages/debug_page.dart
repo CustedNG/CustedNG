@@ -29,6 +29,7 @@ class _DebugPageState extends State<DebugPage> {
 
     return Scaffold(
       appBar: NavBar.material(
+        context: context,
           middle: NavbarText('Terminal'),
           trailing: [TextButton( 
             onPressed: () => AppRoute(

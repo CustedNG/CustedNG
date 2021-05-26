@@ -9,7 +9,6 @@ class BackIcon extends StatelessWidget {
       child: Icon(
         Icons.arrow_back_sharp,
         size: 25,
-        color: Colors.white,
       ),
       onTap: () => Navigator.of(context).pop(),
     );
