@@ -2,6 +2,7 @@ import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/custed_header.dart';
 import 'package:custed2/core/utils.dart';
@@ -100,7 +101,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             rightBtn: _showMenu(context),
           ),
           SettingItem(
-            title: 'App主要强调色',
+            title: 'App主要强调色(beta)',
             titleStyle: settingTextStyle,
             isShowArrow: false,
             rightBtn: Padding(
@@ -108,14 +109,14 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
               child: _buildAppColorPreview(),
             ),
           ),
-          !!BuildMode.isRelease ? SettingItem(
+          !BuildMode.isRelease ? SettingItem(
             title: '推送上课提醒',
             titleStyle: settingTextStyle,
             isShowArrow: false,
             rightBtn: buildSwitch(
               context, 
               setting.pushNotification,
-              func: () => sendSetting2Backend()
+              func: (v) => sendSetting2Backend(v)
             ),
           ) : Container(),
           !BuildMode.isRelease
@@ -164,39 +165,50 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
       });
   }
 
-  void sendSetting2Backend() async {
-    
+  void sendSetting2Backend(bool v) async {
+    final suc = await CustedService().setPushScheduleNotification(v);
+    if (suc) {
+      print('set enable schedule notification success');
+      return;
+    }
+    print('set disable schedule notification failed');
   }
 
   void _showColorPicker(Color selected, int index) {
     showRoundDialog(
-        context,
-        '选择颜色',
-        MaterialColorPicker(
-            shrinkWrap: true,
-            onColorChange: (Color color) {
-              widgetColors[index] = color;
-            },
-            selectedColor: selected),
-        [
-          TextButton(
-              onPressed: () async {
-                final colorInt = widgetColors[index].value;
-                final colorString =
-                    widgetColors[index].toString().substring(8, 16);
-                final suc = await HomeWidget.saveWidgetData<String>(
-                    'color$index', colorString);
-                if (index == 0) {
-                  setting.homeWidgetColor1.put(colorInt);
-                } else {
-                  setting.homeWidgetColor2.put(colorInt);
-                }
-                print('set custom widget color successlly? $suc');
-                setState(() {});
-                Navigator.of(context).pop();
-              },
-              child: Text('关闭'))
-        ]);
+      context,
+      '选择颜色',
+      MaterialColorPicker(
+          shrinkWrap: true,
+          onColorChange: (Color color) {
+            widgetColors[index] = color;
+          },
+          selectedColor: selected),
+      [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(), 
+          child: Text('取消')
+        ),
+        TextButton(
+          onPressed: () async {
+            final colorInt = widgetColors[index].value;
+            final colorString =
+                widgetColors[index].toString().substring(8, 16);
+            final suc = await HomeWidget.saveWidgetData<String>(
+                'color$index', colorString);
+            if (index == 0) {
+              setting.homeWidgetColor1.put(colorInt);
+            } else {
+              setting.homeWidgetColor2.put(colorInt);
+            }
+            print('set custom widget color successlly? $suc');
+            setState(() {});
+            Navigator.of(context).pop();
+          },
+          child: Text('确定')
+        ),
+      ]
+    );
   }
 
   Widget _buildColorRow() {
@@ -236,12 +248,18 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
       '选择颜色',
       MaterialColorPicker(
         shrinkWrap: true,
-        onColorChange: (Color color) {
+        onColorChange: (Color color) async {
           setting.appPrimaryColor.put(color.value);
+          final suc = await CustedService().sendThemeData(color.toString());
+          if (suc) print('send theme data successfully: $color');
         },
         selectedColor: selected
       ),
       [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(), 
+          child: Text('取消')
+        ),
         TextButton(
           onPressed: () async {
             final dark = setting.darkMode.fetch();
@@ -249,8 +267,8 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             setState(() {});
             Navigator.of(context).pop();
           },
-          child: Text('关闭')
-        )
+          child: Text('确定')
+        ),
       ]
     );
   }

@@ -7,7 +7,7 @@ const universe = [
   Color.fromARGB(255, 86, 116, 170),
   Color.fromARGB(255, 153, 181, 145),
   Color.fromARGB(255, 219, 179, 33),
-  Color.fromARGB(255, 232, 231, 137)
+  Color.fromARGB(255, 202, 201, 137)
 ];
 const nihong = [
   Color.fromARGB(255, 236, 143, 192),
@@ -21,7 +21,7 @@ const nihong = [
 ];
 
 const lipstick = [
-  Color.fromARGB(255, 248, 226, 203),
+  Color.fromARGB(255, 228, 206, 183),
   Color.fromARGB(255, 207, 108, 126),
   Color.fromARGB(255, 207, 108, 126),
   Color.fromARGB(255, 181, 85, 87),
@@ -38,7 +38,7 @@ const summer = [
   Color.fromARGB(255, 3, 108, 68),
   Color.fromARGB(255, 131, 206, 213),
   Color.fromARGB(255, 131, 206, 213),
-  Color.fromARGB(255, 223, 233, 181),
+  Color.fromARGB(255, 203, 213, 161),
   Color.fromARGB(255, 3, 96, 102),
 ];
 

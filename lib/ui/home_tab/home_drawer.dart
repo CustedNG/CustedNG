@@ -92,25 +92,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         ListTile(
           leading: Icon(Icons.hardware),
           title: Text('贡献名单'),
-          onTap: () => showRoundDialog(
-            context, 
-            '感谢以下贡献者', 
-            ListView(
-              children: [
-                Text(locator<AppProvider>().testerNameList)
-              ],
-            ), 
-            [
-              TextButton(
-                onPressed: () => openUrl(''), 
-                child: Text('加入用户群')
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(), 
-                child: Text('关闭')
-              )
-            ]
-          ),
+          onTap: () => _showTesterNameList(),
         ),
         AboutListTile(
           icon: Icon(Icons.text_snippet),
@@ -127,6 +109,33 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ],
         ),
       ],
+    );
+  }
+
+  void _showTesterNameList() {
+    String nameList = locator<AppProvider>().testerNameList;
+    if (nameList.startsWith('close')) {
+      showSnackBar(context, '暂时关闭');
+      return;
+    }
+    showRoundDialog(
+      context, 
+      '感谢以下贡献者', 
+      ListView(
+        children: [
+          Text(nameList)
+        ],
+      ), 
+      [
+        TextButton(
+          onPressed: () => openUrl('https://jq.qq.com/?_wv=1027&k=TLrWZjtp'), 
+          child: Text('加入用户群')
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(), 
+          child: Text('关闭')
+        )
+      ]
     );
   }
 

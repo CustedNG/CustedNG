@@ -7,6 +7,8 @@ import 'package:custed2/data/models/custed_response.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/models/custed_update_ios.dart';
 import 'package:custed2/data/models/custed_weather.dart';
+import 'package:custed2/data/store/user_data_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:dio/dio.dart' show Dio;
 import 'package:http/http.dart' show Response;
@@ -170,7 +172,17 @@ class CustedService extends CatClient {
     return '名单加载失败';
   }
 
-  Future<bool> setPushScheduleNotification() async {
-    final resp = await get('$backendUrl/');
+  Future<bool> setPushScheduleNotification(bool open) async {
+    final id = locator<UserDataStore>().username.fetch();
+    if (id == null) return false;
+    final on = open ? 'on' : 'off';
+    final resp = await get('$backendUrl/schedule/push/$id/$on');
+    return resp.statusCode == 200;
+  }
+
+  Future<bool> sendThemeData(String color) async {
+    final id = locator<UserDataStore>().username.fetch();
+    final resp = await get('$backendUrl/theme/$id/$color');
+    return resp.statusCode == 200;
   }
 }

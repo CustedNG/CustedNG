@@ -91,22 +91,19 @@ class _AddLessonPageState extends State<AddLessonPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: NavBar.material(
           context: context,
           middle: Text('添加课程'),
           trailing: [
-            TextButton(
+            IconButton(
                 onPressed: (){
                   if (widget.lesson != null) {
                     widget.lesson.delete();
                   }
                   _addLesson();
                 },
-                child: Text('提交', style: TextStyle(
-                  color: Colors.white
-                ))
+                icon: Icon(Icons.send)
             )
           ]
       ),
