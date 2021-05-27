@@ -76,6 +76,7 @@ dependencies:
   add_2_calendar: ^2.1.0
   home_widget: ^0.1.2+1
   flutter_material_color_picker: ^1.0.5
+  expand_widget: ^2.1.0
 
 dev_dependencies:
   # flutter_test:

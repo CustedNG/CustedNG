@@ -1,6 +1,7 @@
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/extension/iterablex.dart';
 import 'package:custed2/core/route.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -63,7 +64,7 @@ class _HomeScheduleState extends State<HomeSchedule> {
 
   Widget _buildTitle(BuildContext context, ScheduleLesson lesson) {
     final style = TextStyle(
-      color: Color(0xFF889CC3),
+      color: resolveWithBackground(context),
       fontWeight: FontWeight.bold
     );
 

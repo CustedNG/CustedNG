@@ -43,7 +43,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
     );
   }
 
-  Widget _buildUserEntries(BuildContext context, bool isLoggedIn) {
+  Widget _buildUserEntries(BuildContext context, bool isLoggedIn, Color color) {
     final version = BuildData.modifications != 0
         ? '${BuildData.build}(+${BuildData.modifications}f)'
         : '${BuildData.build}';
@@ -57,7 +57,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
     return Column(
       children: [
         (isLoggedIn && showRealUI) ? ListTile(
-          leading: Icon(Icons.photo_camera),
+          leading: Icon(Icons.photo_camera, color: color),
           title: Text('四六级照片'),
           onTap: () {
             locator<CetAvatarProvider>().getAvatar();
@@ -65,7 +65,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           },
         ) : Container(),
         (isLoggedIn && showRealUI) ? ListTile(
-          leading: Icon(Icons.cloud),
+          leading: Icon(Icons.cloud, color: color),
           title: Text('校园网盘'),
           onTap: () {
             locator<NetdiskProvider>().getQuota();
@@ -74,7 +74,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         ) : Container(),
         (isLoggedIn && showRealUI) ? Divider() : Container(),
         ListTile(
-          leading: Icon(Icons.info),
+          leading: Icon(Icons.info, color: color),
           title: Text('版本信息'),
           onTap: () => AppRoute(
             title: '版本信息',
@@ -82,7 +82,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ).go(context),
         ),
         ListTile(
-          leading: Icon(Icons.code),
+          leading: Icon(Icons.code, color: color),
           title: Text('更新日志'),
           onTap: () => AppRoute(
             title: '更新日志',
@@ -90,12 +90,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ).go(context),
         ),
         ListTile(
-          leading: Icon(Icons.hardware),
+          leading: Icon(Icons.hardware, color: color),
           title: Text('贡献名单'),
           onTap: () => _showTesterNameList(),
         ),
         AboutListTile(
-          icon: Icon(Icons.text_snippet),
+          icon: Icon(Icons.text_snippet, color: color),
           child: Text('开源证书'),
           applicationName: appName,
           applicationVersion: version,
@@ -139,12 +139,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
     );
   }
 
-  Widget _buildLoginEntries(BuildContext context, bool isLoggedIn) {
+  Widget _buildLoginEntries(BuildContext context, bool isLoggedIn, Color color) {
     return Column(
       children: [
-        _buildLoginTile(context, isLoggedIn),
+        _buildLoginTile(context, isLoggedIn, color),
         if (isLoggedIn) ListTile(
-          leading: Icon(Icons.logout),
+          leading: Icon(Icons.logout, color: color),
           title: Text('退出登录'),
           onTap: () async {
             await locator<PersistCookieJar>().deleteAll();
@@ -155,10 +155,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
     );
   }
 
-  Widget _buildLoginTile(BuildContext context, bool isLoggedIn) {
+  Widget _buildLoginTile(BuildContext context, bool isLoggedIn, Color color) {
     if (isLoggedIn) {
       return ListTile(
-          leading: Icon(Icons.login),
+          leading: Icon(Icons.login, color: color),
           title: Text('重新登录'),
           onTap: () async {
             await WebviewLogin.begin(context);
@@ -166,7 +166,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         );
     } else if (showRealUI) {
       return ListTile(
-          leading: Icon(Icons.web),
+          leading: Icon(Icons.web, color: color),
           title: Text('统一登录'),
           onTap: () async {
             await WebviewLogin.begin(context);
@@ -174,7 +174,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         );
     }
     return ListTile(
-          leading: Icon(Icons.web),
+          leading: Icon(Icons.web, color: color),
           title: Text('传统登录'),
           onTap: () {
             AppRoute(page: LoginPageLegacy()).go(context);
@@ -185,15 +185,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
   @override
   Widget build(BuildContext context) {
     bool isLoggedIn = widget.user.loggedIn;
+    final color = resolveWithBackground(context);
 
     return Drawer(
         child: ListView(
             padding: EdgeInsets.only(),
             children: <Widget>[
               _buildUserHeader(isLoggedIn),
-              _buildUserEntries(context, isLoggedIn),
+              _buildUserEntries(context, isLoggedIn, color),
               Divider(),
-              _buildLoginEntries(context, isLoggedIn)
+              _buildLoginEntries(context, isLoggedIn, color)
             ]
         )
     );

@@ -11,6 +11,7 @@ import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:custed2/ui/widgets/select_view.dart';
 import 'package:custed2/ui/widgets/setting_item.dart';
+import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:home_widget/home_widget.dart';
@@ -45,8 +46,6 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _buildSetting() {
-    final settingTextStyle =
-        TextStyle(color: isDark(context) ? Colors.white : Colors.black);
 
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
@@ -54,26 +53,43 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
         children: [
           CustedHeader(),
           SizedBox(height: 10.0),
-          Text('设置'),
+          Text('课表'),
           SizedBox(height: 10.0),
           SettingItem(
             title: '将课表设置为首页',
-            titleStyle: settingTextStyle,
             isShowArrow: false,
             rightBtn: buildSwitch(context, setting.useScheduleAsHome),
           ),
           SettingItem(
+            title: '课表隐藏周末',
+            isShowArrow: false,
+            rightBtn: buildSwitch(context, setting.scheduleHideWeekend),
+          ),
+          SettingItem(
             title: '显示非当前周课程',
-            titleStyle: settingTextStyle,
             isShowArrow: false,
             rightBtn: buildSwitch(context, setting.showInactiveLessons),
           ),
+          SizedBox(height: 10.0),
+          Text('主题'),
+          SizedBox(height: 10.0),
           SettingItem(
-            title: '绩点不计选修',
-            titleStyle: settingTextStyle,
+            title: '课表主题',
             isShowArrow: false,
-            rightBtn:
-                buildSwitch(context, setting.dontCountElectiveCourseGrade),
+            rightBtn: _showMenu(context),
+          ),
+          SettingItem(
+            title: 'App强调色(beta)',
+            isShowArrow: false,
+            rightBtn: Padding(
+              padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
+              child: _buildAppColorPreview(),
+            ),
+          ),
+          SettingItem(
+            title: '黑暗模式',
+            isShowArrow: false,
+            rightBtn: _buildDarkModeRadio(),
           ),
           // SettingItem(
           //   title: '启动时自动更新课表',
@@ -82,57 +98,49 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
           //   rightBtn: buildSwitch(
           //       context, setting.autoUpdateSchedule),
           // ),
-          SettingItem(
-            title: '持续自动更新天气',
-            titleStyle: settingTextStyle,
-            isShowArrow: false,
-            rightBtn: buildSwitch(context, setting.autoUpdateWeather),
-          ),
-          SettingItem(
-            title: '黑暗模式',
-            titleStyle: settingTextStyle,
-            isShowArrow: false,
-            rightBtn: _buildDarkModeRadio(),
-          ),
-          SettingItem(
-            title: '课表主题',
-            titleStyle: settingTextStyle,
-            isShowArrow: false,
-            rightBtn: _showMenu(context),
-          ),
-          SettingItem(
-            title: '课表隐藏周末',
-            titleStyle: settingTextStyle,
-            isShowArrow: false,
-            rightBtn: buildSwitch(context, setting.scheduleHideWeekend),
-          ),
-          SettingItem(
-            title: 'App强调色(beta)',
-            titleStyle: settingTextStyle,
-            isShowArrow: false,
-            rightBtn: Padding(
-              padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
-              child: _buildAppColorPreview(),
-            ),
-          ),
-          !BuildMode.isRelease ? SettingItem(
-            title: '推送上课通知',
-            titleStyle: settingTextStyle,
-            isShowArrow: false,
-            rightBtn: buildSwitch(
-              context, 
-              setting.pushNotification,
-              func: (v) => sendSetting2Backend(v)
-            ),
-          ) : Container(),
-          !BuildMode.isRelease
-              ? SettingItem(
-                  title: '桌面课表颜色',
-                  titleStyle: settingTextStyle,
+          ExpandChild(
+            arrowColor: resolveWithBackground(context),
+            arrowSize: 40,
+            expandArrowStyle: ExpandArrowStyle.both,
+            collapsedHint: '更多设置',
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 10.0),
+                Text('更多'),
+                SizedBox(height: 10.0),
+                SettingItem(
+                  title: '绩点不计选修',
                   isShowArrow: false,
-                  rightBtn: _buildColorRow(),
-                )
-              : Container(),
+                  rightBtn:
+                      buildSwitch(context, setting.dontCountElectiveCourseGrade),
+                ),
+                SettingItem(
+                  title: '持续自动更新天气',
+                  isShowArrow: false,
+                  rightBtn: buildSwitch(context, setting.autoUpdateWeather),
+                ),
+                SizedBox(height: 10.0),
+                Text('Beta设置'),
+                SizedBox(height: 10.0),
+                !BuildMode.isRelease ? SettingItem(
+                  title: '推送上课通知',
+                  isShowArrow: false,
+                  rightBtn: buildSwitch(
+                    context, 
+                    setting.pushNotification,
+                    func: (v) => sendSetting2Backend(v)
+                  ),
+                ) : Container(),
+                !BuildMode.isRelease
+                    ? SettingItem(
+                        title: '桌面课表颜色',
+                        isShowArrow: false,
+                        rightBtn: _buildColorRow(),
+                      )
+                    : Container(),
+                    ],
+                  ),
+          ),
           SizedBox(height: 40.0)
         ],
       ),
@@ -282,6 +290,9 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
           onPressed: () async {
             final dark = setting.darkMode.fetch();
             setting.darkMode.put(dark);
+            if (isBrightColor(Color(setting.appPrimaryColor.fetch()))) {
+              showSnackBar(context, '当前设置的颜色过浅\n不会应用至高亮字、按钮、开关等');
+            }
             setState(() {});
             Navigator.of(context).pop();
           },
@@ -292,24 +303,28 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _buildDarkModeRadio() {
+    final color = MaterialStateProperty.all(resolveWithBackground(context));
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text('自动'),
         Radio(
-            value: 0,
-            groupValue: setting.darkMode.fetch(),
-            onChanged: _onSelection),
+          value: 0,
+          fillColor: color,
+          groupValue: setting.darkMode.fetch(),
+          onChanged: _onSelection),
         Text('开'),
         Radio(
-            value: 1,
-            groupValue: setting.darkMode.fetch(),
-            onChanged: _onSelection),
+          value: 1,
+          fillColor: color,
+          groupValue: setting.darkMode.fetch(),
+          onChanged: _onSelection),
         Text('关'),
         Radio(
-            value: 2,
-            groupValue: setting.darkMode.fetch(),
-            onChanged: _onSelection)
+          value: 2,
+          fillColor: color,
+          groupValue: setting.darkMode.fetch(),
+          onChanged: _onSelection)
       ],
     );
   }

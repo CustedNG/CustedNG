@@ -143,7 +143,9 @@ Widget buildSwitch(BuildContext context,
     builder: (context, value, widget) {
       return DarkModeFilter(
         child: Switch(
-            value: value, onChanged: (value) {
+            value: value,
+            activeColor: resolveWithBackground(context),
+            onChanged: (value) {
               if (func != null) func(value);
               return prop.put(value);
             }

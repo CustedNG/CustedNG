@@ -2,15 +2,19 @@ import 'dart:async';
 
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/util/time_point.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/models/schedule.dart';
+import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleArrow extends StatefulWidget {
-  ScheduleArrow({this.child, this.schedule});
+  ScheduleArrow({this.child, this.schedule, this.hideWeekend});
 
   final Widget child;
   final Schedule schedule;
   final double iconSize = 20.0;
+  final bool hideWeekend;
 
   @override
   _ScheduleArrowState createState() => _ScheduleArrowState();
@@ -59,13 +63,13 @@ class _ScheduleArrowState extends State<ScheduleArrow> {
     return Align(
       alignment: Alignment.bottomRight,
       child: Icon(Icons.forward,
-        color: Colors.red.withAlpha(200)
+        color: resolveWithBackground(context) ?? Colors.red
       ),
     );
   }
 
   double calcWidthFactor() {
-    const total = 7;
+    int total = widget.hideWeekend ? 5 : 7;
     final now = DateTime.now().weekday - 0.8;
     return now / total;
   }

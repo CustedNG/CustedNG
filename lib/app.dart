@@ -57,21 +57,6 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
             return Theme(
               data: ThemeData(
                 primaryColor: isDarkMode ? null : primary,
-                switchTheme: SwitchThemeData(
-                  thumbColor: MaterialStateProperty.resolveWith(
-                    (states) {
-                      const Set<MaterialState> interactiveStates = <MaterialState>{
-                        MaterialState.pressed,
-                        MaterialState.hovered,
-                        MaterialState.focused,
-                      };
-                      if (states.any(interactiveStates.contains)) {
-                        return primary;
-                      }
-                      return null;
-                    }
-                  ),
-                ),
                 brightness: isDarkMode ? Brightness.dark : Brightness.light,
               ),
               child: child

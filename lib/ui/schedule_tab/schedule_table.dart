@@ -50,7 +50,7 @@ class ScheduleTable extends StatelessWidget {
 
     final showArrow = schedule.calculateWeekSinceStart(DateTime.now()) == week;
 
-    final table = showArrow ? _withArrow(rawTable) : rawTable;
+    final table = showArrow ? _withArrow(rawTable, hideWeekend) : rawTable;
 
     final settings = locator<SettingStore>();
     final date = ValueListenableBuilder(
@@ -165,7 +165,7 @@ class ScheduleTable extends StatelessWidget {
     );
   }
 
-  Widget _withArrow(Widget child) {
-    return ScheduleArrow(child: child, schedule: schedule);
+  Widget _withArrow(Widget child, bool hideWeekend) {
+    return ScheduleArrow(child: child, schedule: schedule, hideWeekend: hideWeekend);
   }
 }

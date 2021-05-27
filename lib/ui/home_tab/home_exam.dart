@@ -1,4 +1,5 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
@@ -88,7 +89,7 @@ class _HomeExamState extends State<HomeExam> {
 
   Widget _buildTitle(BuildContext context, String examTime) {
     final style = TextStyle(
-      color: Color(0xFF889CC3),
+      color: resolveWithBackground(context),
       fontWeight: FontWeight.bold,
     );
     final title = '下场考试 $examTime';

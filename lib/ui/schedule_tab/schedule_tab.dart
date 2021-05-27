@@ -68,7 +68,7 @@ class _ScheduleTabState extends State<ScheduleTab>
           needPadding: true,
           leading: IconButton(
             onPressed: () => AppRoute(page: SelectSchedulePage()).go(context),
-            icon: Icon(Icons.toggle_on),
+            icon: Icon(Icons.switch_account),
           ),
           middle: _buildNavbarMiddle(context),
           trailing: <Widget>[
@@ -77,7 +77,7 @@ class _ScheduleTabState extends State<ScheduleTab>
                 title: '添加课程',
                 page: AddLessonPage(),
               ).go(context), 
-              icon: Icon(Icons.add_alert)
+              icon: Icon(Icons.bookmark_add)
             ),
           ]
       ),

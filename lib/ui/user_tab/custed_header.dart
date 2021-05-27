@@ -44,7 +44,7 @@ class _CustedHeaderState extends State<CustedHeader> {
                           begin: Alignment.topRight,
                           end: Alignment.bottomLeft,
                           colors: [
-                            primary.withOpacity(0.8),
+                            primary.withOpacity(0.6),
                             primary,
                           ],
                         )

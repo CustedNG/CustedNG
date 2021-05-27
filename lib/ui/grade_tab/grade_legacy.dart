@@ -32,16 +32,6 @@ final textStyleTag = TextStyle(
   fontSize: 14,
 );
 
-const textStyleName = TextStyle(
-  color: Color(0xFF418DF7),
-  fontWeight: FontWeight.bold,
-  fontSize: 14,
-);
-
-final textStyleNameDark = textStyleName.copyWith(
-  color: Colors.white70,
-);
-
 final textStyleField = TextStyle(
   color: Colors.black.withAlpha(170),
   fontWeight: FontWeight.bold,
@@ -499,10 +489,11 @@ class __ReportItemState extends State<_ReportItem>
     isDark(context)
         ? textStyleFieldDark
         : textStyleField;
-    final nameTextTheme =
-    isDark(context)
-        ? textStyleNameDark
-        : textStyleName;
+    final nameTextTheme = TextStyle(
+      color: resolveWithBackground(context),
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
     final content = isExpanded
         ? Column(
       mainAxisSize: MainAxisSize.min,
