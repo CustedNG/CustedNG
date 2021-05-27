@@ -41,6 +41,7 @@ const textStyleName = TextStyle(
 final textStyleNameDark = textStyleName.copyWith(
   color: Colors.white70,
 );
+
 final textStyleField = TextStyle(
   color: Colors.black.withAlpha(170),
   fontWeight: FontWeight.bold,
@@ -116,7 +117,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
 
     await showRoundDialog(
       context,
-      '选择周数',
+      '选择学期',
       Stack(
         children: [
           Positioned(
@@ -192,6 +193,10 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
         ),
     );
   }
+
+  TextStyle resolveWithBackground(TextStyle style) =>
+   style.copyWith(color: isBrightColor(
+     Theme.of(context).primaryColor) ? Colors.black87 : Colors.white);
 
   void _onRefresh() async{
     try {
@@ -294,9 +299,12 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       children: <Widget>[
         Text(
           gradePoint(level, term),
-          style: textStyleInfo.copyWith(fontSize: 27),
+          style: resolveWithBackground(textStyleInfo.copyWith(fontSize: 27)),
         ),
-        Text(gradePointLabel, style: textStyleTag.copyWith(fontSize: 12)),
+        Text(
+          gradePointLabel, 
+          style: resolveWithBackground(textStyleTag.copyWith(fontSize: 12))
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -379,9 +387,15 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       mainAxisSize: MainAxisSize.min,
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(value, style: textStyleInfo.copyWith(fontSize: 12)),
+        Text(
+          value, 
+          style: resolveWithBackground(textStyleInfo.copyWith(fontSize: 12))
+        ),
         SizedBox(height: 3),
-        Text(tag, style: textStyleTag.copyWith(fontSize: 10)),
+        Text(
+          tag, 
+          style: resolveWithBackground(textStyleTag.copyWith(fontSize: 10)),
+        )
       ],
     );
   }
@@ -393,10 +407,10 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       children: <Widget>[
         Row(
           children: <Widget>[
-            Text(value, style: textStyleInfo),
+            Text(value, style: resolveWithBackground(textStyleInfo)),
           ],
         ),
-        Text(tag, style: textStyleTag),
+        Text(tag, style: resolveWithBackground(textStyleTag)),
       ],
     );
   }

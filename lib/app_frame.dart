@@ -1,5 +1,6 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/update.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -9,7 +10,6 @@ import 'package:custed2/ui/nav_tab/nav_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
-import 'package:custed2/ui/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 
 class AppFrame extends StatefulWidget {
@@ -54,15 +54,15 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     );
   }
 
-  static const List<NavigationItem> items = [
-    NavigationItem(Icon(Icons.leaderboard, size: 29), Text('成绩')),
-    NavigationItem(Icon(Icons.calendar_today, size: 27), Text('课表')),
-    NavigationItem(Icon(Icons.home, size: 31), Text('主页')),
-    NavigationItem(Icon(Icons.navigation, size: 29), Text('导航')),
-    NavigationItem(Icon(Icons.settings, size: 29), Text('设置'))
+  static const List<Icon> items = [
+    Icon(Icons.leaderboard, size: 29),
+    Icon(Icons.calendar_today, size: 27),
+    Icon(Icons.home, size: 31),
+    Icon(Icons.navigation, size: 29),
+    Icon(Icons.settings, size: 29)
   ];
 
-  Widget _buildItem(int idx, NavigationItem item, bool isSelected) {
+  Widget _buildItem(int idx, Icon item, bool isSelected) {
     bool isDarkMode = isDark(context);
     final width = _width / 5;
     return AnimatedContainer(
@@ -77,7 +77,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
           )
           : null,
       child: IconButton(
-        icon: item.icon,
+        icon: item,
         splashRadius: width / 3.3,
         padding: EdgeInsets.only(left: 17, right: 17), 
         onPressed: () {

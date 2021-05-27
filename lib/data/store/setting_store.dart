@@ -56,4 +56,7 @@ class SettingStore with PersistentStore {
 
   StoreProperty<int> get appPrimaryColor =>
       property('appPrimaryColor', defaultValue: Colors.blueAccent.value);
+
+  StoreProperty<bool> get scheduleHideWeekend =>
+      property('scheduleHideWeekend', defaultValue: false);
 }

@@ -14,7 +14,6 @@ import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
-import 'package:custed2/ui/widgets/select_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -67,12 +66,19 @@ class _ScheduleTabState extends State<ScheduleTab>
       appBar: NavBar.material(
           context: context,
           needPadding: true,
-          leading: GestureDetector(
-            onDoubleTap: () => AppRoute(page: SelectSchedulePage()).go(context)
+          leading: IconButton(
+            onPressed: () => AppRoute(page: SelectSchedulePage()).go(context),
+            icon: Icon(Icons.toggle_on),
           ),
           middle: _buildNavbarMiddle(context),
           trailing: <Widget>[
-            scheduleProvider.isBusy ? Container() : _showMenu(context),
+            scheduleProvider.isBusy ? Container() : IconButton(
+              onPressed: () => AppRoute(
+                title: '添加课程',
+                page: AddLessonPage(),
+              ).go(context), 
+              icon: Icon(Icons.add_alert)
+            ),
           ]
       ),
       body: SmartRefresher(
@@ -121,23 +127,6 @@ class _ScheduleTabState extends State<ScheduleTab>
         ),
       ),
     ) : Container();
-  }
-
-  Widget _showMenu(BuildContext context) {
-    return PopupMenuButton<String>(
-        itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-              SelectView(Icons.add_alert, '添加课程', 'C'),
-        ],
-        onSelected: (String action) async {
-          switch (action) {
-            case 'C':
-              AppRoute(
-                title: '添加课程',
-                page: AddLessonPage(),
-              ).go(context);
-              break;
-          }
-        });
   }
 
   // @override

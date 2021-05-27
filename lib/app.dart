@@ -5,6 +5,7 @@ import 'package:alice/alice.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/analytics.dart';
 import 'package:custed2/core/util/build_mode.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
@@ -52,12 +53,29 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
           home: AppFrame(),
           builder: (context, child) {
             bool isDarkMode = _shouldEnableDarkMode(context, mode);
+            Color primary = Color(setting.appPrimaryColor.fetch());
             return Theme(
-                data: ThemeData(
-                  primaryColor: isDarkMode ? null : Color(setting.appPrimaryColor.fetch()),
-                  brightness: isDarkMode ? Brightness.dark : Brightness.light,
+              data: ThemeData(
+                primaryColor: isDarkMode ? null : primary,
+                switchTheme: SwitchThemeData(
+                  thumbColor: MaterialStateProperty.resolveWith(
+                    (states) {
+                      const Set<MaterialState> interactiveStates = <MaterialState>{
+                        MaterialState.pressed,
+                        MaterialState.hovered,
+                        MaterialState.focused,
+                      };
+                      if (states.any(interactiveStates.contains)) {
+                        return primary;
+                      }
+                      return null;
+                    }
+                  ),
                 ),
-                child: child);
+                brightness: isDarkMode ? Brightness.dark : Brightness.light,
+              ),
+              child: child
+            );
           },
         );
       },

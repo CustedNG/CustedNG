@@ -30,10 +30,11 @@ class ScheduleTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
+    final hideWeekend = locator<SettingStore>().scheduleHideWeekend.fetch();
 
     final rows = List.generate(
       6,
-      (_) => TableRow(children: List.filled(7, placeholder)),
+      (_) => TableRow(children: List.filled(hideWeekend ? 5 : 7, placeholder)),
     );
 
     _fillActiveLessons(rows);
@@ -106,6 +107,7 @@ class ScheduleTable extends StatelessWidget {
 
   Widget _buildDate(BuildContext context, bool showFestivalAndHoliday) {
     final theme = AppTheme.of(context);
+    final hideWeekend = locator<SettingStore>().scheduleHideWeekend.fetch();
 
     final items = <Widget>[];
 
@@ -121,7 +123,7 @@ class ScheduleTable extends StatelessWidget {
       fontSize: 15,
     );
 
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < (hideWeekend ? 5 : 7); i++) {
       final dayOffset = (week - 1) * 7 + i;
       final date = schedule.startDate.add(Duration(days: dayOffset));
       final shouldShowMonth = i == 0 || date.day == 1;
@@ -151,7 +153,7 @@ class ScheduleTable extends StatelessWidget {
     }
 
     final row = TableRow(children: items);
-    final border = BorderSide(color: theme.scheduleOutlineColor, width: 2);
+    final border = BorderSide(color: theme.scheduleOutlineColor, width: 1);
     return Table(
       children: [row],
       border: TableBorder(

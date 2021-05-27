@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 const themes = [universe, nihong, lipstick, summer, tradition, shout];
 const universe = [
   Color.fromARGB(255, 24, 31, 100),
-  Color.fromARGB(255, 24, 31, 100),
   Color.fromARGB(255, 86, 116, 170),
   Color.fromARGB(255, 153, 181, 145),
   Color.fromARGB(255, 219, 179, 33),

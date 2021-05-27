@@ -1,12 +1,18 @@
+import 'package:custed2/core/utils.dart';
+import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:flutter/material.dart';
 
-SelectView(IconData icon, String text, String id) {
+SelectView(IconData icon, String text, String id, BuildContext context) {
   return PopupMenuItem<String>(
     value: id,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Icon(icon, color: Colors.blue),
+        Icon(
+          icon, 
+          color: resolveWithBackground(context)
+        ),
         SizedBox(width: 10.0),
         Text(text),
       ],

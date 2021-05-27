@@ -1,5 +1,7 @@
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/store/persistent_store.dart';
+import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/fade_in.dart';
@@ -151,9 +153,22 @@ Widget buildSwitch(BuildContext context,
   );
 }
 
-Brightness getBrightnessFromColor(Color c) {
+bool isBrightColor(Color c) {
   if (c.red * 0.299 + c.green * 0.578 + c.blue * 0.114 >= 155) {
-    return Brightness.light;
+    return true;
   }
-  return Brightness.dark;
+  return false;
+}
+
+Brightness getBrightnessFromColor(Color c) {
+  return isBrightColor(c) ? Brightness.light : Brightness.dark;
+}
+
+Color resolveWithBackground(BuildContext context) {
+  final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
+  final back = Theme.of(context).backgroundColor;
+  if (isBrightColor(primary) != isBrightColor(back)) {
+    return primary;
+  }
+  return null;
 }

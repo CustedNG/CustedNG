@@ -1,5 +1,9 @@
 import 'package:custed2/core/route.dart';
+import 'package:custed2/core/utils.dart';
+import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/custed_more_page.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +17,8 @@ class _CustedHeaderState extends State<CustedHeader> {
 
   @override
   Widget build(BuildContext context){
+    Color primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
+    bool isBrightBackground = isBrightColor(primary);
 
     return Padding(
         padding: EdgeInsets.all(20.0),
@@ -29,9 +35,20 @@ class _CustedHeaderState extends State<CustedHeader> {
                 children: <Widget>[
                   AspectRatio(
                     aspectRatio: (MediaQuery.of(context).size.width - 40) / 110,
-                    child: Image.asset(
+                    child: isDark(context) ? Image.asset(
                         'assets/bg/abstract-dark.jpg',
                         fit: BoxFit.cover
+                    ) : Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            primary.withOpacity(0.8),
+                            primary,
+                          ],
+                        )
+                      )
                     ),
                   ),
                   Positioned(
@@ -62,13 +79,17 @@ class _CustedHeaderState extends State<CustedHeader> {
                               Text(
                                 'Custed NG',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
+                                  color: isBrightBackground ? Colors.black : Colors.white, 
+                                  fontSize: 20
+                                ),
                               ),
                               SizedBox(height: 10.0),
                               Text(
                                 'Ver: Material 1.0.${BuildData.build}',
                                 style: TextStyle(
-                                    color: Colors.grey, fontSize: 15),
+                                  color: isBrightBackground ? Colors.black54 : Colors.white54, 
+                                  fontSize: 15
+                                ),
                               )
                             ],
                           ),
