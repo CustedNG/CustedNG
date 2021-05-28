@@ -2,8 +2,8 @@
 
 class BuildData {
   static const String name = "CustedNG";
-  static const int build = 601;
-  static const String engine = "Flutter 2.2.0 • channel beta • https://github.com/flutter/flutter.git\nFramework • revision b22742018b (12 days ago) • 2021-05-14 19:12:57 -0700\nEngine • revision a9d88a4d18\nTools • Dart 2.13.0\n";
-  static const String buildAt = "2021-05-27 19:39:43.714305";
-  static const int modifications = 6;
+  static const int build = 602;
+  static const String engine = "Flutter 2.2.0 • channel beta • https://github.com/flutter/flutter.git\nFramework • revision b22742018b (13 days ago) • 2021-05-14 19:12:57 -0700\nEngine • revision a9d88a4d18\nTools • Dart 2.13.0\n";
+  static const String buildAt = "2021-05-28 16:28:24.758560";
+  static const int modifications = 1;
 }
