@@ -203,6 +203,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       _refreshController.refreshFailed();
       showSnackBar(context, '刷新失败');
       isRefreshing = false;
+      rethrow;
     }
   }
 

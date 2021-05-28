@@ -109,8 +109,10 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 
       final userData = locator<UserDataStore>();
 
-      initPushService(userData);
+      await initPushService(userData);
+      
       if (Platform.isIOS) await HomeWidget.setAppGroupId('group.com.tusi.app');
+      if (userData.username.fetch() == null) return;
       final success =
           await HomeWidget.saveWidgetData('ecardId', userData.username.fetch());
       print('set ecardId for home widget: ${success ? "success" : "failed"}');
@@ -120,7 +122,10 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 
 Future<void> initPushService(UserDataStore user) async {
   String token = await getToken();
-  if (token == null) return;
+  if (token == null) {
+    print('get token failed');
+    return;
+  }
   final now = DateTime.now();
   DateTime cacheTokenDate = user.tokenDate.fetch();
   cacheTokenDate ??= now.subtract(Duration(days: 3));

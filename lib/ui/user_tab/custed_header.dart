@@ -29,7 +29,7 @@ class _CustedHeaderState extends State<CustedHeader> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
               ),
-              clipBehavior: Clip.antiAlias,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               semanticContainer: false,
               child: Stack(
                 children: <Widget>[

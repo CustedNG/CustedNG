@@ -12,9 +12,9 @@ class HomeEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return GestureDetector(
+    return MaterialButton(
       onLongPress: longPressAction,
-      onTap: action ?? () {},
+      onPressed: action ?? () {},
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

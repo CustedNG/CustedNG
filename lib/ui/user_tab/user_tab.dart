@@ -3,7 +3,6 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
-import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/custed_header.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
@@ -25,6 +24,7 @@ class UserTab extends StatefulWidget {
 class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   final setting = locator<SettingStore>();
   List<Color> widgetColors = [];
+  final custed = CustedService();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             rightBtn: _showMenu(context),
           ),
           SettingItem(
-            title: 'App强调色(beta)',
+            title: 'App强调色',
             isShowArrow: false,
             rightBtn: Padding(
               padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
@@ -100,7 +100,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
           // ),
           ExpandChild(
             arrowColor: resolveWithBackground(context),
-            arrowSize: 40,
+            icon: Icons.keyboard_arrow_down,
             expandArrowStyle: ExpandArrowStyle.both,
             collapsedHint: '更多设置',
             child: Column(
@@ -120,9 +120,9 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
                   rightBtn: buildSwitch(context, setting.autoUpdateWeather),
                 ),
                 SizedBox(height: 10.0),
-                Text('Beta设置'),
+                Text('Beta设置(未开放)'),
                 SizedBox(height: 10.0),
-                !BuildMode.isRelease ? SettingItem(
+                SettingItem(
                   title: '推送上课通知',
                   isShowArrow: false,
                   rightBtn: buildSwitch(
@@ -130,7 +130,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
                     setting.pushNotification,
                     func: (v) => sendSetting2Backend(v)
                   ),
-                ) : Container(),
+                ),
                 !BuildMode.isRelease
                     ? SettingItem(
                         title: '桌面课表颜色',
@@ -192,7 +192,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   }
 
   void sendSetting2Backend(bool v) async {
-    final suc = await CustedService().setPushScheduleNotification(v);
+    final suc = await custed.setPushScheduleNotification(v);
     if (suc) {
       print('set enable schedule notification success');
       return;
@@ -276,7 +276,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
         shrinkWrap: true,
         onColorChange: (Color color) async {
           setting.appPrimaryColor.put(color.value);
-          final suc = await CustedService().sendThemeData(color.toString());
+          final suc = await custed.sendThemeData(color.toString());
           if (suc) print('send theme data successfully: $color');
         },
         selectedColor: selected

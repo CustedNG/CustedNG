@@ -113,9 +113,6 @@ class _WebviewLoginState extends State<WebviewLogin> {
     userData.username.put(this.username);
     userData.password.put(this.password);
 
-    await controller.close();
-    Navigator.of(context).pop(true);
-
     if (widget.noLogin) {
       return;
     }
@@ -128,5 +125,8 @@ class _WebviewLoginState extends State<WebviewLogin> {
       showSnackBar(context, '登录出错啦 等下再试吧');
       rethrow;
     }
+
+    await controller.close();
+    Navigator.of(context).pop(true);
   }
 }

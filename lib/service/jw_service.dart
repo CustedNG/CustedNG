@@ -53,6 +53,7 @@ class JwService extends WrdvpnBasedService {
 
   Future<JwSchedule> getSchedule([String userUUID]) async {
     if (!locator<AppProvider>().showRealUI) {
+      print('using fake schedule');
       return JwSchedule.fromJson(JwResponse.fromJson(
               json.decode((await custed.getCacheSchedule('2019003373')).body))
           .data);
@@ -163,6 +164,7 @@ class JwService extends WrdvpnBasedService {
 
   Future<JwGradeData> getGrade() async {
     if (!locator<AppProvider>().showRealUI) {
+      print('using fake grade.');
       return JwGradeData.fromJson(JwResponse.fromJson(
               json.decode((await custed.getCachedGrade('2019003373')).body))
           .data);
@@ -191,7 +193,7 @@ class JwService extends WrdvpnBasedService {
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
     final id = locator<UserDataStore>().username.fetch();
     if (resp.statusCode == 200) {
-      if (id.length == 10) {
+      if (id?.length == 10) {
         await custed.updateCacheGrade(id, resp.body);
       }
     } else {
@@ -288,6 +290,7 @@ class JwService extends WrdvpnBasedService {
 
   Future<JwExam> getExam() async {
     if (!locator<AppProvider>().showRealUI) {
+      print('using fake exam');
       return JwExam.fromJson(
           json.decode((await custed.getCachedExam('2019003373')).body));
     }

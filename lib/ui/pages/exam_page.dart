@@ -62,7 +62,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
           title: Text(
             examTime,
             style: TextStyle(
-              color: Color(0xFF889CC3),
+              color: resolveWithBackground(context),
               fontWeight: FontWeight.bold,
             ),
           ),

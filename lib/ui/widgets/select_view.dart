@@ -1,6 +1,4 @@
 import 'package:custed2/core/utils.dart';
-import 'package:custed2/data/store/setting_store.dart';
-import 'package:custed2/locator.dart';
 import 'package:flutter/material.dart';
 
 SelectView(IconData icon, String text, String id, BuildContext context) {

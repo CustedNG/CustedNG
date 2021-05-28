@@ -126,6 +126,7 @@ class CustedService extends CatClient {
       print('send push token success: $token');
       return true;
     }
+    print('send token failed: ${resp.data}');
     return false;
   }
 
