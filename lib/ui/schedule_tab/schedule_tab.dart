@@ -31,18 +31,6 @@ class _ScheduleTabState extends State<ScheduleTab>
   final settings = locator<SettingStore>();
   final _refreshController = RefreshController(initialRefresh: false);
 
-  @override
-  void initState() {
-    scrollController.addListener(onScroll);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if(settings.showTipOnViewingExam.fetch()){
-        showSnackBar(context, '可以在首页查看考试安排表~');
-        settings.showTipOnViewingExam.put(false);
-      }
-    });
-    super.initState();
-  }
-
   void onScroll() {
     final titleProvider = locator<ScheduleTitleProvider>();
 

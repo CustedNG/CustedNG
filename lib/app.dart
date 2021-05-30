@@ -5,7 +5,6 @@ import 'package:alice/alice.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/analytics.dart';
 import 'package:custed2/core/util/build_mode.dart';
-import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
@@ -108,11 +107,11 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       // IecardService().login();
 
       final userData = locator<UserDataStore>();
+      if (userData.username.fetch() == null) return;
 
       await initPushService(userData);
       
       if (Platform.isIOS) await HomeWidget.setAppGroupId('group.com.tusi.app');
-      if (userData.username.fetch() == null) return;
       final success =
           await HomeWidget.saveWidgetData('ecardId', userData.username.fetch());
       print('set ecardId for home widget: ${success ? "success" : "failed"}');
@@ -126,19 +125,7 @@ Future<void> initPushService(UserDataStore user) async {
     print('get token failed');
     return;
   }
-  final now = DateTime.now();
-  DateTime cacheTokenDate = user.tokenDate.fetch();
-  cacheTokenDate ??= now.subtract(Duration(days: 3));
-
-  if (cacheTokenDate.add(Duration(days: 2)).isAfter(now)) {
-    print('ignore send token due to $cacheTokenDate.');
-    return;
-  }
-  final sendSuccess = await CustedService()
-      .sendToken(token, user.username.fetch(), Platform.isIOS);
-  if (sendSuccess) {
-    user.tokenDate.put(now);
-  }
+  await CustedService().sendToken(token, user.username.fetch(), Platform.isIOS);
 }
 
 Future<String> getToken() async {
@@ -149,15 +136,6 @@ Future<String> getToken() async {
     // wait for user to give notification permission
     await Future.delayed(Duration(seconds: 3));
     return await plainNotificationToken.getToken();
-  } //else if (Platform.isAndroid) {
-  //   JPush jpush = new JPush();
-  //   jpush.setup(
-  //     appKey: "09dc461a0f268ddb989152f6",
-  //     channel: "web",
-  //     production: true,
-  //     debug: false,
-  //   );
-  //   return await jpush.getRegistrationID();
-  // }
+  }
   return null;
 }

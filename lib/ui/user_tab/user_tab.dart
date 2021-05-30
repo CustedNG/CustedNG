@@ -1,4 +1,3 @@
-import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -13,7 +12,6 @@ import 'package:custed2/ui/widgets/setting_item.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
-import 'package:home_widget/home_widget.dart';
 import 'package:provider/provider.dart';
 
 class UserTab extends StatefulWidget {
@@ -131,15 +129,8 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
                     func: (v) => sendSetting2Backend(v)
                   ),
                 ),
-                !BuildMode.isRelease
-                    ? SettingItem(
-                        title: '桌面课表颜色',
-                        isShowArrow: false,
-                        rightBtn: _buildColorRow(),
-                      )
-                    : Container(),
-                    ],
-                  ),
+              ],
+            ),
           ),
           SizedBox(height: 40.0)
         ],
@@ -198,74 +189,6 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
       return;
     }
     print('set disable schedule notification failed');
-  }
-
-  void _showColorPicker(Color selected, int index) {
-    showRoundDialog(
-      context,
-      '选择颜色',
-      MaterialColorPicker(
-          shrinkWrap: true,
-          onColorChange: (Color color) {
-            widgetColors[index] = color;
-          },
-          selectedColor: selected),
-      [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(), 
-          child: Text('取消')
-        ),
-        TextButton(
-          onPressed: () async {
-            final colorInt = widgetColors[index].value;
-            final colorString =
-                widgetColors[index].toString().substring(8, 16);
-            final suc = await HomeWidget.saveWidgetData<String>(
-                'color$index', colorString);
-            if (index == 0) {
-              setting.homeWidgetColor1.put(colorInt);
-            } else {
-              setting.homeWidgetColor2.put(colorInt);
-            }
-            print('set custom widget color successlly? $suc');
-            setState(() {});
-            Navigator.of(context).pop();
-          },
-          child: Text('确定')
-        ),
-      ]
-    );
-  }
-
-  Widget _buildColorRow() {
-    widgetColors.add(Color(setting.homeWidgetColor1.fetch()));
-    widgetColors.add(Color(setting.homeWidgetColor2.fetch()));
-    return Container(
-      height: 46,
-      width: 73,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildColorCircle(widgetColors[0], 0),
-          SizedBox(width: 3),
-          _buildColorCircle(widgetColors[1], 1),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildColorCircle(Color color, int index) {
-    return GestureDetector(
-      child: ClipOval(
-        child: Container(
-          color: color,
-          height: 27,
-          width: 27,
-        ),
-      ),
-      onTap: () => _showColorPicker(color, index),
-    );
   }
 
   void _showAppColorPicker(Color selected) {
