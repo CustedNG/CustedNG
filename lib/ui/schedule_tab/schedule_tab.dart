@@ -1,3 +1,4 @@
+import 'package:custed2/app.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -98,6 +99,7 @@ class _ScheduleTabState extends State<ScheduleTab>
       await scheduleProvider.updateScheduleData();
       _refreshController.refreshCompleted();
       showSnackBar(context, '更新成功');
+      requestUpdateHomeWidget();
     } catch (e) {
       print(e);
       showSnackBar(context, '更新失败');

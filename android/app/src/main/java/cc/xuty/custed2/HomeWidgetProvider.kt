@@ -4,13 +4,14 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.RemoteViews
+import android.widget.Toast
 import com.fasterxml.jackson.annotation.JsonProperty
 import es.antonborri.home_widget.HomeWidgetProvider
 import okhttp3.Request
 import java.io.IOException
 import java.util.concurrent.Future
-import java.util.Date
 import java.text.SimpleDateFormat
+import java.util.*
 
 @Suppress("ArrayInDataClass")
 data class NextSchedule(
@@ -46,6 +47,7 @@ class HomeWidgetProvider : HomeWidgetProvider() {
         appWidgetIds: IntArray,
         widgetData: SharedPreferences
     ) {
+//        Toast.makeText(context, "Updating home widget", Toast.LENGTH_SHORT).show()
         previousTask?.cancel(true)
         val eCardId = widgetData.getString("ecardId", "")
 //        val eCardId = "2019003373"
@@ -73,6 +75,7 @@ class HomeWidgetProvider : HomeWidgetProvider() {
     ) {
         try {
             val result = fetchNextLessonBlocking(urlString)
+            val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
             if (!result.successful) {
                 appWidgetIds.forEach { widgetId ->
                     val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
@@ -80,9 +83,9 @@ class HomeWidgetProvider : HomeWidgetProvider() {
                         setTextViewText(R.id.widget_course, "尝试Custed内")
                         setTextViewText(R.id.widget_position, "刷新课表后")
                         setTextViewText(R.id.widget_teacher, "重新添加该小部件")
-                        setTextViewText(R.id.widget_update, "更新于 ${SimpleDateFormat("HH:mm").format(Date())}")
+                        setTextViewText(R.id.widget_update, "更新于 $currentTime")
                     }
-    
+
                     appWidgetManager.updateAppWidget(widgetId, views)
                     return
                 }
@@ -95,15 +98,15 @@ class HomeWidgetProvider : HomeWidgetProvider() {
                         setTextViewText(R.id.widget_course, "没有课了")
                         setTextViewText(R.id.widget_position, "放松一下吧")
                         setTextViewText(R.id.widget_teacher, "(｡ì _ í｡)")
-                        setTextViewText(R.id.widget_update, "更新于 ${SimpleDateFormat("HH:mm").format(Date())}")
+                        setTextViewText(R.id.widget_update, "更新于 $currentTime")
                     }
-    
+
                     appWidgetManager.updateAppWidget(widgetId, views)
                 }
                 return
             }
 
-            val jsonObj = result.result!!.parseNextScheduleJson()
+            val jsonObj = result.result.parseNextScheduleJson()
 
             appWidgetIds.forEach { widgetId ->
                 val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
@@ -111,7 +114,7 @@ class HomeWidgetProvider : HomeWidgetProvider() {
                     setTextViewText(R.id.widget_course, jsonObj.courseName)
                     setTextViewText(R.id.widget_position, jsonObj.position)
                     setTextViewText(R.id.widget_teacher, jsonObj.teacherName)
-                    setTextViewText(R.id.widget_update, "更新于 ${SimpleDateFormat("HH:mm").format(Date())}")
+                    setTextViewText(R.id.widget_update, "更新于 $currentTime")
                 }
 
                 appWidgetManager.updateAppWidget(widgetId, views)

@@ -115,6 +115,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       final success =
           await HomeWidget.saveWidgetData('ecardId', userData.username.fetch());
       print('set ecardId for home widget: ${success ? "success" : "failed"}');
+      requestUpdateHomeWidget();
     }
   }
 }
@@ -138,4 +139,11 @@ Future<String> getToken() async {
     return await plainNotificationToken.getToken();
   }
   return null;
+}
+
+Future<bool> requestUpdateHomeWidget() async {
+  return HomeWidget.updateWidget(
+      name: 'HomeWidgetProvider',
+      androidName: 'HomeWidgetProvider'
+  );
 }
