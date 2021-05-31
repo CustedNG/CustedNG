@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.RemoteViews
-import android.widget.Toast
 import com.fasterxml.jackson.annotation.JsonProperty
 import es.antonborri.home_widget.HomeWidgetProvider
 import okhttp3.Request
@@ -29,7 +28,17 @@ data class NextSchedule(
 
     @JsonProperty("Weeks")
     var weeks: IntArray
-)
+
+
+) {
+    fun courseIdentityHash(): Long {
+        var result = courseName.hashCode().toLong()
+        result = 31 * result + position.hashCode()
+        result = 31 * result + teacherName.hashCode()
+        result = 31 * result + startTime.hashCode()
+        return result
+    }
+}
 
 private data class NextScheduleFetchResult(
     val successful: Boolean,
@@ -106,14 +115,22 @@ class HomeWidgetProvider : HomeWidgetProvider() {
                 return
             }
 
-            val jsonObj = result.result.parseNextScheduleJson()
+            val nxtCourse = result.result.parseNextScheduleJson()
+            val manager = CourseReminderNotificationManager.get(context)
+
+            if (shouldNotify(manager, nxtCourse)) {
+                CourseReminderNotificationBuilder(context)
+                    .withNextSchedule(nxtCourse)
+                    .buildAndNotify()
+                manager.setLastAlerted(nxtCourse, System.currentTimeMillis())
+            }
 
             appWidgetIds.forEach { widgetId ->
                 val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
-                    setTextViewText(R.id.widget_time, jsonObj.startTime)
-                    setTextViewText(R.id.widget_course, jsonObj.courseName)
-                    setTextViewText(R.id.widget_position, jsonObj.position)
-                    setTextViewText(R.id.widget_teacher, jsonObj.teacherName)
+                    setTextViewText(R.id.widget_time, nxtCourse.startTime)
+                    setTextViewText(R.id.widget_course, nxtCourse.courseName)
+                    setTextViewText(R.id.widget_position, nxtCourse.position)
+                    setTextViewText(R.id.widget_teacher, nxtCourse.teacherName)
                     setTextViewText(R.id.widget_update, "更新于 $currentTime")
                 }
 
@@ -122,6 +139,21 @@ class HomeWidgetProvider : HomeWidgetProvider() {
         } catch (e: Throwable) {
             e.printStackTrace()
             throw e
+        }
+    }
+
+    private fun shouldNotify(manager: CourseReminderNotificationManager, schedule: NextSchedule): Boolean {
+        val startTime = ApproximateTime.parseOrNull(schedule.startTime)
+        if (startTime != null) {
+            val timeToStart = startTime.relativeDifferenceToInMinutes(ApproximateTime.now())
+            if (timeToStart > 35 || timeToStart < -20) return false
+        }
+        with(TimeUtil.ConvertToMillis) {
+            val lastNotification = manager.lastAlerted(schedule) ?: return true
+            if (System.currentTimeMillis() - lastNotification < 45.minutes) {
+                return false
+            }
+            return true
         }
     }
 
