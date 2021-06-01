@@ -13,17 +13,17 @@
         android:textSize="27sp"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:paddingLeft="13dp"
+        android:paddingStart="13dp"
+        android:paddingEnd="13dp"
         android:layout_marginTop="17dp"
         tools:text="Time" />
-    
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="13dp"
-        android:layout_below="@id/widget_time"
-        android:id="@+id/widget_container_inner">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="13dp"
+            android:layout_below="@id/widget_time"
+            android:id="@+id/widget_container_inner">
 
         <TextView
             android:id="@+id/widget_course"
@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:textSize="13sp"
             android:textColor="#FFFFFF"
-            android:layout_below="@id/widget_time"
             tools:text="Course" />
 
         <TextView
@@ -59,8 +58,9 @@
             android:textSize="13sp"
             android:layout_alignParentBottom="true"
             android:textColor="#FFFFFF"
+            android:maxLines="5"
             tools:text="UpdateTime" />
 
     </RelativeLayout>
-    
+
 </RelativeLayout>

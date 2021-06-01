@@ -1,5 +1,6 @@
 package cc.xuty.custed2
 
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
@@ -61,5 +62,17 @@ object TimeUtil {
         val Int.minutes get() = this * (1000 * 60)
         val Int.hours get() = this * (1000 * 60 * 60)
         val Int.days get() = this * (1000 * 60 * 60 * 24)
+    }
+
+    fun toUserFriendlyTimeString(timestamp:Long): String {
+        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(timestamp))
+    }
+
+    fun dateString(date: Date = Date()): String {
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+    }
+
+    fun dateTimeString(date: Date = Date()):String{
+        return SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(date)
     }
 }

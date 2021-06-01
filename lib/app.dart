@@ -54,12 +54,11 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
             bool isDarkMode = _shouldEnableDarkMode(context, mode);
             Color primary = Color(setting.appPrimaryColor.fetch());
             return Theme(
-              data: ThemeData(
-                primaryColor: isDarkMode ? null : primary,
-                brightness: isDarkMode ? Brightness.dark : Brightness.light,
-              ),
-              child: child
-            );
+                data: ThemeData(
+                  primaryColor: isDarkMode ? null : primary,
+                  brightness: isDarkMode ? Brightness.dark : Brightness.light,
+                ),
+                child: child);
           },
         );
       },
@@ -107,14 +106,13 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       // IecardService().login();
 
       final userData = locator<UserDataStore>();
-      if (userData.username.fetch() == null) return;
+      if (userData.username.fetch() == null) {
+        print("userData.username is null");
+      }
 
       await initPushService(userData);
-      
+
       if (Platform.isIOS) await HomeWidget.setAppGroupId('group.com.tusi.app');
-      final success =
-          await HomeWidget.saveWidgetData('ecardId', userData.username.fetch());
-      print('set ecardId for home widget: ${success ? "success" : "failed"}');
       requestUpdateHomeWidget();
     }
   }
@@ -142,8 +140,11 @@ Future<String> getToken() async {
 }
 
 Future<bool> requestUpdateHomeWidget() async {
+  final userData = locator<UserDataStore>();
+  print("User name is ${userData.username.fetch()}");
+  final success =
+      await HomeWidget.saveWidgetData('ecardId', userData.username.fetch() ?? "");
+  print('set ecardId for home widget: ${success ? "success" : "failed"}');
   return HomeWidget.updateWidget(
-      name: 'HomeWidgetProvider',
-      androidName: 'HomeWidgetProvider'
-  );
+      name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
 }

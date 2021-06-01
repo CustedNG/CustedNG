@@ -4,10 +4,14 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.RemoteViews
+import cc.xuty.custed2.TimeUtil.toUserFriendlyTimeString
 import com.fasterxml.jackson.annotation.JsonProperty
 import es.antonborri.home_widget.HomeWidgetProvider
 import okhttp3.Request
+import java.io.File
+import java.io.FileWriter
 import java.io.IOException
+import java.io.PrintWriter
 import java.util.concurrent.Future
 import java.text.SimpleDateFormat
 import java.util.*
@@ -58,89 +62,133 @@ class HomeWidgetProvider : HomeWidgetProvider() {
     ) {
 //        Toast.makeText(context, "Updating home widget", Toast.LENGTH_SHORT).show()
         previousTask?.cancel(true)
+
         val eCardId = widgetData.getString("ecardId", "")
 //        val eCardId = "2019003373"
-        val urlString = "https://custed.lolli.tech/schedule/next/$eCardId"
+
         previousTask =
-            Shared.executor.submit { updateNextLesson(urlString, context, appWidgetManager, appWidgetIds, widgetData) }
-    }
-
-    private fun String?.parseNextScheduleJson(): NextSchedule {
-        return if (this == null) NextSchedule(
-            "-",
-            "获取失败",
-            "",
-            "",
-            IntArray(0)
-        ) else Shared.objectMapper.readValue(this, NextSchedule::class.java)
-    }
-
-    private fun updateNextLesson(
-        urlString: String,
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray,
-        widgetData: SharedPreferences
-    ) {
-        try {
-            val result = fetchNextLessonBlocking(urlString)
-            val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
-            if (!result.successful) {
-                appWidgetIds.forEach { widgetId ->
-                    val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
-                        setTextViewText(R.id.widget_time, "更新失败")
-                        setTextViewText(R.id.widget_course, "尝试Custed内")
-                        setTextViewText(R.id.widget_position, "刷新课表后")
-                        setTextViewText(R.id.widget_teacher, "重新添加该小部件")
-                        setTextViewText(R.id.widget_update, "更新于 $currentTime")
-                    }
-
-                    appWidgetManager.updateAppWidget(widgetId, views)
-                    return
-                }
+            Shared.executor.submit {
+                NextLessonUpdate(eCardId, context, appWidgetManager, appWidgetIds).updateNextLesson()
             }
+    }
+}
 
-            if (result.result!! == "today have no more lesson") {
-                appWidgetIds.forEach { widgetId ->
-                    val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
-                        setTextViewText(R.id.widget_time, "今天")
-                        setTextViewText(R.id.widget_course, "没有课了")
-                        setTextViewText(R.id.widget_position, "放松一下吧")
-                        setTextViewText(R.id.widget_teacher, "(｡ì _ í｡)")
-                        setTextViewText(R.id.widget_update, "更新于 $currentTime")
-                    }
+private class NextLessonUpdate(
+    private val eCardIdSupplied: String?,
+    private val context: Context,
+    private val appWidgetManager: AppWidgetManager,
+    private val appWidgetIds: IntArray,
+) {
+    companion object {
+        private fun String?.parseNextScheduleJson(): NextSchedule {
+            return if (this == null) NextSchedule(
+                "-",
+                "获取失败",
+                "",
+                "",
+                IntArray(0)
+            ) else Shared.objectMapper.readValue(this, NextSchedule::class.java)
+        }
+    }
 
-                    appWidgetManager.updateAppWidget(widgetId, views)
-                }
+    private val sharedPreferences = context.getSharedPreferences("home_widget_config", Context.MODE_PRIVATE)
+
+    private fun RemoteViews.setTextViewTextUnlessNull(resId: Int, content: String?) {
+        if (content != null) {
+            setTextViewText(resId, content)
+        }
+    }
+
+    private val eCardIdOrCached: String?
+        get() = eCardIdSupplied ?: sharedPreferences.getString("cachedECardId", null)
+
+    private var savedLastSuccessfulUpdate: Long
+        get() = sharedPreferences.getLong("lastSuccessfulUpdate", -1)
+        set(value) {
+            sharedPreferences.edit().putLong("lastSuccessfulUpdate", value).apply()
+        }
+
+    private var savedLessonInfoResponse: String?
+        get() = sharedPreferences.getString("savedLessonInfoResponse", null)
+        set(value) {
+            sharedPreferences.edit().putString("savedLessonInfoResponse", value).apply()
+        }
+
+    private fun composeUrlString(eCardId: String?): String? {
+        return eCardId
+            ?.takeUnless { it.isBlank() }
+            ?.let { "https://custed.lolli.tech/schedule/next/$it" }
+    }
+
+    fun updateNextLesson() {
+        try {
+            val urlString = composeUrlString(eCardIdOrCached)
+            if (urlString == null) {
+                updateTexts(
+                    "未登录",
+                    "请先登录",
+                    "并刷新一次课表",
+                    "",
+                    "更新于 ${toUserFriendlyTimeString(System.currentTimeMillis())}"
+                )
                 return
             }
 
-            val nxtCourse = result.result.parseNextScheduleJson()
-            val manager = CourseReminderNotificationManager.get(context)
+            val result = fetchNextLessonBlocking(urlString)
 
-            if (shouldNotify(manager, nxtCourse)) {
-                CourseReminderNotificationBuilder(context)
-                    .withNextSchedule(nxtCourse)
-                    .buildAndNotify()
-                manager.setLastAlerted(nxtCourse, System.currentTimeMillis())
-            }
+            val currentTimeStamp = System.currentTimeMillis()
+            val currentTimeString = toUserFriendlyTimeString(currentTimeStamp)
+            val lastSuccessfulUpdate = savedLastSuccessfulUpdate
 
-            appWidgetIds.forEach { widgetId ->
-                val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
-                    setTextViewText(R.id.widget_time, nxtCourse.startTime)
-                    setTextViewText(R.id.widget_course, nxtCourse.courseName)
-                    setTextViewText(R.id.widget_position, nxtCourse.position)
-                    setTextViewText(R.id.widget_teacher, nxtCourse.teacherName)
-                    setTextViewText(R.id.widget_update, "更新于 $currentTime")
+            val resultWithFallback = if (result.successful) result.result!! else savedLessonInfoResponse
+
+            val texts: List<String> = when (resultWithFallback) {
+                null -> {
+                    "更新失败|尝试Custed内|刷新课表后|重新添加该小部件".split('|')
                 }
+                "today have no more lesson" -> {
+                    "今天|没有课了|放松一下吧|(｡ì _ í｡)".split('|')
+                }
+                else -> {
+                    val nxtCourse = resultWithFallback.parseNextScheduleJson()
+                    val manager = CourseReminderNotificationManager.get(context)
 
-                appWidgetManager.updateAppWidget(widgetId, views)
+                    if (shouldNotify(manager, nxtCourse)) {
+                        CourseReminderNotificationBuilder(context)
+                            .withNextSchedule(nxtCourse)
+                            .buildAndNotify()
+                        manager.setLastAlerted(nxtCourse, System.currentTimeMillis())
+                    }
+
+                    listOf(
+                        nxtCourse.startTime,
+                        nxtCourse.courseName,
+                        nxtCourse.position,
+                        nxtCourse.teacherName,
+                    )
+                }
             }
+            if (result.successful) {
+                savedLastSuccessfulUpdate = currentTimeStamp
+                savedLessonInfoResponse = result.result
+            }
+            val updateTimeString =
+                if (result.successful) "更新于 $currentTimeString"
+                else "更新于 ${toUserFriendlyTimeString(lastSuccessfulUpdate)} (上次失败: $currentTimeString)"
+            updateTexts(
+                texts[0],
+                texts[1],
+                texts[2],
+                texts[3],
+                updateTimeString
+            )
         } catch (e: Throwable) {
             e.printStackTrace()
+            logException(e)
             throw e
         }
     }
+
 
     private fun shouldNotify(manager: CourseReminderNotificationManager, schedule: NextSchedule): Boolean {
         val startTime = ApproximateTime.parseOrNull(schedule.startTime)
@@ -157,6 +205,27 @@ class HomeWidgetProvider : HomeWidgetProvider() {
         }
     }
 
+
+    private fun updateTexts(
+        time: String?,
+        course: String?,
+        position: String?,
+        teacher: String?,
+        updateTime: String?
+    ) {
+        appWidgetIds.forEach { widgetId ->
+            val views = RemoteViews(context.packageName, R.layout.home_widget).apply {
+                setTextViewTextUnlessNull(R.id.widget_time, time)
+                setTextViewTextUnlessNull(R.id.widget_course, course)
+                setTextViewTextUnlessNull(R.id.widget_position, position)
+                setTextViewTextUnlessNull(R.id.widget_teacher, teacher)
+                setTextViewTextUnlessNull(R.id.widget_update, updateTime)
+            }
+
+            appWidgetManager.updateAppWidget(widgetId, views)
+        }
+    }
+
     private fun fetchNextLessonBlocking(urlString: String): NextScheduleFetchResult {
         try {
             val request = Request.Builder()
@@ -170,11 +239,15 @@ class HomeWidgetProvider : HomeWidgetProvider() {
                 .takeIf { it.isSuccessful }
                 ?.body
                 ?.string()
-                ?: return NextScheduleFetchResult(
+            if (responseString == null) {
+                val failureMessage = "Server Returned ${response.code}"
+                logException(IOException(failureMessage))
+                return NextScheduleFetchResult(
                     successful = false,
                     cancelled = false,
-                    failureReason = "Server Returned ${response.code}"
+                    failureReason = failureMessage
                 )
+            }
             if (Thread.interrupted()) throw InterruptedException()
             return NextScheduleFetchResult(
                 successful = true,
@@ -183,16 +256,39 @@ class HomeWidgetProvider : HomeWidgetProvider() {
             )
         } catch (e: IOException) {
             e.printStackTrace()
+            logException(e)
             return NextScheduleFetchResult(
                 successful = false,
                 cancelled = false,
                 failureReason = "连接错误: $e"
             )
         } catch (e: InterruptedException) {
+            logException(e)
             return NextScheduleFetchResult(
                 successful = false,
                 cancelled = true
             )
+        }
+    }
+
+    @Synchronized
+    private fun logException(e: Throwable) {
+        try {
+            val logDir = context.getExternalFilesDir(null)
+            val currentLogFile = File(logDir, "Logs/Log-${TimeUtil.dateString()}.txt")
+            currentLogFile.parentFile?.mkdirs()
+            FileWriter(currentLogFile, true).buffered().use { writer ->
+                PrintWriter(writer).apply {
+                    println(
+                        "Exception at ${TimeUtil.dateTimeString()}" +
+                                "========================================"
+                    )
+                    e.printStackTrace(this)
+                    println()
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
 }
