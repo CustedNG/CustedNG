@@ -60,7 +60,7 @@ class HomeWidgetProvider : HomeWidgetProvider() {
         previousTask?.cancel(true)
         val eCardId = widgetData.getString("ecardId", "")
 //        val eCardId = "2019003373"
-        val urlString = "https://push.lolli.tech/schedule/next/$eCardId"
+        val urlString = "https://custed.lolli.tech/schedule/next/$eCardId"
         previousTask =
             Shared.executor.submit { updateNextLesson(urlString, context, appWidgetManager, appWidgetIds, widgetData) }
     }

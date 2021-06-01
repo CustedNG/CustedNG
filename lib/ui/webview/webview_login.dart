@@ -16,21 +16,16 @@ import 'package:flutter/material.dart';
 
 class WebviewLogin extends StatefulWidget {
   WebviewLogin({
-    this.noLogin = false,
+    this.back2PrePage = true,
   });
 
-  static Future<bool> begin(
-    BuildContext context, {
-    noLogin = false,
-  }) async {
-    final result = await AppRoute(
+  static Future<bool> begin(BuildContext context, {back2PrePage = true}) async => 
+    await AppRoute(
       title: '登录(560+)',
-      page: WebviewLogin(noLogin: noLogin),
+      page: WebviewLogin(back2PrePage: back2PrePage),
     ).go(context);
-    return result == true;
-  }
 
-  final bool noLogin;
+  final bool back2PrePage;
 
   @override
   _WebviewLoginState createState() => _WebviewLoginState();
@@ -113,7 +108,7 @@ class _WebviewLoginState extends State<WebviewLogin> {
     userData.username.put(this.username);
     userData.password.put(this.password);
 
-    if (widget.noLogin) {
+    if (!widget.back2PrePage) {
       return;
     }
 

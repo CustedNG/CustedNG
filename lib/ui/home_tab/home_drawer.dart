@@ -105,7 +105,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             height: 64.0,
           ),
           aboutBoxChildren: <Widget>[
-            Text('Made with ❤️ by Toast Studio.\nAll rights reserved.')
+            Text('\nMade with ❤️ by Toast Studio.\nAll rights reserved.')
           ],
         ),
       ],
@@ -161,7 +161,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           leading: Icon(Icons.login, color: color),
           title: Text('重新登录'),
           onTap: () async {
-            await WebviewLogin.begin(context);
+            await WebviewLogin.begin(context, back2PrePage: true);
           },
         );
     } else if (showRealUI) {
@@ -169,7 +169,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           leading: Icon(Icons.web, color: color),
           title: Text('统一登录'),
           onTap: () async {
-            await WebviewLogin.begin(context);
+            await WebviewLogin.begin(context, back2PrePage: true);
           },
         );
     }

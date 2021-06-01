@@ -19,6 +19,9 @@ class _CustedHeaderState extends State<CustedHeader> {
   Widget build(BuildContext context){
     Color primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
     bool isBrightBackground = isBrightColor(primary);
+    bool floatTextUseWhite = isDark(context) 
+      ? true 
+      : (isBrightBackground ? false : true);
 
     return Padding(
         padding: EdgeInsets.all(20.0),
@@ -79,7 +82,7 @@ class _CustedHeaderState extends State<CustedHeader> {
                               Text(
                                 'Custed NG',
                                 style: TextStyle(
-                                  color: isBrightBackground ? Colors.black : Colors.white, 
+                                  color: floatTextUseWhite ? Colors.white : Colors.black, 
                                   fontSize: 20
                                 ),
                               ),
@@ -87,7 +90,7 @@ class _CustedHeaderState extends State<CustedHeader> {
                               Text(
                                 'Ver: Material 1.0.${BuildData.build}',
                                 style: TextStyle(
-                                  color: isBrightBackground ? Colors.black54 : Colors.white54, 
+                                  color: floatTextUseWhite ? Colors.white54 : Colors.black54, 
                                   fontSize: 15
                                 ),
                               )

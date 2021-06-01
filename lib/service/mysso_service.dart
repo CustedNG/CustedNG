@@ -53,7 +53,7 @@ class MyssoService extends CatService {
     }
 
     final context = locator<AppProvider>().ctx;
-    final ok = await WebviewLogin.begin(context, noLogin: true);
+    final ok = await WebviewLogin.begin(context, back2PrePage: true);
     if (ok) {
       return CatLoginResult.ok();
     }
