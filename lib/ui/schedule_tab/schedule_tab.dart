@@ -5,6 +5,7 @@ import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
+import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/schedule_table.dart';
@@ -99,7 +100,10 @@ class _ScheduleTabState extends State<ScheduleTab>
       await scheduleProvider.updateScheduleData();
       _refreshController.refreshCompleted();
       showSnackBar(context, '更新成功');
-      requestUpdateHomeWidget();
+      requestUpdateHomeWidget(
+        locator<UserDataStore>().username.fetch(),
+        locator<SettingStore>().pushNotification.fetch()
+      );
     } catch (e) {
       print(e);
       showSnackBar(context, '更新失败');

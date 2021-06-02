@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:plain_notification_token/plain_notification_token.dart';
+import 'package:xiao_mi_push_plugin/xiao_mi_push_plugin.dart';
 // import 'package:jpush_flutter/jpush_flutter.dart';
 
 bool _shouldEnableDarkMode(BuildContext context, int mode) {
@@ -106,25 +107,25 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       // IecardService().login();
 
       final userData = locator<UserDataStore>();
-      if (userData.username.fetch() == null) {
-        print("userData.username is null");
+      final userName = userData.username.fetch();
+      print("User name is $userName");
+      if (userName == null) {
+        return;
       }
 
-      await initPushService(userData);
-
-      if (Platform.isIOS) await HomeWidget.setAppGroupId('group.com.tusi.app');
-      requestUpdateHomeWidget();
+      await initPushService(userName);
+      await requestUpdateHomeWidget(userName, setting.pushNotification.fetch());
     }
   }
 }
 
-Future<void> initPushService(UserDataStore user) async {
+Future<void> initPushService(String userName) async {
   String token = await getToken();
   if (token == null) {
     print('get token failed');
     return;
   }
-  await CustedService().sendToken(token, user.username.fetch(), Platform.isIOS);
+  await CustedService().sendToken(token, userName, Platform.isIOS);
 }
 
 Future<String> getToken() async {
@@ -135,16 +136,21 @@ Future<String> getToken() async {
     // wait for user to give notification permission
     await Future.delayed(Duration(seconds: 3));
     return await plainNotificationToken.getToken();
+  } else {
+    await XiaoMiPushPlugin.init(
+      appId: "2882303761518813144", appKey: "5601881368144");
+    return await XiaoMiPushPlugin.getRegId();
   }
-  return null;
 }
 
-Future<bool> requestUpdateHomeWidget() async {
-  final userData = locator<UserDataStore>();
-  print("User name is ${userData.username.fetch()}");
-  final success =
-      await HomeWidget.saveWidgetData('ecardId', userData.username.fetch() ?? "");
-  print('set ecardId for home widget: ${success ? "success" : "failed"}');
+Future<bool> requestUpdateHomeWidget(String userName, bool enablePush) async {
+  if (Platform.isIOS) await HomeWidget.setAppGroupId('group.com.tusi.app');
+  final setIdResult =
+      await HomeWidget.saveWidgetData('ecardId', userName ?? '');
+  print('set ecardId for home widget: ${setIdResult ? "success" : "failed"}');
+  final setEnableLessonPush = 
+      await HomeWidget.saveWidgetData('enableLessonPush', enablePush);
+  print('set enableLessonPush for home widget successfully? $setEnableLessonPush');
   return HomeWidget.updateWidget(
       name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
 }

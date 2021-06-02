@@ -64,17 +64,19 @@ class HomeWidgetProvider : HomeWidgetProvider() {
         previousTask?.cancel(true)
 
         val eCardId = widgetData.getString("ecardId", "")
+        val enablePush = widgetData.getBoolean("enableLessonPush", false);
 //        val eCardId = "2019003373"
 
         previousTask =
             Shared.executor.submit {
-                NextLessonUpdate(eCardId, context, appWidgetManager, appWidgetIds).updateNextLesson()
+                NextLessonUpdate(eCardId, enablePush, context, appWidgetManager, appWidgetIds).updateNextLesson()
             }
     }
 }
 
 private class NextLessonUpdate(
     private val eCardIdSupplied: String?,
+    private val enablePush: Boolean,
     private val context: Context,
     private val appWidgetManager: AppWidgetManager,
     private val appWidgetIds: IntArray,
@@ -153,7 +155,7 @@ private class NextLessonUpdate(
                     val nxtCourse = resultWithFallback.parseNextScheduleJson()
                     val manager = CourseReminderNotificationManager.get(context)
 
-                    if (shouldNotify(manager, nxtCourse)) {
+                    if (shouldNotify(manager, nxtCourse) && enablePush) {
                         CourseReminderNotificationBuilder(context)
                             .withNextSchedule(nxtCourse)
                             .buildAndNotify()

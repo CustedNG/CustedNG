@@ -77,6 +77,7 @@ dependencies:
   home_widget: ^0.1.2+1
   flutter_material_color_picker: ^1.0.5
   expand_widget: ^2.1.0
+  xiao_mi_push_plugin: ^2.0.0
 
 dev_dependencies:
   # flutter_test:
