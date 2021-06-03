@@ -100,6 +100,7 @@ class CustedService extends CatClient {
   Future<String> updateCachedSchedule(String ecardId, String body) async {
     final resp = await post(
       '$backendUrl/schedule/$ecardId',
+      headers: {'content-type': 'application/json'},
       body: body,
     );
     return '${resp.statusCode} ${resp.body}';

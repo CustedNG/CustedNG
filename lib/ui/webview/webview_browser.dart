@@ -19,15 +19,17 @@ import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:flutter/material.dart';
 
 class WebviewBrowser extends StatelessWidget {
-  WebviewBrowser(this.url);
+  WebviewBrowser(this.url, {this.showBottom = true});
 
   final String url;
+  final bool showBottom;
 
   @override
   Widget build(BuildContext context) {
     return Webview2(
       url: url,
       onCreated: onCreated,
+      showBottom: showBottom,
       invalidUrlRegex: 'custed-target=blank',
       onLoadAborted: (controller, url) {
         if (url.contains('custed-target=blank')) {

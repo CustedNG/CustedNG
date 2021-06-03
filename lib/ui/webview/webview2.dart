@@ -24,6 +24,7 @@ class Webview2 extends StatefulWidget {
     this.onScrollYChanged,
     this.onScrollXChanged,
     this.plugins = const [],
+    this.showBottom = true,
   });
 
   final String url;
@@ -43,6 +44,8 @@ class Webview2 extends StatefulWidget {
   final void Function(double value) onScrollXChanged;
 
   final List<Webview2Plugin> plugins;
+
+  final bool showBottom;
 
   @override
   Webview2State createState() =>

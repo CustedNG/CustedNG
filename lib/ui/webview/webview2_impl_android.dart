@@ -193,6 +193,7 @@ class Webview2StateAndroid extends Webview2State {
         invalidUrlRegex: widget.invalidUrlRegex,
         javascriptChannels: getJsChannels(),
         mediaPlaybackRequiresUserGesture: false,
+        debuggingEnabled: true,
         userAgent: UserAgent.defaultUA,
         ignoreSSLErrors: true,
         appBar: Webview2Header(
@@ -211,12 +212,12 @@ class Webview2StateAndroid extends Webview2State {
         withLocalStorage: true,
         hidden: true,
         initialChild: buildLoadingWidget(),
-        bottomNavigationBar: Webview2Bottom(
+        bottomNavigationBar: widget.showBottom ? Webview2Bottom(
           controller: bottom,
           url: getUrl,
           onGoBack: wp.goBack,
           onGoForward: wp.goForward,
-        ),
+        ) : SizedBox(height: 0),
       ),
     );
   }
