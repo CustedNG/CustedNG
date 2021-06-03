@@ -16,9 +16,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- <permission android:name="cc.xuty.custed2.permission.MIPUSH_RECEIVE"
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <permission android:name="cc.xuty.custed2.permission.MIPUSH_RECEIVE"
                 android:protectionLevel="signature"/>
-    <uses-permission android:name="cc.xuty.custed2.permission.MIPUSH_RECEIVE"/> -->
+    <uses-permission android:name="cc.xuty.custed2.permission.MIPUSH_RECEIVE"/>
 
 
 
@@ -78,16 +79,16 @@
                 android:resource="@xml/provider_install_paths"/>
         </provider> -->
 
-        <service android:name="cc.xuty.custed2.PushService"
+        <!-- <service android:name="cc.xuty.custed2.PushService"
                 android:enabled="true"
                 android:exported="false"
                 android:process=":pushcore">
                 <intent-filter>
                     <action android:name="cn.jiguang.user.service.action" />
                 </intent-filter>
-        </service>
+        </service> -->
 
-        <receiver
+        <!-- <receiver
             android:name="cc.xuty.custed2.PushReceriver"
             android:enabled="true"
             android:exported="false">
@@ -95,7 +96,7 @@
                     <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
                     <category android:name="cc.xuty.custed2" />
             </intent-filter>
-        </receiver>
+        </receiver> -->
 
         <provider android:name="androidx.core.content.FileProvider"
             tools:replace="android:authorities"
@@ -111,9 +112,17 @@
         <receiver android:name="HomeWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="cc.xuty.custed2.UPDATE_ALL"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/home_widget" />
+        </receiver>
+
+        <receiver android:name=".HomeWidgetReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
         </receiver>
 
         <!-- Don't delete the meta-data below.

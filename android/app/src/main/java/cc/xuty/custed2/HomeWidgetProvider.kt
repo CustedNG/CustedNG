@@ -13,8 +13,6 @@ import java.io.FileWriter
 import java.io.IOException
 import java.io.PrintWriter
 import java.util.concurrent.Future
-import java.text.SimpleDateFormat
-import java.util.*
 
 @Suppress("ArrayInDataClass")
 data class NextSchedule(
@@ -64,7 +62,7 @@ class HomeWidgetProvider : HomeWidgetProvider() {
         previousTask?.cancel(true)
 
         val eCardId = widgetData.getString("ecardId", "")
-        val enablePush = widgetData.getBoolean("enableLessonPush", false);
+        val enablePush = widgetData.getBoolean("enableLessonPush", false)
 //        val eCardId = "2019003373"
 
         previousTask =
