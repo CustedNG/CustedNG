@@ -46,7 +46,7 @@
 
             <meta-data
                 android:name="io.flutter.embedding.android.SplashScreenDrawable"
-                android:resource="@drawable/normal_background"
+                android:resource="@drawable/launch_background"
                 />
 
             <intent-filter>

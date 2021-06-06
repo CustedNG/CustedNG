@@ -65,7 +65,7 @@ object TimeUtil {
     }
 
     fun toUserFriendlyTimeString(timestamp:Long): String {
-        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(timestamp))
+        return SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(timestamp))
     }
 
     fun dateString(date: Date = Date()): String {
