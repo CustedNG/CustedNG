@@ -56,9 +56,8 @@ class _ScheduleTabState extends State<ScheduleTab>
       appBar: NavBar.material(
           context: context,
           needPadding: true,
-          leading: IconButton(
-            onPressed: () => AppRoute(page: SelectSchedulePage()).go(context),
-            icon: Icon(Icons.switch_account),
+          leading: GestureDetector(
+            onDoubleTap: () => AppRoute(page: SelectSchedulePage()).go(context),
           ),
           middle: _buildNavbarMiddle(context),
           trailing: <Widget>[

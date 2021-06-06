@@ -13,15 +13,16 @@
         android:textSize="27sp"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:paddingStart="13dp"
+        android:paddingStart="17dp"
         android:paddingEnd="13dp"
         android:layout_marginTop="17dp"
         tools:text="Time" />
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="13dp"
+            android:layout_height="wrap_content"
+            android:padding="17dp"
+            android:gravity="center_vertical"
             android:layout_below="@id/widget_time"
             android:id="@+id/widget_container_inner">
 
@@ -51,16 +52,37 @@
             android:layout_below="@id/widget_position"
             tools:text="Teacher" />
 
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="17dp"
+        android:paddingBottom="9dp"
+        android:layout_height="wrap_content" >
+
         <TextView
             android:id="@+id/widget_update"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="13sp"
-            android:layout_alignParentBottom="true"
             android:textColor="#FFFFFF"
-            android:maxLines="5"
-            tools:text="UpdateTime" />
+            android:maxLines="2"
+            tools:text="UpdateTime"
+            tools:ignore="RtlSymmetry" />
 
-    </RelativeLayout>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/widget_refresh_btn"
+            android:paddingLeft="5dp"
+            android:background="#00000000"
+            android:src="@drawable/ic_baseline_refresh_24"
+            android:contentDescription="TODO" />
+
+
+    </LinearLayout>
 
 </RelativeLayout>

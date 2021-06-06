@@ -1,7 +1,9 @@
 package cc.xuty.custed2
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.RemoteViews
 import cc.xuty.custed2.TimeUtil.toUserFriendlyTimeString
@@ -13,8 +15,6 @@ import java.io.FileWriter
 import java.io.IOException
 import java.io.PrintWriter
 import java.util.concurrent.Future
-import java.text.SimpleDateFormat
-import java.util.*
 
 @Suppress("ArrayInDataClass")
 data class NextSchedule(
@@ -64,7 +64,7 @@ class HomeWidgetProvider : HomeWidgetProvider() {
         previousTask?.cancel(true)
 
         val eCardId = widgetData.getString("ecardId", "")
-        val enablePush = widgetData.getBoolean("enableLessonPush", false);
+        val enablePush = widgetData.getBoolean("enableLessonPush", false)
 //        val eCardId = "2019003373"
 
         previousTask =
@@ -79,7 +79,7 @@ private class NextLessonUpdate(
     private val enablePush: Boolean,
     private val context: Context,
     private val appWidgetManager: AppWidgetManager,
-    private val appWidgetIds: IntArray,
+    private val appWidgetIds: IntArray
 ) {
     companion object {
         private fun String?.parseNextScheduleJson(): NextSchedule {
@@ -142,9 +142,7 @@ private class NextLessonUpdate(
             val currentTimeString = toUserFriendlyTimeString(currentTimeStamp)
             val lastSuccessfulUpdate = savedLastSuccessfulUpdate
 
-            val resultWithFallback = if (result.successful) result.result!! else savedLessonInfoResponse
-
-            val texts: List<String> = when (resultWithFallback) {
+            val texts: List<String> = when (val resultWithFallback = if (result.successful) result.result!! else savedLessonInfoResponse) {
                 null -> {
                     "更新失败|尝试Custed内|刷新课表后|重新添加该小部件".split('|')
                 }
@@ -166,7 +164,7 @@ private class NextLessonUpdate(
                         nxtCourse.startTime,
                         nxtCourse.courseName,
                         nxtCourse.position,
-                        nxtCourse.teacherName,
+                        nxtCourse.teacherName
                     )
                 }
             }
@@ -223,6 +221,14 @@ private class NextLessonUpdate(
                 setTextViewTextUnlessNull(R.id.widget_teacher, teacher)
                 setTextViewTextUnlessNull(R.id.widget_update, updateTime)
             }
+
+            val openActivityIntent = Intent(context, MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(context, 0, openActivityIntent, 0)
+            views.setOnClickPendingIntent(R.id.widget_container, pendingIntent)
+
+            val refreshIntent = Intent("cc.xuty.custed2.UPDATE_WIDGET")
+            val refreshPending = PendingIntent.getBroadcast(context, 0, refreshIntent, 0)
+            views.setOnClickPendingIntent(R.id.widget_refresh_btn, refreshPending)
 
             appWidgetManager.updateAppWidget(widgetId, views)
         }

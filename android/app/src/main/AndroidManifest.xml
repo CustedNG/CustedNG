@@ -16,22 +16,21 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <!-- <permission android:name="cc.xuty.custed2.permission.MIPUSH_RECEIVE"
+    <permission android:name="cc.xuty.custed2.permission.MIPUSH_RECEIVE"
                 android:protectionLevel="signature"/>
-    <uses-permission android:name="cc.xuty.custed2.permission.MIPUSH_RECEIVE"/> -->
-
-
+    <uses-permission android:name="cc.xuty.custed2.permission.MIPUSH_RECEIVE"/>
 
     <application
-        android:label="Custed NG"
+        android:label="CustedNG"
         tools:replace="android:label"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:hasFragileUserData="true"
         android:restoreAnyVersion="true">
+
         <activity
-            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -39,63 +38,19 @@
             android:windowSoftInputMode="adjustResize">
 
             <meta-data
-                android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme"
-                />
-
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
             <meta-data
-                android:name="io.flutter.embedding.android.SplashScreenDrawable"
-                android:resource="@drawable/normal_background"
-                />
-
+              android:name="io.flutter.embedding.android.SplashScreenDrawable"
+              android:resource="@drawable/normal_background"
+              />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <!-- See: https://pub.dev/packages/open_file -->
-        <!-- <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileProvider.install"
-            android:exported="false"
-            android:grantUriPermissions="true"
-            tools:replace="android:authorities">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths"
-                tools:replace="android:resource" />
-        </provider> -->
-
-        <!-- <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileProvider.install"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_install_paths"/>
-        </provider> -->
-
-        <service android:name="cc.xuty.custed2.PushService"
-                android:enabled="true"
-                android:exported="false"
-                android:process=":pushcore">
-                <intent-filter>
-                    <action android:name="cn.jiguang.user.service.action" />
-                </intent-filter>
-        </service>
-
-        <receiver
-            android:name="cc.xuty.custed2.PushReceriver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                    <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                    <category android:name="cc.xuty.custed2" />
-            </intent-filter>
-        </receiver>
 
         <provider android:name="androidx.core.content.FileProvider"
             tools:replace="android:authorities"
@@ -108,13 +63,21 @@
                 android:resource="@xml/provider_install_paths"/>
         </provider>
 
-        <receiver android:name="HomeWidgetProvider" >
+        <receiver android:name=".HomeWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="cc.xuty.custed2.UPDATE_WIDGET"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/home_widget" />
         </receiver>
+
+        <service android:name=".WidgetService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_SERVICE" />
+            </intent-filter>
+        </service>
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
