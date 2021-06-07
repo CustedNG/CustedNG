@@ -194,7 +194,7 @@ private class NextLessonUpdate(
         val startTime = ApproximateTime.parseOrNull(schedule.startTime)
         if (startTime != null) {
             val timeToStart = startTime.relativeDifferenceToInMinutes(ApproximateTime.now())
-            if (timeToStart > 35 || timeToStart < -20) return false
+            if (timeToStart > 45 || timeToStart < 15) return false
         }
         with(TimeUtil.ConvertToMillis) {
             val lastNotification = manager.lastAlerted(schedule) ?: return true
@@ -225,10 +225,6 @@ private class NextLessonUpdate(
             val openActivityIntent = Intent(context, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(context, 0, openActivityIntent, 0)
             views.setOnClickPendingIntent(R.id.widget_container, pendingIntent)
-
-            val refreshIntent = Intent("cc.xuty.custed2.UPDATE_WIDGET")
-            val refreshPending = PendingIntent.getBroadcast(context, 0, refreshIntent, 0)
-            views.setOnClickPendingIntent(R.id.widget_refresh_btn, refreshPending)
 
             appWidgetManager.updateAppWidget(widgetId, views)
         }
