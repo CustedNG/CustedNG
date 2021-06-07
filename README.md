@@ -41,7 +41,7 @@
   </tr>
 </table>
 
-**功能:**  
+## 功能
 ✔️ 查课表  
 ✔️ 查成绩  
 ✔️ 充网费  
@@ -55,27 +55,23 @@
 ✔️ ...  
 
 ## 安装
+|Android|iOS|桌面客户端|
+|:--:|:--:|:--:|
+|[二维码](https://cust.app/CustedNG.svg) or [直链](https://cust.app/app/apk/downloadUrl)|[AppStore](https://apps.apple.com/cn/app/custed/id1483085363) or [Testflight](https://cust.app/ios)|需自行下载编译|
 
-**Andriod**
 
-[Github Release](https://github.com/CustedNG/CustedNG/releases) | [二维码](https://cust.app/CustedNG.svg) | [直链](https://cust.app/app/apk/downloadUrl)
 
-<img width="250px" src="https://cust.app/CustedNG.svg">
+## 源码使用
+1. **使用git[^1]获取项目**。打开终端，切换到你喜欢的目录，执行`git clone https://github.com/CustedNG/CustedNG`
+2. **配置flutter环境**。请参考[flutter.cn](https://flutter.cn/docs/get-started/install)上的教程。
+3. **运行项目**。切换目录至本项目，执行`./make.dart run`。
+4. **修改本项目**。do whatever you want。
 
-**iOS**
+## 反馈、贡献
+[Github Issues](https://github.com/CustedNG/CustedNG/issues) | [QQ群](https://jq.qq.com/?_wv=1027&k=Hh5Yans4)  
+如果你对开发感兴趣，欢迎先加入[Custed Insider 内测群](https://jq.qq.com/?_wv=1027&k=b5Yfv0KF)。做出突出贡献者，会加入**Custed内的贡献者名单**。  
+如果你有一定的开发基础，愿意为Custed添砖java，欢迎先加入内测群，经过一定考核后，可以进入开发组。
 
-[AppStore](https://apps.apple.com/cn/app/custed/id1483085363)  OR 
-[Testflight](https://cust.app/ios)
-
-**桌面客户端**
-
-*会有的
-
-## 反馈
-
-[Github Issues](https://github.com/CustedNG/CustedNG/issues) | QQ群: 
-
-<img width="150px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/user_group.jpg">
 
 ## 已知问题
 
@@ -89,3 +85,5 @@
 CustedNG is licensed under the
 Apache License 2.0
 ```
+
+[^1]: 没有安装git的话，请搜索git如何安装，安装完成后，才能执行后继步骤

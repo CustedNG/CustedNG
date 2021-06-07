@@ -41,7 +41,7 @@ lib/generated_plugin_registrant.dart
 /android/app/*.json
 /android/app/build
 
-*.apk
+/release
 countly_config
 lib/config/countly.dart
 ios/build

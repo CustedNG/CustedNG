@@ -2,6 +2,7 @@ import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/core/utils.dart';
+import 'package:custed2/ui/widgets/url_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,7 @@ class HomeNotice extends StatelessWidget {
   }
 
   Widget _buildContent(context, notification) {
-    final style = TextStyle(
+    final style = Theme.of(context).textTheme.bodyText1.copyWith(
       fontSize: 13
     );
 
@@ -27,11 +28,11 @@ class HomeNotice extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(' ' * 7 + noti[0], style: style),
-        if (noti.length != 1) Container(
+        UrlText(' ' * 7 + noti.content, style: style),
+        if (noti.date != null) Container(
           alignment: Alignment.bottomRight,
           child: Text(
-            noti[1], 
+            noti.date, 
             style: style, 
             textAlign: TextAlign.right
           ),
@@ -40,7 +41,7 @@ class HomeNotice extends StatelessWidget {
     );
   }
 
-  List<String> _buildNotification(context, String notification) {
+  Notification _buildNotification(context, String notification) {
     if (notification.startsWith('!')) {
       showRoundDialog(
         context, 
@@ -48,10 +49,12 @@ class HomeNotice extends StatelessWidget {
         Text(notification.substring(1)), 
         [_buildCloseButton(context)]
       );
-      return notification.substring(1).split('发布于：');
+      final data = notification.substring(1).split('发布于：');
+      return Notification(data[1], data[0]);
     }
-    return notification.split('发布于：') 
-            ?? ['<版本号 TechnicalPreview#${BuildData.build}>'];
+    final data = notification.split('发布于：');
+    return Notification(data[1], data[0] ?? ['<版本号 TechnicalPreview#${BuildData.build}>']
+    );
   }
 
   Widget _buildCloseButton(context) {
@@ -60,4 +63,11 @@ class HomeNotice extends StatelessWidget {
       child: Text('关闭')
     );
   }
+}
+
+class Notification {
+  final String date;
+  final String content;
+
+  Notification(this.date, this.content);
 }

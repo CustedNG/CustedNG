@@ -3,8 +3,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-var build64Bit = false;
-
 Future<int> getGitCommitCount() async {
   final result = await Process.run('git', ['log', '--oneline']);
   return (result.stdout as String)
@@ -88,31 +86,33 @@ void flutterRun() {
       mode: ProcessStartMode.inheritStdio, runInShell: true);
 }
 
-void flutterBuildAndroid() async {
+void flutterBuild(String source, String target, bool isAndroid) async {
   final startTime = DateTime.now();
   final build = await getGitCommitCount();
-  await generateCountlyConfig();
 
   final args = [
     'build',
-    'apk',
-    build64Bit
-        ? '--target-platform=android-arm64'
-        : '--target-platform=android-arm',
+    isAndroid ? 'apk' : 'ios',
+    '--target-platform=android-arm64',
     '--build-number=$build',
     '--build-name=1.0.$build',
     '-v'
   ];
+  if (!isAndroid) args.removeAt(2);
   print('Building with args: ${args.join(' ')}');
   final buildResult = await Process.run('flutter', args, runInShell: true);
   final exitCode = buildResult.exitCode;
 
   if (exitCode == 0) {
-    final copySource = './build/app/outputs/apk/release/app-release.apk';
-    final copyTarget = './CustedNG_${build}_Arm${build64Bit ? 64 : ""}.apk';
-    print('Copying from $copySource to $copyTarget');
+    target = target.replaceFirst('build', build.toString());
+    print('Copying from $source to $target');
 
-    await File(copySource).copy(copyTarget);
+    if (!isAndroid) {
+      await Process.run('cp', ['-r', source, target], runInShell: true);
+    } else {
+      await File(source).copy(target);
+    }
+    
     print('Done.');
   } else {
     print(buildResult.stderr.toString());
@@ -122,10 +122,23 @@ void flutterBuildAndroid() async {
   print('Spent time: ${endTime.difference(startTime).toString()}');
 }
 
-void main(List<String> args) async {
-  await updateBuildData();
-  await generateCountlyConfig();
+void flutterBuildIOS() async {
+  await flutterBuild(
+    './build/ios/iphoneos/CustedNG.app',
+    './release/CustedNG_build.app',
+    false
+  );
+}
 
+void flutterBuildAndroid() async {
+  await flutterBuild(
+    './build/app/outputs/apk/release/app-release.apk', 
+    './release/CustedNG_build_Arm64.apk',
+    true
+  );
+}
+
+void main(List<String> args) async {
   if (args.isEmpty) {
     print('No action. Exit.');
     return;
@@ -133,19 +146,23 @@ void main(List<String> args) async {
 
   final command = args[0];
 
+  await generateCountlyConfig();
+
   switch (command) {
     case 'run':
       return flutterRun();
     case 'build':
       if (args.length > 1) {
-        if (args[1] == 'arm64') {
+        await updateBuildData();
+        if (args[1] == 'android' || args[1] == 'harmony') {
           print("Building android-arm64 variant");
-          build64Bit = true;
-        } else {
-          print("Unrecognized variant " + args[1]);
+          return flutterBuildAndroid();
+        } else if (args[1] == 'ios') {
+          return flutterBuildIOS();
         }
+        print('unkonwn build arg: ${args[1]}');
       }
-      return flutterBuildAndroid();
+      return;
     default:
       print('Unsupported command: $command');
       return;

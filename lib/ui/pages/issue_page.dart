@@ -1,8 +1,10 @@
+import 'package:custed2/constants.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
+import 'package:custed2/ui/widgets/url_text.dart';
 import 'package:flutter/material.dart';
 
 class IssuePage extends StatelessWidget{
@@ -36,13 +38,18 @@ class IssuePage extends StatelessWidget{
 
   List<Widget> _buildCards(BuildContext context) {
     final titleTextStyle = TextStyle(
-      fontSize: 27,
+      fontSize: 23,
     );
     final contentTextStyle = TextStyle(
-      fontSize: 17,
+      fontSize: 15,
     );
 
     return [
+      HomeCard(
+        title: Text('用户群', style: titleTextStyle),
+        content: UrlText(joinQQUserGroup, replace: '点击加入'),
+      ),
+      SizedBox(height: 20),
       HomeCard(
         title: Text('常见问题', style: titleTextStyle),
         content: Column(
@@ -53,14 +60,9 @@ class IssuePage extends StatelessWidget{
                     'A:由于统一认证系统近期强制要求绑定手机号，'
                     '使用统一认证登录然后绑定手机号即可继续使用传统登录\n'
                     'Q:统一认证登录无法输入密码\n'
-                    'A:可能由于某些机型中的安全键盘导致，可以尝试临时关闭\n\n'
-                    '加入用户组获取最新资讯\n',
+                    'A:可能由于某些机型中的安全键盘导致，可以尝试临时关闭',
                 style: contentTextStyle
             ),
-            Image.asset(
-                'assets/user_group.jpg',
-                height: MediaQuery.of(context).size.height * 0.3
-            )
           ],
         ),
       ),
@@ -77,7 +79,7 @@ class IssuePage extends StatelessWidget{
                 'Q: 如何连续翻页\n'
                 'A: 长按课表左/右 翻页箭头即可\n'
                 'Q:如何快速回到当前周\n'
-                'A:长按课表中”第x周“即可\n',
+                'A:长按课表中”第x周“即可',
           style: contentTextStyle
         ),
       ),

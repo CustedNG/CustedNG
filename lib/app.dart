@@ -108,7 +108,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 
       final userData = locator<UserDataStore>();
       final userName = userData.username.fetch();
-      print("User name is $userName");
+      print('User name is $userName');
       if (userName == null) {
         return;
       }

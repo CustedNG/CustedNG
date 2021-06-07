@@ -13,6 +13,7 @@ import 'package:custed2/res/build_data.dart';
 import 'package:custed2/ui/pages/kv_table_page.dart';
 import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/webview/webview_login.dart';
+import 'package:custed2/ui/widgets/url_text.dart';
 import 'package:flutter/material.dart';
 
 class HomeDrawer extends StatefulWidget{
@@ -38,7 +39,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
       accountEmail:
       Text(isLoggedIn ? widget.user.profile.department : '(´･ω･`)'),
       currentAccountPicture: CircleAvatar(
-        backgroundImage: AssetImage('assets/icon/custed_lite.png'),
+        backgroundImage: AssetImage(custedIconPath),
       ),
     );
   }
@@ -105,7 +106,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
             height: 64.0,
           ),
           aboutBoxChildren: <Widget>[
-            Text('\nMade with ❤️ by Toast Studio.\nAll rights reserved.')
+            UrlText('''\nMade with ❤️ by  $tusiBlogUrl .
+            \nAll rights reserved.''', replace: 'Toast Studio'),
           ],
         ),
       ],
@@ -128,7 +130,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
       ), 
       [
         TextButton(
-          onPressed: () => openUrl('https://jq.qq.com/?_wv=1027&k=TLrWZjtp'), 
+          onPressed: () => openUrl(joinQQUserGroup), 
           child: Text('加入用户群')
         ),
         TextButton(
