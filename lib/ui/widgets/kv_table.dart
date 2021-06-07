@@ -1,3 +1,4 @@
+import 'package:custed2/ui/widgets/url_text.dart';
 import 'package:flutter/material.dart';
 
 class KvTable extends StatelessWidget {
@@ -25,7 +26,7 @@ class KvTable extends StatelessWidget {
       ));
       lines.add(SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: Text(
+        child: UrlText(
           item.value,
           style: valueFont,
         ),

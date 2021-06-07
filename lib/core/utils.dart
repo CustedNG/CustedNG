@@ -144,7 +144,7 @@ Widget buildSwitch(BuildContext context,
       return DarkModeFilter(
         child: Switch(
             value: value,
-            activeColor: resolveWithBackground(context),
+            activeColor: Color(locator<SettingStore>().appPrimaryColor.fetch()),
             onChanged: (value) {
               if (func != null) func(value);
               return prop.put(value);
@@ -156,20 +156,20 @@ Widget buildSwitch(BuildContext context,
 }
 
 bool isBrightColor(Color c) {
-  if (c.red * 0.299 + c.green * 0.578 + c.blue * 0.114 >= 155) {
+  if (getBrightnessFromColor(c) == Brightness.light) {
     return true;
   }
   return false;
 }
 
 Brightness getBrightnessFromColor(Color c) {
-  return isBrightColor(c) ? Brightness.light : Brightness.dark;
+  return ThemeData.estimateBrightnessForColor(c);
 }
 
 Color resolveWithBackground(BuildContext context) {
   final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
-  final back = Theme.of(context).backgroundColor;
-  if (isBrightColor(primary) != isBrightColor(back)) {
+  final background = Theme.of(context).backgroundColor;
+  if (isBrightColor(primary) != isBrightColor(background)) {
     return primary;
   }
   return null;

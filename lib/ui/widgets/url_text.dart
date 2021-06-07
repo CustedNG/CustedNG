@@ -60,7 +60,7 @@ class UrlText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final highLightColor = resolveWithBackground(context);
+    final highLightColor = Colors.blue;
     final urlStyle = style?.copyWith(color: highLightColor) ?? TextStyle(
       color: highLightColor
     );

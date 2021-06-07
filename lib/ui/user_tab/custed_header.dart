@@ -100,7 +100,10 @@ class _CustedHeaderState extends State<CustedHeader> {
                       )
                   ),
                   Positioned(
-                    child: Icon(Icons.keyboard_arrow_right, color: Colors.white),
+                    child: Icon(
+                      Icons.keyboard_arrow_right, 
+                      color: isBrightBackground ? Colors.black : Colors.white
+                    ),
                     top: 0,
                     bottom: 0,
                     right: 17,

@@ -226,7 +226,9 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _buildDarkModeRadio() {
-    final color = MaterialStateProperty.all(resolveWithBackground(context));
+    final color = MaterialStateProperty.all(
+      Color(setting.appPrimaryColor.fetch())
+    );
     final value = setting.darkMode.fetch();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
