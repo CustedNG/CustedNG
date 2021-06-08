@@ -86,8 +86,8 @@ class ScheduleLessonWidget extends StatelessWidget {
       SizedBox(
         height: 37,
         child: Text(
-          '@' + lesson.roomRaw, 
-          maxLines: 3, 
+          lesson.roomRaw, 
+          maxLines: 2, 
           style: textStyle, 
           textAlign: TextAlign.center
         ),
@@ -108,9 +108,10 @@ class ScheduleLessonWidget extends StatelessWidget {
           child,
           Positioned(
             top: 0,
-            right: 20,
+            right: 0,
             bottom: 0,
-            child: Icon(Icons.report_problem, size: 17)
+            left: 0,
+            child: Icon(Icons.report_problem, size: 17, color: Colors.red)
           )
         ],
       );
