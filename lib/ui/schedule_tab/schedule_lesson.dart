@@ -161,7 +161,7 @@ class ScheduleLessonWidget extends StatelessWidget {
           inactiveColorDense.resolve(context), occupancyRate)];
     }
 
-    final colors = themes[themeIdx];
+    final colors = scheduleThemes[themeIdx];
     final index = [
       lesson.hashCode % colors.length,
       lesson.displayName.hashCode % colors.length,
@@ -169,10 +169,11 @@ class ScheduleLessonWidget extends StatelessWidget {
       lesson.roomRaw.hashCode % colors.length
     ];
 
-    int idx2 = 1;
+    int idx2 = 0;
     for (var idx1 in index) {
-      if (colors[idx1] != colors[idx2]) {
-        return [colors.elementAt(idx1), colors.elementAt(idx2)];
+      final diff = (idx1 - idx2).abs();
+      if (idx1 != idx2 && diff < 3) {
+        return [colors[min(idx1, idx2)], colors[max(idx1, idx2)]];
       }
       idx2++;
     }

@@ -227,7 +227,7 @@ class LessonPreview extends StatelessWidget {
 
     final deleteCustom = TextButton(
       onPressed: () {
-        if (locator<CustomLessonStore>().deleteLesson(lesson)) {
+        if (locator<CustomLessonStore>().deleteLesson(customLessons.first)) {
           schedule.loadLocalData();
           showSnackBar(context, '删除成功');
           Navigator.of(context).pop();
