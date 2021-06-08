@@ -148,7 +148,6 @@ void main(List<String> args) async {
       if (args.length > 1) {
         await updateBuildData();
         if (args[1] == 'android' || args[1] == 'harmony') {
-          print("Building android-arm64 variant");
           return flutterBuildAndroid();
         } else if (args[1] == 'ios') {
           return flutterBuildIOS();

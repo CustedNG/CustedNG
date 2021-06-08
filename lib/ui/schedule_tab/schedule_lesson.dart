@@ -9,6 +9,7 @@ import 'package:custed2/res/theme_colors.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
 import 'package:custed2/ui/theme.dart';
+import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleLessonWidget extends StatelessWidget {
@@ -36,19 +37,22 @@ class ScheduleLessonWidget extends StatelessWidget {
 
   Widget _buildLessonCell(BuildContext context) {
     List<Color> colors = selectColorForLesson(context);
-    return Container(
-      margin: EdgeInsets.all(2.5),
-      constraints: BoxConstraints(maxWidth: 70, maxHeight: 100),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: colors ?? [Colors.transparent]
+    return DarkModeFilter(
+      child: Container(
+        margin: EdgeInsets.all(2.5),
+        constraints: BoxConstraints(maxWidth: 70, maxHeight: 100),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: colors ?? [Colors.transparent, Colors.transparent]
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(4))
         ),
-        borderRadius: BorderRadius.all(Radius.circular(4))
+        padding: EdgeInsets.all(4.0),
+        child: _buildCellContent(context),
       ),
-      padding: EdgeInsets.all(4.0),
-      child: _buildCellContent(context),
+      level: 200,
     );
   }
 
@@ -64,34 +68,69 @@ class ScheduleLessonWidget extends StatelessWidget {
     );
 
     final content = <Widget>[];
-    content.add(Text(lesson.name, maxLines: 2, style: textStyle));
+    content.add(
+      SizedBox(
+        height: 37,
+        child: Center(
+          child: Text(
+            lesson.name, 
+            maxLines: 2, 
+            style: textStyle, 
+            textAlign: TextAlign.center
+          )
+        )
+      )
+    );
+    addDivider(content);
+    content.add(
+      SizedBox(
+        height: 37,
+        child: Text(
+          '@' + lesson.roomRaw, 
+          maxLines: 3, 
+          style: textStyle, 
+          textAlign: TextAlign.center
+        ),
+      )
+    );
 
-    if (conflict.isEmpty) {
-      addDivider(content);
-      content.add(Text('@' + lesson.roomRaw, maxLines: 3, style: textStyle));
-    } else {
-      for (var lesson in conflict) {
-        addDivider(content);
-        content.add(Text(lesson.name, maxLines: 2, style: textStyle));
-      }
-      if (conflict.length >= 2) {
-        addDivider(content);
-        final more = conflict.length - 1;
-        content.add(Text("... +${more}", style: textStyle));
-      }
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+    Widget child = Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: content,
     );
+
+    if (conflict.isEmpty) {
+      return child;
+    } else {
+      return Stack(
+        children: [
+          child,
+          Positioned(
+            top: 0,
+            right: 20,
+            bottom: 0,
+            child: Icon(Icons.report_problem, size: 17)
+          )
+        ],
+      );
+    }
   }
 
   void addDivider(List<Widget> content) {
     final divider = Divider(height: 2, color: Colors.white70);
-    content.add(SizedBox(height: 5));
-    content.add(divider);
-    content.add(SizedBox(height: 5));
+    content.add(
+      SizedBox(
+        height: 17,
+        child: Column(
+        children: [
+          SizedBox(height: 5),
+          divider,
+          SizedBox(height: 5)
+        ],
+      ),
+      )
+    );
   }
 
   int _interpolate(int lower, int higher, double interpolateValue) {
@@ -135,6 +174,7 @@ class ScheduleLessonWidget extends StatelessWidget {
       if (colors[idx1] != colors[idx2]) {
         return [colors.elementAt(idx1), colors.elementAt(idx2)];
       }
+      idx2++;
     }
     return [colors.first, colors.last];
   }
