@@ -33,12 +33,14 @@ class _HomeExamState extends State<HomeExam> {
 
     if (setting.agreeToShowExam.fetch() == false) {
       notice = '点击查看考场信息';
-    } else if (exam.failed && !exam.useCache) {
-      notice = '刷新失败，暂时无法获取考试信息';
+    } else if (exam.data == null) {
+      notice = '无数据，请点击进入此卡片并刷新';
+    } else if (exam.failed) {
+      notice = '刷新失败，暂时无法获取考试信息 ${(exam.useCache) ? "(缓存)" : ""}';
     } else {
       var nextExam = exam.getNextExam();
       if (nextExam == null) {
-        notice = '没有考试啦～ ${(exam.failed && exam.useCache) ? "(缓存)" : ""}';
+        notice = '没有考试啦～ ${(exam.useCache) ? "(缓存)" : ""}';
       } else {
         final examName = nextExam.examTask.beginLesson.lessonInfo.name;
         final examPosition = nextExam.examTask.examRoom.name;

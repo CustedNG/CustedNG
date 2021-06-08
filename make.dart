@@ -92,11 +92,10 @@ void flutterBuild(String source, String target, bool isAndroid) async {
 
   final args = [
     'build',
-    isAndroid ? 'apk' : 'ios',
+    isAndroid ? 'apk' : 'ipa',
     '--target-platform=android-arm64',
     '--build-number=$build',
-    '--build-name=1.0.$build',
-    '-v'
+    '--build-name=1.0.$build'
   ];
   if (!isAndroid) args.removeAt(2);
   print('Building with args: ${args.join(' ')}');
@@ -106,13 +105,7 @@ void flutterBuild(String source, String target, bool isAndroid) async {
   if (exitCode == 0) {
     target = target.replaceFirst('build', build.toString());
     print('Copying from $source to $target');
-
-    if (!isAndroid) {
-      await Process.run('cp', ['-r', source, target], runInShell: true);
-    } else {
-      await File(source).copy(target);
-    }
-    
+    await File(source).copy(target);
     print('Done.');
   } else {
     print(buildResult.stderr.toString());
@@ -132,7 +125,7 @@ void flutterBuildIOS() async {
 
 void flutterBuildAndroid() async {
   await flutterBuild(
-    './build/app/outputs/apk/release/app-release.apk', 
+    './build/app/outputs/flutter-apk/app-release.apk', 
     './release/CustedNG_build_Arm64.apk',
     true
   );

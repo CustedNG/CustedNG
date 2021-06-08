@@ -143,7 +143,7 @@ Future<String> getToken() async {
   }
 }
 
-Future<bool> requestUpdateHomeWidget(String userName, bool enablePush) async {
+Future<void> requestUpdateHomeWidget(String userName, bool enablePush) async {
   if (Platform.isIOS) await HomeWidget.setAppGroupId('group.com.tusi.app');
   final setIdResult =
       await HomeWidget.saveWidgetData('ecardId', userName ?? '');
@@ -151,6 +151,8 @@ Future<bool> requestUpdateHomeWidget(String userName, bool enablePush) async {
   final setEnableLessonPush = 
       await HomeWidget.saveWidgetData('enableLessonPush', enablePush);
   print('set enableLessonPush for home widget successfully? $setEnableLessonPush');
-  return HomeWidget.updateWidget(
+  if (Platform.isAndroid) {
+    HomeWidget.updateWidget(
       name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
+  }
 }
