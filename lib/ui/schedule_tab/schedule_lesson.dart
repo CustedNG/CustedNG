@@ -35,12 +35,17 @@ class ScheduleLessonWidget extends StatelessWidget {
   }
 
   Widget _buildLessonCell(BuildContext context) {
+    List<Color> colors = selectColorForLesson(context);
     return Container(
       margin: EdgeInsets.all(2.5),
       constraints: BoxConstraints(maxWidth: 70, maxHeight: 100),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.0),
-        color: selectColorForLesson(context),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: colors ?? [Colors.transparent]
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(4))
       ),
       padding: EdgeInsets.all(4.0),
       child: _buildCellContent(context),
@@ -62,19 +67,15 @@ class ScheduleLessonWidget extends StatelessWidget {
     content.add(Text(lesson.name, maxLines: 2, style: textStyle));
 
     if (conflict.isEmpty) {
-      content.add(SizedBox(height: 2));
+      addDivider(content);
       content.add(Text('@' + lesson.roomRaw, maxLines: 3, style: textStyle));
     } else {
-      final divider = Divider(height: 1, color: Colors.white);
       for (var lesson in conflict) {
-        content.add(SizedBox(height: 5));
-        content.add(divider);
-        content.add(SizedBox(height: 5));
+        addDivider(content);
         content.add(Text(lesson.name, maxLines: 2, style: textStyle));
       }
       if (conflict.length >= 2) {
-        content.add(SizedBox(height: 3));
-        content.add(divider);
+        addDivider(content);
         final more = conflict.length - 1;
         content.add(Text("... +${more}", style: textStyle));
       }
@@ -84,6 +85,13 @@ class ScheduleLessonWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: content,
     );
+  }
+
+  void addDivider(List<Widget> content) {
+    final divider = Divider(height: 2, color: Colors.white70);
+    content.add(SizedBox(height: 5));
+    content.add(divider);
+    content.add(SizedBox(height: 5));
   }
 
   int _interpolate(int lower, int higher, double interpolateValue) {
@@ -101,24 +109,34 @@ class ScheduleLessonWidget extends StatelessWidget {
         _interpolate(lower.blue, higher.blue, interpolateValue));
   }
 
-  Color selectColorForLesson(BuildContext context) {
+  List<Color> selectColorForLesson(BuildContext context) {
     if (lesson == null) {
       return null;
     }
 
-    //final inactiveColor =
-    //    DynamicColor(Color(0xFFEBEFF5), Colors.grey[800]);
     final inactiveColorLight = DynamicColor(Color(0xFFFAFAFAFA), Colors.grey[900]);
     final inactiveColorDense = DynamicColor(Colors.grey[400], Colors.grey[700]);
 
     if (!isActive) {
-      return _interpolateColor(inactiveColorLight.resolve(context),
-          inactiveColorDense.resolve(context), occupancyRate);
+      return [_interpolateColor(inactiveColorLight.resolve(context),
+          inactiveColorDense.resolve(context), occupancyRate)];
     }
 
     final colors = themes[themeIdx];
+    final index = [
+      lesson.hashCode % colors.length,
+      lesson.displayName.hashCode % colors.length,
+      lesson.teacherName.hashCode % colors.length,
+      lesson.roomRaw.hashCode % colors.length
+    ];
 
-    return colors[lesson.hashCode % colors.length];
+    int idx2 = 1;
+    for (var idx1 in index) {
+      if (colors[idx1] != colors[idx2]) {
+        return [colors.elementAt(idx1), colors.elementAt(idx2)];
+      }
+    }
+    return [colors.first, colors.last];
   }
 
   void _showLessonPreview(BuildContext context) {

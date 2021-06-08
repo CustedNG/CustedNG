@@ -1,6 +1,5 @@
 import 'package:custed2/constants.dart';
 import 'package:custed2/core/open.dart';
-import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ class UrlText extends StatelessWidget {
 
   UrlText(this.text, {this.replace, this.style});
 
-  List<InlineSpan> _getTextSpans(TextStyle textStyle, TextStyle urlStyle) {
+  List<InlineSpan> _getTextSpans(bool isDarkMode) {
     List<InlineSpan> widgets = <InlineSpan>[];
     final reg = RegExp(regUrl);
     Iterable<Match> _matches = reg.allMatches(text);
@@ -49,10 +48,17 @@ class UrlText extends StatelessWidget {
         widgets.add(_LinkTextSpan(
           replace: replace ?? result.text, 
           text: result.text, 
-          style: urlStyle
+          style: style.copyWith(
+            color: Colors.blue
+          )
         ));
       } else {
-        widgets.add(TextSpan(text: result.text, style: textStyle));
+        widgets.add(TextSpan(
+          text: result.text, 
+          style: style.copyWith(
+            color: isDarkMode ? Colors.white : Colors.black,
+          )
+        ));
       }
     }
     return widgets;
@@ -60,15 +66,8 @@ class UrlText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final highLightColor = Colors.blue;
-    final urlStyle = style?.copyWith(color: highLightColor) ?? TextStyle(
-      color: highLightColor
-    );
-    final textStyle = style?.copyWith(
-      color: isDark(context) ? Colors.white : Colors.black
-    ) ?? Theme.of(context).textTheme.bodyText2;
     return RichText(
-      text: TextSpan(children: _getTextSpans(textStyle, urlStyle)),
+      text: TextSpan(children: _getTextSpans(isDark(context))),
     );
   }
 }

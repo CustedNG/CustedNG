@@ -56,6 +56,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
       HomeSchedule(),
       HomeExam(),
       HomeEntries(),
+      SizedBox(height: 7)
     ];
 
     Widget widget = AnimationLimiter(

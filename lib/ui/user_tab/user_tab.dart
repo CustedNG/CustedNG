@@ -118,7 +118,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
                   rightBtn: buildSwitch(context, setting.autoUpdateWeather),
                 ),
                 SizedBox(height: 10.0),
-                Text('Beta设置(未开放)'),
+                Text('Beta设置'),
                 SizedBox(height: 10.0),
                 SettingItem(
                   title: '推送上课通知',
@@ -183,6 +183,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   }
 
   void sendSetting2Backend(bool v) async {
+    if (v) showSnackBar(context, ' 该功能处于测试阶段！');
     final suc = await custed.setPushScheduleNotification(v);
     if (suc) {
       print('set enable schedule notification success');
