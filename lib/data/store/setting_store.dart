@@ -47,4 +47,7 @@ class SettingStore with PersistentStore {
 
   StoreProperty<bool> get scheduleHideWeekend =>
       property('scheduleHideWeekend', defaultValue: false);
+
+  StoreProperty<bool> get scheduleUseGradient =>
+      property('scheduleUseGradient', defaultValue: true);
 }

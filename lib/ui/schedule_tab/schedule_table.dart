@@ -30,14 +30,16 @@ class ScheduleTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.of(context);
-    final hideWeekend = locator<SettingStore>().scheduleHideWeekend.fetch();
+    final settings = locator<SettingStore>();
+    final hideWeekend = settings.scheduleHideWeekend.fetch();
+    final useGradient = settings.scheduleUseGradient.fetch();
 
     final rows = List.generate(
       6,
       (_) => TableRow(children: List.filled(hideWeekend ? 5 : 7, placeholder)),
     );
 
-    _fillActiveLessons(rows);
+    _fillActiveLessons(rows, useGradient);
 
     if (showInactive) {
       _fillInactiveLessons(rows);
@@ -52,7 +54,6 @@ class ScheduleTable extends StatelessWidget {
 
     final table = showArrow ? _withArrow(rawTable, hideWeekend) : rawTable;
 
-    final settings = locator<SettingStore>();
     final date = ValueListenableBuilder(
       valueListenable: settings.showFestivalAndHoliday.listenable(),
       builder: (context, value, _) {
@@ -68,14 +69,14 @@ class ScheduleTable extends StatelessWidget {
     );
   }
 
-  void _fillActiveLessons(List<TableRow> rows) {
+  void _fillActiveLessons(List<TableRow> rows, bool useGradient) {
     for (var lesson in schedule.activeLessons(week)) {
       final slotIndex = (lesson.startSection - 1) ~/ 2;
       final weekIndex = lesson.weekday - 1;
       final lessonWidget = rows[slotIndex].children[weekIndex];
       if (lessonWidget == placeholder) {
         rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(
-          lesson, themeIdx: themeIdx
+          lesson, themeIdx: themeIdx, useGradient: useGradient,
         );
       } else {
         final lw = (lessonWidget as ScheduleLessonWidget);

@@ -10,6 +10,7 @@ class AppProvider extends ProviderBase {
   bool _showRealUI = true;
   String _testerNameList;
   BuildContext ctx;
+  int build;
 
   String get notification => _notification;
   Map get changeLog => _changeLog;

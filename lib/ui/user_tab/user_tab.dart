@@ -68,6 +68,11 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             isShowArrow: false,
             rightBtn: buildSwitch(context, setting.showInactiveLessons),
           ),
+          SettingItem(
+            title: '课表使用渐变色',
+            isShowArrow: false,
+            rightBtn: buildSwitch(context, setting.scheduleUseGradient),
+          ),
           SizedBox(height: 10.0),
           Text('主题'),
           SizedBox(height: 10.0),

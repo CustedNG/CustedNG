@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
@@ -40,6 +41,8 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
   final ignore = settings.ignoreUpdate.fetch();
   final urgent = update.level != null && update.level >= 2;
 
+  locator<AppProvider>().build = update.build;
+
   if (!urgent && !force && ignore != null && ignore >= update.build) {
     print('$ignore is skipped by user.');
     print('Update Skipped.');
@@ -56,10 +59,16 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
     return;
   }
 
-  AppRoute(
-    title: '更新',
-    page: UpdateNoticePage(update),
-  ).go(context);
+  if (update.level >= 1 || force) {
+    if (force && update.build < BuildData.build) {
+      showSnackBar(context, '当前没有新版本');
+      return;
+    }
+    AppRoute(
+      title: '更新',
+      page: UpdateNoticePage(update),
+    ).go(context);
+  }
 }
 
 Future<void> doiOSUpdate(
@@ -72,9 +81,14 @@ Future<void> doiOSUpdate(
   print('Update available: $update');
 
   final isCurrentVersionTooOld = BuildData.build < update.min;
+  locator<AppProvider>().build = update.newest;
   final shouldShowDialog = force || isCurrentVersionTooOld;
 
   if (shouldShowDialog) {
+    if (update.newest < BuildData.build) {
+      showSnackBar(context, '当前没有新版本');
+      return;
+    }
     showRoundDialog(
       context,
       update.title,

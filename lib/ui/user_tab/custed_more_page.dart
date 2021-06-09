@@ -1,5 +1,9 @@
 import 'package:custed2/constants.dart';
 import 'package:custed2/core/route.dart';
+import 'package:custed2/core/update.dart';
+import 'package:custed2/data/providers/app_provider.dart';
+import 'package:custed2/locator.dart';
+import 'package:custed2/res/build_data.dart';
 import 'package:custed2/ui/pages/issue_page.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
@@ -31,6 +35,7 @@ class CustedMorePage extends StatelessWidget{
       SizedBox(height: 10),
       Text(appName),
       SizedBox(height: 20),
+      _buildCheckUpdate(context),
       SettingItem(
         title: '开源地址',
         onTap: () => AppRoute(
@@ -77,6 +82,20 @@ class CustedMorePage extends StatelessWidget{
           },
         ),
       )
+    );
+  }
+
+  Widget _buildCheckUpdate(BuildContext context) {
+    final newBuild = locator<AppProvider>().build;
+    if (newBuild > BuildData.build) {
+      return SettingItem(
+        title: '发现新版本: $newBuild',
+        onTap: () => updateCheck(context, force: true),
+      );
+    }
+    return SettingItem(
+      title: '检查更新',
+      onTap: () => updateCheck(context, force: true),
     );
   }
 

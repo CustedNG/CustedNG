@@ -13,14 +13,20 @@ import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleLessonWidget extends StatelessWidget {
-  ScheduleLessonWidget(this.lesson,
-      {this.isActive = true, this.occupancyRate = 1.0, this.themeIdx = 0});
+  ScheduleLessonWidget(
+    this.lesson,
+    {this.isActive = true, 
+    this.occupancyRate = 1.0, 
+    this.themeIdx = 0, 
+    this.useGradient = true}
+  );
   
   final ScheduleLesson lesson;
   final List<ScheduleLesson> conflict = [];
   final bool isActive;
   final double occupancyRate;
   final int themeIdx;
+  final bool useGradient;
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +43,22 @@ class ScheduleLessonWidget extends StatelessWidget {
 
   Widget _buildLessonCell(BuildContext context) {
     List<Color> colors = selectColorForLesson(context);
+    final cell = _buildCellContent(context);
     return DarkModeFilter(
-      child: Container(
+      child:  Container(
         margin: EdgeInsets.all(2.5),
         constraints: BoxConstraints(maxWidth: 70, maxHeight: 100),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
+          color: useGradient ? null : colors[0],
+          gradient: useGradient ?? true ? LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: colors ?? [Colors.transparent, Colors.transparent]
-          ),
+          ) : null,
           borderRadius: BorderRadius.all(Radius.circular(4))
         ),
         padding: EdgeInsets.all(4.0),
-        child: _buildCellContent(context),
+        child: cell,
       ),
       level: 200,
     );
@@ -82,14 +90,19 @@ class ScheduleLessonWidget extends StatelessWidget {
       )
     );
     addDivider(content);
+    final displayLesson = lesson.roomRaw.replaceFirst('[理论]', '理')
+                                        .replaceFirst('[实验]', '实');
     content.add(
       SizedBox(
         height: 37,
-        child: Text(
-          lesson.roomRaw, 
-          maxLines: 2, 
-          style: textStyle, 
-          textAlign: TextAlign.center
+        child: Center(
+          child: Text(
+            displayLesson, 
+            maxLines: 2, 
+            softWrap: true,
+            style: textStyle, 
+            textAlign: TextAlign.center
+          ),
         ),
       )
     );
@@ -170,15 +183,15 @@ class ScheduleLessonWidget extends StatelessWidget {
       lesson.roomRaw.hashCode % colors.length
     ];
 
-    int idx2 = 0;
-    for (var idx1 in index) {
+    int idx1 = 0, idx2 = 0;
+    while (true) {
+      idx2++;
       final diff = (idx1 - idx2).abs();
       if (idx1 != idx2 && diff < 3) {
-        return [colors[min(idx1, idx2)], colors[max(idx1, idx2)]];
+        return [colors[index[min(idx1, idx2)]], colors[index[max(idx1, idx2)]]];
       }
-      idx2++;
+      idx1++;
     }
-    return [colors.first, colors.last];
   }
 
   void _showLessonPreview(BuildContext context) {
