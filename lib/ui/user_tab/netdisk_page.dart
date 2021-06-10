@@ -45,7 +45,7 @@ class NetdiskPage extends StatelessWidget {
           title: '个人文件',
           titleStyle:
               TextStyle(color: isDark(context) ? Colors.white : Colors.black),
-          isShowArrow: false,
+          showArrow: false,
           content: netdisk.quota != null
               ? '已用 '
                   '${netdisk.quota.used.withSizeUnit()}/'

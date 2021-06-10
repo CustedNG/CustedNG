@@ -10,7 +10,7 @@ class UrlText extends StatelessWidget {
   final String replace;
   final TextStyle style;
 
-  UrlText(this.text, {this.replace, this.style});
+  UrlText(this.text, {this.replace, this.style = const TextStyle()});
 
   List<InlineSpan> _getTextSpans(bool isDarkMode) {
     List<InlineSpan> widgets = <InlineSpan>[];

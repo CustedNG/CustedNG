@@ -55,22 +55,22 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
           SizedBox(height: 10.0),
           SettingItem(
             title: '将课表设置为首页',
-            isShowArrow: false,
+            showArrow: false,
             rightBtn: buildSwitch(context, setting.useScheduleAsHome),
           ),
           SettingItem(
             title: '课表隐藏周末',
-            isShowArrow: false,
+            showArrow: false,
             rightBtn: buildSwitch(context, setting.scheduleHideWeekend),
           ),
           SettingItem(
             title: '显示非当前周课程',
-            isShowArrow: false,
+            showArrow: false,
             rightBtn: buildSwitch(context, setting.showInactiveLessons),
           ),
           SettingItem(
             title: '课表使用渐变色',
-            isShowArrow: false,
+            showArrow: false,
             rightBtn: buildSwitch(context, setting.scheduleUseGradient),
           ),
           SizedBox(height: 10.0),
@@ -78,12 +78,12 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
           SizedBox(height: 10.0),
           SettingItem(
             title: '课表主题',
-            isShowArrow: false,
+            showArrow: false,
             rightBtn: _showMenu(context),
           ),
           SettingItem(
             title: 'App强调色',
-            isShowArrow: false,
+            showArrow: false,
             rightBtn: Padding(
               padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
               child: _buildAppColorPreview(),
@@ -91,7 +91,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
           ),
           SettingItem(
             title: '黑暗模式',
-            isShowArrow: false,
+            showArrow: false,
             rightBtn: _buildDarkModeRadio(),
           ),
           // SettingItem(
@@ -113,13 +113,13 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
                 SizedBox(height: 10.0),
                 SettingItem(
                   title: '绩点不计选修',
-                  isShowArrow: false,
+                  showArrow: false,
                   rightBtn:
                       buildSwitch(context, setting.dontCountElectiveCourseGrade),
                 ),
                 SettingItem(
                   title: '持续自动更新天气',
-                  isShowArrow: false,
+                  showArrow: false,
                   rightBtn: buildSwitch(context, setting.autoUpdateWeather),
                 ),
                 SizedBox(height: 10.0),
@@ -127,7 +127,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
                 SizedBox(height: 10.0),
                 SettingItem(
                   title: '推送上课通知',
-                  isShowArrow: false,
+                  showArrow: false,
                   rightBtn: buildSwitch(
                     context, 
                     setting.pushNotification,

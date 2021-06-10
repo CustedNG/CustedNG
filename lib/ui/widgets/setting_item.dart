@@ -11,7 +11,7 @@ class SettingItem extends StatelessWidget {
     this.titleStyle,
     this.contentStyle,
     this.height,
-    this.isShowArrow = true,
+    this.showArrow = true,
     this.icon,
   }): super(key: key);
 
@@ -23,7 +23,7 @@ class SettingItem extends StatelessWidget {
   final TextStyle contentStyle;
   final Widget rightBtn;
   final double height;
-  final bool isShowArrow;
+  final bool showArrow;
   final Icon icon;
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class SettingItem extends StatelessWidget {
                                   )),
                         ),
                       ),
-                      this.isShowArrow
+                      this.showArrow
                           ? Icon(
                               Icons.arrow_forward_ios,
                               size: 16,
