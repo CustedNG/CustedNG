@@ -17,14 +17,33 @@ String get rmHeaderFooter => '''
 
 String get rmWxLogin => r'''
     (function() {
-      var normalLogin = document.querySelector('form[action="login"]');
-      if (normalLogin) normalLogin.parentNode.style = '';
-      var wxLogin = document.querySelector('.card-header.text-center');
-      if (wxLogin) wxLogin.parentNode.removeChild(wxLogin);
-      var wxLogin2 = document.querySelector('#notices');
-      if (wxLogin2) wxLogin2.parentNode.removeChild(wxLogin2);
-      var wx3 = document.querySelector('[id*="weixin"]')
-      if (wx3) wx3.parentNode.removeChild(wx3);
+      function action() {
+        var normalLogin = document.querySelector('form[action="login"]');
+        if (normalLogin) normalLogin.parentNode.style = '';
+        if (normalLogin) normalLogin.parentNode.parentNode.style = '';
+
+        var wxLogin = document.querySelector('.card-header.text-center');
+        if (wxLogin) wxLogin.parentNode.removeChild(wxLogin);
+  
+        var wxLogin2 = document.querySelector('#notices');
+        if (wxLogin2) wxLogin2.parentNode.removeChild(wxLogin2);
+
+        var wx3 = document.querySelector('[id*="weixin"]')
+        if (wx3) wx3.parentNode.removeChild(wx3);
+
+        document.querySelector('#loginform .card').style.paddingTop = '0px'
+        document.querySelector('#cardUp').style.paddingTop = '0px'
+        document.querySelector('#cardWx').style.paddingTop = '0px'
+      }
+
+      var wait = setInterval(function() {
+        if (!document.querySelector('#loginform')) {
+          return;
+        } else {
+          clearInterval(wait);
+          action();
+        }
+      }, 200);
     })();
   ''';
 
