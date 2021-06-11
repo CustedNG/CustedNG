@@ -23,12 +23,13 @@ class JwScheduleLesson {
   Map<String, dynamic> toJson() => _$JwScheduleLessonToJson(this);
 
   String getProp(String key) {
+    String values = '';
     for (var prop in Content) {
       if (prop.Key == key) {
-        return prop.Name;
+        values += '${prop.Name} ';
       }
     }
-    return null;
+    return values == '' ? null : values.trim();
   }
 
   String getName() => getProp('Lesson');
