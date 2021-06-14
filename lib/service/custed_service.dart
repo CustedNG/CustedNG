@@ -187,4 +187,19 @@ class CustedService extends CatClient {
     final resp = await get('$backendUrl/theme/$id/$color');
     return resp.statusCode == 200;
   }
+
+  Future<void> login2Backend(String cookie, String id) async {
+    final resp = await post(
+      '$backendUrl/verify',
+      body: {
+        'cookie': cookie,
+        'id': id
+      }
+    );
+    if (resp.statusCode == 200) {
+      print('backend verify success.');
+    } else {
+      print('backend verify: ${resp.body}');
+    }
+  } 
 }

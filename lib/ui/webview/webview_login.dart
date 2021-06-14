@@ -6,6 +6,7 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/core/utils.dart';
+import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/pages/captcha_help_page.dart';
 import 'package:custed2/ui/webview/plugin_debug.dart';
 import 'package:custed2/ui/webview/plugin_login.dart';
@@ -103,10 +104,15 @@ class _WebviewLoginState extends State<WebviewLogin> {
       await cookieJar.delete(Uri.parse(domain));
       await cookieJar.saveFromResponse(Uri.parse(domain), cookies);
     }
-
+    
     final userData = await locator.getAsync<UserDataStore>();
     userData.username.put(this.username);
     userData.password.put(this.password);
+
+    await CustedService().login2Backend(
+      buildCookie(await controller.getCookies('https://portal.cust.edu.cn/custp/shiro-cas')), 
+      this.username
+    );
 
     if (!widget.back2PrePage) {
       return;
@@ -123,5 +129,13 @@ class _WebviewLoginState extends State<WebviewLogin> {
 
     await controller.close();
     Navigator.of(context).pop(true);
+  }
+
+  String buildCookie(List cookies) {
+    String cookie = '';
+    for (var item in cookies) {
+      cookie += '${item.name}=${item.value};';
+    }
+    return cookie;
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/util/cookie.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/locator.dart';
@@ -24,8 +25,8 @@ class CatClient {
     int maxRedirects = kDefaultMaxRedirects,
     Duration timeout = kDefaultTimeout,
   }) async {
-    url = resolveUri(url);
-    final request = CatRequest(method, url);
+    Uri uri = resolveUri(url);
+    final request = CatRequest(method, uri);
     request.headers.addAll(headers);
     request.headers.putIfAbsent('Accept-Language',
         () => 'zh-CN,zh;q=0.9,zh-TW;q=0.8,en-US;q=0.7,en;q=0.6');
@@ -38,7 +39,10 @@ class CatClient {
       await _client.send(request).timeout(timeout),
     );
     saveCookies(response);
-    _alice.onHttpResponse(response);
+    final host = request.url.host;
+    if ((!host.contains('lolli.tech') && !host.contains('cust.app')) || BuildMode.isDebug) {
+      _alice.onHttpResponse(response);
+    }
     return await followRedirect(response, maxRedirects, body: body);
   }
 

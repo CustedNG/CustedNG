@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:collection/collection.dart';
 import 'package:custed2/core/user/cust_user.dart';
 import 'package:custed2/core/user/user.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
@@ -13,6 +14,7 @@ import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/kbpro_schedule.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
@@ -53,7 +55,7 @@ class UndergraduateUser with CustUser implements User {
 
     for (var rawLesson in raw) {
       final lesson = ScheduleLesson()
-        ..weeks = rawLesson.sKZC.weeks
+        ..weeks = rawLesson.sKZC.parseWeeks(rawLesson.sKZCTYPE)
         ..name = rawLesson.kCMC
         ..classes = [rawLesson.jXBMC]
         ..startTime = rawLesson.kSJC.startTime
@@ -116,6 +118,10 @@ class UndergraduateUser with CustUser implements User {
           result.lessons.add(lesson);
         }
       }
+    }
+
+    if (result.lessons.isEmpty) {
+      showSnackBar(locator<AppProvider>().ctx, '当前课表为空，若不正常\n请在设置页面开启新数据源');
     }
 
     return result;
@@ -319,12 +325,21 @@ extension Section2Time on String {
     }
   }
 
-  List<int> get weeks {
+  List<int> parseWeeks(String type) {
+    if (this.length == 2) {
+      return [int.parse(this)];
+    }
     List<int> weeks = [];
     for (var i = 0; i < this.length; i++) {
       if (this[i] == '1') {
         weeks.add(i + 1);
       }
+    }
+    if (type == '1') {
+      weeks.removeWhere((ele) => ele % 2 == 0);
+    }
+    if (type == '2') {
+      weeks.removeWhere((ele) => ele % 2 == 1);
     }
     return weeks;
   }

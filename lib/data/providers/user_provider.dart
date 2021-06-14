@@ -49,7 +49,7 @@ class UserProvider extends BusyProvider {
   Future<void> _updateProfileData({bool force = false}) async {
     if (force) {
       _profile = UserProfile()
-                  ..department = '经济管理'
+                  ..department = ' 经济管理'
                   ..displayName = '冯峻源'
                   ..studentNumber = '190913416';
     } else {
