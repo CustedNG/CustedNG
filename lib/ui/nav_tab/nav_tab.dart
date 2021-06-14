@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/webview/user_agent.dart';
@@ -38,6 +40,8 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    if (Platform.isMacOS) return Center(child: Text('macOS不支持'));
 
     return Scaffold(
       appBar: NavBar.material(

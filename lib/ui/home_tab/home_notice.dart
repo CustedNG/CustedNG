@@ -44,25 +44,8 @@ class HomeNotice extends StatelessWidget {
   }
 
   Notification _buildNotification(context, String notification) {
-    if (notification.startsWith('!')) {
-      showRoundDialog(
-        context, 
-        '重要提示', 
-        Text(notification.substring(1)), 
-        [_buildCloseButton(context)]
-      );
-      final data = notification.substring(1).split('发布于：');
-      return Notification(data[1], data[0]);
-    }
     final data = notification.split('发布于：');
     return Notification(data[1], data[0] ?? ['<版本号 TechnicalPreview#${BuildData.build}>']
-    );
-  }
-
-  Widget _buildCloseButton(context) {
-    return TextButton(
-      onPressed: () => Navigator.of(context).pop(), 
-      child: Text('关闭')
     );
   }
 }

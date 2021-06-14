@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:custed2/core/provider/provider_base.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/service/custed_service.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppProvider extends ProviderBase {
@@ -25,6 +27,25 @@ class AppProvider extends ProviderBase {
     _testerNameList = await service.getTesterNameList();
 
     notifyListeners();
+
+    showImportantNotify();
+  }
+
+  void showImportantNotify() {
+    if (ctx == null) return;
+    if (notification.startsWith('!')) {
+      showRoundDialog(
+        ctx, 
+        '重要提示', 
+        Text(notification.substring(1)), 
+        [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(), 
+            child: Text('关闭')
+          )
+        ]
+      );
+    }
   }
 
   void setContext(c) {
