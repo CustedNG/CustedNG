@@ -50,4 +50,7 @@ class SettingStore with PersistentStore {
 
   StoreProperty<bool> get scheduleUseGradient =>
       property('scheduleUseGradient', defaultValue: true);
+
+  StoreProperty<bool> get useNewScheduleSource =>
+      property('useNewScheduleSource', defaultValue: false);
 }

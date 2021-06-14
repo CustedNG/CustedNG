@@ -33,7 +33,7 @@ class AppProvider extends ProviderBase {
 
   void showImportantNotify() {
     if (ctx == null) return;
-    if (notification.startsWith('!')) {
+    if (notification.startsWith('！')) {
       showRoundDialog(
         ctx, 
         '重要提示', 

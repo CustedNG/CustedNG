@@ -59,7 +59,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             rightBtn: buildSwitch(context, setting.useScheduleAsHome),
           ),
           SettingItem(
-            title: '课表隐藏周末',
+            title: '隐藏周末',
             showArrow: false,
             rightBtn: buildSwitch(context, setting.scheduleHideWeekend),
           ),
@@ -69,9 +69,14 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             rightBtn: buildSwitch(context, setting.showInactiveLessons),
           ),
           SettingItem(
-            title: '课表使用渐变色',
+            title: '使用渐变色',
             showArrow: false,
             rightBtn: buildSwitch(context, setting.scheduleUseGradient),
+          ),
+          SettingItem(
+            title: '使用新数据源',
+            showArrow: false,
+            rightBtn: buildSwitch(context, setting.useNewScheduleSource),
           ),
           SizedBox(height: 10.0),
           Text('主题'),

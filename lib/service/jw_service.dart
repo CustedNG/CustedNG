@@ -11,6 +11,7 @@ import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/jw_student_info.dart';
 import 'package:custed2/data/models/jw_week_time.dart';
+import 'package:custed2/data/models/kbpro_schedule.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
@@ -28,6 +29,7 @@ class JwService extends WrdvpnBasedService {
 
   final MyssoService _mysso = locator<MyssoService>();
   final custed = CustedService();
+  final ecardId = locator<UserDataStore>().username.fetch();
 
   @override
   final Pattern sessionExpirationTest = '过期';
@@ -79,8 +81,6 @@ class JwService extends WrdvpnBasedService {
       headers: {'content-type': 'application/json'},
     );
 
-    final ecardId = locator<UserDataStore>().username.fetch();
-
     if (resp.statusCode == 200) {
       final result4SendChedule =
           await custed.updateCachedSchedule(ecardId, resp.body);
@@ -92,6 +92,22 @@ class JwService extends WrdvpnBasedService {
     }
 
     return resp;
+  }
+
+  Future<List<KBProSchedule>> getSelfScheduleFromKBPro() async {
+    final resp = await xRequest(
+      'GET', 
+      'https://kbpro.cust.edu.cn/Schedule/Buser',
+      headers: {'content-type': 'application/json;charset=utf-8'},
+      expireTest: (res) => res.body.length < 10,
+    );
+
+    final data = json.decode(utf8.decode(resp.bodyBytes));
+    final List<KBProSchedule> list = [];
+    for (var item in data) {
+      list.add(KBProSchedule.fromJson(item));
+    }
+    return list;
   }
 
   Future<Response> getScheduleByUUID(String userUUID) async {
@@ -191,13 +207,12 @@ class JwService extends WrdvpnBasedService {
     );
 
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
-    final id = locator<UserDataStore>().username.fetch();
     if (resp.statusCode == 200) {
-      if (id?.length == 10) {
-        await custed.updateCacheGrade(id, resp.body);
+      if (ecardId?.length == 10) {
+        await custed.updateCacheGrade(ecardId, resp.body);
       }
     } else {
-      final response = await custed.getCachedGrade(id);
+      final response = await custed.getCachedGrade(ecardId);
       if (response.statusCode == 200) {
         return JwGradeData.fromJson(
             JwResponse.fromJson(json.decode(response.body)).data);

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
+import 'package:collection/collection.dart';
 import 'package:custed2/core/user/cust_user.dart';
 import 'package:custed2/core/user/user.dart';
 import 'package:custed2/data/models/grade.dart';
@@ -9,8 +10,10 @@ import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
 import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
+import 'package:custed2/data/models/kbpro_schedule.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
+import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/jw_service.dart';
@@ -21,6 +24,10 @@ class UndergraduateUser with CustUser implements User {
 
   @override
   Future<Schedule> getSchedule() async {
+    if (locator<SettingStore>().useNewScheduleSource.fetch()) {
+      final raw = await _jw.getSelfScheduleFromKBPro();
+      return normalizeScheduleKBPro(raw);
+    }
     final rawSchedule = await _jw.getSchedule();
     return normalizeSchedule(rawSchedule);
   }
@@ -35,6 +42,51 @@ class UndergraduateUser with CustUser implements User {
     final jwService = locator<JwService>();
     final rawSchedule = await jwService.getSchedule(uuid);
     return normalizeSchedule(rawSchedule);
+  }
+
+  static Future<Schedule> normalizeScheduleKBPro(List<KBProSchedule> raw) async {
+    final result = Schedule()
+      ..createdAt = DateTime.now()
+      ..versionHash = await computeJsonHashAsync(raw)
+      ..startDate = getScheduleStartTime()
+      ..lessons = [];
+
+    for (var rawLesson in raw) {
+      final lesson = ScheduleLesson()
+        ..weeks = rawLesson.sKZC.weeks
+        ..name = rawLesson.kCMC
+        ..classes = [rawLesson.jXBMC]
+        ..startTime = rawLesson.kSJC.startTime
+        ..endTime = rawLesson.jSJC.endTime
+        ..type = ScheduleLessonType.general
+        ..weekday = int.parse(rawLesson.wEEK)
+        ..classRaw = rawLesson.jXBMC
+        ..startSection = int.parse(rawLesson.kSJC)
+        ..endSection = int.parse(rawLesson.jSJC)
+        ..roomRaw = rawLesson.jSMC
+        ..teacherName = rawLesson.jSXM
+        ..classRaw = rawLesson.jXBMC;
+      
+      result.lessons.add(lesson);
+    }
+
+    for (var idx1 = 0; idx1 < result.lessons.length - 1; idx1++) {
+      for (var idx2 = idx1 + 1; idx2 < result.lessons.length; idx2++) {
+        final l1 = result.lessons[idx1];
+        final l2 = result.lessons[idx2];
+        if (l1.name == l2.name &&
+            listEq(l1.weeks, l2.weeks) &&
+            l1.startSection == l2.startSection &&
+            l1.endSection == l2.endSection &&
+            l1.roomRaw == l2.roomRaw &&
+            l1.weekday == l2.weekday) {
+          result.lessons[idx1].teacherName += ' ${l2.teacherName}';
+          result.lessons.removeAt(idx2);
+        }
+      }
+    }
+    
+    return result;
   }
 
   static Future<Schedule> normalizeSchedule(JwSchedule raw) async {
@@ -196,3 +248,86 @@ class UndergraduateUser with CustUser implements User {
     return table['$year$nth'] ?? table.values.last;
   }
 }
+
+class SectionTime {
+  String startTime;
+  String endTime;
+
+  SectionTime(this.startTime, this.endTime);
+}
+
+extension Section2Time on String {
+  String get startTime {
+    switch (this) {
+      case '01':
+        return '8:00';
+      case '02':
+        return '8:50';
+      case '03':
+        return '10:05';
+      case '04':
+        return '10:50';
+      case '05':
+        return '13:30';
+      case '06':
+        return '14:20';
+      case '07':
+        return '15:35';
+      case '08':
+        return '16:25';
+      case '09':
+        return '18:00';
+      case '10':
+        return '18:50';
+      case '11':
+        return '19:45';
+      case '12':
+        return '20:35';
+      default:
+        return '';
+    }
+  }
+
+  String get endTime {
+    switch (this) {
+      case '01':
+        return '8:45';
+      case '02':
+        return '9:30';
+      case '03':
+        return '10:50';
+      case '04':
+        return '11:40';
+      case '05':
+        return '14:15';
+      case '06':
+        return '15:05';
+      case '07':
+        return '16:20';
+      case '08':
+        return '17:10';
+      case '09':
+        return '18:45';
+      case '10':
+        return '19:35';
+      case '11':
+        return '20:25';
+      case '12':
+        return '21:20';
+      default:
+        return '';
+    }
+  }
+
+  List<int> get weeks {
+    List<int> weeks = [];
+    for (var i = 0; i < this.length; i++) {
+      if (this[i] == '1') {
+        weeks.add(i + 1);
+      }
+    }
+    return weeks;
+  }
+}
+
+Function listEq = const ListEquality().equals;
