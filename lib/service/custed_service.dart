@@ -15,7 +15,7 @@ import 'package:http/http.dart' show Response;
 class CustedService extends CatClient {
   static const baseUrl = 'https://cust.app';
   static const ccUrl = 'https://cust.cc';
-  static const backendUrl = 'https://custed.lolli.tech';
+  static const backendUrl = 'https://v2.custed.lolli.tech';
   static const defaultTimeout = Duration(seconds: 10);
 
   Future<WeatherData> getWeather() async {
