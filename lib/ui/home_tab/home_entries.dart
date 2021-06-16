@@ -1,4 +1,5 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
@@ -8,6 +9,7 @@ import 'package:custed2/service/campus_wifi_service.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
 import 'package:custed2/core/utils.dart';
+import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +20,7 @@ class HomeEntries extends StatefulWidget {
 }
 
 class _HomeEntriesState extends State<HomeEntries> {
-  String tikuUrl = 'https://tiku.lacus.site';
+  String tikuUrl = 'https://tiku-ng.lacus.site';
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -47,7 +49,7 @@ class _HomeEntriesState extends State<HomeEntries> {
     final userData = await locator.getAsync<UserDataStore>();
     final username = userData.username.fetch();
     setState(() {
-      tikuUrl = 'https://tiku.lacus.site/?cid=$username';
+      tikuUrl = 'https://tiku-ng.lacus.site/?cid=$username';
     });
   }
 
@@ -86,7 +88,13 @@ class _HomeEntriesState extends State<HomeEntries> {
           HomeEntry(
             name: Text('题库', style: style),
             icon: Image(image: ImageRes.tikuIcon),
-            action: () => tiku2WebPage.go(context),
+            action: () => AppRoute(
+              page: WebviewBrowser(
+                tikuUrl, 
+                showBottom: false
+              ),
+              title: '考试题库'
+            ).go(context),
           ),
           HomeEntry(
             name: Text('地图', style: style),

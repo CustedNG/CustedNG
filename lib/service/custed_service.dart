@@ -10,7 +10,6 @@ import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
-import 'package:dio/dio.dart' show Dio;
 import 'package:http/http.dart' show Response;
 
 class CustedService extends CatClient {
@@ -97,53 +96,40 @@ class CustedService extends CatClient {
     return resp.body;
   }
 
-  Future<String> updateCachedSchedule(String ecardId, String body) async {
+  Future<String> updateCachedSchedule(String body) async {
     final resp = await post(
-      '$backendUrl/schedule/$ecardId',
+      '$backendUrl/schedule',
       headers: {'content-type': 'application/json'},
       body: body,
     );
     return '${resp.statusCode} ${resp.body}';
   }
 
-  Future<Response> getCacheSchedule(String ecardId) async {
-    return await get('$backendUrl/schedule/$ecardId');
+  Future<Response> getCacheSchedule() async {
+    return await get('$backendUrl/schedule');
   }
 
-  Future<bool> sendToken(String token, String userName, bool isIOS) async {
+  Future<bool> sendToken(String token, bool isIOS) async {
     String url;
     if (isIOS) {
-      url = "$backendUrl/ios/token";
+      url = "$backendUrl/token/ios";
     } else {
-      url = "$backendUrl/android/token";
+      url = "$backendUrl/token/android";
     }
-    Map<String, dynamic> queryParams = {
+    Map<String, String> queryParams = {
       "token": token,
-      // 一卡通号， eg：2019003373
-      "id": userName,
     };
-    final resp = await Dio().post(url, queryParameters: queryParams);
+    final resp = await post(url, body: queryParams);
     if (resp.statusCode == 200) {
       print('send push token success: $token');
       return true;
     }
-    print('send token failed: ${resp.data}');
+    print('send token failed: ${resp.body}');
     return false;
   }
 
-  Future<Response> getCachedGrade(String ecardId) async {
-    return await get('$backendUrl/grade?id=$ecardId');
-  }
-
-  Future<void> updateCacheGrade(String ecardId, String grade) async {
-    final resp = await post('$backendUrl/grade/$ecardId',
-        headers: {'content-type': 'application/json'}, body: grade);
-
-    if (resp.statusCode != 200) {
-      print('send cache grade: ${resp.body}');
-      return;
-    }
-    print('send cache grade successfully');
+  Future<Response> getCachedGrade() async {
+    return await get('$backendUrl/grade');
   }
 
   Future<bool> showRealCustedUI() async {
@@ -151,12 +137,12 @@ class CustedService extends CatClient {
     return resp.body == '1';
   }
 
-  Future<Response> getCachedExam(String ecardId) async {
-    return await get('$backendUrl/exam?id=$ecardId');
+  Future<Response> getCachedExam() async {
+    return await get('$backendUrl/exam');
   }
 
-  Future<void> updateCahedExam(String eacrdId, String exam) async {
-    final resp = await post('$backendUrl/exam/$eacrdId',
+  Future<void> updateCahedExam(String exam) async {
+    final resp = await post('$backendUrl/exam',
         headers: {'content-type': 'application/json'}, body: exam);
 
     if (resp.statusCode == 200) {
@@ -202,4 +188,17 @@ class CustedService extends CatClient {
       print('backend verify: ${resp.body}');
     }
   } 
+
+  Future<String> updateCachedScheduleKBPro(String body) async {
+    final resp = await post(
+      '$backendUrl/scheduleKBPro',
+      headers: {'content-type': 'application/json'},
+      body: body,
+    );
+    return '${resp.statusCode} ${resp.body}';
+  }
+
+  Future<Response> getCacheScheduleKBPro() async {
+    return await get('$backendUrl/scheduleKBPro');
+  }
 }

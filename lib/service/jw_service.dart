@@ -13,7 +13,6 @@ import 'package:custed2/data/models/jw_student_info.dart';
 import 'package:custed2/data/models/jw_week_time.dart';
 import 'package:custed2/data/models/kbpro_schedule.dart';
 import 'package:custed2/data/providers/app_provider.dart';
-import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/mysso_service.dart';
@@ -29,7 +28,6 @@ class JwService extends WrdvpnBasedService {
 
   final MyssoService _mysso = locator<MyssoService>();
   final custed = CustedService();
-  final ecardId = locator<UserDataStore>().username.fetch();
 
   @override
   final Pattern sessionExpirationTest = '过期';
@@ -57,7 +55,7 @@ class JwService extends WrdvpnBasedService {
     if (!locator<AppProvider>().showRealUI) {
       print('using fake schedule');
       return JwSchedule.fromJson(JwResponse.fromJson(
-              json.decode((await custed.getCacheSchedule('2019003373')).body))
+              json.decode((await custed.getCacheSchedule()).body))
           .data);
     }
     await locator<RemoteConfigService>().reloadData();
@@ -83,10 +81,10 @@ class JwService extends WrdvpnBasedService {
 
     if (resp.statusCode == 200) {
       final result4SendChedule =
-          await custed.updateCachedSchedule(ecardId, resp.body);
+          await custed.updateCachedSchedule(resp.body);
       print('send cache schedule to backend: $result4SendChedule');
     } else {
-      final cache = await custed.getCacheSchedule(ecardId);
+      final cache = await custed.getCacheSchedule();
       print('use cached schedule from backend: ${cache.statusCode}');
       if (cache.statusCode == 200) return cache;
     }
@@ -95,12 +93,22 @@ class JwService extends WrdvpnBasedService {
   }
 
   Future<List<KBProSchedule>> getSelfScheduleFromKBPro() async {
-    final resp = await xRequest(
+    Response resp = await xRequest(
       'GET', 
       'https://kbpro.cust.edu.cn/Schedule/Buser',
       headers: {'content-type': 'application/json;charset=utf-8'},
       expireTest: (res) => res.body.length < 10,
     );
+
+    if (resp.statusCode == 200) {
+      final result4SendChedule =
+          await custed.updateCachedScheduleKBPro(utf8.decode(resp.bodyBytes));
+      print('send cache schedule to backend: $result4SendChedule');
+    } else {
+      final cache = await custed.getCacheScheduleKBPro();
+      print('use cached schedule from backend: ${cache.statusCode}');
+      if (cache.statusCode == 200) resp = cache;
+    }
 
     final data = json.decode(utf8.decode(resp.bodyBytes));
     final List<KBProSchedule> list = [];
@@ -182,7 +190,7 @@ class JwService extends WrdvpnBasedService {
     if (!locator<AppProvider>().showRealUI) {
       print('using fake grade.');
       return JwGradeData.fromJson(JwResponse.fromJson(
-              json.decode((await custed.getCachedGrade('2019003373')).body))
+              json.decode((await custed.getCachedGrade()).body))
           .data);
     }
 
@@ -207,17 +215,6 @@ class JwService extends WrdvpnBasedService {
     );
 
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
-    if (resp.statusCode == 200) {
-      if (ecardId?.length == 10) {
-        await custed.updateCacheGrade(ecardId, resp.body);
-      }
-    } else {
-      final response = await custed.getCachedGrade(ecardId);
-      if (response.statusCode == 200) {
-        return JwGradeData.fromJson(
-            JwResponse.fromJson(json.decode(response.body)).data);
-      }
-    }
     return JwGradeData.fromJson(parsedResponse.data);
   }
 
@@ -307,7 +304,7 @@ class JwService extends WrdvpnBasedService {
     if (!locator<AppProvider>().showRealUI) {
       print('using fake exam');
       return JwExam.fromJson(
-          json.decode((await custed.getCachedExam('2019003373')).body));
+          json.decode((await custed.getCachedExam()).body));
     }
 
     final resp = await xRequest(
@@ -328,13 +325,12 @@ class JwService extends WrdvpnBasedService {
       headers: {'content-type': 'application/json'},
     );
 
-    final id = locator<UserDataStore>().username.fetch();
     if (resp.statusCode == 200) {
-      await custed.updateCahedExam(id, resp.body);
+      await custed.updateCahedExam(resp.body);
       return JwExam.fromJson(json.decode(resp.body));
     } else {
       return JwExam.fromJson(
-          json.decode((await custed.getCachedExam(id)).body));
+          json.decode((await custed.getCachedExam()).body));
     }
   }
 

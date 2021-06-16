@@ -299,7 +299,7 @@ extension Section2Time on String {
       case '01':
         return '8:45';
       case '02':
-        return '9:30';
+        return '9:35';
       case '03':
         return '10:50';
       case '04':

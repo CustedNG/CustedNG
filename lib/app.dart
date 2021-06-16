@@ -125,7 +125,7 @@ Future<void> initPushService(String userName) async {
     print('get token failed');
     return;
   }
-  await CustedService().sendToken(token, userName, Platform.isIOS);
+  await CustedService().sendToken(token, Platform.isIOS);
 }
 
 Future<String> getToken() async {

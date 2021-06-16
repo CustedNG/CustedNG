@@ -41,6 +41,11 @@
 	<string>需要写入图片</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>需要读取图片</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
