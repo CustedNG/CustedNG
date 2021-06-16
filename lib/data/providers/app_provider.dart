@@ -10,6 +10,7 @@ class AppProvider extends ProviderBase {
   String _notification;
   Map _changeLog;
   bool _showRealUI = true;
+  bool _useKBPro = false;
   String _testerNameList;
   BuildContext ctx;
   int build;
@@ -18,6 +19,7 @@ class AppProvider extends ProviderBase {
   Map get changeLog => _changeLog;
   bool get showRealUI => _showRealUI;
   String get testerNameList => _testerNameList;
+  bool get useKBPro => _useKBPro;
 
   Future<void> loadLocalData() async {
     final service = CustedService();
@@ -25,6 +27,7 @@ class AppProvider extends ProviderBase {
     _changeLog = await service.getChangeLog();
     _showRealUI = await service.showRealCustedUI() || Platform.isAndroid;
     _testerNameList = await service.getTesterNameList();
+    _useKBPro = await service.useKBPro();
 
     notifyListeners();
 

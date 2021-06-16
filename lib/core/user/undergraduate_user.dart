@@ -15,7 +15,6 @@ import 'package:custed2/data/models/kbpro_schedule.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/app_provider.dart';
-import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/jw_service.dart';
@@ -26,7 +25,7 @@ class UndergraduateUser with CustUser implements User {
 
   @override
   Future<Schedule> getSchedule() async {
-    if (locator<SettingStore>().useNewScheduleSource.fetch()) {
+    if (locator<AppProvider>().useKBPro) {
       final raw = await _jw.getSelfScheduleFromKBPro();
       return normalizeScheduleKBPro(raw);
     }

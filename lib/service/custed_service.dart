@@ -201,4 +201,9 @@ class CustedService extends CatClient {
   Future<Response> getCacheScheduleKBPro() async {
     return await get('$backendUrl/scheduleKBPro');
   }
+
+  Future<bool> useKBPro() async {
+    final resp = await get('$backendUrl/res/useKBPro');
+    return resp.body == 'true';
+  }
 }

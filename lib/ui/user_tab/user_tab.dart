@@ -73,11 +73,6 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             showArrow: false,
             rightBtn: buildSwitch(context, setting.scheduleUseGradient),
           ),
-          SettingItem(
-            title: '使用新数据源',
-            showArrow: false,
-            rightBtn: buildSwitch(context, setting.useNewScheduleSource),
-          ),
           SizedBox(height: 10.0),
           Text('主题'),
           SizedBox(height: 10.0),
