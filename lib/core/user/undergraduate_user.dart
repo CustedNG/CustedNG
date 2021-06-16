@@ -145,7 +145,7 @@ class UndergraduateUser with CustUser implements User {
           ..lessonType = rawGrade.KCXZ
           ..schoolHour = rawGrade.XS
           ..credit = rawGrade.XF
-          ..mark = rawGrade.YXCJ
+          ..mark = rawGrade.YXCJ ?? 0
           ..rawMark = rawGrade.ShowYXCJ
           ..lessonName = rawGrade.LessonInfo.KCMC
           ..testType = rawGrade.KSXZ
@@ -223,6 +223,10 @@ class UndergraduateUser with CustUser implements User {
       ..resitCount = raw.GradeStatistics.BKCS
       ..retakeCount = raw.GradeStatistics.CXCS
       ..terms = terms;
+
+    if (result.terms.last.grades.last.rawMark == '未评教') {
+      showSnackBar(locator<AppProvider>().ctx, '当前未评教\n未评教无法正常显示成绩');
+    }
 
     return result;
   }
