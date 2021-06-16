@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:custed2/core/open.dart';
@@ -64,10 +65,21 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
       showSnackBar(context, '当前没有新版本');
       return;
     }
-    AppRoute(
+    
+    final updatePage = AppRoute(
       title: '更新',
       page: UpdateNoticePage(update),
-    ).go(context);
+    );
+    if (update.level == 1) {
+      showSnackBarWithAction(
+        context, 
+        'Custed有更新啦，Ver：${update.build}', 
+        '更新', 
+        () => updatePage.go(context)
+      );
+    } else {
+      updatePage.go(context);
+    }
   }
 }
 
