@@ -2,6 +2,7 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
+import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:flutter/material.dart';
@@ -69,8 +70,9 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     userData.username.put(usernameController.text);
     userData.password.put(passwordController.text);
 
-    user.login(force: true);
-    Navigator.pop(ctx);
+    await user.login(force: true);
+    await CustedService().login2Backend("", "FakeUser");
+    Navigator.of(context).pop(ctx);
   }
 
   void focusOnPasswordField() {

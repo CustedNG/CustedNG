@@ -93,6 +93,17 @@ class JwService extends WrdvpnBasedService {
   }
 
   Future<List<KBProSchedule>> getSelfScheduleFromKBPro() async {
+    if (!locator<AppProvider>().showRealUI) {
+      print('using fake schedule kbpro');
+      final resp = await custed.getCacheScheduleKBPro();
+      final data = json.decode(utf8.decode(resp.bodyBytes));
+      final List<KBProSchedule> list = [];
+      for (var item in data) {
+        list.add(KBProSchedule.fromJson(item));
+      }
+      return list;
+    }
+
     Response resp = await xRequest(
       'GET', 
       'https://kbpro.cust.edu.cn/Schedule/Buser',
