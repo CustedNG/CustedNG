@@ -16,10 +16,9 @@ class CustedService extends CatClient {
   static const baseUrl = 'https://cust.app';
   static const ccUrl = 'https://cust.cc';
   static const backendUrl = 'https://v2.custed.lolli.tech';
-  static const defaultTimeout = Duration(seconds: 10);
 
   Future<WeatherData> getWeather() async {
-    final resp = await get('$baseUrl/app/weather', timeout: defaultTimeout);
+    final resp = await get('$baseUrl/app/weather');
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
     if (custedResp.hasError) return null;
     return WeatherData.fromJson(custedResp.data as Map<String, dynamic>);
@@ -28,7 +27,7 @@ class CustedService extends CatClient {
   Future<String> getNotify() async {
     final build = BuildData.build;
     final resp =
-        await get('$backendUrl/notify?build=$build', timeout: defaultTimeout);
+        await get('$backendUrl/notify?build=$build');
     final body = resp.body;
     if (body == '') return null;
     return body;
@@ -36,8 +35,7 @@ class CustedService extends CatClient {
 
   Future<CustedUpdate> getUpdate() async {
     final build = BuildData.build;
-    final resp = await get('$baseUrl/app/apk/newest?build=$build',
-        timeout: defaultTimeout);
+    final resp = await get('$baseUrl/app/apk/newest?build=$build');
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
     if (custedResp.hasError) return null;
     return CustedUpdate.fromJson(custedResp.data as Map<String, dynamic>);
@@ -45,8 +43,7 @@ class CustedService extends CatClient {
 
   Future<CustedUpdateiOS> getiOSUpdate() async {
     final build = BuildData.build;
-    final resp = await get('$backendUrl/ios/update?build=$build',
-        timeout: defaultTimeout);
+    final resp = await get('$backendUrl/update/ios?build=$build');
     return CustedUpdateiOS.fromJson(
         json.decode(resp.body) as Map<String, dynamic>);
   }
@@ -54,20 +51,20 @@ class CustedService extends CatClient {
   Future<CustedBanner> getBanner() async {
     final build = BuildData.build;
     final resp =
-        await get('$baseUrl/app/banner?build=$build', timeout: defaultTimeout);
+        await get('$baseUrl/app/banner?build=$build');
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
     if (custedResp.hasError) return null;
     return CustedBanner.fromJson(custedResp.data as Map<String, dynamic>);
   }
 
   Future<bool> getShouldShowExam() async {
-    final resp = await get('$backendUrl/res/haveExam', timeout: defaultTimeout);
+    final resp = await get('$backendUrl/res/haveExam');
     if (resp.body != null) return resp.body == '1' ? true : false;
     return false;
   }
 
   Future<String> getRemoteConfigJson() async {
-    final resp = await get('$backendUrl/jw/randomUrl', timeout: defaultTimeout);
+    final resp = await get('$backendUrl/jw/randomUrl');
     return resp.body;
   }
 
@@ -160,12 +157,10 @@ class CustedService extends CatClient {
     return '名单加载失败';
   }
 
-  Future<bool> setPushScheduleNotification(bool open) async {
-    final id = locator<UserDataStore>().username.fetch();
-    if (id == null) return false;
+  Future<void> setPushScheduleNotification(bool open) async {
     final on = open ? 'on' : 'off';
-    final resp = await get('$backendUrl/schedule/push/$id/$on');
-    return resp.statusCode == 200;
+    final resp = await get('$backendUrl/schedule/push/$on');
+    print('set schedule push notification: ${resp.statusCode} ${resp.body}');
   }
 
   Future<bool> sendThemeData(String color) async {

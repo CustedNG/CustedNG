@@ -79,7 +79,10 @@ class _WebviewLoginState extends State<WebviewLogin> {
 
     if (url.contains('portal.cust.edu.cn')) {
       loginDone = true;
-      await loginSuccessCallback(controller);
+      Future.delayed(
+        Duration(milliseconds: 377), 
+        () async => await loginSuccessCallback(controller)
+      );
     }
   }
 
@@ -95,14 +98,16 @@ class _WebviewLoginState extends State<WebviewLogin> {
       'https://wwwn.cust.edu.cn/',
       'https://vpn.cust.edu.cn/',
       'https://webvpn.cust.edu.cn/',
+      'https://portal.cust.edu.cn/custp/shiro-cas'
     ];
 
     final cookieJar = locator<PersistCookieJar>();
 
     for (var domain in syncDomains) {
       final cookies = await controller.getCookies(domain);
-      await cookieJar.delete(Uri.parse(domain));
-      await cookieJar.saveFromResponse(Uri.parse(domain), cookies);
+      final uri = domain.uri;
+      await cookieJar.delete(uri);
+      await cookieJar.saveFromResponse(uri, cookies);
     }
     
     final userData = await locator.getAsync<UserDataStore>();
@@ -110,7 +115,7 @@ class _WebviewLoginState extends State<WebviewLogin> {
     userData.password.put(this.password);
 
     await CustedService().login2Backend(
-      buildCookie(await controller.getCookies('https://portal.cust.edu.cn/custp/shiro-cas')), 
+      buildCookie(await cookieJar.loadForRequest(syncDomains.last.uri)), 
       this.username
     );
 

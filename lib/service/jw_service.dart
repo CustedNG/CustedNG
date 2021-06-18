@@ -80,9 +80,9 @@ class JwService extends WrdvpnBasedService {
     );
 
     if (resp.statusCode == 200) {
-      final result4SendChedule =
+      final result4SendSchedule =
           await custed.updateCachedSchedule(resp.body);
-      print('send cache schedule to backend: $result4SendChedule');
+      print('send cache schedule to backend: $result4SendSchedule');
     } else {
       final cache = await custed.getCacheSchedule();
       print('use cached schedule from backend: ${cache.statusCode}');

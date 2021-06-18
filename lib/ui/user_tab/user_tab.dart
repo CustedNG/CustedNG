@@ -189,12 +189,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
 
   void sendSetting2Backend(bool v) async {
     if (v) showSnackBar(context, ' 该功能处于测试阶段！');
-    final suc = await custed.setPushScheduleNotification(v);
-    if (suc) {
-      print('set enable schedule notification success');
-      return;
-    }
-    print('set disable schedule notification failed');
+    await custed.setPushScheduleNotification(v);
   }
 
   void _showAppColorPicker(Color selected) {

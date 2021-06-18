@@ -148,10 +148,11 @@ Future<void> requestUpdateHomeWidget(String userName, bool enablePush) async {
   final setIdResult =
       await HomeWidget.saveWidgetData('ecardId', userName ?? '');
   print('set ecardId for home widget: ${setIdResult ? "success" : "failed"}');
-  final setEnableLessonPush = 
-      await HomeWidget.saveWidgetData('enableLessonPush', enablePush);
-  print('set enableLessonPush for home widget successfully? $setEnableLessonPush');
+  
   if (Platform.isAndroid) {
+    final setPushResult = 
+      await HomeWidget.saveWidgetData('enableLessonPush', enablePush);
+    print('set lessonPush for home widget successfully? $setPushResult');
     HomeWidget.updateWidget(
       name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
   }
