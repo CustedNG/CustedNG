@@ -80,7 +80,7 @@ class _WebviewLoginState extends State<WebviewLogin> {
     if (url.contains('portal.cust.edu.cn')) {
       loginDone = true;
       Future.delayed(
-        Duration(milliseconds: 377), 
+        Duration(milliseconds: 177), 
         () async => await loginSuccessCallback(controller)
       );
     }
