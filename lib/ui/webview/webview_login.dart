@@ -8,6 +8,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/pages/captcha_help_page.dart';
+import 'package:custed2/ui/webview/plugin_captcha.dart';
 import 'package:custed2/ui/webview/plugin_debug.dart';
 import 'package:custed2/ui/webview/plugin_login.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
@@ -48,6 +49,7 @@ class _WebviewLoginState extends State<WebviewLogin> {
         PluginForMysso(),
         PluginForLogin(onLoginData),
         PluginForDebug(),
+        PluginForCaptcha()
       ],
     );
   }
@@ -61,14 +63,14 @@ class _WebviewLoginState extends State<WebviewLogin> {
       );
     });
 
-    Future.delayed(Duration(seconds: 1), () => showSnackBarWithPage(
+    Future.delayed(Duration(seconds: 5), () => showSnackBarWithPage(
       context, 
-      '不知验证码为何物？',
+      '验证码发送失败？',
       AppRoute(
         page: JwCaptchaHelpPage(),
         title: '验证码帮助'
       ),
-      '点我查看'
+      '帮助'
     ));
   }
 
@@ -80,7 +82,7 @@ class _WebviewLoginState extends State<WebviewLogin> {
     if (url.contains('portal.cust.edu.cn')) {
       loginDone = true;
       Future.delayed(
-        Duration(milliseconds: 177), 
+        Duration(milliseconds: 277), 
         () async => await loginSuccessCallback(controller)
       );
     }
