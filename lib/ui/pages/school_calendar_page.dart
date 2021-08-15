@@ -62,7 +62,7 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
                 child: Container(
                   width: size.width,
                   child: Text(
-                    '不是最新校历？点击查看最新文字版', 
+                    '点击查看文字版', 
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white)
                   ),
