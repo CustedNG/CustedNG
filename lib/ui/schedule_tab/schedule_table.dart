@@ -16,7 +16,7 @@ class ScheduleTable extends StatelessWidget {
     this.week = 1,
     this.showInactive = true,
     this.highLightToday = true,
-    this.themeIdx = 0
+    this.themeIdx = 0,
   });
 
   final Schedule schedule;
@@ -76,7 +76,9 @@ class ScheduleTable extends StatelessWidget {
       final lessonWidget = rows[slotIndex].children[weekIndex];
       if (lessonWidget == placeholder) {
         rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(
-          lesson, themeIdx: themeIdx, useGradient: useGradient,
+          lesson,
+          themeIdx: themeIdx,
+          useGradient: useGradient,
         );
       } else {
         final lw = (lessonWidget as ScheduleLessonWidget);
@@ -101,7 +103,8 @@ class ScheduleTable extends StatelessWidget {
         rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(lesson,
             isActive: false,
             occupancyRate:
-                (schedule.lessonCount(weekIndex, slotIndex) - minLessonCount) / interval);
+                (schedule.lessonCount(weekIndex, slotIndex) - minLessonCount) /
+                    interval);
       }
     }
   }
@@ -116,12 +119,14 @@ class ScheduleTable extends StatelessWidget {
       color: theme.scheduleTextColor,
       fontWeight: FontWeight.w500,
       fontSize: 12,
+      height: 1.2,
     );
 
     final chsDateStyle = TextStyle(
       color: theme.scheduleTextColor,
       fontWeight: FontWeight.bold,
       fontSize: 15,
+      height: 1.2,
     );
 
     for (var i = 0; i < (hideWeekend ? 5 : 7); i++) {
@@ -129,7 +134,7 @@ class ScheduleTable extends StatelessWidget {
       final date = schedule.startDate.add(Duration(days: dayOffset));
       final shouldShowMonth = i == 0 || date.day == 1;
       final displayDate =
-      shouldShowMonth ? '${date.month}/${date.day}' : '${date.day}';
+          shouldShowMonth ? '${date.month}/${date.day}' : '${date.day}';
 
       final dateOverride = showFestivalAndHoliday
           ? ScheduleDates.getHoliday(date) ?? ScheduleDates.getSolarTerm(date)
@@ -143,11 +148,13 @@ class ScheduleTable extends StatelessWidget {
             dateOverride ?? displayDate,
             style: dateStyle,
             maxLines: 1,
+            overflow: TextOverflow.fade,
           ),
           Text(
             date.weekday.weekdayInChinese(),
             style: chsDateStyle,
             maxLines: 1,
+            overflow: TextOverflow.fade,
           ),
         ]),
       ));
@@ -167,6 +174,10 @@ class ScheduleTable extends StatelessWidget {
   }
 
   Widget _withArrow(Widget child, bool hideWeekend) {
-    return ScheduleArrow(child: child, schedule: schedule, hideWeekend: hideWeekend);
+    return ScheduleArrow(
+      child: child,
+      schedule: schedule,
+      hideWeekend: hideWeekend,
+    );
   }
 }
