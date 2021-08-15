@@ -31,7 +31,7 @@ class ImageRes {
   static const testPaperIcon = AssetImage('assets/icon/test_paper.png');
   static const tikuIcon = AssetImage('assets/icon/tiku.png');
 
-  static const miscSchoolCalendar = AssetImage('assets/calendar/2020-2021-1.png');
+  static const miscSchoolCalendar = AssetImage('assets/calendar/2021-2022-1.webp');
 
   static const wechatStep1 = AssetImage('assets/wechat/step1.jpg');
   static const wechatStep2 = AssetImage('assets/wechat/step2.jpg');
