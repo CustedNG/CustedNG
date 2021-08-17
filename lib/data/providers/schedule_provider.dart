@@ -26,7 +26,10 @@ class ScheduleProvider extends BusyProvider {
 
   int get maxWeek => _schedule?.weekCount;
 
-  int get currentWeek => _schedule?.calculateWeekSinceStart(DateTime.now());
+  int get currentWeek {
+    final weeks = _schedule?.calculateWeekSinceStart(DateTime.now());
+    return weeks > 0 ? weeks : 1;
+  }
 
   CustomScheduleProfile _customScheduleProfile;
 
@@ -89,7 +92,7 @@ class ScheduleProvider extends BusyProvider {
       final scheduleStore = await locator.getAsync<CustomScheduleStore>();
       scheduleStore.saveScheduleWithUUID(uuid, schedule);
     }
-    if(customScheduleProfile == requestedProfile) {
+    if (customScheduleProfile == requestedProfile) {
       _useSchedule(schedule);
     }
   }
