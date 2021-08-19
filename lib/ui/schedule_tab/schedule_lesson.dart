@@ -49,11 +49,11 @@ class ScheduleLessonWidget extends StatelessWidget {
         margin: EdgeInsets.all(2.5),
         constraints: BoxConstraints(maxWidth: 70, maxHeight: 100),
         decoration: BoxDecoration(
-          color: useGradient ? null : colors[0],
-          gradient: useGradient ?? true ? LinearGradient(
+          color: (useGradient && lesson == null) ? null : colors[0],
+          gradient: (colors != null && colors.length > 1 && useGradient ?? true) ? LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: colors ?? [Colors.transparent, Colors.transparent]
+            colors: colors
           ) : null,
           borderRadius: BorderRadius.all(Radius.circular(4))
         ),
