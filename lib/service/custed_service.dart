@@ -10,6 +10,7 @@ import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
+import 'package:dio/dio.dart' show Dio;
 import 'package:http/http.dart' show Response;
 
 class CustedService extends CatClient {
@@ -26,8 +27,7 @@ class CustedService extends CatClient {
 
   Future<String> getNotify() async {
     final build = BuildData.build;
-    final resp =
-        await get('$backendUrl/notify?build=$build');
+    final resp = await get('$backendUrl/notify?build=$build');
     final body = resp.body;
     if (body == '') return null;
     return body;
@@ -50,8 +50,7 @@ class CustedService extends CatClient {
 
   Future<CustedBanner> getBanner() async {
     final build = BuildData.build;
-    final resp =
-        await get('$baseUrl/app/banner?build=$build');
+    final resp = await get('$baseUrl/app/banner?build=$build');
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
     if (custedResp.hasError) return null;
     return CustedBanner.fromJson(custedResp.data as Map<String, dynamic>);
@@ -59,13 +58,13 @@ class CustedService extends CatClient {
 
   Future<bool> getShouldShowExam() async {
     final resp = await get('$backendUrl/res/haveExam');
-    if (resp.body != null) return resp.body == '1' ? true : false;
-    return false;
+    if (resp.body != null) return resp.body == '1';
+    return true;
   }
 
   Future<String> getRemoteConfigJson() async {
     final resp = await get('$backendUrl/jw/randomUrl');
-    return resp.body;
+    return resp.body ?? '{"jwglBaseUrl":"https://jwgls3.cust.edu.cn"}';
   }
 
   Future<List<String>> getWebviewPlugins() async {
@@ -131,7 +130,8 @@ class CustedService extends CatClient {
 
   Future<bool> showRealCustedUI() async {
     final resp = await get('$backendUrl/showRealUI?build=${BuildData.build}');
-    return resp.body == '1';
+    if (resp.body != null || resp.body != '') return resp.body == '1';
+    return true;
   }
 
   Future<Response> getCachedExam() async {
@@ -170,19 +170,14 @@ class CustedService extends CatClient {
   }
 
   Future<void> login2Backend(String cookie, String id) async {
-    final resp = await post(
-      '$backendUrl/verify',
-      body: {
-        'cookie': cookie,
-        'id': id
-      }
-    );
+    final resp =
+        await post('$backendUrl/verify', body: {'cookie': cookie, 'id': id});
     if (resp.statusCode == 200) {
       print('backend verify success.');
     } else {
       print('backend verify: ${resp.body}');
     }
-  } 
+  }
 
   Future<String> updateCachedScheduleKBPro(String body) async {
     final resp = await post(
@@ -199,6 +194,15 @@ class CustedService extends CatClient {
 
   Future<bool> useKBPro() async {
     final resp = await get('$backendUrl/res/useKBPro');
-    return resp.body == 'true';
+    if (resp.body != null || resp.body != '') return resp.body == 'true';
+    return false;
+  }
+
+  Future<bool> isServiceAvailable() async {
+    final custApp =
+        (await Dio().head(baseUrl)).statusCode == 200;
+    final backend =
+        (await Dio().head(backendUrl)).statusCode == 200;
+    return custApp && backend;
   }
 }

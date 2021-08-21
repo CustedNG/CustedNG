@@ -1,8 +1,10 @@
 import 'package:after_layout/after_layout.dart';
 import 'package:custed2/core/update.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/grade_tab/grade_legacy.dart';
 import 'package:custed2/ui/home_tab/home_tab.dart';
 import 'package:custed2/ui/nav_tab/nav_tab.dart';
@@ -72,20 +74,18 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
       decoration: isSelected
           ? BoxDecoration(
               color: isDarkMode ? Colors.white12 : Colors.black12,
-              borderRadius: const BorderRadius.all(Radius.circular(50))
-          )
+              borderRadius: const BorderRadius.all(Radius.circular(50)))
           : null,
       child: IconButton(
         icon: item,
         splashRadius: width / 3.3,
-        padding: EdgeInsets.only(left: 17, right: 17), 
+        padding: EdgeInsets.only(left: 17, right: 17),
         onPressed: () {
           setState(() {
             _selectIndex = idx;
-            _pageController.animateToPage(
-              idx,
-              duration: Duration(milliseconds: 677),
-              curve: Curves.fastLinearToSlowEaseIn);
+            _pageController.animateToPage(idx,
+                duration: Duration(milliseconds: 677),
+                curve: Curves.fastLinearToSlowEaseIn);
           });
         },
       ),
@@ -94,24 +94,29 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   Widget _buildBottom(BuildContext context) {
     return SafeArea(
-        child: Container(
-          height: 56,
-          padding: const EdgeInsets.only(left: 8, top: 4, bottom: 4, right: 8),
-          width: _width,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: items.map((item) {
-              int itemIndex = items.indexOf(item);
-              return _buildItem(itemIndex, item, _selectIndex == itemIndex);
-            }).toList(),
-          ),
-        )
-    );
+      child: Container(
+      height: 56,
+      padding: const EdgeInsets.only(left: 8, top: 4, bottom: 4, right: 8),
+      width: _width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: items.map((item) {
+          int itemIndex = items.indexOf(item);
+          return _buildItem(itemIndex, item, _selectIndex == itemIndex);
+        }).toList(),
+      ),
+    ));
   }
 
   @override
   Future<void> afterFirstLayout(BuildContext context) async {
     updateCheck(context);
     locator<AppProvider>().setContext(context);
+    try {
+      await CustedService().isServiceAvailable();
+    } catch (e) {
+      showSnackBar(context, '无法连接到服务器，请等待修复');
+      rethrow;
+    }
   }
 }

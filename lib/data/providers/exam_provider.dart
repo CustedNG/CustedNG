@@ -13,7 +13,7 @@ int sortExamByTime(JwExamRows a, JwExamRows b) {
 
 class ExamProvider extends BusyProvider {
   JwExamData data;
-  var show = false;
+  var show = true;
   var failed = false;
   bool useCache = false;
 

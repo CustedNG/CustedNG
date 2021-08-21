@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppProvider extends ProviderBase {
-  String _notification;
-  Map _changeLog;
+  String _notification = '无法连接到服务器，可能会出现无法获取登录等问题，请耐心等待修复～。发布于：现在';
+  Map _changeLog = {'': '无法连接到服务器，暂时无法获取'};
   bool _showRealUI = true;
   bool _useKBPro = false;
-  String _testerNameList;
+  String _testerNameList = '无法连接到服务器，加载失败';
   BuildContext ctx;
   int build = BuildData.build;
 
@@ -24,7 +24,9 @@ class AppProvider extends ProviderBase {
 
   Future<void> loadLocalData() async {
     final service = CustedService();
+    
     _notification = await service.getNotify();
+    notifyListeners();
     _changeLog = await service.getChangeLog();
     _showRealUI = await service.showRealCustedUI() || Platform.isAndroid;
     _testerNameList = await service.getTesterNameList();
@@ -38,17 +40,9 @@ class AppProvider extends ProviderBase {
   void showImportantNotify() {
     if (ctx == null) return;
     if (notification.startsWith('！')) {
-      showRoundDialog(
-        ctx, 
-        '重要提示', 
-        Text(notification.substring(1)), 
-        [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(), 
-            child: Text('关闭')
-          )
-        ]
-      );
+      showRoundDialog(ctx, '重要提示', Text(notification.substring(1)), [
+        TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text('关闭'))
+      ]);
     }
   }
 
