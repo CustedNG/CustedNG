@@ -10,20 +10,18 @@ import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class CustedHeader extends StatefulWidget{
+class CustedHeader extends StatefulWidget {
   @override
   _CustedHeaderState createState() => _CustedHeaderState();
 }
 
 class _CustedHeaderState extends State<CustedHeader> {
-
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     Color primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
     bool isBrightBackground = isBrightColor(primary);
-    bool floatTextUseWhite = isDark(context) 
-      ? true 
-      : (isBrightBackground ? false : true);
+    bool floatTextUseWhite =
+        isDark(context) ? true : (isBrightBackground ? false : true);
 
     return Padding(
         padding: EdgeInsets.all(20.0),
@@ -43,17 +41,13 @@ class _CustedHeaderState extends State<CustedHeader> {
                   _buildRightIcon(isBrightBackground)
                 ],
               ),
-            )
-        )
-    );
+            )));
   }
 
   Widget _buildRightIcon(bool isBrightBackground) {
     return Positioned(
-      child: Icon(
-        Icons.keyboard_arrow_right, 
-        color: isBrightBackground ? Colors.black : Colors.white
-      ),
+      child: Icon(Icons.keyboard_arrow_right,
+          color: isBrightBackground ? Colors.black : Colors.white),
       top: 0,
       bottom: 0,
       right: 17,
@@ -64,44 +58,29 @@ class _CustedHeaderState extends State<CustedHeader> {
     final child = AspectRatio(
       aspectRatio: (MediaQuery.of(context).size.width - 40) / 110,
       child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              primary.withOpacity(0.8),
-              primary,
-            ],
-          )
-        )
-      ),
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          primary.withOpacity(0.8),
+          primary,
+        ],
+      ))),
     );
     if (BuildData.build < locator<AppProvider>().build) {
       if (isDark(context)) {
-        return Shimmer(
-          child: child, 
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Colors.transparent,
-              Colors.white10,
-            ],
-          ),
-          period: Duration(seconds: 3),
-        );
+        return Shimmer.fromColors(
+            child: child,
+            baseColor: Colors.transparent,
+            highlightColor: Colors.black26,
+            period: Duration(seconds: 3));
       }
-      return Shimmer(
-        child: child, 
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            primary.withOpacity(0.6),
-            primary,
-          ],
-        ),
-        period: Duration(seconds: 2),
+      return Shimmer.fromColors(
+        child: child,
+        baseColor: primary,
+        highlightColor: primary.withOpacity(0.6),
+        period: Duration(seconds: 3),
       );
     }
     return child;
@@ -120,14 +99,9 @@ class _CustedHeaderState extends State<CustedHeader> {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: DarkModeFilter(
-                      child: Image.asset(
-                          'assets/icon/custed_lite.png',
-                          height: 57,
-                          width: 57
-                      ),
-                    )
-                )
-            ),
+                      child: Image.asset('assets/icon/custed_lite.png',
+                          height: 57, width: 57),
+                    ))),
             SizedBox(width: 30.0),
             Column(
               mainAxisSize: MainAxisSize.min,
@@ -136,22 +110,20 @@ class _CustedHeaderState extends State<CustedHeader> {
                 Text(
                   'Custed NG',
                   style: TextStyle(
-                    color: floatTextUseWhite ? Colors.white : Colors.black, 
-                    fontSize: 20
-                  ),
+                      color: floatTextUseWhite ? Colors.white : Colors.black,
+                      fontSize: 20),
                 ),
                 SizedBox(height: 10.0),
                 Text(
                   'Ver: Material 1.0.${BuildData.build}',
                   style: TextStyle(
-                    color: floatTextUseWhite ? Colors.white54 : Colors.black54, 
-                    fontSize: 15
-                  ),
+                      color:
+                          floatTextUseWhite ? Colors.white54 : Colors.black54,
+                      fontSize: 15),
                 )
               ],
             ),
           ],
-        )
-    );
+        ));
   }
 }

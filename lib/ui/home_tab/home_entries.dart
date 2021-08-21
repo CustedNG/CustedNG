@@ -13,6 +13,7 @@ import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeEntries extends StatefulWidget {
   @override
@@ -55,7 +56,7 @@ class _HomeEntriesState extends State<HomeEntries> {
 
   @override
   Widget build(BuildContext context) {
-    final style = TextStyle(fontSize: 13);
+    final style = TextStyle(fontSize: 14);
     loadUserName();
 
     return HomeCard(
@@ -78,10 +79,14 @@ class _HomeEntriesState extends State<HomeEntries> {
             action: () => ticeWebPage.go(context),
           ),
           HomeEntry(
-            name: Text('充网费', style: style),
+            name: Shimmer.fromColors(
+                child: Text('长理指北',
+                    style: style.copyWith(fontWeight: FontWeight.bold)),
+                baseColor: resolveWithBackground(context),
+                highlightColor: Colors.redAccent),
             icon: Image(image: ImageRes.networkIcon),
             // action: () => ecardWebPage.go(context),
-            action: () => gotoWechat.go(context),
+            action: () => custWikiPage.go(context),
           ),
         ]),
         TableRow(children: [
@@ -89,12 +94,9 @@ class _HomeEntriesState extends State<HomeEntries> {
             name: Text('题库', style: style),
             icon: Image(image: ImageRes.tikuIcon),
             action: () => AppRoute(
-              page: WebviewBrowser(
-                tikuUrl, 
-                showBottom: false
-              ),
-              title: '考试题库'
-            ).go(context),
+                    page: WebviewBrowser(tikuUrl, showBottom: false),
+                    title: '考试题库')
+                .go(context),
           ),
           HomeEntry(
             name: Text('地图', style: style),

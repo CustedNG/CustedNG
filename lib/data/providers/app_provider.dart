@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppProvider extends ProviderBase {
-  String _notification = '无法连接到服务器，可能会出现无法获取登录等问题，请耐心等待修复～。发布于：现在';
-  Map _changeLog = {'': '无法连接到服务器，暂时无法获取'};
+  String _notification;
   bool _showRealUI = true;
   bool _useKBPro = false;
   String _testerNameList = '无法连接到服务器，加载失败';
@@ -17,17 +16,15 @@ class AppProvider extends ProviderBase {
   int build = BuildData.build;
 
   String get notification => _notification;
-  Map get changeLog => _changeLog;
   bool get showRealUI => _showRealUI;
   String get testerNameList => _testerNameList;
   bool get useKBPro => _useKBPro;
 
   Future<void> loadLocalData() async {
     final service = CustedService();
-    
+
     _notification = await service.getNotify();
     notifyListeners();
-    _changeLog = await service.getChangeLog();
     _showRealUI = await service.showRealCustedUI() || Platform.isAndroid;
     _testerNameList = await service.getTesterNameList();
     _useKBPro = await service.useKBPro();

@@ -16,7 +16,7 @@ final custccBase = 'https://cust.cc';
 // final loginPage = AppRoute(
 //   title: '登录',
 //   page: WebviewLogin(),
-  // page: LoginWebPage(),
+// page: LoginWebPage(),
 // );
 
 // 因webview, 提供传统登录方式
@@ -71,20 +71,16 @@ final netdiskWebPage = AppRoute(
   page: WebviewBrowser('$custccBase/go/netdisk'),
 );
 
-final feedbackPage = AppRoute(
-  title: '反馈',
-  page: WebviewBrowser('$custccBase/go/feedback')
-);
+final feedbackPage =
+    AppRoute(title: '反馈', page: WebviewBrowser('$custccBase/go/feedback'));
 
-final bbsPage = AppRoute(
-    title: '校内导航',
-    page: WebviewBrowser('https://bbs.cust.app')
-);
+final bbsPage =
+    AppRoute(title: '校内导航', page: WebviewBrowser('https://bbs.cust.app'));
 
-final emptyRoomPage = AppRoute(
-  title: '空教室',
-  page: EmptyRoomPage()
-);
+final custWikiPage =
+    AppRoute(title: 'Cust Wiki', page: WebviewBrowser('https://cust.wiki'));
+
+final emptyRoomPage = AppRoute(title: '空教室', page: EmptyRoomPage());
 
 final selfWebPage = AppRoute(
   title: '校园网',
