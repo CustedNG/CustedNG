@@ -14,17 +14,14 @@ import 'package:custed2/ui/widgets/maps.dart';
 import 'package:flutter/material.dart';
 
 class LessonInfo extends StatelessWidget {
-  const LessonInfo({
-    Key key,
-    @required this.lesson,
-    this.deviceWidth
-    // this.children,
-  }) : super(key: key);
+  const LessonInfo({Key key, @required this.lesson, this.deviceWidth
+      // this.children,
+      })
+      : super(key: key);
 
   // final List<Widget> children;
   final ScheduleLesson lesson;
   final deviceWidth;
-
 
   @override
   Widget build(BuildContext context) {
@@ -202,8 +199,7 @@ class LessonPreview extends StatelessWidget {
             context,
             '选择',
             null,
-            List<Widget>.of(
-              customLessons.map((selectedLesson) => TextButton(
+            List<Widget>.of(customLessons.map((selectedLesson) => TextButton(
                   child: Text(selectedLesson.displayName),
                   onPressed: () {
                     AppRoute(
@@ -212,10 +208,7 @@ class LessonPreview extends StatelessWidget {
                     ).go(context);
                     schedule.loadLocalData();
                   },
-                )
-              )
-            )
-        );
+                ))));
         schedule.loadLocalData();
       },
     );
@@ -226,17 +219,16 @@ class LessonPreview extends StatelessWidget {
     );
 
     final deleteCustom = TextButton(
-      onPressed: () {
-        if (locator<CustomLessonStore>().deleteLesson(customLessons.first)) {
-          schedule.loadLocalData();
-          showSnackBar(context, '删除成功');
-          Navigator.of(context).pop();
-        } else {
-          showSnackBar(context, '删除失败');
-        }
-      }, 
-      child: Text('删除', style: TextStyle(color: Colors.red))
-    );
+        onPressed: () {
+          if (locator<CustomLessonStore>().deleteLesson(customLessons.first)) {
+            schedule.loadLocalData();
+            showSnackBar(context, '删除成功');
+            Navigator.of(context).pop();
+          } else {
+            showSnackBar(context, '删除失败');
+          }
+        },
+        child: Text('删除', style: TextStyle(color: Colors.red)));
 
     if (noConflict) {
       if (!lesson.isCustom) {

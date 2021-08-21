@@ -5,7 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class UrlText extends StatelessWidget {
-
   final String text;
   final String replace;
   final TextStyle style;
@@ -46,19 +45,15 @@ class UrlText extends StatelessWidget {
     for (var result in resultMatches) {
       if (result.isUrl) {
         widgets.add(_LinkTextSpan(
-          replace: replace ?? result.text, 
-          text: result.text, 
-          style: style.copyWith(
-            color: Colors.blue
-          )
-        ));
+            replace: replace ?? result.text,
+            text: result.text,
+            style: style.copyWith(color: Colors.blue)));
       } else {
         widgets.add(TextSpan(
-          text: result.text, 
-          style: style.copyWith(
-            color: isDarkMode ? Colors.white : Colors.black,
-          )
-        ));
+            text: result.text,
+            style: style.copyWith(
+              color: isDarkMode ? Colors.white : Colors.black,
+            )));
       }
     }
     return widgets;

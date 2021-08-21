@@ -72,8 +72,8 @@ class WebviewBrowser extends StatelessWidget {
     String url, {
     String urlOverride,
   }) async {
-    final rawCookies = await 
-          locator<PersistCookieJar>().loadForRequest(url.toUri());
+    final rawCookies =
+        await locator<PersistCookieJar>().loadForRequest(url.toUri());
     final cookies = <Cookie>[];
 
     final uri = Uri.tryParse(url);

@@ -35,6 +35,7 @@ class PlaceholderWidget extends StatelessWidget {
       ),
     );
   }
+
   //怕写施工中，ios审核会以完成度不够拒绝
-  String get defaultText => isActive ? '加载中...' : '暂无数据';//'施工中...';
+  String get defaultText => isActive ? '加载中...' : '暂无数据'; //'施工中...';
 }

@@ -1,9 +1,5 @@
 class NetdiskQuota {
-  NetdiskQuota({
-    this.type,
-    this.quota,
-    this.used
-  });
+  NetdiskQuota({this.type, this.quota, this.used});
 
   final String type;
   final int quota;

@@ -67,39 +67,39 @@ class _Webview2BottomState extends State<Webview2Bottom> {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: canGoBack ? widget.onGoBack?.call : null,
-            ),
-            IconButton(
-              icon: const Icon(Icons.arrow_forward_ios),
-              onPressed: canGoForward ? widget.onGoForward?.call : null,
-            ),
-            IconButton(
-              icon: const Icon(Icons.share),
-              onPressed: () async {
-                // var url = await webview.evalJavascript('window.location.href');
-                final url = await widget.url();
-                ShareExtend.share(resolveUrl(url), 'text');
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.open_in_browser, size: 26),
-              onPressed: () async {
-                // var url = await webview.evalJavascript('window.location.href');
-                // if (url.length >= 2) {
-                //   url = url.substring(1, url.length - 1);
-                // }
-                final url = await widget.url();
-                print('open in browser: $url');
-                openUrl(resolveUrl(url));
-              },
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: canGoBack ? widget.onGoBack?.call : null,
+          ),
+          IconButton(
+            icon: const Icon(Icons.arrow_forward_ios),
+            onPressed: canGoForward ? widget.onGoForward?.call : null,
+          ),
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () async {
+              // var url = await webview.evalJavascript('window.location.href');
+              final url = await widget.url();
+              ShareExtend.share(resolveUrl(url), 'text');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.open_in_browser, size: 26),
+            onPressed: () async {
+              // var url = await webview.evalJavascript('window.location.href');
+              // if (url.length >= 2) {
+              //   url = url.substring(1, url.length - 1);
+              // }
+              final url = await widget.url();
+              print('open in browser: $url');
+              openUrl(resolveUrl(url));
+            },
+          ),
+        ],
+      ),
     );
   }
 }

@@ -3,9 +3,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class JwCaptchaHelpPage extends StatefulWidget {
-
-  JwCaptchaHelpPage({Key key})
-      : super(key: key);
+  JwCaptchaHelpPage({Key key}) : super(key: key);
 
   @override
   _JwCaptchaHelpPageState createState() => _JwCaptchaHelpPageState();
@@ -19,7 +17,10 @@ class _JwCaptchaHelpPageState extends State<JwCaptchaHelpPage> {
       body: Stack(
         children: <Widget>[
           Positioned(
-            top: 0, left: 0, bottom: 0, right: 0,
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
             child: ExtendedImageGesturePageView.builder(
               itemBuilder: (BuildContext context, int index) {
                 Widget image = ExtendedImage(
@@ -27,10 +28,7 @@ class _JwCaptchaHelpPageState extends State<JwCaptchaHelpPage> {
                   fit: BoxFit.contain,
                   mode: ExtendedImageMode.gesture,
                   initGestureConfigHandler: (state) => GestureConfig(
-                    inPageView: true, 
-                    initialScale: 1.0,
-                    cacheGesture: true
-                  ),
+                      inPageView: true, initialScale: 1.0, cacheGesture: true),
                 );
                 return image;
               },
@@ -43,8 +41,8 @@ class _JwCaptchaHelpPageState extends State<JwCaptchaHelpPage> {
             top: MediaQuery.of(context).padding.top,
             child: IconButton(
               icon: Icon(
-                Icons.close, 
-                size: 30, 
+                Icons.close,
+                size: 30,
                 color: Colors.white,
               ),
               onPressed: () => Navigator.of(context).pop(),

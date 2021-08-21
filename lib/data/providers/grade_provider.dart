@@ -11,7 +11,6 @@ class GradeProvider extends BusyProvider {
   Grade _grade;
   Grade get grade => _grade;
 
-
   Future<void> loadLocalData() async {
     final gradeStore = await locator.getAsync<GradeStore>();
     _grade = gradeStore.head;
@@ -57,5 +56,4 @@ class GradeProvider extends BusyProvider {
 
     safeOperation();
   }
-
 }

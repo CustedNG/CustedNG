@@ -8,16 +8,20 @@ class ImageRes {
   static const custEMapSimple = AssetImage('assets/map/simple/CustE.png');
   static const custSMapSimple = AssetImage('assets/map/simple/CustS.png');
 
-  static const custWMapSimpleDark = AssetImage('assets/map/simple/Dark-CustW.png');
-  static const custEMapSimpleDark = AssetImage('assets/map/simple/Dark-CustE.png');
-  static const custSMapSimpleDark = AssetImage('assets/map/simple/Dark-CustS.png');
+  static const custWMapSimpleDark =
+      AssetImage('assets/map/simple/Dark-CustW.png');
+  static const custEMapSimpleDark =
+      AssetImage('assets/map/simple/Dark-CustE.png');
+  static const custSMapSimpleDark =
+      AssetImage('assets/map/simple/Dark-CustS.png');
 
   static const networkIcon = AssetImage('assets/icon/network.png');
   static const timetableIcon = AssetImage('assets/icon/timetable.png');
   static const calendarIcon = AssetImage('assets/icon/calendar.png');
   static const ecardIcon = AssetImage('assets/icon/card.png');
   static const cardOutlineIcon = AssetImage('assets/icon/card_outline.png');
-  static const networkOutlineIcon = AssetImage('assets/icon/network_outline.png');
+  static const networkOutlineIcon =
+      AssetImage('assets/icon/network_outline.png');
   static const wifiIcon = AssetImage('assets/icon/wifi.png');
   static const wifiOutlineIcon = AssetImage('assets/icon/wifi_outline.png');
   static const bellOutlineIcon = AssetImage('assets/icon/bell_outline.png');
@@ -31,7 +35,8 @@ class ImageRes {
   static const testPaperIcon = AssetImage('assets/icon/test_paper.png');
   static const tikuIcon = AssetImage('assets/icon/tiku.png');
 
-  static const miscSchoolCalendar = AssetImage('assets/calendar/2021-2022-1.webp');
+  static const miscSchoolCalendar =
+      AssetImage('assets/calendar/2021-2022-1.webp');
 
   static const wechatStep1 = AssetImage('assets/wechat/step1.jpg');
   static const wechatStep2 = AssetImage('assets/wechat/step2.jpg');

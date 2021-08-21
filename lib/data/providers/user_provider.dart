@@ -49,13 +49,13 @@ class UserProvider extends BusyProvider {
   Future<void> _updateProfileData({bool force = false}) async {
     if (force) {
       _profile = UserProfile()
-                  ..department = ' 经济管理'
-                  ..displayName = '冯峻源'
-                  ..studentNumber = '190913416';
+        ..department = ' 经济管理'
+        ..displayName = '冯峻源'
+        ..studentNumber = '190913416';
     } else {
       _profile = await User().getProfile();
     }
-    
+
     final userData = await locator.getAsync<UserDataStore>();
     unawaited(userData.profile.put(_profile));
   }
@@ -70,7 +70,7 @@ class UserProvider extends BusyProvider {
     final schedule = locator<ScheduleProvider>();
     final grade = locator<GradeProvider>();
     final exam = locator<ExamProvider>();
-    
+
     await schedule.updateScheduleData(resetWeek: true);
     await grade.updateGradeData();
     // call login() here to improve iecard open speed.

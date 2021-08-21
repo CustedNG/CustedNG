@@ -13,7 +13,7 @@ class SettingItem extends StatelessWidget {
     this.height,
     this.showArrow = true,
     this.icon,
-  }): super(key: key);
+  }) : super(key: key);
 
   final GestureTapCallback onTap;
   final String title;
@@ -27,7 +27,6 @@ class SettingItem extends StatelessWidget {
   final Icon icon;
   @override
   Widget build(BuildContext context) {
-
     return Container(
         height: this.height ?? 55.0,
         margin: EdgeInsets.only(left: 16, right: 16),
@@ -56,9 +55,7 @@ class SettingItem extends StatelessWidget {
                               textAlign: this.textAlign,
                               overflow: TextOverflow.ellipsis,
                               style: this.contentStyle ??
-                                  TextStyle(
-                                    fontSize: 14.0
-                                  )),
+                                  TextStyle(fontSize: 14.0)),
                         ),
                       ),
                       this.showArrow
@@ -76,7 +73,6 @@ class SettingItem extends StatelessWidget {
                   )
                 ],
               )),
-        )
-    );
+        ));
   }
 }

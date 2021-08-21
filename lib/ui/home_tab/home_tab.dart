@@ -20,7 +20,7 @@ class HomeTab extends StatefulWidget {
   _HomeTabState createState() => _HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
+class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -38,10 +38,11 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
       ),
       appBar: NavBar.material(
         context: context,
-        leading: Builder(builder: (context) => IconButton(
-          icon: const Icon(Icons.account_circle),
-          onPressed: () => Scaffold.of(context).openDrawer(),
-        )),
+        leading: Builder(
+            builder: (context) => IconButton(
+                  icon: const Icon(Icons.account_circle),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                )),
         middle: HomeWeather(),
         trailing: <Widget>[_showMenu(context)],
       ),
@@ -70,9 +71,8 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
               verticalOffset: 50.0,
               child: FadeInAnimation(
                 child: Container(
-                  margin: EdgeInsets.fromLTRB(20, 15, 20, 0), 
-                  child: widgets[index]
-                ),
+                    margin: EdgeInsets.fromLTRB(20, 15, 20, 0),
+                    child: widgets[index]),
               ),
             ),
           );
@@ -85,11 +85,10 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin{
 
   Widget _showMenu(BuildContext context) {
     return PopupMenuButton<String>(
-        itemBuilder: (BuildContext context) =>
-        <PopupMenuItem<String>>[
-          SelectView(Icons.calendar_view_day, '查看校历', 'A', context),
-          SelectView(Icons.feedback, '我要反馈', 'B', context),
-        ],
+        itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+              SelectView(Icons.calendar_view_day, '查看校历', 'A', context),
+              SelectView(Icons.feedback, '我要反馈', 'B', context),
+            ],
         onSelected: (String action) {
           switch (action) {
             case 'A':

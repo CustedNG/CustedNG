@@ -27,19 +27,19 @@ class _HomeScheduleState extends State<HomeSchedule> {
     final user = locator<UserProvider>();
     scheduleProvider = Provider.of<ScheduleProvider>(context);
     if (!user.loggedIn) {
-        return GestureDetector(
-          child: HomeCard(
-            title: Text('你还没有登录', style: TextStyle(color: Colors.redAccent)),
-            content: Text('点击登录'),
-            trailing: true,
-          ),
-          onTap: () {
-            if (Provider.of<AppProvider>(context, listen: false).showRealUI) {
-              WebviewLogin.begin(context, back2PrePage: true);
-            } else {
-              AppRoute(page: LoginPageLegacy()).go(context);
-            }
-          },
+      return GestureDetector(
+        child: HomeCard(
+          title: Text('你还没有登录', style: TextStyle(color: Colors.redAccent)),
+          content: Text('点击登录'),
+          trailing: true,
+        ),
+        onTap: () {
+          if (Provider.of<AppProvider>(context, listen: false).showRealUI) {
+            WebviewLogin.begin(context, back2PrePage: true);
+          } else {
+            AppRoute(page: LoginPageLegacy()).go(context);
+          }
+        },
       );
     }
 
@@ -49,24 +49,21 @@ class _HomeScheduleState extends State<HomeSchedule> {
       content: _buildContent(context),
       trailing: lesson != null,
     );
-    
+
     if (lesson == null) return card;
     return GestureDetector(
-      onTap: () => showDialog(
-        context: context,
-        builder: (context) {
-          return LessonPreview(lesson);
-        },
-      ),
-      child: card
-    );
+        onTap: () => showDialog(
+              context: context,
+              builder: (context) {
+                return LessonPreview(lesson);
+              },
+            ),
+        child: card);
   }
 
   Widget _buildTitle(BuildContext context, ScheduleLesson lesson) {
     final style = TextStyle(
-      color: resolveWithBackground(context),
-      fontWeight: FontWeight.bold
-    );
+        color: resolveWithBackground(context), fontWeight: FontWeight.bold);
 
     final detail = lesson == null
         ? ''

@@ -101,8 +101,6 @@ class ScheduleDates {
     DateTime(2021, 10, 9): '10/5日课',
     DateTime(2021, 10, 10): '10/8日课',
 
-
-
     // DateTime(2021, 9, 10): '教师节',
   };
 

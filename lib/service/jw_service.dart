@@ -80,8 +80,7 @@ class JwService extends WrdvpnBasedService {
     );
 
     if (resp.statusCode == 200) {
-      final result4SendSchedule =
-          await custed.updateCachedSchedule(resp.body);
+      final result4SendSchedule = await custed.updateCachedSchedule(resp.body);
       print('send cache schedule to backend: $result4SendSchedule');
     } else {
       final cache = await custed.getCacheSchedule();
@@ -105,7 +104,7 @@ class JwService extends WrdvpnBasedService {
     }
 
     Response resp = await xRequest(
-      'GET', 
+      'GET',
       'https://kbpro.cust.edu.cn/Schedule/Buser',
       headers: {'content-type': 'application/json;charset=utf-8'},
       expireTest: (res) => res.body.length < 10,
@@ -200,9 +199,9 @@ class JwService extends WrdvpnBasedService {
   Future<JwGradeData> getGrade() async {
     if (!locator<AppProvider>().showRealUI) {
       print('using fake grade.');
-      return JwGradeData.fromJson(JwResponse.fromJson(
-              json.decode((await custed.getCachedGrade()).body))
-          .data);
+      return JwGradeData.fromJson(
+          JwResponse.fromJson(json.decode((await custed.getCachedGrade()).body))
+              .data);
     }
 
     final resp = await xRequest(
@@ -314,8 +313,7 @@ class JwService extends WrdvpnBasedService {
   Future<JwExam> getExam() async {
     if (!locator<AppProvider>().showRealUI) {
       print('using fake exam');
-      return JwExam.fromJson(
-          json.decode((await custed.getCachedExam()).body));
+      return JwExam.fromJson(json.decode((await custed.getCachedExam()).body));
     }
 
     final resp = await xRequest(
@@ -340,8 +338,7 @@ class JwService extends WrdvpnBasedService {
       await custed.updateCahedExam(resp.body);
       return JwExam.fromJson(json.decode(resp.body));
     } else {
-      return JwExam.fromJson(
-          json.decode((await custed.getCachedExam()).body));
+      return JwExam.fromJson(json.decode((await custed.getCachedExam()).body));
     }
   }
 

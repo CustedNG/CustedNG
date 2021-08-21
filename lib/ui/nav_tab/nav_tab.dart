@@ -115,7 +115,7 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
             page: WebviewBrowser(request.request.url.toString()),
           ).go(context);
         }
-        
+
         return NavigationActionPolicy.CANCEL;
       },
     );
@@ -124,9 +124,9 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
   Widget _showMenu(BuildContext context) {
     return PopupMenuButton<String>(
         itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-          SelectView(Icons.refresh, '刷新此网页', 'A', context),
-          SelectView(Icons.open_in_browser, '浏览器打开', 'B', context),
-        ],
+              SelectView(Icons.refresh, '刷新此网页', 'A', context),
+              SelectView(Icons.open_in_browser, '浏览器打开', 'B', context),
+            ],
         onSelected: (String action) {
           switch (action) {
             case 'A':

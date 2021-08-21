@@ -20,7 +20,8 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
     final theme = AppTheme.of(context);
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
     final hasSchedule = scheduleProvider.schedule != null;
-    final iconColorWithAlpha = Theme.of(context).iconTheme.color.withOpacity(0.2);
+    final iconColorWithAlpha =
+        Theme.of(context).iconTheme.color.withOpacity(0.2);
 
     return Container(
       decoration: BoxDecoration(
@@ -38,12 +39,14 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
               onLongPress: scheduleProvider.gotoCurrentWeek),
           Text('${scheduleProvider.activeLessonCount ?? 0} 节'),
           _ArrowButton(
-              icon: scheduleProvider.selectedWeek > (scheduleProvider.minWeek ?? 0)
+              icon: scheduleProvider.selectedWeek >
+                      (scheduleProvider.minWeek ?? 0)
                   ? Icon(Icons.arrow_back_ios)
                   : Icon(Icons.arrow_back_ios, color: iconColorWithAlpha),
               onPressed: scheduleProvider.gotoPrevWeek),
           _ArrowButton(
-              icon: scheduleProvider.selectedWeek < (scheduleProvider.maxWeek ?? 0)
+              icon: scheduleProvider.selectedWeek <
+                      (scheduleProvider.maxWeek ?? 0)
                   ? Icon(Icons.arrow_forward_ios)
                   : Icon(Icons.arrow_forward_ios, color: iconColorWithAlpha),
               onPressed: scheduleProvider.gotoNextWeek),
@@ -62,14 +65,11 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
       onLongPress: onLongPress,
       onPressed: onPressed,
       style: ButtonStyle(
-        enableFeedback: true,
-        backgroundColor: MaterialStateProperty.all(Colors.black12),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
+          enableFeedback: true,
+          backgroundColor: MaterialStateProperty.all(Colors.black12),
+          shape: MaterialStateProperty.all(RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50.0),
-          )
-        )
-      ),
+          ))),
       child: SizedBox(
         height: 27,
         width: 87,
@@ -77,9 +77,9 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
           child: Text(
             text,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).textTheme.bodyText1.color.withAlpha(127)
-            ),
+                fontWeight: FontWeight.bold,
+                color:
+                    Theme.of(context).textTheme.bodyText1.color.withAlpha(127)),
           ),
         ),
       ),
@@ -93,15 +93,15 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
     }
 
     final TextStyle textStyle = TextStyle(
-        fontSize: 17.0,
+      fontSize: 17.0,
     );
-    var selected = 
-      scheduleProvider.selectedWeek.clamp(1, scheduleProvider.maxWeek);
+    var selected =
+        scheduleProvider.selectedWeek.clamp(1, scheduleProvider.maxWeek);
 
     final items = List<Widget>.generate(scheduleProvider.maxWeek, (i) {
-      final String text =
-          i + 1 == scheduleProvider.currentWeek 
-          ? '第${i + 1}周 - 当前周' : '第${i + 1}周';
+      final String text = i + 1 == scheduleProvider.currentWeek
+          ? '第${i + 1}周 - 当前周'
+          : '第${i + 1}周';
 
       return Center(
         child: Text(
@@ -112,44 +112,42 @@ class _ScheduleWeekNavigatorState extends State<ScheduleWeekNavigator> {
     });
 
     await showRoundDialog(
-      context,
-      '选择周数',
-      Stack(
-        children: [
-          Positioned(
-            child: Container(
-              height: 37,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(7)),
-                color: Colors.black12,
+        context,
+        '选择周数',
+        Stack(
+          children: [
+            Positioned(
+              child: Container(
+                height: 37,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                  color: Colors.black12,
+                ),
+              ),
+              top: 55,
+              bottom: 55,
+              left: 0,
+              right: 0,
+            ),
+            Container(
+              height: 150.0,
+              child: ListWheelScrollView.useDelegate(
+                itemExtent: 37,
+                diameterRatio: 1.2,
+                onSelectedItemChanged: (n) => setState(() {
+                  scheduleProvider.selectWeek(n + 1);
+                }),
+                controller:
+                    FixedExtentScrollController(initialItem: selected - 1),
+                physics: FixedExtentScrollPhysics(),
+                childDelegate: ListWheelChildBuilderDelegate(
+                    builder: (context, index) => items[index],
+                    childCount: items.length),
               ),
             ),
-            top: 55,
-            bottom: 55,
-            left: 0,
-            right: 0,
-          ),
-          Container(
-            height: 150.0,
-            child: ListWheelScrollView.useDelegate(
-              itemExtent: 37,
-              diameterRatio: 1.2,
-              onSelectedItemChanged: (n) => setState(() {
-                scheduleProvider.selectWeek(n + 1);
-              }),
-              controller: FixedExtentScrollController(initialItem: selected - 1),
-              physics: FixedExtentScrollPhysics(),
-              childDelegate: ListWheelChildBuilderDelegate(
-                  builder: (context, index) =>
-                      items[index],
-                  childCount: items.length
-              ),
-            ),
-          ),
-        ],
-      ),
-      []
-    );
+          ],
+        ),
+        []);
   }
 }
 
@@ -168,7 +166,6 @@ class __ArrowButtonState extends State<_ArrowButton> {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onLongPressStart: (_) => activateTimer(),
       onLongPressEnd: (_) => cancelTimer(),

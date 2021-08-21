@@ -7,7 +7,7 @@ part 'custed_file.g.dart';
 @JsonSerializable()
 class CustedFile {
   CustedFile();
-  
+
   double size;
   String url;
   String sha256;

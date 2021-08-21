@@ -14,10 +14,7 @@ class LessonDetailPage extends StatelessWidget {
     // classes?.sort();
 
     return Scaffold(
-      appBar: NavBar.material(
-        context: context,
-        middle: NavbarText('课程详情')
-      ),
+      appBar: NavBar.material(context: context, middle: NavbarText('课程详情')),
       body: ListView(
         children: <Widget>[
           _LessonInfo({

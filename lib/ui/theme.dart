@@ -45,10 +45,7 @@ class AppTheme {
     Color(0xFF8A8A8A),
   );
 
-  final scheduleOutlineColor = DynamicColor(
-    Colors.grey[200],
-    Colors.grey[800]
-  );
+  final scheduleOutlineColor = DynamicColor(Colors.grey[200], Colors.grey[800]);
 
   final scheduleButtonColor = DynamicColor(
     Color(0xFFF0EFF3),

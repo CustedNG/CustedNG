@@ -14,7 +14,8 @@ abstract class WebviewAddon {
     return null;
   }
 
-  FutureOr<void> onPageFinished(InAppWebViewController controller, String url) async {}
+  FutureOr<void> onPageFinished(
+      InAppWebViewController controller, String url) async {}
 
   void onPageStarted(InAppWebViewController controller, String url) {}
 

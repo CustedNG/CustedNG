@@ -6,9 +6,7 @@ class CbsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar.material(
-        context: context
-      ),
+      appBar: NavBar.material(context: context),
       body: PlaceholderWidget(text: 'Custed Backup Service'),
     );
   }

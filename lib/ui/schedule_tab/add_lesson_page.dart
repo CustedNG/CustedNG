@@ -92,21 +92,17 @@ class _AddLessonPageState extends State<AddLessonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar.material(
-          context: context,
-          middle: Text('添加课程'),
-          trailing: [
-            IconButton(
-                onPressed: (){
-                  if (widget.lesson != null) {
-                    widget.lesson.delete();
-                  }
-                  _addLesson();
-                },
-                icon: Icon(Icons.send)
-            )
-          ]
-      ),
+      appBar:
+          NavBar.material(context: context, middle: Text('添加课程'), trailing: [
+        IconButton(
+            onPressed: () {
+              if (widget.lesson != null) {
+                widget.lesson.delete();
+              }
+              _addLesson();
+            },
+            icon: Icon(Icons.send))
+      ]),
       body: ListView(
         children: <Widget>[
           _buildNameField(context),
@@ -213,7 +209,8 @@ class _AddLessonPageState extends State<AddLessonPage> {
   }
 
   void updateDisplay() {
-    weekdayController.text = weekday.weekdayInChinese() + ' ${startSection}-${endSection}节';
+    weekdayController.text =
+        weekday.weekdayInChinese() + ' ${startSection}-${endSection}节';
     weeksController.text = activeWeeks.join(',');
   }
 
@@ -237,7 +234,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
       showSnackBar(context, '该课程已添加至课表，请检查');
       return;
     }
-    
+
     store.addLesson(lesson);
     locator<ScheduleProvider>().loadLocalData();
 

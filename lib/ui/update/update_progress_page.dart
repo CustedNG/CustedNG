@@ -43,8 +43,8 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     final image = failed
         ? Icon(Icons.error_outline, size: 40, color: Colors.white)
         : Center(
-          child: CircularProgressIndicator(),
-        );
+            child: CircularProgressIndicator(),
+          );
 
     final message = failed
         ? _buildFailedButton(context)
@@ -187,7 +187,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     if (mounted) {
       setState(() => updateProgress(0.25));
     }
-    
+
     final exists = await File(outputPath).exists();
     if (!exists) {
       throw UpdateException('校验失败[1]');

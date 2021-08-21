@@ -61,8 +61,7 @@ class _ScheduleArrowState extends State<ScheduleArrow> {
     return Align(
       alignment: Alignment.bottomRight,
       child: Icon(Icons.forward,
-        color: resolveWithBackground(context) ?? Colors.red
-      ),
+          color: resolveWithBackground(context) ?? Colors.red),
     );
   }
 

@@ -61,15 +61,15 @@ class _ScheduleTabState extends State<ScheduleTab>
           ),
           middle: _buildNavbarMiddle(context),
           trailing: <Widget>[
-            scheduleProvider.isBusy ? Container() : IconButton(
-              onPressed: () => AppRoute(
-                title: '添加课程',
-                page: AddLessonPage(),
-              ).go(context), 
-              icon: Icon(Icons.bookmark_add)
-            ),
-          ]
-      ),
+            scheduleProvider.isBusy
+                ? Container()
+                : IconButton(
+                    onPressed: () => AppRoute(
+                          title: '添加课程',
+                          page: AddLessonPage(),
+                        ).go(context),
+                    icon: Icon(Icons.bookmark_add)),
+          ]),
       body: SmartRefresher(
         enablePullDown: true,
         enablePullUp: false,
@@ -80,18 +80,18 @@ class _ScheduleTabState extends State<ScheduleTab>
         child: ListView(
           controller: scrollController,
           children: <Widget>[
-              _buildCloseAutoUpdateTip(),
-              ScheduleWeekNavigator(),
-              _buildTable(context),
-            ],
-          ),
+            _buildCloseAutoUpdateTip(),
+            ScheduleWeekNavigator(),
+            _buildTable(context),
+          ],
+        ),
       ),
     );
   }
 
   Future<void> _onRefresh() async {
     try {
-      if(!Provider.of<UserProvider>(context, listen: false).loggedIn) {
+      if (!Provider.of<UserProvider>(context, listen: false).loggedIn) {
         showSnackBar(context, '请登录');
         _refreshController.refreshFailed();
         return;
@@ -99,10 +99,8 @@ class _ScheduleTabState extends State<ScheduleTab>
       await scheduleProvider.updateScheduleData();
       _refreshController.refreshCompleted();
       showSnackBar(context, '更新成功');
-      requestUpdateHomeWidget(
-        locator<UserDataStore>().username.fetch(),
-        locator<SettingStore>().pushNotification.fetch()
-      );
+      requestUpdateHomeWidget(locator<UserDataStore>().username.fetch(),
+          locator<SettingStore>().pushNotification.fetch());
     } catch (e) {
       print(e);
       showSnackBar(context, '更新失败');
@@ -110,16 +108,21 @@ class _ScheduleTabState extends State<ScheduleTab>
     }
   }
 
-  Widget _buildCloseAutoUpdateTip(){
-    return !settings.autoUpdateSchedule.fetch() ? Center(
-      child: Text(
-        '鉴于教务验证机制，已关闭自动更新',
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).textTheme.bodyText1.color.withOpacity(0.5)
-        ),
-      ),
-    ) : Container();
+  Widget _buildCloseAutoUpdateTip() {
+    return !settings.autoUpdateSchedule.fetch()
+        ? Center(
+            child: Text(
+              '鉴于教务验证机制，已关闭自动更新',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .color
+                      .withOpacity(0.5)),
+            ),
+          )
+        : Container();
   }
 
   // @override
@@ -146,19 +149,22 @@ class _ScheduleTabState extends State<ScheduleTab>
       display = ['第${scheduleProvider.selectedWeek}周'];
     } else {
       display = [
-        '上次更新', 
-        scheduleProvider.schedule != null ? 
-          scheduleProvider.schedule.createdAt.toHumanReadable() 
-          : '-'
+        '上次更新',
+        scheduleProvider.schedule != null
+            ? scheduleProvider.schedule.createdAt.toHumanReadable()
+            : '-'
       ];
     }
 
     // return Text(title);
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 233),
-      child: display.length == 1 ? NavbarText(display[0]) : 
-        NavbarMiddle(textAbove: display[0], textBelow: display[1],
-      ),
+      child: display.length == 1
+          ? NavbarText(display[0])
+          : NavbarMiddle(
+              textAbove: display[0],
+              textBelow: display[1],
+            ),
     );
   }
 

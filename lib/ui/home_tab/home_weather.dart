@@ -23,8 +23,8 @@ class _HomeWeatherState extends State<HomeWeather> {
       child: AnimatedSwitcher(
         duration: Duration(milliseconds: 233),
         child: showCurrent
-        ? _buildCurrent(weather.data?.wendu)
-        : _buildWeather(weather.data),
+            ? _buildCurrent(weather.data?.wendu)
+            : _buildWeather(weather.data),
       ),
       onTap: () => setState(() => showCurrent = !showCurrent),
       onLongPress: () => debugPage.go(context),
@@ -36,7 +36,8 @@ class _HomeWeatherState extends State<HomeWeather> {
       key: ValueKey(1),
       child: NavbarMiddle(
         textAbove: data != null ? '${data?.city} ${data?.type}' : '加载中...',
-        textBelow: '${data?.today?.lowNum ?? ''} ~ ${data?.today?.highNum ?? ''}',
+        textBelow:
+            '${data?.today?.lowNum ?? ''} ~ ${data?.today?.highNum ?? ''}',
       ),
     );
   }

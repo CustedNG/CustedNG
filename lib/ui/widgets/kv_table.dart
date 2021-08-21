@@ -8,11 +8,9 @@ class KvTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final keyFont = TextStyle(
-        fontWeight: FontWeight.bold);
+    final keyFont = TextStyle(fontWeight: FontWeight.bold);
 
-    final valueFont = TextStyle(
-        fontWeight: FontWeight.normal);
+    final valueFont = TextStyle(fontWeight: FontWeight.normal);
 
     final lines = <Widget>[];
 

@@ -94,7 +94,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   Widget _buildBottom(BuildContext context) {
     return SafeArea(
-      child: Container(
+        child: Container(
       height: 56,
       padding: const EdgeInsets.only(left: 8, top: 4, bottom: 4, right: 8),
       width: _width,

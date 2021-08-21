@@ -7,7 +7,7 @@ part 'jw_schedule_lesson_prop.g.dart';
 @JsonSerializable()
 class JwScheduleLessonProperty {
   JwScheduleLessonProperty();
-  
+
   String ID;
   String Key;
   String Name;

@@ -29,17 +29,17 @@ class _DebugPageState extends State<DebugPage> {
 
     return Scaffold(
       appBar: NavBar.material(
-        context: context,
+          context: context,
           middle: NavbarText('Terminal'),
-          trailing: [TextButton( 
-            onPressed: () => AppRoute(
-              page: locator<Alice>().buildInspector(),
-              title: 'alice'
-            ).go(context),
-            child: Text(''),
-          )],
-          backgroundColor: Colors.black
-        ),
+          trailing: [
+            TextButton(
+              onPressed: () => AppRoute(
+                      page: locator<Alice>().buildInspector(), title: 'alice')
+                  .go(context),
+              child: Text(''),
+            )
+          ],
+          backgroundColor: Colors.black),
       body: content,
       backgroundColor: Colors.black,
     );
@@ -96,12 +96,12 @@ class _DebugPageState extends State<DebugPage> {
           fontWeight: FontWeight.bold,
         ),
         child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: debug.widgets,
-              ),
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: debug.widgets,
+          ),
+        ),
       ),
     );
   }

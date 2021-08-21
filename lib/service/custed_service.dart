@@ -77,16 +77,6 @@ class CustedService extends CatClient {
     return file.url.startsWith('/') ? '$baseUrl${file.url}' : file.url;
   }
 
-  Future<Map> getChangeLog() async {
-    final resp = await get('$backendUrl/res/changeLog.json');
-    final log = <String, String>{};
-    final logs = json.decode(resp.body);
-    logs.forEach((element) {
-      log[element['ver']] = element['log'];
-    });
-    return log;
-  }
-
   Future<String> getSchoolCalendarString() async {
     final resp = await get('$backendUrl/res/schoolCalendar.txt');
     return resp.body;
@@ -199,10 +189,8 @@ class CustedService extends CatClient {
   }
 
   Future<bool> isServiceAvailable() async {
-    final custApp =
-        (await Dio().head(baseUrl)).statusCode == 200;
-    final backend =
-        (await Dio().head(backendUrl)).statusCode == 200;
+    final custApp = (await Dio().head(baseUrl)).statusCode == 200;
+    final backend = (await Dio().head(backendUrl)).statusCode == 200;
     return custApp && backend;
   }
 }

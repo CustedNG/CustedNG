@@ -1,8 +1,6 @@
-
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-
 
 typedef headerBuilder = Widget Function(
   BuildContext context,
@@ -29,10 +27,7 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent
-  ) {
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return builder(context, shrinkOffset, overlapsContent);
   }
 

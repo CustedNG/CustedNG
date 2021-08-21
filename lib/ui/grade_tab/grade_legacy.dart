@@ -32,8 +32,8 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   double currentPage;
   final _refreshController = RefreshController(initialRefresh: false);
 
-  GradeProvider get gradeProvider => 
-    Provider.of<GradeProvider>(context, listen: false);
+  GradeProvider get gradeProvider =>
+      Provider.of<GradeProvider>(context, listen: false);
 
   Grade get grade => gradeProvider.grade;
 
@@ -64,48 +64,45 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     }).toList();
 
     await showRoundDialog(
-      context,
-      '选择学期',
-      Stack(
-        children: [
-          Positioned(
-            child: Container(
-              height: 37,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(7)),
-                color: Colors.black12,
+        context,
+        '选择学期',
+        Stack(
+          children: [
+            Positioned(
+              child: Container(
+                height: 37,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                  color: Colors.black12,
+                ),
+              ),
+              top: 55,
+              bottom: 55,
+              left: 0,
+              right: 0,
+            ),
+            Container(
+              height: 150.0,
+              child: ListWheelScrollView.useDelegate(
+                itemExtent: 37,
+                diameterRatio: 1.2,
+                onSelectedItemChanged: (n) => setState(() {
+                  controller.animateToPage(
+                    n,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeOut,
+                  );
+                }),
+                controller: FixedExtentScrollController(initialItem: current),
+                physics: FixedExtentScrollPhysics(),
+                childDelegate: ListWheelChildBuilderDelegate(
+                    builder: (context, index) => items[index],
+                    childCount: items.length),
               ),
             ),
-            top: 55,
-            bottom: 55,
-            left: 0,
-            right: 0,
-          ),
-          Container(
-            height: 150.0,
-            child: ListWheelScrollView.useDelegate(
-              itemExtent: 37,
-              diameterRatio: 1.2,
-              onSelectedItemChanged: (n) => setState(() {
-                controller.animateToPage(
-                  n,
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.easeOut,
-                );
-              }),
-              controller: FixedExtentScrollController(initialItem: current),
-              physics: FixedExtentScrollPhysics(),
-              childDelegate: ListWheelChildBuilderDelegate(
-                  builder: (context, index) =>
-                      items[index],
-                  childCount: items.length
-              ),
-            ),
-          ),
-        ],
-      ),
-      []
-    );
+          ],
+        ),
+        []);
   }
 
   @override
@@ -123,30 +120,31 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
                 : Container()
           ]),
       body: Material(
-          child: PageView(
-            controller: controller,
-            children: <Widget>[
-              for (var i = 0; i < (grade?.terms?.length ?? 1); i++)
-                SmartRefresher(
-                  enablePullDown: true,
-                  enablePullUp: false,
-                  physics: BouncingScrollPhysics(),
-                  header: MaterialClassicHeader(),
-                  controller: _refreshController,
-                  onRefresh: _onRefresh,
-                  child: _buildTermReport(context, i),
-                ),
-            ],
-          ),
+        child: PageView(
+          controller: controller,
+          children: <Widget>[
+            for (var i = 0; i < (grade?.terms?.length ?? 1); i++)
+              SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: false,
+                physics: BouncingScrollPhysics(),
+                header: MaterialClassicHeader(),
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                child: _buildTermReport(context, i),
+              ),
+          ],
         ),
+      ),
     );
   }
 
-  TextStyle resolveWithBackground(TextStyle style) =>
-   style.copyWith(color: isBrightColor(
-     Theme.of(context).primaryColor) ? Colors.black87 : Colors.white);
+  TextStyle resolveWithBackground(TextStyle style) => style.copyWith(
+      color: isBrightColor(Theme.of(context).primaryColor)
+          ? Colors.black87
+          : Colors.white);
 
-  void _onRefresh() async{
+  void _onRefresh() async {
     try {
       if (isRefreshing) return;
       isRefreshing = true;
@@ -154,10 +152,8 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       _refreshController.refreshCompleted();
       showSnackBar(context, '刷新成功');
       isRefreshing = false;
-      setState(() {
-        
-      });
-    } catch(e) {
+      setState(() {});
+    } catch (e) {
       _refreshController.refreshFailed();
       showSnackBar(context, '刷新失败');
       isRefreshing = false;
@@ -220,7 +216,9 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
 
     final noElectionGP = term?.averageGradePointNoElectiveCourse;
     final gp = dontCountElective
-        ? (noElectionGP.isNaN ? noResultString : noElectionGP?.toStringAsFixed(3))
+        ? (noElectionGP.isNaN
+            ? noResultString
+            : noElectionGP?.toStringAsFixed(3))
         : term?.averageGradePoint?.toStringAsFixed(3);
 
     if (gp != null) {
@@ -253,15 +251,12 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
           children: [
             Text(
               gradePoint(level, term),
-              style: resolveWithBackground(textTheme.headline4).copyWith(
-                fontWeight: FontWeight.bold
-              ),
+              style: resolveWithBackground(textTheme.headline4)
+                  .copyWith(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 7),
-            Text(
-              gradePointLabel, 
-              style: resolveWithBackground(textTheme.caption)
-            ),
+            Text(gradePointLabel,
+                style: resolveWithBackground(textTheme.caption)),
           ],
         ),
         Row(
@@ -346,21 +341,22 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       mainAxisSize: MainAxisSize.min,
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          value, 
-          style: resolveWithBackground(textTheme.caption)
-        ),
+        Text(value, style: resolveWithBackground(textTheme.caption)),
         SizedBox(height: 3),
         Text(
-          tag, 
+          tag,
           style: resolveWithBackground(textTheme.caption),
         )
       ],
     );
   }
 
-  Widget _buildInfoItem(BuildContext context,
-      {@required String value, @required String tag, /*String unit = ''*/}) {
+  Widget _buildInfoItem(
+    BuildContext context, {
+    @required String value,
+    @required String tag,
+    /*String unit = ''*/
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -389,19 +385,19 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     return Container(
       padding: EdgeInsets.all(15.0),
       child: AnimationLimiter(
-          child: Column(
-            children: AnimationConfiguration.toStaggeredList(
-              duration: const Duration(milliseconds: 375),
-              childAnimationBuilder: (widget) => SlideAnimation(
-                horizontalOffset: 50.0,
-                child: FadeInAnimation(
-                  child: widget,
-                ),
+        child: Column(
+          children: AnimationConfiguration.toStaggeredList(
+            duration: const Duration(milliseconds: 375),
+            childAnimationBuilder: (widget) => SlideAnimation(
+              horizontalOffset: 50.0,
+              child: FadeInAnimation(
+                child: widget,
               ),
-              children: items,
             ),
+            children: items,
           ),
         ),
+      ),
     );
   }
 }
@@ -433,68 +429,68 @@ class __ReportItemState extends State<_ReportItem>
     );
     final content = isExpanded
         ? Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(widget.exam.lessonName, style: nameTextTheme),
-              SizedBox(width: 5),
-              Text(
-                widget.exam.lessonType,
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(widget.exam.lessonName, style: nameTextTheme),
+                    SizedBox(width: 5),
+                    Text(
+                      widget.exam.lessonType,
+                    ),
+                  ],
+                ),
+              ),
+              // SizedBox(height: 10),
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      '成绩 : ${formatGrade(widget.exam)}',
+                    ),
+                    SizedBox(width: 20),
+                    Text(
+                      '类别 : ${widget.exam.lessonType}',
+                    ),
+                  ],
+                ),
+              ),
+              // SizedBox(height: 10),
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      '学分 : ${widget.exam.credit}',
+                    ),
+                    SizedBox(width: 20),
+                    Text(
+                      '学时 : ${widget.exam.schoolHour}',
+                    ),
+                    SizedBox(width: 20),
+                    Text(
+                      '状态 : ${widget.exam.testStatus}',
+                    ),
+                  ],
+                ),
               ),
             ],
-          ),
-        ),
-        // SizedBox(height: 10),
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '成绩 : ${formatGrade(widget.exam)}',
-              ),
-              SizedBox(width: 20),
-              Text(
-                '类别 : ${widget.exam.lessonType}',
-              ),
-            ],
-          ),
-        ),
-        // SizedBox(height: 10),
-        Flexible(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '学分 : ${widget.exam.credit}',
-              ),
-              SizedBox(width: 20),
-              Text(
-                '学时 : ${widget.exam.schoolHour}',
-              ),
-              SizedBox(width: 20),
-              Text(
-                '状态 : ${widget.exam.testStatus}',
-              ),
-            ],
-          ),
-        ),
-      ],
-    )
+          )
         : Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(
-          widget.exam.lessonName,
-          style: nameTextTheme,
-          overflow: TextOverflow.fade,
-        ),
-        _buildScore(widget.exam.rawMark),
-      ],
-    );
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                widget.exam.lessonName,
+                style: nameTextTheme,
+                overflow: TextOverflow.fade,
+              ),
+              _buildScore(widget.exam.rawMark),
+            ],
+          );
     final item = AnimatedContainer(
       height: isExpanded ? 115 : 57,
       curve: Curves.fastLinearToSlowEaseIn,

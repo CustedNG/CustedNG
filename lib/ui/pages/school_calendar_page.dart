@@ -15,7 +15,7 @@ class SchoolCalendarPage extends StatefulWidget {
 
 class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
   bool isDialogOpen = false;
-  
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -48,30 +48,24 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
                   gradient: LinearGradient(
                       colors: [Colors.black38, Colors.transparent],
                       begin: FractionalOffset(0.5, 0),
-                      end: FractionalOffset(0.5, 1)
-                  )
-              ),
+                      end: FractionalOffset(0.5, 1))),
               width: size.width,
             ),
           ),
           Positioned(
             top: 10,
             child: Center(
-              widthFactor: 1.0,
-              child: GestureDetector(
-                child: Container(
-                  width: size.width,
-                  child: Text(
-                    '点击查看文字版', 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white)
+                widthFactor: 1.0,
+                child: GestureDetector(
+                  child: Container(
+                    width: size.width,
+                    child: Text('点击查看文字版',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white)),
                   ),
-                ),
-                onTap: _showViewCalendarDialog,
-              )
-            ),
+                  onTap: _showViewCalendarDialog,
+                )),
           ),
-          
         ],
       ),
     );
@@ -80,43 +74,34 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
   Future<void> _showViewCalendarDialog() async {
     if (isDialogOpen) return;
     isDialogOpen = true;
-    
+
     showRoundDialog(
-      context, 
-      '校历',
-      Text(await CustedService().getSchoolCalendarString()),
-      [
-        TextButton(
-          child: Text('确定'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ]
-    ).then((value) => isDialogOpen = false);
+        context, '校历', Text(await CustedService().getSchoolCalendarString()), [
+      TextButton(
+        child: Text('确定'),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+    ]).then((value) => isDialogOpen = false);
   }
 
   void _showMenu(BuildContext context) {
-    showRoundDialog(
-        context,
-        '保存到本地',
-        null,
-        [
-          TextButton(
-            child: Text('确定'),
-            onPressed: () {
-              Navigator.of(context).pop();
-              save(context);
-            },
-          ),
-          TextButton(
-            child: Text('取消'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ]
-    );
+    showRoundDialog(context, '保存到本地', null, [
+      TextButton(
+        child: Text('确定'),
+        onPressed: () {
+          Navigator.of(context).pop();
+          save(context);
+        },
+      ),
+      TextButton(
+        child: Text('取消'),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+    ]);
   }
 
   Future<void> save(BuildContext context) async {

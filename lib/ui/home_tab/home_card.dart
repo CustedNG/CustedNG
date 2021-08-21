@@ -2,19 +2,18 @@ import 'package:custed2/constants.dart';
 import 'package:flutter/material.dart';
 
 class HomeCard extends StatelessWidget {
-  HomeCard({
-    this.title,
-    this.content,
-    this.trailing = false,
-    this.padding = 15,
-    this.borderRadius = 7
-  });
+  HomeCard(
+      {this.title,
+      this.content,
+      this.trailing = false,
+      this.padding = 15,
+      this.borderRadius = 7});
 
   HomeCard.loading({
     this.title = const Center(),
-    this.content = const Center(child: CircularProgressIndicator()), 
-    this.trailing = false, 
-    this.padding = 15, 
+    this.content = const Center(child: CircularProgressIndicator()),
+    this.trailing = false,
+    this.padding = 15,
     this.borderRadius = 7,
   });
 
@@ -27,19 +26,18 @@ class HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-          elevation: 3.0,
-          shape: roundShape,
-          clipBehavior: Clip.antiAlias,
-          semanticContainer: false,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Flexible(child: _buildContent(context)),
-              if (trailing) Icon(Icons.keyboard_arrow_right),
-              if (trailing) SizedBox(width: 7),
-            ],
-          )
-      );
+        elevation: 3.0,
+        shape: roundShape,
+        clipBehavior: Clip.antiAlias,
+        semanticContainer: false,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Flexible(child: _buildContent(context)),
+            if (trailing) Icon(Icons.keyboard_arrow_right),
+            if (trailing) SizedBox(width: 7),
+          ],
+        ));
   }
 
   _buildContent(BuildContext context) {

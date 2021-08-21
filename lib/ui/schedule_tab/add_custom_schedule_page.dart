@@ -7,7 +7,6 @@ import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 
-
 class AddCustomSchedulePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _AddCustomSchedulePageState();
@@ -44,9 +43,7 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
                 controller: _studentNumberTextFieldController,
                 maxLength: 9,
                 decoration: InputDecoration(
-                  labelText: '学号/姓名',
-                  icon: Icon(Icons.person)
-                ),
+                    labelText: '学号/姓名', icon: Icon(Icons.person)),
               ),
             ),
             Center(
@@ -135,36 +132,29 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
   void _showBadNotice(
       {String title = '不能添加此项目', String reason = "未知原因"}) async {
     if (mounted) setState(() {});
-    showRoundDialog(
-      context,
-      title,
-      Text(reason),
-      [
-        TextButton(
-          child: Text('确定'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ]
-    );
+    showRoundDialog(context, title, Text(reason), [
+      TextButton(
+        child: Text('确定'),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+    ]);
   }
 
   void _showProfileSelectorMenu(List<CustomScheduleProfile> profiles) async {
     final List<Widget> child = [];
     for (final profile in profiles) {
-      child.add(
-        TextButton(
-          child: Text('${profile.name} ${profile.studentNumber}'),
-          onPressed: () {
-            if (_addProfile(profile)) {
-              Navigator.of(context).pop();
-            }
-          },
-        )
-      );
+      child.add(TextButton(
+        child: Text('${profile.name} ${profile.studentNumber}'),
+        onPressed: () {
+          if (_addProfile(profile)) {
+            Navigator.of(context).pop();
+          }
+        },
+      ));
     }
-            
+
     showRoundDialog(
         context,
         '请选择',
@@ -179,7 +169,6 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
               Navigator.of(context).pop();
             },
           )
-        ]
-    );
+        ]);
   }
 }

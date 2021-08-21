@@ -107,12 +107,14 @@ class Webview2StateGeneral extends Webview2State {
           controller?.reload();
         },
       ),
-      bottomNavigationBar: widget.showBottom ? Webview2Bottom(
-        controller: bottom,
-        url: () => controller?.getUrl(),
-        onGoForward: () => controller?.goForward(),
-        onGoBack: () => controller?.goBack(),
-      ) : SizedBox(height: 0),
+      bottomNavigationBar: widget.showBottom
+          ? Webview2Bottom(
+              controller: bottom,
+              url: () => controller?.getUrl(),
+              onGoForward: () => controller?.goForward(),
+              onGoBack: () => controller?.goBack(),
+            )
+          : SizedBox(height: 0),
       body: InAppWebView(
         initialUrlRequest: widget.url.uq,
         initialOptions: InAppWebViewGroupOptions(

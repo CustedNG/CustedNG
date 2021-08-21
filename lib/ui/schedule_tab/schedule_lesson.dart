@@ -13,14 +13,12 @@ import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleLessonWidget extends StatelessWidget {
-  ScheduleLessonWidget(
-    this.lesson,
-    {this.isActive = true, 
-    this.occupancyRate = 1.0, 
-    this.themeIdx = 0, 
-    this.useGradient = true}
-  );
-  
+  ScheduleLessonWidget(this.lesson,
+      {this.isActive = true,
+      this.occupancyRate = 1.0,
+      this.themeIdx = 0,
+      this.useGradient = true});
+
   final ScheduleLesson lesson;
   final List<ScheduleLesson> conflict = [];
   final bool isActive;
@@ -45,18 +43,19 @@ class ScheduleLessonWidget extends StatelessWidget {
     List<Color> colors = selectColorForLesson(context);
     final cell = _buildCellContent(context);
     return DarkModeFilter(
-      child:  Container(
+      child: Container(
         margin: EdgeInsets.all(2.5),
         constraints: BoxConstraints(maxWidth: 70, maxHeight: 100),
         decoration: BoxDecoration(
-          color: (useGradient && lesson == null) ? null : colors[0],
-          gradient: (colors != null && colors.length > 1 && useGradient ?? true) ? LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: colors
-          ) : null,
-          borderRadius: BorderRadius.all(Radius.circular(4))
-        ),
+            color: (useGradient && lesson == null) ? null : colors[0],
+            gradient:
+                (colors != null && colors.length > 1 && useGradient ?? true)
+                    ? LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: colors)
+                    : null,
+            borderRadius: BorderRadius.all(Radius.circular(4))),
         padding: EdgeInsets.all(4.0),
         child: cell,
       ),
@@ -70,42 +69,31 @@ class ScheduleLessonWidget extends StatelessWidget {
     }
 
     final textStyle = TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.bold,
-      color: isActive ? Colors.white : (isDark(context) ? Colors.white24 : Colors.grey)
-    );
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+        color: isActive
+            ? Colors.white
+            : (isDark(context) ? Colors.white24 : Colors.grey));
 
     final content = <Widget>[];
-    content.add(
-      SizedBox(
+    content.add(SizedBox(
         height: 37,
         child: Center(
-          child: Text(
-            lesson.name, 
-            maxLines: 2, 
-            style: textStyle, 
-            textAlign: TextAlign.center
-          )
-        )
-      )
-    );
+            child: Text(lesson.name,
+                maxLines: 2, style: textStyle, textAlign: TextAlign.center))));
     addDivider(content);
-    final displayLesson = lesson.roomRaw.replaceFirst('[理论]', '理')
-                                        .replaceFirst('[实验]', '实');
-    content.add(
-      SizedBox(
-        height: 37,
-        child: Center(
-          child: Text(
-            displayLesson, 
-            maxLines: 2, 
+    final displayLesson =
+        lesson.roomRaw.replaceFirst('[理论]', '理').replaceFirst('[实验]', '实');
+    content.add(SizedBox(
+      height: 37,
+      child: Center(
+        child: Text(displayLesson,
+            maxLines: 2,
             softWrap: true,
-            style: textStyle, 
-            textAlign: TextAlign.center
-          ),
-        ),
-      )
-    );
+            style: textStyle,
+            textAlign: TextAlign.center),
+      ),
+    ));
 
     Widget child = Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,12 +108,11 @@ class ScheduleLessonWidget extends StatelessWidget {
         children: [
           child,
           Positioned(
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            child: Icon(Icons.report_problem, size: 17, color: Colors.red)
-          )
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              child: Icon(Icons.report_problem, size: 17, color: Colors.red))
         ],
       );
     }
@@ -133,18 +120,12 @@ class ScheduleLessonWidget extends StatelessWidget {
 
   void addDivider(List<Widget> content) {
     final divider = Divider(height: 2, color: Colors.white70);
-    content.add(
-      SizedBox(
-        height: 17,
-        child: Column(
-        children: [
-          SizedBox(height: 5),
-          divider,
-          SizedBox(height: 5)
-        ],
+    content.add(SizedBox(
+      height: 17,
+      child: Column(
+        children: [SizedBox(height: 5), divider, SizedBox(height: 5)],
       ),
-      )
-    );
+    ));
   }
 
   int _interpolate(int lower, int higher, double interpolateValue) {
@@ -153,7 +134,7 @@ class ScheduleLessonWidget extends StatelessWidget {
     interpolateValue = min(1, interpolateValue);
     return lower + (range * interpolateValue).toInt();
   }
-  
+
   Color _interpolateColor(Color lower, Color higher, double interpolateValue) {
     return Color.fromARGB(
         lower.alpha,
@@ -167,12 +148,15 @@ class ScheduleLessonWidget extends StatelessWidget {
       return null;
     }
 
-    final inactiveColorLight = DynamicColor(Color(0xFFFAFAFAFA), Colors.grey[900]);
+    final inactiveColorLight =
+        DynamicColor(Color(0xFFFAFAFAFA), Colors.grey[900]);
     final inactiveColorDense = DynamicColor(Colors.grey[400], Colors.grey[700]);
 
     if (!isActive) {
-      return [_interpolateColor(inactiveColorLight.resolve(context),
-          inactiveColorDense.resolve(context), occupancyRate)];
+      return [
+        _interpolateColor(inactiveColorLight.resolve(context),
+            inactiveColorDense.resolve(context), occupancyRate)
+      ];
     }
 
     final colors = scheduleThemes[themeIdx];

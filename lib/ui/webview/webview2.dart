@@ -58,9 +58,7 @@ abstract class Webview2State extends State<Webview2> {
 
   Widget buildLoadingWidget() {
     return Container(
-      child: Center(
-        child: CircularProgressIndicator()
-      ),
+      child: Center(child: CircularProgressIndicator()),
     );
   }
 

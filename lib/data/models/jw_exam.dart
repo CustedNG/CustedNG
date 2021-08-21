@@ -2,46 +2,46 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'jw_exam.g.dart';
 
-
 @JsonSerializable()
 class JwExam extends Object {
-
   @JsonKey(name: 'state')
   int state;
 
   @JsonKey(name: 'data')
   JwExamData data;
 
-  JwExam(this.state,this.data,);
+  JwExam(
+    this.state,
+    this.data,
+  );
 
-  factory JwExam.fromJson(Map<String, dynamic> srcJson) => _$JwExamFromJson(srcJson);
+  factory JwExam.fromJson(Map<String, dynamic> srcJson) =>
+      _$JwExamFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$JwExamToJson(this);
-
 }
-
 
 @JsonSerializable()
 class JwExamData extends Object {
-
   @JsonKey(name: 'Total')
   int total;
 
   @JsonKey(name: 'Rows')
   List<JwExamRows> rows;
 
-  JwExamData(this.total,this.rows,);
+  JwExamData(
+    this.total,
+    this.rows,
+  );
 
-  factory JwExamData.fromJson(Map<String, dynamic> srcJson) => _$JwExamDataFromJson(srcJson);
+  factory JwExamData.fromJson(Map<String, dynamic> srcJson) =>
+      _$JwExamDataFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$JwExamDataToJson(this);
-
 }
-
 
 @JsonSerializable()
 class JwExamRows extends Object {
-
   @JsonKey(name: 'ZXBJ')
   bool zXBJ;
 
@@ -54,18 +54,21 @@ class JwExamRows extends Object {
   @JsonKey(name: 'ISGB')
   bool iSGB;
 
-  JwExamRows(this.zXBJ,this.zXSJ,this.examTask,this.iSGB,);
+  JwExamRows(
+    this.zXBJ,
+    this.zXSJ,
+    this.examTask,
+    this.iSGB,
+  );
 
-  factory JwExamRows.fromJson(Map<String, dynamic> srcJson) => _$JwExamRowsFromJson(srcJson);
+  factory JwExamRows.fromJson(Map<String, dynamic> srcJson) =>
+      _$JwExamRowsFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$JwExamRowsToJson(this);
-
 }
-
 
 @JsonSerializable()
 class JwExamTask extends Object {
-
   @JsonKey(name: 'PKZT')
   int pKZT;
 
@@ -117,18 +120,34 @@ class JwExamTask extends Object {
   @JsonKey(name: 'YQJKRS')
   int yQJKRS;
 
-  JwExamTask(this.pKZT,this.kSLX,this.pKFS,this.iSTYZJK,this.examPlan,this.type,this.cKRS,this.yPJKRS,this.fBZT,this.eMKSRWID,this.beginTime,this.beginLesson,this.beginDate,this.examRoom,this.kSSC,this.fBSJBZ,this.yQJKRS,);
+  JwExamTask(
+    this.pKZT,
+    this.kSLX,
+    this.pKFS,
+    this.iSTYZJK,
+    this.examPlan,
+    this.type,
+    this.cKRS,
+    this.yPJKRS,
+    this.fBZT,
+    this.eMKSRWID,
+    this.beginTime,
+    this.beginLesson,
+    this.beginDate,
+    this.examRoom,
+    this.kSSC,
+    this.fBSJBZ,
+    this.yQJKRS,
+  );
 
-  factory JwExamTask.fromJson(Map<String, dynamic> srcJson) => _$JwExamTaskFromJson(srcJson);
+  factory JwExamTask.fromJson(Map<String, dynamic> srcJson) =>
+      _$JwExamTaskFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$JwExamTaskToJson(this);
-
 }
-
 
 @JsonSerializable()
 class JwExamPlan extends Object {
-
   @JsonKey(name: 'JSRQ')
   String jSRQ;
 
@@ -153,18 +172,25 @@ class JwExamPlan extends Object {
   @JsonKey(name: 'KSRQ')
   String kSRQ;
 
-  JwExamPlan(this.jSRQ,this.jYBJ,this.iSXSKBSJPD,this.iSXSKSSJPD,this.xQBH,this.jHBH,this.jHMC,this.kSRQ,);
+  JwExamPlan(
+    this.jSRQ,
+    this.jYBJ,
+    this.iSXSKBSJPD,
+    this.iSXSKSSJPD,
+    this.xQBH,
+    this.jHBH,
+    this.jHMC,
+    this.kSRQ,
+  );
 
-  factory JwExamPlan.fromJson(Map<String, dynamic> srcJson) => _$JwExamPlanFromJson(srcJson);
+  factory JwExamPlan.fromJson(Map<String, dynamic> srcJson) =>
+      _$JwExamPlanFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$JwExamPlanToJson(this);
-
 }
-
 
 @JsonSerializable()
 class JwExamBeginLesson extends Object {
-
   @JsonKey(name: 'SHZT')
   int sHZT;
 
@@ -261,18 +287,49 @@ class JwExamBeginLesson extends Object {
   @JsonKey(name: 'ISZRPK')
   bool iSZRPK;
 
-  JwExamBeginLesson(this.sHZT,this.iSJZPK,this.lessonInfo,this.clearZDJS,this.xXJD,this.pKZT,this.lCKKXXID,this.iSPKYSD,this.bJRS,this.qZ,this.vREFJXJSZ,this.kSXZ,this.clearKCFZ,this.iSJZCJLR,this.iSXKBJ,this.vREFJXKSZ,this.vREFPKZXS,this.clearRKJS,this.pKFS,this.clearZDFQ,this.iSZRXK,this.clearBJFZ,this.xXLB,this.department,this.lessonOccupyChangeNum,this.vREFWXSS,this.jXBLXCXBM,this.iSKSXK,this.clearCJLRJS,this.iSPKBJ,this.yPKCS,this.iSZRPK,);
+  JwExamBeginLesson(
+    this.sHZT,
+    this.iSJZPK,
+    this.lessonInfo,
+    this.clearZDJS,
+    this.xXJD,
+    this.pKZT,
+    this.lCKKXXID,
+    this.iSPKYSD,
+    this.bJRS,
+    this.qZ,
+    this.vREFJXJSZ,
+    this.kSXZ,
+    this.clearKCFZ,
+    this.iSJZCJLR,
+    this.iSXKBJ,
+    this.vREFJXKSZ,
+    this.vREFPKZXS,
+    this.clearRKJS,
+    this.pKFS,
+    this.clearZDFQ,
+    this.iSZRXK,
+    this.clearBJFZ,
+    this.xXLB,
+    this.department,
+    this.lessonOccupyChangeNum,
+    this.vREFWXSS,
+    this.jXBLXCXBM,
+    this.iSKSXK,
+    this.clearCJLRJS,
+    this.iSPKBJ,
+    this.yPKCS,
+    this.iSZRPK,
+  );
 
-  factory JwExamBeginLesson.fromJson(Map<String, dynamic> srcJson) => _$JwExamBeginLessonFromJson(srcJson);
+  factory JwExamBeginLesson.fromJson(Map<String, dynamic> srcJson) =>
+      _$JwExamBeginLessonFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$JwExamBeginLessonToJson(this);
-
 }
-
 
 @JsonSerializable()
 class JwExamLessonInfo extends Object {
-
   @JsonKey(name: 'KCBH')
   String kCBH;
 
@@ -282,18 +339,20 @@ class JwExamLessonInfo extends Object {
   @JsonKey(name: 'KCMC')
   String name;
 
-  JwExamLessonInfo(this.kCBH,this.jYBJ,this.name,);
+  JwExamLessonInfo(
+    this.kCBH,
+    this.jYBJ,
+    this.name,
+  );
 
-  factory JwExamLessonInfo.fromJson(Map<String, dynamic> srcJson) => _$JwExamLessonInfoFromJson(srcJson);
+  factory JwExamLessonInfo.fromJson(Map<String, dynamic> srcJson) =>
+      _$JwExamLessonInfoFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$JwExamLessonInfoToJson(this);
-
 }
-
 
 @JsonSerializable()
 class Department extends Object {
-
   @JsonKey(name: 'ISSYS')
   bool iSSYS;
 
@@ -321,18 +380,26 @@ class Department extends Object {
   @JsonKey(name: 'ISKKDW')
   bool iSKKDW;
 
-  Department(this.iSSYS,this.iSGLBM,this.jYBJ,this.dWMC,this.iSJYS,this.iSSKDW,this.iSSTBJ,this.dWBH,this.iSKKDW,);
+  Department(
+    this.iSSYS,
+    this.iSGLBM,
+    this.jYBJ,
+    this.dWMC,
+    this.iSJYS,
+    this.iSSKDW,
+    this.iSSTBJ,
+    this.dWBH,
+    this.iSKKDW,
+  );
 
-  factory Department.fromJson(Map<String, dynamic> srcJson) => _$DepartmentFromJson(srcJson);
+  factory Department.fromJson(Map<String, dynamic> srcJson) =>
+      _$DepartmentFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$DepartmentToJson(this);
-
 }
-
 
 @JsonSerializable()
 class JwExamRoom extends Object {
-
   @JsonKey(name: 'KSRNRS')
   int kSRNRS;
 
@@ -372,11 +439,24 @@ class JwExamRoom extends Object {
   @JsonKey(name: 'IsPlanAssign')
   bool isPlanAssign;
 
-  JwExamRoom(this.kSRNRS,this.assignNum,this.isTaskAssgin,this.bPKBJ,this.assignClassNum,this.isLessonAssgin,this.isCompleteAssgin,this.isFull,this.isConflict,this.name,this.assignLessonNum,this.remainNum,this.isPlanAssign,);
+  JwExamRoom(
+    this.kSRNRS,
+    this.assignNum,
+    this.isTaskAssgin,
+    this.bPKBJ,
+    this.assignClassNum,
+    this.isLessonAssgin,
+    this.isCompleteAssgin,
+    this.isFull,
+    this.isConflict,
+    this.name,
+    this.assignLessonNum,
+    this.remainNum,
+    this.isPlanAssign,
+  );
 
-  factory JwExamRoom.fromJson(Map<String, dynamic> srcJson) => _$JwExamRoomFromJson(srcJson);
+  factory JwExamRoom.fromJson(Map<String, dynamic> srcJson) =>
+      _$JwExamRoomFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$JwExamRoomToJson(this);
-
 }
-

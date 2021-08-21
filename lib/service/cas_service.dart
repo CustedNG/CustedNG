@@ -10,7 +10,8 @@ class CasService extends BaseClient {
   }
 
   void test() async {
-    final resp = await this.get('http://portal-cust-edu-cn.webvpn.cust.edu.cn:8118/'.uri);
+    final resp = await this
+        .get('http://portal-cust-edu-cn.webvpn.cust.edu.cn:8118/'.uri);
     print(resp.isRedirect);
     print(resp.headers);
     print(resp.body);

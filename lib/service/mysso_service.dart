@@ -58,7 +58,6 @@ class MyssoService extends CatService {
       return CatLoginResult.ok();
     }
 
-
     // final userData = await locator.getAsync<UserDataStore>();
 
     // final loginPageParsed = parse(loginPageData.body);

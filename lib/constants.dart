@@ -4,8 +4,8 @@ const roundShape = RoundedRectangleBorder(
   borderRadius: BorderRadius.all(Radius.circular(7)),
 );
 
-const regUrl = 
-        r"(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]*";
+const regUrl =
+    r"(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]*";
 
 const appName = 'CustedNG';
 const custedAppUrl = 'https://cust.app';
@@ -15,4 +15,3 @@ const tusiBlogUrl = 'https://blog.tusi.site';
 const custedServiceAgreementUrl =
     'https://blog.tusi.site/serviceagreement.html';
 const joinQQUserGroup = 'https://jq.qq.com/?_wv=1027&k=TLrWZjtp';
-

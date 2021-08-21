@@ -105,7 +105,7 @@ Future<void> setupLocator(String docDir) async {
   await setupLocatorForStores();
 
   setupLocatorForProviders();
-  
+
   locator.registerLazySingleton(
     () => PersistCookieJar(storage: FileStorage('$docDir/.cookies/')),
   );

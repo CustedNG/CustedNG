@@ -120,5 +120,3 @@ class _Webview2HeaderState extends State<Webview2Header> {
     );
   }
 }
-
-

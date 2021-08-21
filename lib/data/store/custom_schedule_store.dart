@@ -36,8 +36,7 @@ class CustomScheduleStore with PersistentStore {
   }
 
   List<CustomScheduleProfile> getProfileList() {
-    final rawString =
-        box.get("ProfileList_", defaultValue: "[]");
+    final rawString = box.get("ProfileList_", defaultValue: "[]");
     final List jsonObj = json.decode(rawString);
     return jsonObj
         .map((e) => CustomScheduleProfile.fromPrimitiveMap(e))
@@ -59,7 +58,7 @@ class CustomScheduleStore with PersistentStore {
         if (item.uuid != uuid) item
     ];
     saveProfileList(newList);
-    if(removeScheduleData){
+    if (removeScheduleData) {
       box.delete("Schedule_$uuid");
     }
     return newList;

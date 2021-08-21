@@ -44,7 +44,7 @@ class DebugProvider extends ProviderBase {
     _addWidget(widget);
     notifyListeners();
   }
-  
+
   void _addWidget(Widget widget) {
     final outlined = Container(
       margin: EdgeInsets.symmetric(vertical: 2),

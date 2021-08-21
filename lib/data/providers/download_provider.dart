@@ -67,7 +67,7 @@ class DownloadProvider extends ProviderBase {
 
 abstract class _DownloadBehavior {
   factory _DownloadBehavior() {
-    return  Platform.isIOS ? _IOSBehavior() : _GeneralBehavior();
+    return Platform.isIOS ? _IOSBehavior() : _GeneralBehavior();
   }
 
   Future<String> getTempDir();

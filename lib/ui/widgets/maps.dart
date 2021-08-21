@@ -22,12 +22,7 @@ class CustCompusMap {
 
 class PhotoViewMap extends StatelessWidget {
   PhotoViewMap(
-      this.name,
-      this.map,
-      this.position,
-      this.darkPosition,
-      this.offset
-  );
+      this.name, this.map, this.position, this.darkPosition, this.offset);
 
   static const flagSize = 4.7;
   final String name;
@@ -47,7 +42,7 @@ class PhotoViewMap extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           FadeInImage(
-            image: isDarkMode ? map.darkImage : map.image, 
+            image: isDarkMode ? map.darkImage : map.image,
             placeholder: MemoryImage(kTransparentImage),
             fadeInDuration: Duration(milliseconds: 277),
           ),
@@ -93,8 +88,8 @@ class Maps {
 
   /// @dx positive = right
   /// @dy positive = down
-  static PhotoViewMap makeMap(String name, CustCompusMap map, double dx,
-      double dy) {
+  static PhotoViewMap makeMap(
+      String name, CustCompusMap map, double dx, double dy) {
     return PhotoViewMap(
       name,
       map,
@@ -112,8 +107,7 @@ class Maps {
         Offset(31, 28),
         Offset(31, 28),
         Offset(27, 53),
-      )
-      ,
+      ),
       PhotoViewMap(
         '东1东',
         custE,
@@ -121,11 +115,7 @@ class Maps {
         Offset(68, 28),
         Offset(-8, 53),
       ),
-      makeMap(
-          '东区田径场',
-          custE,
-          25, 92
-      ),
+      makeMap('东区田径场', custE, 25, 92),
       makeMap('东1教', custE, 48, 27),
       makeMap('东2教', custE, 65, 12),
       PhotoViewMap(

@@ -16,14 +16,13 @@ import 'package:custed2/ui/webview/webview_login.dart';
 import 'package:custed2/ui/widgets/url_text.dart';
 import 'package:flutter/material.dart';
 
-class HomeDrawer extends StatefulWidget{
+class HomeDrawer extends StatefulWidget {
   final version;
   final myTheme;
   final UserProvider user;
 
-  const HomeDrawer({
-    Key key, this.version, this.myTheme, this.user
-  }) : super(key: key);
+  const HomeDrawer({Key key, this.version, this.myTheme, this.user})
+      : super(key: key);
 
   @override
   _HomeDrawerState createState() => _HomeDrawerState();
@@ -35,9 +34,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
   Widget _buildUserHeader(bool isLoggedIn) {
     return UserAccountsDrawerHeader(
       accountName:
-      Text(isLoggedIn ? ' ' + widget.user.profile.displayName : '请登录'),
+          Text(isLoggedIn ? ' ' + widget.user.profile.displayName : '请登录'),
       accountEmail:
-      Text(isLoggedIn ? widget.user.profile.department : '(´･ω･`)'),
+          Text(isLoggedIn ? widget.user.profile.department : '(´･ω･`)'),
       currentAccountPicture: CircleAvatar(
         backgroundImage: AssetImage(custedIconPath),
       ),
@@ -57,38 +56,33 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
     return Column(
       children: [
-        (isLoggedIn && showRealUI) ? ListTile(
-          leading: Icon(Icons.photo_camera, color: color),
-          title: Text('四六级照片'),
-          onTap: () {
-            locator<CetAvatarProvider>().getAvatar();
-            cetAvatarPage.go(context);
-          },
-        ) : Container(),
-        (isLoggedIn && showRealUI) ? ListTile(
-          leading: Icon(Icons.cloud, color: color),
-          title: Text('校园网盘'),
-          onTap: () {
-            locator<NetdiskProvider>().getQuota();
-            netdiskPage.go(context);
-          },
-        ) : Container(),
+        (isLoggedIn && showRealUI)
+            ? ListTile(
+                leading: Icon(Icons.photo_camera, color: color),
+                title: Text('四六级照片'),
+                onTap: () {
+                  locator<CetAvatarProvider>().getAvatar();
+                  cetAvatarPage.go(context);
+                },
+              )
+            : Container(),
+        (isLoggedIn && showRealUI)
+            ? ListTile(
+                leading: Icon(Icons.cloud, color: color),
+                title: Text('校园网盘'),
+                onTap: () {
+                  locator<NetdiskProvider>().getQuota();
+                  netdiskPage.go(context);
+                },
+              )
+            : Container(),
         (isLoggedIn && showRealUI) ? Divider() : Container(),
         ListTile(
           leading: Icon(Icons.info, color: color),
           title: Text('版本信息'),
-          onTap: () => AppRoute(
-            title: '版本信息',
-            page: KVTablePage('版本信息', infoMap)
-          ).go(context),
-        ),
-        ListTile(
-          leading: Icon(Icons.code, color: color),
-          title: Text('更新日志'),
-          onTap: () => AppRoute(
-            title: '更新日志',
-            page: KVTablePage('更新日志', locator<AppProvider>().changeLog),
-          ).go(context),
+          onTap: () =>
+              AppRoute(title: '版本信息', page: KVTablePage('版本信息', infoMap))
+                  .go(context),
         ),
         ListTile(
           leading: Icon(Icons.hardware, color: color),
@@ -121,38 +115,33 @@ class _HomeDrawerState extends State<HomeDrawer> {
       return;
     }
     showRoundDialog(
-      context, 
-      '感谢以下贡献者', 
-      ListView(
-        children: [
-          Text(nameList)
-        ],
-      ), 
-      [
-        TextButton(
-          onPressed: () => openUrl(joinQQUserGroup), 
-          child: Text('加入用户群')
+        context,
+        '感谢以下贡献者',
+        ListView(
+          children: [Text(nameList)],
         ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(), 
-          child: Text('关闭')
-        )
-      ]
-    );
+        [
+          TextButton(
+              onPressed: () => openUrl(joinQQUserGroup), child: Text('加入用户群')),
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(), child: Text('关闭'))
+        ]);
   }
 
-  Widget _buildLoginEntries(BuildContext context, bool isLoggedIn, Color color) {
+  Widget _buildLoginEntries(
+      BuildContext context, bool isLoggedIn, Color color) {
     return Column(
       children: [
         _buildLoginTile(context, isLoggedIn, color),
-        if (isLoggedIn) ListTile(
-          leading: Icon(Icons.logout, color: color),
-          title: Text('退出登录'),
-          onTap: () async {
-            await locator<PersistCookieJar>().deleteAll();
-            await widget.user.logout();
-          },
-        ) 
+        if (isLoggedIn)
+          ListTile(
+            leading: Icon(Icons.logout, color: color),
+            title: Text('退出登录'),
+            onTap: () async {
+              await locator<PersistCookieJar>().deleteAll();
+              await widget.user.logout();
+            },
+          )
       ],
     );
   }
@@ -160,28 +149,28 @@ class _HomeDrawerState extends State<HomeDrawer> {
   Widget _buildLoginTile(BuildContext context, bool isLoggedIn, Color color) {
     if (isLoggedIn) {
       return ListTile(
-          leading: Icon(Icons.login, color: color),
-          title: Text('重新登录'),
-          onTap: () async {
-            await WebviewLogin.begin(context, back2PrePage: true);
-          },
-        );
+        leading: Icon(Icons.login, color: color),
+        title: Text('重新登录'),
+        onTap: () async {
+          await WebviewLogin.begin(context, back2PrePage: true);
+        },
+      );
     } else if (showRealUI) {
       return ListTile(
-          leading: Icon(Icons.web, color: color),
-          title: Text('统一登录'),
-          onTap: () async {
-            await WebviewLogin.begin(context, back2PrePage: true);
-          },
-        );
+        leading: Icon(Icons.web, color: color),
+        title: Text('统一登录'),
+        onTap: () async {
+          await WebviewLogin.begin(context, back2PrePage: true);
+        },
+      );
     }
     return ListTile(
-          leading: Icon(Icons.web, color: color),
-          title: Text('传统登录'),
-          onTap: () {
-            AppRoute(page: LoginPageLegacy()).go(context);
-          },
-        );
+      leading: Icon(Icons.web, color: color),
+      title: Text('传统登录'),
+      onTap: () {
+        AppRoute(page: LoginPageLegacy()).go(context);
+      },
+    );
   }
 
   @override
@@ -190,15 +179,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
     final color = resolveWithBackground(context);
 
     return Drawer(
-        child: ListView(
-            padding: EdgeInsets.only(),
-            children: <Widget>[
-              _buildUserHeader(isLoggedIn),
-              _buildUserEntries(context, isLoggedIn, color),
-              Divider(),
-              _buildLoginEntries(context, isLoggedIn, color)
-            ]
-        )
-    );
+        child: ListView(padding: EdgeInsets.only(), children: <Widget>[
+      _buildUserHeader(isLoggedIn),
+      _buildUserEntries(context, isLoggedIn, color),
+      Divider(),
+      _buildLoginEntries(context, isLoggedIn, color)
+    ]));
   }
 }

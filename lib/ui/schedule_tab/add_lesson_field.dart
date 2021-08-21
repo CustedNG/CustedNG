@@ -20,17 +20,15 @@ class AddLessonField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-        child: TextField(
-          readOnly: isReadonly,
-          controller: controller,
-          autocorrect: false,
-          decoration: InputDecoration(
-            labelText: placeholder,
-            prefixIcon: Icon(icon)
-          ),
-          onTap: onTap,
-        ),
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      child: TextField(
+        readOnly: isReadonly,
+        controller: controller,
+        autocorrect: false,
+        decoration:
+            InputDecoration(labelText: placeholder, prefixIcon: Icon(icon)),
+        onTap: onTap,
+      ),
     );
   }
 }

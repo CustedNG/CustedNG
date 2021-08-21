@@ -12,9 +12,7 @@ class CetAvatarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar.material(
-          context: context,
-          middle: NavbarText('四六级照片')),
+      appBar: NavBar.material(context: context, middle: NavbarText('四六级照片')),
       body: Container(
         child: SafeArea(
           child: CustomScrollView(
@@ -58,18 +56,16 @@ class CetAvatarPage extends StatelessWidget {
         SizedBox(height: 40),
         TextButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.resolveWith<Color>(
-              (Set<MaterialState> states) {
-                if (states.contains(MaterialState.pressed)) {
-                  return Colors.blue;
-                }
-                return Colors.blueAccent;
-              },
-            ),
-            padding: MaterialStateProperty.resolveWith(
-              (states) => EdgeInsets.all(10)
-            )
-          ),
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                (Set<MaterialState> states) {
+                  if (states.contains(MaterialState.pressed)) {
+                    return Colors.blue;
+                  }
+                  return Colors.blueAccent;
+                },
+              ),
+              padding: MaterialStateProperty.resolveWith(
+                  (states) => EdgeInsets.all(10))),
           onPressed: () => saveImageToGallery(context, cetAvatar.avatar),
           child: Text(
             '保存到相册',

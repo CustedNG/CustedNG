@@ -7,7 +7,7 @@ part 'custed_response.g.dart';
 @JsonSerializable()
 class CustedResponse {
   CustedResponse();
-  
+
   bool ok;
   dynamic data;
   String error;

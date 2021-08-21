@@ -21,11 +21,12 @@ class WebviewLogin extends StatefulWidget {
     this.back2PrePage = true,
   });
 
-  static Future<bool> begin(BuildContext context, {back2PrePage = true}) async => 
-    await AppRoute(
-      title: '登录(560+)',
-      page: WebviewLogin(back2PrePage: back2PrePage),
-    ).go(context);
+  static Future<bool> begin(BuildContext context,
+          {back2PrePage = true}) async =>
+      await AppRoute(
+        title: '登录(560+)',
+        page: WebviewLogin(back2PrePage: back2PrePage),
+      ).go(context);
 
   final bool back2PrePage;
 
@@ -63,15 +64,10 @@ class _WebviewLoginState extends State<WebviewLogin> {
       );
     });
 
-    Future.delayed(Duration(seconds: 5), () => showSnackBarWithPage(
-      context, 
-      '验证码发送失败？',
-      AppRoute(
-        page: JwCaptchaHelpPage(),
-        title: '验证码帮助'
-      ),
-      '帮助'
-    ));
+    Future.delayed(
+        Duration(seconds: 5),
+        () => showSnackBarWithPage(context, '验证码发送失败？',
+            AppRoute(page: JwCaptchaHelpPage(), title: '验证码帮助'), '帮助'));
   }
 
   void onLoadAborted(Webview2Controller controller, String url) async {
@@ -81,10 +77,8 @@ class _WebviewLoginState extends State<WebviewLogin> {
 
     if (url.contains('portal.cust.edu.cn')) {
       loginDone = true;
-      Future.delayed(
-        Duration(milliseconds: 277), 
-        () async => await loginSuccessCallback(controller)
-      );
+      Future.delayed(Duration(milliseconds: 277),
+          () async => await loginSuccessCallback(controller));
     }
   }
 
@@ -111,15 +105,14 @@ class _WebviewLoginState extends State<WebviewLogin> {
       await cookieJar.delete(uri);
       await cookieJar.saveFromResponse(uri, cookies);
     }
-    
+
     final userData = await locator.getAsync<UserDataStore>();
     userData.username.put(this.username);
     userData.password.put(this.password);
 
     await CustedService().login2Backend(
-      buildCookie(await cookieJar.loadForRequest(syncDomains.last.uri)), 
-      this.username
-    );
+        buildCookie(await cookieJar.loadForRequest(syncDomains.last.uri)),
+        this.username);
 
     if (!widget.back2PrePage) {
       return;

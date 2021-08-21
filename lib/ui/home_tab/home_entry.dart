@@ -11,7 +11,6 @@ class HomeEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onLongPress: longPressAction,
       onTap: action ?? () {},

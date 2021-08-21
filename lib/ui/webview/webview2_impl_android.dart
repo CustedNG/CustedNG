@@ -153,7 +153,7 @@ class Webview2StateAndroid extends Webview2State {
       // locator<DownloadProvider>().enqueue(state.url);
       widget.onLoadAborted?.call(Webview2ControllerAndroid(), state.url);
     }
-    
+
     bottom.setCanGoBack(await wp.canGoBack());
     bottom.setCanGoForward(await wp.canGoForward());
   }
@@ -212,12 +212,14 @@ class Webview2StateAndroid extends Webview2State {
         withLocalStorage: true,
         hidden: true,
         initialChild: buildLoadingWidget(),
-        bottomNavigationBar: widget.showBottom ? Webview2Bottom(
-          controller: bottom,
-          url: getUrl,
-          onGoBack: wp.goBack,
-          onGoForward: wp.goForward,
-        ) : SizedBox(height: 0),
+        bottomNavigationBar: widget.showBottom
+            ? Webview2Bottom(
+                controller: bottom,
+                url: getUrl,
+                onGoBack: wp.goBack,
+                onGoForward: wp.goForward,
+              )
+            : SizedBox(height: 0),
       ),
     );
   }

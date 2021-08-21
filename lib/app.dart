@@ -138,7 +138,7 @@ Future<String> getToken() async {
     return await plainNotificationToken.getToken();
   } else {
     await XiaoMiPushPlugin.init(
-      appId: "2882303761518813144", appKey: "5601881368144");
+        appId: "2882303761518813144", appKey: "5601881368144");
     return await XiaoMiPushPlugin.getRegId();
   }
 }
@@ -148,12 +148,12 @@ Future<void> requestUpdateHomeWidget(String userName, bool enablePush) async {
   final setIdResult =
       await HomeWidget.saveWidgetData('ecardId', userName ?? '');
   print('set ecardId for home widget: ${setIdResult ? "success" : "failed"}');
-  
+
   if (Platform.isAndroid) {
-    final setPushResult = 
-      await HomeWidget.saveWidgetData('enableLessonPush', enablePush);
+    final setPushResult =
+        await HomeWidget.saveWidgetData('enableLessonPush', enablePush);
     print('set lessonPush for home widget successfully? $setPushResult');
     HomeWidget.updateWidget(
-      name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
+        name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
   }
 }

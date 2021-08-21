@@ -45,7 +45,8 @@ class UndergraduateUser with CustUser implements User {
     return normalizeSchedule(rawSchedule);
   }
 
-  static Future<Schedule> normalizeScheduleKBPro(List<KBProSchedule> raw) async {
+  static Future<Schedule> normalizeScheduleKBPro(
+      List<KBProSchedule> raw) async {
     final result = Schedule()
       ..createdAt = DateTime.now()
       ..versionHash = await computeJsonHashAsync(raw)
@@ -67,7 +68,7 @@ class UndergraduateUser with CustUser implements User {
         ..roomRaw = rawLesson.jSMC
         ..teacherName = rawLesson.jSXM
         ..classRaw = rawLesson.jXBMC;
-      
+
       result.lessons.add(lesson);
     }
 
@@ -86,7 +87,7 @@ class UndergraduateUser with CustUser implements User {
         }
       }
     }
-    
+
     return result;
   }
 

@@ -7,7 +7,7 @@ part 'jw_response.g.dart';
 @JsonSerializable()
 class JwResponse {
   JwResponse();
-  
+
   int state;
   String message;
   Map<String, dynamic> data;

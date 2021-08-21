@@ -30,21 +30,21 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
             Container(
               height: 60.0,
               child: NavigationToolbar(
-                  leading: TextButton(
-                    child: Text('取消'),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  trailing: TextButton(
-                    child: Text('确定'),
-                    onPressed: () {
-                      final data = AddLessonTime(
-                        weekday: weekDay,
-                        startSection: lesson,
-                        endSection: lesson + 1,
-                      );
-                      Navigator.pop(context, data);
-                    },
-                  ),
+                leading: TextButton(
+                  child: Text('取消'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                trailing: TextButton(
+                  child: Text('确定'),
+                  onPressed: () {
+                    final data = AddLessonTime(
+                      weekday: weekDay,
+                      startSection: lesson,
+                      endSection: lesson + 1,
+                    );
+                    Navigator.pop(context, data);
+                  },
+                ),
               ),
             ),
             Container(
@@ -64,8 +64,9 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
                           (index + 1).weekdayInChinese(),
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
-                              color: isDark(context) ? Colors.white : Colors.black
-                          ),
+                              color: isDark(context)
+                                  ? Colors.white
+                                  : Colors.black),
                         );
                       }),
                     ),
@@ -83,8 +84,9 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
                           '${index * 2 + 1}-${(index + 1) * 2}节',
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
-                              color: isDark(context) ? Colors.white : Colors.black
-                          ),
+                              color: isDark(context)
+                                  ? Colors.white
+                                  : Colors.black),
                         );
                       }),
                     ),

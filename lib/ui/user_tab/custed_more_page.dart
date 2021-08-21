@@ -13,7 +13,7 @@ import 'package:custed2/ui/widgets/setting_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class CustedMorePage extends StatelessWidget{
+class CustedMorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widgets = [
@@ -24,14 +24,8 @@ class CustedMorePage extends StatelessWidget{
           child: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: DarkModeFilter(
-                child: Image.asset(
-                    custedIconPath,
-                    height: 50,
-                    width: 50
-                ),
-              )
-          )
-      ),
+                child: Image.asset(custedIconPath, height: 50, width: 50),
+              ))),
       SizedBox(height: 10),
       Text(appName),
       SizedBox(height: 20),
@@ -57,32 +51,27 @@ class CustedMorePage extends StatelessWidget{
     ];
 
     return Scaffold(
-      appBar: NavBar.material(
-        context: context,
-        middle: NavbarText('关于')
-      ),
-      body: AnimationLimiter(
-        child: ListView.builder(
-          itemCount: widgets.length,
-          itemBuilder: (BuildContext context, int index) {
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: const Duration(milliseconds: 375),
-              child: SlideAnimation(
-                verticalOffset: 50.0,
-                child: FadeInAnimation(
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(bottom: 3), 
-                    child: widgets[index]
+        appBar: NavBar.material(context: context, middle: NavbarText('关于')),
+        body: AnimationLimiter(
+          child: ListView.builder(
+            itemCount: widgets.length,
+            itemBuilder: (BuildContext context, int index) {
+              return AnimationConfiguration.staggeredList(
+                position: index,
+                duration: const Duration(milliseconds: 375),
+                child: SlideAnimation(
+                  verticalOffset: 50.0,
+                  child: FadeInAnimation(
+                    child: Container(
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(bottom: 3),
+                        child: widgets[index]),
                   ),
                 ),
-              ),
-            );
-          },
-        ),
-      )
-    );
+              );
+            },
+          ),
+        ));
   }
 
   Widget _buildCheckUpdate(BuildContext context) {
@@ -98,5 +87,4 @@ class CustedMorePage extends StatelessWidget{
       onTap: () => updateCheck(context, force: true),
     );
   }
-
 }

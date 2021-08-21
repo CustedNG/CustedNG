@@ -1,7 +1,6 @@
 import 'package:custed2/ui/webview/webview2_controller.dart';
 import 'package:custed2/ui/webview/webview2_plugin.dart';
 
-
 class PluginForNav extends Webview2Plugin {
   @override
   bool shouldActivate(Uri uri) {

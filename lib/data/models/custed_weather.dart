@@ -10,7 +10,8 @@ class WeatherZhishu {
   String value;
   String detail;
 
-  factory WeatherZhishu.fromJson(Map<String, dynamic> json) => _$WeatherZhishuFromJson(json);
+  factory WeatherZhishu.fromJson(Map<String, dynamic> json) =>
+      _$WeatherZhishuFromJson(json);
 
   Map<String, dynamic> toJson() => _$WeatherZhishuToJson(this);
 }
@@ -21,7 +22,8 @@ class WeatherZhishus {
 
   List<WeatherZhishu> zhishu;
 
-  factory WeatherZhishus.fromJson(Map<String, dynamic> json) => _$WeatherZhishusFromJson(json);
+  factory WeatherZhishus.fromJson(Map<String, dynamic> json) =>
+      _$WeatherZhishusFromJson(json);
 
   Map<String, dynamic> toJson() => _$WeatherZhishusToJson(this);
 }
@@ -34,7 +36,8 @@ class WeatherDetail {
   String fengxiang;
   String fengli;
 
-  factory WeatherDetail.fromJson(Map<String, dynamic> json) => _$WeatherDetailFromJson(json);
+  factory WeatherDetail.fromJson(Map<String, dynamic> json) =>
+      _$WeatherDetailFromJson(json);
 
   Map<String, dynamic> toJson() => _$WeatherDetailToJson(this);
 }
@@ -52,7 +55,8 @@ class WeatherForDay {
   String get highNum => high.split(' ')[1];
   String get lowNum => low.split(' ')[1];
 
-  factory WeatherForDay.fromJson(Map<String, dynamic> json) => _$WeatherForDayFromJson(json);
+  factory WeatherForDay.fromJson(Map<String, dynamic> json) =>
+      _$WeatherForDayFromJson(json);
 
   Map<String, dynamic> toJson() => _$WeatherForDayToJson(this);
 }
@@ -63,11 +67,11 @@ class WeatherForecast {
 
   List<WeatherForDay> weather;
 
-  factory WeatherForecast.fromJson(Map<String, dynamic> json) => _$WeatherForecastFromJson(json);
+  factory WeatherForecast.fromJson(Map<String, dynamic> json) =>
+      _$WeatherForecastFromJson(json);
 
   Map<String, dynamic> toJson() => _$WeatherForecastToJson(this);
 }
-
 
 @JsonSerializable()
 class WeatherData {
@@ -77,7 +81,7 @@ class WeatherData {
 
   @JsonKey(name: 'updatetime')
   String updateTime;
-  
+
   String wendu;
   // Map<String, dynamic> fengli;
   String shidu;
@@ -87,17 +91,15 @@ class WeatherData {
   WeatherForecast forecast;
   WeatherZhishus zhishus;
 
-  factory WeatherData.fromJson(Map<String, dynamic> json)
-    => _$WeatherDataFromJson(json);
+  factory WeatherData.fromJson(Map<String, dynamic> json) =>
+      _$WeatherDataFromJson(json);
 
-  Map<String, dynamic> toJson() 
-    => _$WeatherDataToJson(this);
+  Map<String, dynamic> toJson() => _$WeatherDataToJson(this);
 
   WeatherForDay get today => forecast.weather.first;
 
-  String get type => DateTime.now().hour < 18
-    ? today.day.type
-    : today.night.type;
+  String get type =>
+      DateTime.now().hour < 18 ? today.day.type : today.night.type;
 
   WeatherZhishu getZhishu(String keyword) {
     for (var zhishu in zhishus.zhishu) {

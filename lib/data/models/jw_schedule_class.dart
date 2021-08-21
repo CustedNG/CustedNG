@@ -7,7 +7,7 @@ part 'jw_schedule_class.g.dart';
 @JsonSerializable()
 class JwScheduleClass {
   JwScheduleClass();
-  
+
   String ID;
   String Name;
 

@@ -78,15 +78,10 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
       result = await sendRequest();
     }
     if (result.state == 0) {
-      showRoundDialog(
-        context, 
-        '结果', 
-        _buildEmptyRoomList(result), 
-        [
-          TextButton(
+      showRoundDialog(context, '结果', _buildEmptyRoomList(result), [
+        TextButton(
             onPressed: () => Navigator.of(context).pop(), child: Text('关闭'))
-        ]
-      );
+      ]);
     } else {
       showSnackBar(context, result.message);
     }
@@ -99,15 +94,11 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NavBar.material(
-        context: context,
-        middle: NavbarText('空教室'),
-        trailing: [
-          IconButton(
-            onPressed: () => getData(), 
-            icon: Icon(Icons.search)
-          )
-        ]
-      ),
+          context: context,
+          middle: NavbarText('空教室'),
+          trailing: [
+            IconButton(onPressed: () => getData(), icon: Icon(Icons.search))
+          ]),
       body: ListView(
         shrinkWrap: true,
         children: [

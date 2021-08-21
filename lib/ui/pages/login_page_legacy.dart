@@ -47,8 +47,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     userData.password.put(passwordController.text);
 
     try {
-      final login =
-          await mysso.login(force: true);
+      final login = await mysso.login(force: true);
       if (login.ok) {
         user.login();
         Navigator.pop(ctx);
@@ -94,20 +93,16 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     );
   }
 
-  InputDecoration _buildDecoration(String label, TextStyle textStyle){
+  InputDecoration _buildDecoration(String label, TextStyle textStyle) {
     return InputDecoration(
-      labelText: label,
-      labelStyle: textStyle,
-      border: OutlineInputBorder(),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.cyan
-        )
-      )
-    );
+        labelText: label,
+        labelStyle: textStyle,
+        border: OutlineInputBorder(),
+        enabledBorder:
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.cyan)));
   }
 
-  Widget _buildTextInputField(BuildContext ctx){
+  Widget _buildTextInputField(BuildContext ctx) {
     return Column(
       children: [
         SizedBox(height: 77),
@@ -115,7 +110,8 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           controller: usernameController,
           keyboardType: TextInputType.number,
           style: TextStyle(color: Colors.white),
-          decoration: _buildDecoration('一卡通号', TextStyle(color: Color(0x55FFFFFF))),
+          decoration:
+              _buildDecoration('一卡通号', TextStyle(color: Color(0x55FFFFFF))),
           onSubmitted: (_) => focusOnPasswordField(),
         ),
         SizedBox(height: 15),
@@ -124,7 +120,8 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
           focusNode: passwordFocusNode,
           style: TextStyle(color: Colors.white),
           obscureText: true,
-          decoration: _buildDecoration('统一认证密码', TextStyle(color: Color(0x55FFFFFF))),
+          decoration:
+              _buildDecoration('统一认证密码', TextStyle(color: Color(0x55FFFFFF))),
           onSubmitted: (_) => forceLogin(ctx),
         ),
         SizedBox(height: 90),
@@ -132,7 +129,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     );
   }
 
-  Widget _buildFAB(BuildContext context){
+  Widget _buildFAB(BuildContext context) {
     return Column(
       children: [
         Row(
@@ -167,7 +164,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     );
   }
 
-  Widget _buildHead(){
+  Widget _buildHead() {
     return Column(
       children: [
         SizedBox(height: 20),

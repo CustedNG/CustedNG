@@ -23,5 +23,4 @@ class JwPhotoBlob {
       _$JwPhotoBlobFromJson(json);
 
   Map<String, dynamic> toJson() => _$JwPhotoBlobToJson(this);
-
 }

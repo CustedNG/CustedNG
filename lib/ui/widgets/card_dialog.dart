@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CardDialog extends StatelessWidget {
-
-  CardDialog({
-    this.title,
-    this.content,
-    this.actions,
-    this.padding
-  });
+  CardDialog({this.title, this.content, this.actions, this.padding});
 
   final Widget content;
   final List<Widget> actions;

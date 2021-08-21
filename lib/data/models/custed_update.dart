@@ -14,7 +14,7 @@ class CustedUpdate {
 
   /// 更新级别，2表示紧急更新
   int level;
-  
+
   String name;
   String changelog;
   CustedFile file;
