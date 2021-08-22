@@ -183,7 +183,7 @@ class CustedService extends CatClient {
   }
 
   Future<bool> useKBPro() async {
-    final resp = await get('$backendUrl/res/useKBPro?build=${BuildData.build}');
+    final resp = await get('$backendUrl/useKBPro?build=${BuildData.build}');
     if (resp.body != null || resp.body != '') return resp.body == 'true';
     return false;
   }
