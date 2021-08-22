@@ -6,6 +6,7 @@ import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/campus_wifi_service.dart';
+import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
 import 'package:custed2/core/utils.dart';
@@ -82,7 +83,7 @@ class _HomeEntriesState extends State<HomeEntries> {
             name: Shimmer.fromColors(
                 child: Text('长理指北',
                     style: style.copyWith(fontWeight: FontWeight.bold)),
-                baseColor: resolveWithBackground(context),
+                baseColor: DynamicColor(Colors.black, Colors.white).resolve(context),
                 highlightColor: Colors.redAccent),
             icon: Image(image: ImageRes.networkIcon),
             // action: () => ecardWebPage.go(context),

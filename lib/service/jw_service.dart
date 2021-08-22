@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:encrypt/encrypt.dart';
 
 import 'package:convert/convert.dart';
 import 'package:custed2/core/extension/stringx.dart';
@@ -110,9 +111,14 @@ class JwService extends WrdvpnBasedService {
       expireTest: (res) => res.body.length < 10,
     );
 
+    final key = Key.fromUtf8('ytdxcmqwbQS=@phr');
+    final iv = IV.fromLength(16);
+    final encrypter = Encrypter(AES(key, mode: AESMode.ecb));
+    final result = encrypter.decrypt(Encrypted.fromBase64(resp.body), iv: iv);
+
     if (resp.statusCode == 200) {
       final result4SendChedule =
-          await custed.updateCachedScheduleKBPro(utf8.decode(resp.bodyBytes));
+          await custed.updateCachedScheduleKBPro(result);
       print('send cache schedule to backend: $result4SendChedule');
     } else {
       final cache = await custed.getCacheScheduleKBPro();
@@ -120,7 +126,7 @@ class JwService extends WrdvpnBasedService {
       if (cache.statusCode == 200) resp = cache;
     }
 
-    final data = json.decode(utf8.decode(resp.bodyBytes));
+    final data = json.decode(result);
     final List<KBProSchedule> list = [];
     for (var item in data) {
       list.add(KBProSchedule.fromJson(item));

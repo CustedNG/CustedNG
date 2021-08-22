@@ -5,7 +5,6 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
-import 'package:otp/otp.dart';
 import 'package:provider/provider.dart';
 
 class DebugPage extends StatefulWidget {
@@ -24,8 +23,7 @@ class _DebugPageState extends State<DebugPage> {
 
   @override
   Widget build(BuildContext context) {
-    final content =
-        permitted ? _buildTerminal(context) : _buildLockScreen(context);
+    final content = _buildTerminal(context);
 
     return Scaffold(
       appBar: NavBar.material(
@@ -42,46 +40,6 @@ class _DebugPageState extends State<DebugPage> {
           backgroundColor: Colors.black),
       body: content,
       backgroundColor: Colors.black,
-    );
-  }
-
-  Widget _buildLockScreen(BuildContext context) {
-    return SingleChildScrollView(
-      child: Center(
-        child: Container(
-          padding: EdgeInsets.all(20),
-          constraints: BoxConstraints(maxWidth: 300),
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 50,
-              ),
-              TextField(
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                onChanged: (otp) => otpInput = otp,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              TextButton(
-                child: Text('Unlock'),
-                onPressed: () {
-                  final otp = OTP.generateTOTPCode(
-                    'ORXWC43UORXWC43U',
-                    DateTime.now().millisecondsSinceEpoch,
-                  );
-                  if (otp.toString() == otpInput) {
-                    setState(() {
-                      permitted = true;
-                    });
-                  }
-                },
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 
