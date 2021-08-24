@@ -76,7 +76,19 @@ class JwService extends WrdvpnBasedService {
     final resp = await xRequest(
       'POST',
       requestUrl.toUri(),
-      body: encodeParams({}),
+      body: {
+        "param": "JTdCJTdE",
+        "__permission": {
+          "MenuID": "00000000-0000-0000-0000-000000000000",
+          "Operate": "select",
+          "Operation": 0
+        },
+        "__log": {
+          "MenuID": "00000000-0000-0000-0000-000000000000",
+          "Logtype": 6,
+          "Context": "查询"
+        }
+      },
       headers: {'content-type': 'application/json'},
     );
 
@@ -117,8 +129,7 @@ class JwService extends WrdvpnBasedService {
     final result = encrypter.decrypt(Encrypted.fromBase64(resp.body), iv: iv);
 
     if (resp.statusCode == 200) {
-      final result4SendChedule =
-          await custed.updateCachedScheduleKBPro(result);
+      final result4SendChedule = await custed.updateCachedScheduleKBPro(result);
       print('send cache schedule to backend: $result4SendChedule');
     } else {
       final cache = await custed.getCacheScheduleKBPro();

@@ -83,7 +83,8 @@ class _HomeEntriesState extends State<HomeEntries> {
             name: Shimmer.fromColors(
                 child: Text('长理指北',
                     style: style.copyWith(fontWeight: FontWeight.bold)),
-                baseColor: DynamicColor(Colors.black, Colors.white).resolve(context),
+                baseColor:
+                    DynamicColor(Colors.black, Colors.white).resolve(context),
                 highlightColor: Colors.redAccent),
             icon: Image(image: ImageRes.networkIcon),
             // action: () => ecardWebPage.go(context),
