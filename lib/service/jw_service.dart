@@ -226,17 +226,17 @@ class JwService extends WrdvpnBasedService {
       '$baseUrl/api/ClientStudent/QueryService/GradeQueryApi/GetDataByStudent'
           .toUri(),
       body: {
-        // {"ShowGradeType":1} -> url -> base64
-        'param': 'JTdCJTIyU2hvd0dyYWRlVHlwZSUyMjoxJTdE',
-        '__log': {
-          'MenuID': '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5',
-          'Logtype': 6,
-          'Context': '查询',
+        "param": "JTdCJTIyU2hvd0dyYWRlVHlwZSUyMiUzQTAlN0Q=",
+        "__permission": {
+          "MenuID": "4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5",
+          "Operate": "select",
+          "Operation": 0
         },
-        '__permission': {
-          'MenuID': '4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5',
-          'Operation': 0
-        },
+        "__log": {
+          "MenuID": "4443798E-EB6E-4D88-BFBD-BB0A76FF6BD5",
+          "Logtype": 6,
+          "Context": "查询"
+        }
       },
       headers: {'content-type': 'application/json'},
     );
