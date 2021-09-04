@@ -85,14 +85,14 @@ void flutterRun() {
       mode: ProcessStartMode.inheritStdio, runInShell: true);
 }
 
-void flutterBuild(String source, String target, bool isAndroid) async {
+void flutterBuild(String source, String target, bool isAndroid, bool is32Bit) async {
   final startTime = DateTime.now();
   final build = await getGitCommitCount();
 
   final args = [
     'build',
     isAndroid ? 'apk' : 'ipa',
-    '--target-platform=android-arm64',
+    '--target-platform=android-arm${is32Bit ? "" : 64}',
     '--build-number=$build',
     '--build-name=1.0.$build'
   ];
@@ -116,12 +116,12 @@ void flutterBuild(String source, String target, bool isAndroid) async {
 
 void flutterBuildIOS() async {
   await flutterBuild('./build/ios/iphoneos/CustedNG.app',
-      './release/CustedNG_build.app', false);
+      './release/CustedNG_build.app', false, false);
 }
 
-void flutterBuildAndroid() async {
+void flutterBuildAndroid(bool is32Bit) async {
   await flutterBuild('./build/app/outputs/flutter-apk/app-release.apk',
-      './release/CustedNG_build_Arm64.apk', true);
+      './release/CustedNG_build_Arm${is32Bit ? "" : 64}.apk', true, is32Bit);
 }
 
 void main(List<String> args) async {
@@ -141,7 +141,7 @@ void main(List<String> args) async {
       if (args.length > 1) {
         await updateBuildData();
         if (args[1] == 'android' || args[1] == 'harmony') {
-          return flutterBuildAndroid();
+          return flutterBuildAndroid(args.last == '32');
         } else if (args[1] == 'ios') {
           return flutterBuildIOS();
         }
