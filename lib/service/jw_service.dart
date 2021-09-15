@@ -149,9 +149,9 @@ class JwService extends WrdvpnBasedService {
     final Map<String, dynamic> params = {
       "KBLX": "2",
       "CXLX": "0",
-      "XNXQ": "20202", // seemingly hardcoded?
+      "XNXQ": "20211", // seemingly hardcoded?
       "CXID": userUUID,
-      "CXZC": "3",
+      "CXZC": "",
       "JXBLX": "", "IsOnLine": "-1"
     };
 
@@ -163,8 +163,16 @@ class JwService extends WrdvpnBasedService {
       requestUrl.toUri(),
       body: {
         'param': encodeParamValue(params),
-        "__permission": {"MenuID": '1616251313480', "Operation": '0'},
-        "__log": {"MenuID": '1616251313480', "Logtype": '6', "Context": "查询"}
+        "__permission": {
+          "MenuID": '9B419D97-3440-422C-8230-A83292B62FA4',
+          "Operate": "select",
+          "Operation": '0'
+        },
+        "__log": {
+          "MenuID": '9B419D97-3440-422C-8230-A83292B62FA4',
+          "Logtype": '6',
+          "Context": "查询"
+        }
       },
       headers: {'content-type': 'application/json'},
     );
@@ -181,8 +189,16 @@ class JwService extends WrdvpnBasedService {
       '$baseUrl/api/CommonApi/GetStudentDropDownDataBySearchText'.toUri(),
       body: {
         "param": encodeParamValue(params),
-        "__permission": {"MenuID": "1616251313480", "Operation": "0"},
-        "__log": {"MenuID": "1616251313480", "Logtype": "6", "Context": "查询"}
+        "__permission": {
+          "MenuID": "9B419D97-3440-422C-8230-A83292B62FA4",
+          "Operate": "select",
+          "Operation": "0"
+        },
+        "__log": {
+          "MenuID": "9B419D97-3440-422C-8230-A83292B62FA4",
+          "Logtype": "6",
+          "Context": "查询"
+        }
       },
       headers: {'content-type': 'application/json'},
     );
