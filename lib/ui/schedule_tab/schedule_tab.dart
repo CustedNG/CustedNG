@@ -140,20 +140,40 @@ class _ScheduleTabState extends State<ScheduleTab>
 
   Widget _buildNavbarMiddle(BuildContext context) {
     final scheduleTitleProvider = Provider.of<ScheduleTitleProvider>(context);
+    final scheduleProvider = Provider.of<ScheduleProvider>(context);
+    final profile = scheduleProvider.customScheduleProfile;
+    final captionLastUpdateValue = scheduleProvider.schedule != null
+        ? scheduleProvider.schedule.createdAt.toHumanReadable()
+        : '-';
+
+    bool usingCustomProfile = profile != null;
+
+    final studentInfo =
+    usingCustomProfile ? profile.name + ' ' + profile.studentNumber : null;
 
     var display;
 
     if (scheduleProvider.isBusy) {
       display = ['更新中'];
     } else if (scheduleTitleProvider.showWeekInTitle) {
-      display = ['第${scheduleProvider.selectedWeek}周'];
-    } else {
       display = [
-        '上次更新',
-        scheduleProvider.schedule != null
-            ? scheduleProvider.schedule.createdAt.toHumanReadable()
-            : '-'
+        '第${scheduleProvider.selectedWeek}周',
+        if (usingCustomProfile) studentInfo
       ];
+    } else {
+      if (usingCustomProfile) {
+        display = [
+          '上次更新 ' + captionLastUpdateValue,
+          studentInfo,
+        ];
+      } else {
+        display = [
+          '上次更新',
+          scheduleProvider.schedule != null
+              ? scheduleProvider.schedule.createdAt.toHumanReadable()
+              : '-',
+        ];
+      }
     }
 
     // return Text(title);
