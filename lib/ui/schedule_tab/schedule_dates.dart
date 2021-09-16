@@ -87,19 +87,9 @@ class ScheduleDates {
     DateTime(2021, 9, 20): '休',
     DateTime(2021, 9, 21): '中秋',
 
-    DateTime(2021, 9, 26): '10/4日课',
-
     DateTime(2021, 10, 1): '国庆',
     DateTime(2021, 10, 2): '休',
     DateTime(2021, 10, 3): '休',
-    DateTime(2021, 10, 4): '10/4 休',
-    DateTime(2021, 10, 5): '休',
-    DateTime(2021, 10, 6): '休',
-    DateTime(2021, 10, 7): '休',
-    DateTime(2021, 10, 8): '休',
-
-    DateTime(2021, 10, 9): '10/5日课',
-    DateTime(2021, 10, 10): '10/8日课',
 
     // DateTime(2021, 9, 10): '教师节',
   };

@@ -41,7 +41,7 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
               child: TextField(
                 controller: _studentNumberTextFieldController,
-                maxLength: 9,
+                maxLength: 10,
                 decoration: InputDecoration(
                     labelText: '学号/姓名', icon: Icon(Icons.person)),
               ),

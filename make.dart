@@ -9,8 +9,14 @@
 import 'dart:convert';
 import 'dart:io';
 
+Encoding getCommandLineEncoding() {
+  return Encoding.getByName("UTF-8");
+}
+
 Future<int> getGitCommitCount() async {
-  final result = await Process.run('git', ['log', '--oneline']);
+  final encoding = getCommandLineEncoding();
+  final result = await Process.run('git', ['log', '--oneline'],
+      stdoutEncoding: encoding, stderrEncoding: encoding);
   return (result.stdout as String)
       .split('\n')
       .where((line) => line.isNotEmpty)
@@ -58,7 +64,8 @@ Future<int> getGitModificationCount() async {
 }
 
 Future<String> getFlutterVersion() async {
-  final result = await Process.run('flutter', ['--version'], runInShell: true);
+  final result = await Process.run('flutter', ['--version'],
+      runInShell: true, stdoutEncoding: getCommandLineEncoding());
   return (result.stdout as String);
 }
 
@@ -91,7 +98,8 @@ void flutterRun() {
       mode: ProcessStartMode.inheritStdio, runInShell: true);
 }
 
-void flutterBuild(String source, String target, bool isAndroid, bool is32Bit) async {
+void flutterBuild(
+    String source, String target, bool isAndroid, bool is32Bit) async {
   final startTime = DateTime.now();
   final build = await getGitCommitCount();
 
