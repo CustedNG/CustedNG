@@ -1,5 +1,11 @@
 #!/usr/bin/env dart
 
+/// 使用示例
+/// 请在使用前，在本项目根目录创建[countly_config]文件，按行填入URL和KEY。
+/// `./make.dart build android`编译Android 64bit版本
+/// `./make.dart build android 32`编译Android 32bit版本
+/// `./make.dart build ios`编译iOS 64bit版本
+
 import 'dart:convert';
 import 'dart:io';
 

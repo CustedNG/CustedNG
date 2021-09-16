@@ -188,7 +188,10 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   }
 
   void sendSetting2Backend(bool v) async {
-    if (v) showSnackBar(context, ' 该功能处于测试阶段！');
+    if ((await custed.getCacheSchedule()).statusCode != 200) {
+      setting.pushNotification.put(false);
+      return showSnackBar(context, '未能检测到课表！\n请登录并刷新课表后重试');
+    }
     await custed.setPushScheduleNotification(v);
   }
 
