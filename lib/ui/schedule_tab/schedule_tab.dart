@@ -150,7 +150,7 @@ class _ScheduleTabState extends State<ScheduleTab>
     bool usingCustomProfile = profile != null;
 
     final studentInfo =
-    usingCustomProfile ? profile.name + ' ' + profile.studentNumber : null;
+        usingCustomProfile ? profile.name + ' ' + profile.studentNumber : null;
 
     var display;
 

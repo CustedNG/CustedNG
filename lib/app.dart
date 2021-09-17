@@ -38,13 +38,12 @@ class Custed extends StatefulWidget {
 }
 
 class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     setSystemBottomNavigationBarColor(context);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final setting = locator<SettingStore>();

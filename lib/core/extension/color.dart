@@ -9,9 +9,8 @@ extension ColorX on Color {
     return false;
   }
 
-  SystemUiOverlayStyle get systemOverlayStyle => isBrightColor
-      ? SystemUiOverlayStyle.dark
-      : SystemUiOverlayStyle.light;
+  SystemUiOverlayStyle get systemOverlayStyle =>
+      isBrightColor ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light;
 
   Brightness get getBrightnessFromColor {
     return ThemeData.estimateBrightnessForColor(this);

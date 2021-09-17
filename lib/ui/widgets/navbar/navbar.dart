@@ -13,7 +13,9 @@ class NavBar {
       Widget middle,
       List<Widget> trailing,
       Color backgroundColor}) {
-    final primary = isDark(context) ? Theme.of(context).appBarTheme.backgroundColor : Color(locator<SettingStore>().appPrimaryColor.fetch());
+    final primary = isDark(context)
+        ? Theme.of(context).appBarTheme.backgroundColor
+        : Color(locator<SettingStore>().appPrimaryColor.fetch());
     return AppBar(
       leading: needPadding
           ? Padding(
@@ -24,7 +26,7 @@ class NavBar {
       centerTitle: true,
       actions: trailing,
       systemOverlayStyle: primary?.systemOverlayStyle,
-      backgroundColor: primary,
+      backgroundColor: backgroundColor ?? primary,
     );
   }
 }

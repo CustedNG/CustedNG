@@ -5,6 +5,7 @@ import 'package:custed2/core/route.dart';
 import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
+import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/fade_in.dart';
@@ -206,19 +207,26 @@ Widget buildSwitch(BuildContext context, StoreProperty<bool> prop,
   );
 }
 
-  Color resolveWithBackground(BuildContext context) {
-    final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
-    final background = Theme.of(context).backgroundColor;
-    if (primary.isBrightColor != background.isBrightColor) {
-      return primary;
-    }
-    return null;
+Color resolveWithBackground(BuildContext context) {
+  final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
+  final background = Theme.of(context).backgroundColor;
+  if (primary.isBrightColor != background.isBrightColor) {
+    return primary;
   }
+  return null;
+}
 
-  void setSystemBottomNavigationBarColor(BuildContext context) {
-    if (Platform.isAndroid) {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
-      ));
-    }
+void setSystemBottomNavigationBarColor(BuildContext context) {
+  if (Platform.isAndroid) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
+        overlays: [SystemUiOverlay.top]); // Enable Edge-to-Edge on Android 10+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor:
+          Colors.transparent, // Setting a transparent navigation bar color
+      systemNavigationBarContrastEnforced: true, // Default
+      systemNavigationBarIconBrightness: isDark(context)
+          ? Brightness.light
+          : Brightness.dark, // This defines the color of the scrim
+    ));
   }
+}
