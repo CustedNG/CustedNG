@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/store/persistent_store.dart';
@@ -8,6 +10,7 @@ import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/fade_in.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/src/types.dart';
 import 'dart:async';
 import 'dart:typed_data';
@@ -210,4 +213,12 @@ Widget buildSwitch(BuildContext context, StoreProperty<bool> prop,
       return primary;
     }
     return null;
+  }
+
+  void setSystemBottomNavigationBarColor(BuildContext context) {
+    if (Platform.isAndroid) {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+      ));
+    }
   }

@@ -433,16 +433,7 @@ class __ReportItemState extends State<_ReportItem>
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Flexible(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(widget.exam.lessonName, style: nameTextTheme),
-                    SizedBox(width: 5),
-                    Text(
-                      widget.exam.lessonType,
-                    ),
-                  ],
-                ),
+                child: Text(widget.exam.lessonName, style: nameTextTheme),
               ),
               // SizedBox(height: 10),
               Flexible(
