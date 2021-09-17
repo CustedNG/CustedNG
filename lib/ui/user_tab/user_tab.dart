@@ -1,3 +1,4 @@
+import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -214,7 +215,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
               onPressed: () async {
                 final dark = setting.darkMode.fetch();
                 setting.darkMode.put(dark);
-                if (isBrightColor(Color(setting.appPrimaryColor.fetch()))) {
+                if (Color(setting.appPrimaryColor.fetch()).isBrightColor) {
                   showSnackBar(context, '当前设置的颜色过浅\n不会应用至高亮字、按钮、开关等');
                 }
                 setState(() {});

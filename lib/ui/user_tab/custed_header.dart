@@ -1,5 +1,5 @@
+import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -19,7 +19,7 @@ class _CustedHeaderState extends State<CustedHeader> {
   @override
   Widget build(BuildContext context) {
     Color primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
-    bool isBrightBackground = isBrightColor(primary);
+    bool isBrightBackground = primary.isBrightColor;
     bool floatTextUseWhite =
         isDark(context) ? true : (isBrightBackground ? false : true);
 

@@ -1,3 +1,4 @@
+import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/store/persistent_store.dart';
 import 'package:custed2/data/store/setting_store.dart';
@@ -202,22 +203,11 @@ Widget buildSwitch(BuildContext context, StoreProperty<bool> prop,
   );
 }
 
-bool isBrightColor(Color c) {
-  if (getBrightnessFromColor(c) == Brightness.light) {
-    return true;
+  Color resolveWithBackground(BuildContext context) {
+    final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
+    final background = Theme.of(context).backgroundColor;
+    if (primary.isBrightColor != background.isBrightColor) {
+      return primary;
+    }
+    return null;
   }
-  return false;
-}
-
-Brightness getBrightnessFromColor(Color c) {
-  return ThemeData.estimateBrightnessForColor(c);
-}
-
-Color resolveWithBackground(BuildContext context) {
-  final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
-  final background = Theme.of(context).backgroundColor;
-  if (isBrightColor(primary) != isBrightColor(background)) {
-    return primary;
-  }
-  return null;
-}

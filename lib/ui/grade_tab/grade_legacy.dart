@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:custed2/constants.dart';
+import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
@@ -140,7 +141,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   }
 
   TextStyle resolveWithBackground(TextStyle style) => style.copyWith(
-      color: isBrightColor(Theme.of(context).primaryColor)
+      color: Theme.of(context).primaryColor.isBrightColor
           ? Colors.black87
           : Colors.white);
 
