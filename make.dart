@@ -9,6 +9,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+const appName = 'Custed NG';
+const buildDataClassPath = 'lib/res/build_data.dart';
+const countlyConfigClassPath = 'lib/config/countly.dart';
+
 Encoding getCommandLineEncoding() {
   return Encoding.getByName("UTF-8");
 }
@@ -36,7 +40,11 @@ Future<void> generateCountlyConfig() async {
     'key': configs[1],
   };
 
-  await writeStaicConfigFile(data, 'CountlyConfig', 'lib/config/countly.dart');
+  await writeStaicConfigFile(
+    data,
+    'CountlyConfig',
+    countlyConfigClassPath
+  );
 }
 
 Future<void> writeStaicConfigFile(
@@ -71,7 +79,7 @@ Future<String> getFlutterVersion() async {
 
 Future<Map<String, dynamic>> getBuildData() async {
   final data = {
-    'name': 'CustedNG',
+    'name': appName,
     'build': await getGitCommitCount(),
     'engine': await getFlutterVersion(),
     'buildAt': DateTime.now().toString(),
@@ -89,12 +97,11 @@ Future<void> updateBuildData() async {
   print('Updating BuildData...');
   final data = await getBuildData();
   print(jsonEncodeWithIndent(data));
-  final path = 'lib/res/build_data.dart';
-  await writeStaicConfigFile(data, 'BuildData', path);
+  await writeStaicConfigFile(data, 'BuildData', buildDataClassPath);
 }
 
-void flutterRun() {
-  Process.start('flutter', ['run'],
+void flutterRun(String mode) {
+  Process.start('flutter', ['run', '--$mode'],
       mode: ProcessStartMode.inheritStdio, runInShell: true);
 }
 
@@ -129,13 +136,13 @@ void flutterBuild(
 }
 
 void flutterBuildIOS() async {
-  await flutterBuild('./build/ios/iphoneos/CustedNG.app',
-      './release/CustedNG_build.app', false, false);
+  await flutterBuild('./build/ios/iphoneos/$appName.app',
+      './release/${appName}_build.app', false, false);
 }
 
 void flutterBuildAndroid(bool is32Bit) async {
   await flutterBuild('./build/app/outputs/flutter-apk/app-release.apk',
-      './release/CustedNG_build_Arm${is32Bit ? "" : 64}.apk', true, is32Bit);
+      './release/${appName}_build_Arm${is32Bit ? "" : 64}.apk', true, is32Bit);
 }
 
 void main(List<String> args) async {
@@ -150,7 +157,11 @@ void main(List<String> args) async {
 
   switch (command) {
     case 'run':
-      return flutterRun();
+      if (args.length > 1) {
+        await updateBuildData();
+        return flutterRun(args[1]);
+      }
+      return flutterRun('');
     case 'build':
       if (args.length > 1) {
         await updateBuildData();
