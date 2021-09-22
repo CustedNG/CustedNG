@@ -9,7 +9,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-const appName = 'Custed NG';
+const appName = 'CustedNG';
 const buildDataClassPath = 'lib/res/build_data.dart';
 const countlyConfigClassPath = 'lib/config/countly.dart';
 

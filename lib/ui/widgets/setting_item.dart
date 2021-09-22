@@ -40,9 +40,7 @@ class SettingItem extends StatelessWidget {
           semanticContainer: false,
           child: InkWell(
               onTap: this.onTap,
-              child: Stack(
-                children: [
-                  Row(
+              child: Row(
                     children: <Widget>[
                       SizedBox(width: 10.0),
                       this.icon ?? Container(),
@@ -65,14 +63,9 @@ class SettingItem extends StatelessWidget {
                             )
                           : Container(),
                       SizedBox(width: 10.0),
+                      this.rightBtn ?? Container()
                     ],
-                  ),
-                  Positioned(
-                    child: this.rightBtn ?? Container(),
-                    right: 0,
-                  )
-                ],
-              )),
+                  )),
         ));
   }
 }

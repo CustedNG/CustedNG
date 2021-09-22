@@ -85,7 +85,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             title: 'App强调色',
             showArrow: false,
             rightBtn: Padding(
-              padding: EdgeInsets.fromLTRB(0, 10, 10, 0),
+              padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
               child: _buildAppColorPreview(),
             ),
           ),
@@ -172,7 +172,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
               Icon(Icons.keyboard_arrow_down)
             ],
           ),
-          padding: EdgeInsets.fromLTRB(0, 11, 10, 0),
+          padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
         ),
         itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
               SelectViewText('梵高·星空', 0),
