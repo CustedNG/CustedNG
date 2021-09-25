@@ -22,7 +22,8 @@ class CustomLessonStore with PersistentStore<ScheduleLesson> {
       if (value.name == lesson.name &&
           value.teacherName == lesson.teacherName &&
           lesson.type == ScheduleLessonType.custom &&
-          value.room == lesson.room) {
+          value.room == lesson.room && 
+          value.startSection == lesson.startSection) {
         k = key;
       }
     });
