@@ -38,7 +38,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
     return Scaffold(
         appBar: NavBar.material(
           context: context,
-          leading: Container(),
+          leading: SizedBox(),
           middle: NavbarText('设置'),
         ),
         body: _buildSetting());

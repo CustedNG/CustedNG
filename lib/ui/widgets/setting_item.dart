@@ -43,7 +43,7 @@ class SettingItem extends StatelessWidget {
               child: Row(
                     children: <Widget>[
                       SizedBox(width: 10.0),
-                      this.icon ?? Container(),
+                      this.icon ?? SizedBox(),
                       SizedBox(width: 10.0),
                       Text(this.title),
                       Expanded(
@@ -61,9 +61,9 @@ class SettingItem extends StatelessWidget {
                               Icons.arrow_forward_ios,
                               size: 16,
                             )
-                          : Container(),
+                          : SizedBox(),
                       SizedBox(width: 10.0),
-                      this.rightBtn ?? Container()
+                      this.rightBtn ?? SizedBox()
                     ],
                   )),
         ));

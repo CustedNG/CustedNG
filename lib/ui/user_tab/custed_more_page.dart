@@ -1,6 +1,8 @@
 import 'package:custed2/constants.dart';
+import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/update.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
@@ -47,6 +49,10 @@ class CustedMorePage extends StatelessWidget {
         onTap: () => AppRoute(
           page: IssuePage(),
         ).go(context),
+      ),
+      SettingItem(
+        title: '加入我们',
+        onTap: () => showSnackBarWithAction(context, '请在用户群内私聊管理员', '加入用户群', () => openUrl(joinQQUserGroup)),
       ),
     ];
 

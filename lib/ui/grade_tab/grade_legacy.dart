@@ -110,7 +110,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: NavBar.material(
-          leading: Container(),
+          leading: SizedBox(),
           context: context,
           middle: NavbarText('成绩'),
           trailing: [
@@ -118,7 +118,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
                 ? IconButton(
                     icon: Icon(Icons.format_list_numbered),
                     onPressed: () => _showSelector(context))
-                : Container()
+                : SizedBox()
           ]),
       body: Material(
         child: PageView(

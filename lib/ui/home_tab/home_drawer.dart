@@ -65,7 +65,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   cetAvatarPage.go(context);
                 },
               )
-            : Container(),
+            : SizedBox(),
         (isLoggedIn && showRealUI)
             ? ListTile(
                 leading: Icon(Icons.cloud, color: color),
@@ -75,8 +75,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   netdiskPage.go(context);
                 },
               )
-            : Container(),
-        (isLoggedIn && showRealUI) ? Divider() : Container(),
+            : SizedBox(),
+        (isLoggedIn && showRealUI) ? Divider() : SizedBox(),
         ListTile(
           leading: Icon(Icons.info, color: color),
           title: Text('版本信息'),

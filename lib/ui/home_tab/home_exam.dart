@@ -21,7 +21,7 @@ class _HomeExamState extends State<HomeExam> {
     final setting = locator<SettingStore>();
 
     if (!exam.show || user.isBusy || !user.loggedIn) {
-      return Container();
+      return SizedBox();
     }
 
     if (exam.isBusy || exam == null) {

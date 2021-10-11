@@ -63,7 +63,7 @@ class _ScheduleTabState extends State<ScheduleTab>
           middle: _buildNavbarMiddle(context),
           trailing: <Widget>[
             scheduleProvider.isBusy
-                ? Container()
+                ? SizedBox()
                 : IconButton(
                     onPressed: () => AppRoute(
                           title: '添加课程',
@@ -123,7 +123,7 @@ class _ScheduleTabState extends State<ScheduleTab>
                       .withOpacity(0.5)),
             ),
           )
-        : Container();
+        : SizedBox();
   }
 
   // @override

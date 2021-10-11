@@ -28,7 +28,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     final setting = locator<SettingStore>();
     final exam = Provider.of<ExamProvider>(context);
 
-    Widget content = Container();
+    Widget content = SizedBox();
 
     // 三种特殊情况：
     // 1.没有考试

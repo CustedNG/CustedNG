@@ -19,7 +19,7 @@ class HomeBanner extends StatelessWidget {
   Widget _buildBanner(BuildContext context) {
     final bannerProvider = Provider.of<BannerProvider>(context);
     final bannerUrl = bannerProvider.bannerUrl;
-    if (bannerUrl == null) return Container();
+    if (bannerUrl == null) return SizedBox();
 
     return GestureDetector(
       onTap: () => bannerProvider.execAction(),

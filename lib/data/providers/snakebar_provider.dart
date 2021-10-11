@@ -12,7 +12,7 @@ class SnakebarProvider extends ProviderBase {
     _contentQueue = StreamController<SnakeBarContent>();
     // add a placeholder
     _content = SnakeBarContent(
-      widget: Container(),
+      widget: SizedBox(),
       bgColor: Colors.blue,
     );
     _startLoop();

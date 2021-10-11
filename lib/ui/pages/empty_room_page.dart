@@ -123,8 +123,8 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
             controller: buildingController,
             onTap: () => _showBuildingPicker(),
           ),
-          isBusy ? SizedBox(height: 77) : Container(),
-          isBusy ? Center(child: CircularProgressIndicator()) : Container()
+          isBusy ? SizedBox(height: 77) : SizedBox(),
+          isBusy ? Center(child: CircularProgressIndicator()) : SizedBox()
         ],
       ),
     );
