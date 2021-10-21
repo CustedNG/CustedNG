@@ -1,4 +1,5 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
@@ -31,7 +32,7 @@ class _HomeWeatherState extends State<HomeWeather> {
     );
   }
 
-  _buildWeather(WeatherData data) {
+  Widget _buildWeather(WeatherData data) {
     return Container(
       key: ValueKey(1),
       child: NavbarMiddle(
@@ -42,7 +43,7 @@ class _HomeWeatherState extends State<HomeWeather> {
     );
   }
 
-  _buildCurrent(String temperature) {
+  Widget _buildCurrent(String temperature) {
     return Container(
       key: ValueKey(2),
       child: NavbarMiddle(

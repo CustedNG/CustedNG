@@ -1,4 +1,5 @@
 import 'package:custed2/core/extension/color.dart';
+import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/theme.dart';
@@ -16,6 +17,9 @@ class NavBar {
     final primary = isDark(context)
         ? Theme.of(context).appBarTheme.backgroundColor
         : Color(locator<SettingStore>().appPrimaryColor.fetch());
+    final contentColor = judgeWhiteOrBlack4AppbarContent(context);
+    final contentTextStyle = TextStyle(color: contentColor);
+
     return AppBar(
       leading: needPadding
           ? Padding(
@@ -25,7 +29,9 @@ class NavBar {
       title: middle,
       centerTitle: true,
       actions: trailing,
-      systemOverlayStyle: primary?.systemOverlayStyle,
+      iconTheme: IconThemeData(color: contentColor),
+      titleTextStyle: contentTextStyle,
+      toolbarTextStyle: contentTextStyle,
       backgroundColor: backgroundColor ?? primary,
     );
   }

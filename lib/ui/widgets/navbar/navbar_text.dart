@@ -8,7 +8,7 @@ class NavbarText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseFont = TextStyle(
-      fontSize: 16.0,
+      fontSize: 15.777,
       fontWeight: FontWeight.bold,
     );
 

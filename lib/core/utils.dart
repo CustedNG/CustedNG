@@ -216,6 +216,11 @@ Color resolveWithBackground(BuildContext context) {
   return null;
 }
 
+Color judgeWhiteOrBlack4AppbarContent(BuildContext context) {
+  final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
+  return primary.isBrightColor ? Colors.black : Colors.white;
+}
+
 void setSystemBottomNavigationBarColor(BuildContext context) {
   if (Platform.isAndroid) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
