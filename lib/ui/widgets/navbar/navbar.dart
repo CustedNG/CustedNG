@@ -1,4 +1,3 @@
-import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';

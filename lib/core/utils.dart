@@ -207,6 +207,7 @@ Widget buildSwitch(BuildContext context, StoreProperty<bool> prop,
   );
 }
 
+/// 根据背景色判断是否显示强调色
 Color resolveWithBackground(BuildContext context) {
   final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
   final background = Theme.of(context).backgroundColor;
@@ -216,6 +217,7 @@ Color resolveWithBackground(BuildContext context) {
   return null;
 }
 
+/// 根据Appbar背景色判断使用黑/白色
 Color judgeWhiteOrBlack4AppbarContent(BuildContext context) {
   final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
   return primary.isBrightColor ? Colors.black : Colors.white;

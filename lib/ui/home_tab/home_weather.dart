@@ -1,5 +1,4 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';

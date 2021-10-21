@@ -5,7 +5,7 @@ import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
-import 'package:custed2/data/providers/cet_avatar_provider.dart';
+// import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
@@ -56,16 +56,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
     return Column(
       children: [
-        (isLoggedIn && showRealUI)
-            ? ListTile(
-                leading: Icon(Icons.photo_camera, color: color),
-                title: Text('四六级照片'),
-                onTap: () {
-                  locator<CetAvatarProvider>().getAvatar();
-                  cetAvatarPage.go(context);
-                },
-              )
-            : SizedBox(),
+        // (isLoggedIn && showRealUI)
+        //     ? ListTile(
+        //         leading: Icon(Icons.photo_camera, color: color),
+        //         title: Text('四六级照片'),
+        //         onTap: () {
+        //           locator<CetAvatarProvider>().getAvatar();
+        //           cetAvatarPage.go(context);
+        //         },
+        //       )
+        //     : SizedBox(),
         (isLoggedIn && showRealUI)
             ? ListTile(
                 leading: Icon(Icons.cloud, color: color),
