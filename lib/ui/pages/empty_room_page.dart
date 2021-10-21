@@ -43,7 +43,7 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
   }
 
   String fitLength(String raw) {
-    return '${raw.length == 1 ? 0 : ""}${raw}';
+    return '${raw.length == 1 ? 0 : ""}$raw';
   }
 
   Widget _buildEmptyRoomList(JwEmptyRoom data) {

@@ -8,7 +8,6 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/pages/captcha_help_page.dart';
-import 'package:custed2/ui/webview/plugin_captcha.dart';
 import 'package:custed2/ui/webview/plugin_debug.dart';
 import 'package:custed2/ui/webview/plugin_login.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
@@ -50,7 +49,6 @@ class _WebviewLoginState extends State<WebviewLogin> {
         PluginForMysso(),
         PluginForLogin(onLoginData),
         PluginForDebug(),
-        PluginForCaptcha()
       ],
     );
   }

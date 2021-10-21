@@ -28,7 +28,7 @@ class SettingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: this.height ?? 55.0,
+        height: height ?? 55.0,
         margin: EdgeInsets.only(left: 16, right: 16),
         width: double.infinity,
         child: Card(
@@ -39,33 +39,32 @@ class SettingItem extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           semanticContainer: false,
           child: InkWell(
-              onTap: this.onTap,
+              onTap: onTap,
               child: Row(
-                    children: <Widget>[
-                      SizedBox(width: 10.0),
-                      this.icon ?? SizedBox(),
-                      SizedBox(width: 10.0),
-                      Text(this.title),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.only(left: 16, right: 16),
-                          child: Text(this.content,
-                              textAlign: this.textAlign,
-                              overflow: TextOverflow.ellipsis,
-                              style: this.contentStyle ??
-                                  TextStyle(fontSize: 14.0)),
-                        ),
-                      ),
-                      this.showArrow
-                          ? Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16,
-                            )
-                          : SizedBox(),
-                      SizedBox(width: 10.0),
-                      this.rightBtn ?? SizedBox()
-                    ],
-                  )),
+                children: <Widget>[
+                  SizedBox(width: 10.0),
+                  icon ?? SizedBox(),
+                  SizedBox(width: 10.0),
+                  Text(title),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      child: Text(content,
+                          textAlign: textAlign,
+                          overflow: TextOverflow.ellipsis,
+                          style: contentStyle ?? TextStyle(fontSize: 14.0)),
+                    ),
+                  ),
+                  showArrow
+                      ? Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                        )
+                      : SizedBox(),
+                  SizedBox(width: 10.0),
+                  rightBtn ?? SizedBox()
+                ],
+              )),
         ));
   }
 }

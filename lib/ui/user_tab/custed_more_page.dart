@@ -52,7 +52,8 @@ class CustedMorePage extends StatelessWidget {
       ),
       SettingItem(
         title: '加入我们',
-        onTap: () => showSnackBarWithAction(context, '请在用户群内私聊管理员', '加入用户群', () => openUrl(joinQQUserGroup)),
+        onTap: () => showSnackBarWithAction(
+            context, '请在用户群内私聊管理员', '加入用户群', () => openUrl(joinQQUserGroup)),
       ),
     ];
 

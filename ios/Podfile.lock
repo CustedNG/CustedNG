@@ -107,12 +107,12 @@ SPEC CHECKSUMS:
   home_widget: 2829415127ee92e876f816cbbe44c0b6601b8a37
   install_plugin: a13e7ddd2bab0c701b48cd359c26d0394125b6fb
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
-  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  path_provider: d1e9807085df1f9cc9318206cd649dc0b76be3de
   plain_notification_token: b36467dc91939a7b6754267c701bbaca14996ee1
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   save_in_gallery: 75c1d76566ed1af3a266f25b38c6c19a1d019a66
   share_extend: b6748dc53695587891126a89533b862b92548c7b
-  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+  url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649
   webview_cookie_manager: eaf920722b493bd0f7611b5484771ca53fed03f7
   wifi_ip: a97652dceba35b28465dcf89781f300c91f22de7
 

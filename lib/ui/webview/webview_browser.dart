@@ -8,7 +8,6 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/webvpn_service.dart';
 import 'package:custed2/service/wrdvpn_service.dart';
-import 'package:custed2/ui/webview/plugin_captcha.dart';
 import 'package:custed2/ui/webview/plugin_iecard.dart';
 import 'package:custed2/ui/webview/plugin_nav.dart';
 import 'package:custed2/ui/webview/plugin_remote.dart';
@@ -43,7 +42,6 @@ class WebviewBrowser extends StatelessWidget {
         PluginForIecard(),
         PluginForNetdisk(),
         PluginFromRemote(),
-        PluginForCaptcha(),
         PluginForNav()
       ],
     );

@@ -40,11 +40,7 @@ Future<void> generateCountlyConfig() async {
     'key': configs[1],
   };
 
-  await writeStaicConfigFile(
-    data,
-    'CountlyConfig',
-    countlyConfigClassPath
-  );
+  await writeStaicConfigFile(data, 'CountlyConfig', countlyConfigClassPath);
 }
 
 Future<void> writeStaicConfigFile(

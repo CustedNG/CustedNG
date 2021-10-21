@@ -3,10 +3,7 @@ import 'package:flutter/services.dart';
 
 extension ColorX on Color {
   bool get isBrightColor {
-    if (getBrightnessFromColor == Brightness.light) {
-      return true;
-    }
-    return false;
+    return getBrightnessFromColor == Brightness.light;
   }
 
   SystemUiOverlayStyle get systemOverlayStyle =>
