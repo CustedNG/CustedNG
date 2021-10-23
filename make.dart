@@ -121,7 +121,7 @@ void flutterBuild(
   if (exitCode == 0) {
     target = target.replaceFirst('build', build.toString());
     print('Copying from $source to $target');
-    if (await File('release').exists()) {
+    if (!(await Directory('release').exists())) {
       await Directory('release').create();
     }
     await File(source).copy(target);
