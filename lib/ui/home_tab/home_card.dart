@@ -40,7 +40,7 @@ class HomeCard extends StatelessWidget {
         ));
   }
 
-  _buildContent(BuildContext context) {
+  Widget _buildContent(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(padding),
       child: Column(
@@ -54,7 +54,7 @@ class HomeCard extends StatelessWidget {
     );
   }
 
-  _buildTitle(BuildContext context) {
+  Widget _buildTitle(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,

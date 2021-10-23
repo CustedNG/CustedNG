@@ -1,6 +1,6 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/constants.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
@@ -13,7 +13,6 @@ import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeEntries extends StatefulWidget {
@@ -22,8 +21,6 @@ class HomeEntries extends StatefulWidget {
 }
 
 class _HomeEntriesState extends State<HomeEntries> {
-  String tikuUrl = 'https://tiku-ng.lacus.site';
-
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordFocusNode = FocusNode();
@@ -43,22 +40,9 @@ class _HomeEntriesState extends State<HomeEntries> {
     init();
   }
 
-  Future<void> loadUserName() async {
-    final user = Provider.of<UserProvider>(context);
-
-    if (!user.loggedIn) return;
-
-    final userData = await locator.getAsync<UserDataStore>();
-    final username = userData.username.fetch();
-    setState(() {
-      tikuUrl = 'https://tiku-ng.lacus.site/?cid=$username';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final style = TextStyle(fontSize: 14);
-    loadUserName();
 
     return HomeCard(
       padding: 5,

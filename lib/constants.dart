@@ -12,6 +12,7 @@ const custedAppUrl = 'https://cust.app';
 const custedIconPath = 'assets/icon/custed_lite.png';
 const custedGithubUrl = 'https://github.com/CustedNG/CustedNG';
 const tusiBlogUrl = 'https://blog.tusi.site';
+const tikuUrl = 'https://tiku-ng.lacus.site';
 const custedServiceAgreementUrl =
     'https://blog.tusi.site/serviceagreement.html';
 const joinQQUserGroup = 'https://jq.qq.com/?_wv=1027&k=TLrWZjtp';

@@ -17,11 +17,9 @@ import 'package:custed2/ui/widgets/url_text.dart';
 import 'package:flutter/material.dart';
 
 class HomeDrawer extends StatefulWidget {
-  final version;
-  final myTheme;
   final UserProvider user;
 
-  const HomeDrawer({Key key, this.version, this.myTheme, this.user})
+  const HomeDrawer({Key key, this.user})
       : super(key: key);
 
   @override
