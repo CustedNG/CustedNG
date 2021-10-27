@@ -246,7 +246,7 @@ struct ScheduleView: View {
                 .font(.system(.caption2))
                 .foregroundColor(.white)
             Spacer()
-            Text("更新于\(entry.data.updateTime)")
+            Text("更新:\(entry.data.updateTime)")
                 .font(.system(.caption2))
                 .foregroundColor(.white)
                 .frame(width: .none, height: .none, alignment: .bottom)

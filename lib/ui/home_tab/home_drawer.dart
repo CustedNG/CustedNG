@@ -19,8 +19,7 @@ import 'package:flutter/material.dart';
 class HomeDrawer extends StatefulWidget {
   final UserProvider user;
 
-  const HomeDrawer({Key key, this.user})
-      : super(key: key);
+  const HomeDrawer({Key key, this.user}) : super(key: key);
 
   @override
   _HomeDrawerState createState() => _HomeDrawerState();

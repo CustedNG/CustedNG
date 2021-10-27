@@ -39,10 +39,10 @@ class ScheduleTable extends StatelessWidget {
       (_) => TableRow(children: List.filled(hideWeekend ? 5 : 7, placeholder)),
     );
 
-    _fillActiveLessons(rows, useGradient);
+    _fillActiveLessons(rows, useGradient, hideWeekend);
 
     if (showInactive) {
-      _fillInactiveLessons(rows);
+      _fillInactiveLessons(rows, hideWeekend);
     }
 
     final rawTable = Table(
@@ -69,10 +69,12 @@ class ScheduleTable extends StatelessWidget {
     );
   }
 
-  void _fillActiveLessons(List<TableRow> rows, bool useGradient) {
+  void _fillActiveLessons(
+      List<TableRow> rows, bool useGradient, bool hideWeekend) {
     for (var lesson in schedule.activeLessons(week)) {
       final slotIndex = (lesson.startSection - 1) ~/ 2;
       final weekIndex = lesson.weekday - 1;
+      if (lesson.weekday > 5 && hideWeekend) return;
       final lessonWidget = rows[slotIndex].children[weekIndex];
       if (lessonWidget == placeholder) {
         rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(
@@ -88,7 +90,7 @@ class ScheduleTable extends StatelessWidget {
     }
   }
 
-  void _fillInactiveLessons(List<TableRow> rows) {
+  void _fillInactiveLessons(List<TableRow> rows, bool hideWeekend) {
     final inactiveLessons = schedule.inactiveLessons(week);
 
     final int maxLessonCount = schedule.lessonCountMap.values.fold(1, max);
@@ -98,6 +100,7 @@ class ScheduleTable extends StatelessWidget {
     for (var lesson in inactiveLessons) {
       final slotIndex = (lesson.startSection - 1) ~/ 2;
       final weekIndex = lesson.weekday - 1;
+      if (lesson.weekday > 5 && hideWeekend) return;
       final lessonWidget = rows[slotIndex].children[weekIndex];
       if (lessonWidget == placeholder) {
         rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(lesson,
