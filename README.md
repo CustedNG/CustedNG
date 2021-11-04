@@ -9,6 +9,10 @@
     <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/CustedNG/CustedNG">
 </p>
 
+<p align="center">
+    <a href="https://count.ly/f/badge" rel="nofollow"><img style="width:145px;height:60px" src="https://count.ly/badges/light.svg" alt="Countly - Product Analytics" /></a>
+</p>
+
 # CustedNG
 
 ## 截屏
@@ -16,13 +20,16 @@
 <table>
   <tr>
     <td>
-		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/home.png">
+		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3489.PNG">
     </td>
     <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/schedule.png">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3490.PNG">
     </td>
     <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/grade.png">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3491.PNG">
+    </td>
+    <td>
+		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3492.PNG">
     </td>
   </tr>
 </table>
@@ -30,16 +37,37 @@
 <table>
   <tr>
     <td>
-		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/bbs.png">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3493.PNG">
+    </td>
+    <td>
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3494.PNG">
+    </td>
+    <td>
+		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3495.PNG">
+    </td>
+    <td>
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3496.PNG">
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3497.PNG">
+    </td>
+    <td>
+		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3498.PNG">
+    </td>
+    <td>
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3499.PNG">
     </td>
     <td>
       <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/tiku.png">
     </td>
-    <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/setting.png">
-    </td>
   </tr>
 </table>
+
 
 ## 功能
 ✔️ 查课表  
