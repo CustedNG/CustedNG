@@ -7,6 +7,7 @@ import 'package:custed2/data/models/custed_response.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/models/custed_update_ios.dart';
 import 'package:custed2/data/models/custed_weather.dart';
+import 'package:custed2/data/models/tiku_update.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
@@ -192,5 +193,13 @@ class CustedService extends CatClient {
     final custApp = (await Dio().head(baseUrl)).statusCode == 200;
     final backend = (await Dio().head(backendUrl)).statusCode == 200;
     return custApp && backend;
+  }
+
+  Future<TikuUpdate> getTikuUpdate() async {
+    final resp = await get('$backendUrl/res/tiku/update.json');
+    if (resp.statusCode == 200) {
+      return TikuUpdate.fromJson(json.decode(resp.body));
+    }
+    return null;
   }
 }

@@ -7,6 +7,7 @@ import 'package:custed2/ui/pages/empty_room_page.dart';
 import 'package:custed2/ui/pages/exam_page.dart';
 import 'package:custed2/ui/pages/map_page.dart';
 import 'package:custed2/ui/pages/school_calendar_page.dart';
+import 'package:custed2/ui/pages/tiku_page.dart';
 import 'package:custed2/ui/user_tab/netdisk_page.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 
@@ -45,10 +46,10 @@ final jwWebPage = AppRoute(
   page: WebviewBrowser('$custccBase/go/jwgl'),
 );
 
-//final tikuWebPage = AppRoute(
-//  title: '考试题库',
-//  page: TikuWebPage(),
-//);
+final tikuPage = AppRoute(
+  title: '题库引导下载页面',
+  page: TikuPage(),
+);
 
 final schoolCalendarPage = AppRoute(
   title: '校历',

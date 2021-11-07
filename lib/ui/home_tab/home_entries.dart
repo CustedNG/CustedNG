@@ -1,6 +1,4 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/constants.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
@@ -10,7 +8,6 @@ import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
 import 'package:custed2/core/utils.dart';
-import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shimmer/shimmer.dart';
@@ -79,10 +76,7 @@ class _HomeEntriesState extends State<HomeEntries> {
           HomeEntry(
             name: Text('题库', style: style),
             icon: Image(image: ImageRes.tikuIcon),
-            action: () => AppRoute(
-                    page: WebviewBrowser(tikuUrl, showBottom: false),
-                    title: '考试题库')
-                .go(context),
+            action: () => tikuPage.go(context),
           ),
           HomeEntry(
             name: Text('地图', style: style),
