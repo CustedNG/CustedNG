@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clipboard/clipboard.dart';
 import 'package:custed2/constants.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
@@ -38,12 +39,10 @@ class TikuPage extends StatelessWidget {
                     showSnackBar(context, '暂时无法获取题库App下载链接');
                     return;
                   }
-                  final success = await openUrl(Platform.isAndroid ? tiku.android : tiku.ios);
-                  if (success) {
-                    showSnackBar(context, '已打开题库App下载链接');
-                  } else {
-                    showSnackBar(context, '无法打开题库App下载链接');
-                  }
+                  final url = Platform.isAndroid ? tiku.android : tiku.ios;
+                  await FlutterClipboard.copy(url);
+                  showSnackBar(context, '已复制题库App下载链接到剪贴板');
+                  await openUrl(url);
                 },
                 child: Shimmer.fromColors(
                     child: Text('立即下载App'),
