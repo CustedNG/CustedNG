@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <permission android:name="cc.xuty.custed2.permission.MIPUSH_RECEIVE"
                 android:protectionLevel="signature"/>
@@ -27,7 +26,9 @@
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:hasFragileUserData="true"
-        android:restoreAnyVersion="true">
+        android:restoreAnyVersion="true"
+        tools:targetApi="q"
+        android:fullBackupContent="true">
 
         <activity
             android:name=".MainActivity"
@@ -35,7 +36,8 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
 
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
@@ -63,7 +65,8 @@
                 android:resource="@xml/provider_install_paths"/>
         </provider>
 
-        <receiver android:name=".HomeWidgetProvider" >
+        <receiver android:name=".HomeWidgetProvider"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="cc.xuty.custed2.UPDATE_WIDGET"/>

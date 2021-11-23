@@ -13,15 +13,15 @@
         android:textSize="27sp"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:paddingStart="17dp"
-        android:layout_marginTop="13dp"
+        android:paddingStart="19dp"
+        android:layout_marginTop="18dp"
         tools:text="Time"
         tools:ignore="RtlSymmetry" />
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="17dp"
+            android:padding="22dp"
             android:gravity="center_vertical"
             android:id="@+id/widget_container_inner">
 
@@ -59,8 +59,9 @@
         android:layout_height="wrap_content"
         android:textSize="13sp"
         android:layout_alignParentBottom="true"
-        android:paddingStart="17dp"
-        android:paddingBottom="13dp"
+        android:paddingStart="19dp"
+        android:paddingBottom="18dp"
+        android:paddingEnd="19dp"
         android:textColor="#FFFFFF"
         android:maxLines="2"
         tools:text="UpdateTime"
