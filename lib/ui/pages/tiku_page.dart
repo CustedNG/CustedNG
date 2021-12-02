@@ -52,26 +52,26 @@ class TikuPage extends StatelessWidget {
             TextButton(
               onPressed: () {
                 showRoundDialog(
-                    context,
-                    '提示',
-                    Text('网页版题库已停止技术支持，其代码与题目数据将不再更新，题目可能存在错误、老旧等问题。为保障您的使用体验和效果，请使用题库App。是否继续前往网页版？'),
-                    [
-                      TextButton(
-                        child: Text('取消'),
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                      TextButton(
+                  context,
+                  '提示',
+                  Text(
+                      '网页版题库已停止技术支持，其代码与题目数据将不再更新，题目可能存在错误、老旧等问题。为保障您的使用体验和效果，请使用题库App。是否继续前往网页版？'),
+                  [
+                    TextButton(
+                      child: Text('取消'),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    TextButton(
                         child: Text('确定'),
                         onPressed: () {
                           Navigator.of(context).pop();
                           AppRoute(
-                            page: WebviewBrowser(tikuUrl,
-                            showBottom: false),
-                            title: '考试题库')
-                          .go(context);
-                        }
-                      )
-                    ],
+                                  page: WebviewBrowser(tikuUrl,
+                                      showBottom: false),
+                                  title: '考试题库')
+                              .go(context);
+                        })
+                  ],
                 );
               },
               child: Text('网页版'),
