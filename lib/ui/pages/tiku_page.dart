@@ -28,7 +28,7 @@ class TikuPage extends StatelessWidget {
           children: [
             Text('题库App现已推出', style: TextStyle(fontSize: 27)),
             SizedBox(height: 20),
-            Text('建议下载app使用\n当然你也可以继续使用网页版',
+            Text('推荐下载使用App\n当然你也可以继续使用网页版',
                 style: TextStyle(color: Colors.grey, fontSize: 15),
                 textAlign: TextAlign.center),
             SizedBox(height: 200),
@@ -50,10 +50,30 @@ class TikuPage extends StatelessWidget {
                     highlightColor: Colors.redAccent)),
             Divider(),
             TextButton(
-              onPressed: () => AppRoute(
-                      page: WebviewBrowser(tikuUrl, showBottom: false),
-                      title: '考试题库')
-                  .go(context),
+              onPressed: () {
+                showRoundDialog(
+                    context,
+                    '提示',
+                    Text('网页版题库已停止技术支持，其代码与题目数据将不再更新，题目可能存在错误、老旧等问题。为保障您的使用体验和效果，请使用题库App。是否继续前往网页版？'),
+                    [
+                      TextButton(
+                        child: Text('取消'),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                      TextButton(
+                        child: Text('确定'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          AppRoute(
+                            page: WebviewBrowser(tikuUrl,
+                            showBottom: false),
+                            title: '考试题库')
+                          .go(context);
+                        }
+                      )
+                    ],
+                );
+              },
               child: Text('网页版'),
             )
           ],
@@ -62,3 +82,11 @@ class TikuPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
+//AppRoute(
+//                      page: WebviewBrowser(tikuUrl, showBottom: false),
+//                      title: '考试题库')
+//                  .go(context),
