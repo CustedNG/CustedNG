@@ -5,7 +5,6 @@ import 'package:custed2/core/utils.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AppProvider extends ProviderBase {
   String _notification;

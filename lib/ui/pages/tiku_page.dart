@@ -28,7 +28,7 @@ class TikuPage extends StatelessWidget {
           children: [
             Text('题库App现已推出', style: TextStyle(fontSize: 27)),
             SizedBox(height: 20),
-            Text('推荐下载使用App\n当然你也可以继续使用网页版',
+            Text('推荐下载App\n当然你也可以继续使用网页版',
                 style: TextStyle(color: Colors.grey, fontSize: 15),
                 textAlign: TextAlign.center),
             SizedBox(height: 200),
@@ -41,7 +41,7 @@ class TikuPage extends StatelessWidget {
                   }
                   final url = Platform.isAndroid ? tiku.android : tiku.ios;
                   await FlutterClipboard.copy(url);
-                  showSnackBar(context, '已复制题库App下载链接到剪贴板');
+                  showSnackBar(context, '已复制题库App下载链接到剪贴板，请粘贴到浏览器打开');
                   await openUrl(url);
                 },
                 child: Shimmer.fromColors(

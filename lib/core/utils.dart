@@ -15,7 +15,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/src/types.dart';
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:flutter/widgets.dart';
 
 void showSnackBar(BuildContext context, String content) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -174,7 +174,7 @@ private class NextLessonUpdate(
             }
             val updateTimeString =
                 if (result.successful) "更新于 $currentTimeString"
-                else "更新于 ${toUserFriendlyTimeString(lastSuccessfulUpdate)} (上次失败: $currentTimeString)"
+                else "更新于 ${toUserFriendlyTimeString(lastSuccessfulUpdate)} ($currentTimeString 时，尝试更新失败)"
             updateTexts(
                 texts[0],
                 texts[1],
