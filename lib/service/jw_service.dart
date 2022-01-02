@@ -149,7 +149,7 @@ class JwService extends WrdvpnBasedService {
     final Map<String, dynamic> params = {
       "KBLX": "2",
       "CXLX": "0",
-      "XNXQ": "20211", // seemingly hardcoded?
+      "XNXQ": "20212", // seemingly hardcoded?
       "CXID": userUUID,
       "CXZC": "",
       "JXBLX": "", "IsOnLine": "-1"
