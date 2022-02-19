@@ -143,11 +143,12 @@ Future<String> getToken() async {
     // wait for user to give notification permission
     await Future.delayed(Duration(seconds: 3));
     return await plainNotificationToken.getToken();
-  } else {
+  } else if (Platform.isAndroid) {
     await XiaoMiPushPlugin.init(
         appId: "2882303761518813144", appKey: "5601881368144");
     return await XiaoMiPushPlugin.getRegId();
   }
+  return null;
 }
 
 Future<void> requestUpdateHomeWidget(String userName, bool enablePush) async {

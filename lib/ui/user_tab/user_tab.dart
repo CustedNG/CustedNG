@@ -62,7 +62,8 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
           SettingItem(
             title: '隐藏周末',
             showArrow: false,
-            rightBtn: buildSwitch(context, setting.scheduleHideWeekend, func: (v) => checkWeekendHaveLesson(v)),
+            rightBtn: buildSwitch(context, setting.scheduleHideWeekend,
+                func: (v) => checkWeekendHaveLesson(v)),
           ),
           SettingItem(
             title: '显示非当前周课程',

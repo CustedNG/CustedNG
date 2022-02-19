@@ -92,7 +92,7 @@ class JwService extends WrdvpnBasedService {
       headers: {'content-type': 'application/json'},
     );
 
-    if (resp.statusCode == 200) {
+    if (resp.statusCode == 200 && resp.body.length > 50) {
       final result4SendSchedule = await custed.updateCachedSchedule(resp.body);
       print('send cache schedule to backend: $result4SendSchedule');
     } else {
@@ -128,7 +128,7 @@ class JwService extends WrdvpnBasedService {
     final encrypter = Encrypter(AES(key, mode: AESMode.ecb));
     final result = encrypter.decrypt(Encrypted.fromBase64(resp.body), iv: iv);
 
-    if (resp.statusCode == 200) {
+    if (resp.statusCode == 200 && resp.body.length > 50) {
       final result4SendChedule = await custed.updateCachedScheduleKBPro(result);
       print('send cache schedule to backend: $result4SendChedule');
     } else {
@@ -146,10 +146,13 @@ class JwService extends WrdvpnBasedService {
   }
 
   Future<Response> getScheduleByUUID(String userUUID) async {
+    final nowTime = DateTime.now();
+    bool lastHalf = nowTime.month < 7;
+
     final Map<String, dynamic> params = {
       "KBLX": "2",
       "CXLX": "0",
-      "XNXQ": "20212", // seemingly hardcoded?
+      "XNXQ": (nowTime.year - (lastHalf ? 1 : 0)).toString() + (lastHalf ? '2' : '1'),
       "CXID": userUUID,
       "CXZC": "",
       "JXBLX": "", "IsOnLine": "-1"
@@ -367,7 +370,7 @@ class JwService extends WrdvpnBasedService {
       headers: {'content-type': 'application/json'},
     );
 
-    if (resp.statusCode == 200) {
+    if (resp.statusCode == 200 && resp.body.length > 50) {
       await custed.updateCahedExam(resp.body);
       return JwExam.fromJson(json.decode(resp.body));
     } else {
