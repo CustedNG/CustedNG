@@ -41,9 +41,9 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
               child: TextField(
                 controller: _studentNumberTextFieldController,
-                maxLength: 9,
+                maxLength: 10,
                 decoration: InputDecoration(
-                    labelText: '学号/姓名', icon: Icon(Icons.person)),
+                    labelText: '学号', icon: Icon(Icons.person)),
               ),
             ),
             Center(
@@ -74,11 +74,15 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
     try {
       final String text = _studentNumberTextFieldController.text.trim();
       if (text.isEmpty) {
-        _showBadNotice(reason: '请输入学号/姓名');
+        _showBadNotice(reason: '请输入学号');
         return;
       }
-      if (text.length != 9 && text.codeUnits.every((e) => e > 47 && e < 58)) {
-        _showBadNotice(reason: '请输入9位的学号');
+      if (text.length < 9) {
+        _showBadNotice(reason: '学号不得少于9位');
+        return;
+      }
+      if (text.codeUnits.any((e) => e < 48 || e > 122)) {
+        _showBadNotice(reason: '学号只能包含数字和字母');
         return;
       }
       if (customScheduleStore

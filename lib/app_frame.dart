@@ -56,16 +56,16 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   }
 
   static const List<Icon> items = [
-    Icon(Icons.leaderboard, size: 29),
-    Icon(Icons.calendar_today, size: 27),
-    Icon(Icons.home, size: 31),
-    Icon(Icons.navigation, size: 29),
-    Icon(Icons.settings, size: 29)
+    Icon(Icons.leaderboard, size: 22),
+    Icon(Icons.calendar_today, size: 20),
+    Icon(Icons.home, size: 24),
+    Icon(Icons.navigation, size: 22),
+    Icon(Icons.settings, size: 22)
   ];
 
   Widget _buildItem(int idx, Icon item, bool isSelected) {
     bool isDarkMode = isDark(context);
-    final width = _width / 5;
+    final width = _width / items.length;
     return AnimatedContainer(
       duration: Duration(milliseconds: 377),
       curve: Curves.fastOutSlowIn,

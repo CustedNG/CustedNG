@@ -213,7 +213,7 @@ class LessonPreview extends StatelessWidget {
 
     final helpMe = TextButton(
       child: Text('我该怎么办?'),
-      onPressed: () {},
+      onPressed: () => showSnackBar(context, '问问老师吧～'),
     );
 
     final deleteCustom = TextButton(
