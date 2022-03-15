@@ -1,10 +1,6 @@
 import 'dart:math';
 
-import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
-import 'package:custed2/core/extension/intx.dart';
-import 'package:custed2/data/providers/schedule_provider.dart';
-import 'package:custed2/locator.dart';
 import 'package:custed2/res/theme_colors.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
@@ -34,7 +30,7 @@ class ScheduleLessonWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => _showLessonPreview(context),
-      onLongPress: addToCalendar,
+      // onLongPress: addToCalendar,
       child: _buildLessonCell(context),
     );
   }
@@ -187,25 +183,25 @@ class ScheduleLessonWidget extends StatelessWidget {
     );
   }
 
-  void addToCalendar() {
-    if (!isActive) return;
-    final schedule = locator<ScheduleProvider>();
-    final day = schedule.schedule
-        .weekStartDate(schedule.selectedWeek)
-        .add((lesson.weekday - 1).days);
+  // void addToCalendar() {
+  //   if (!isActive) return;
+  //   final schedule = locator<ScheduleProvider>();
+  //   final day = schedule.schedule
+  //       .weekStartDate(schedule.selectedWeek)
+  //       .add((lesson.weekday - 1).days);
 
-    final start = day.add(lesson.parseStart().sinceDayStart);
-    final end = day.add(lesson.parseEnd().sinceDayStart);
+  //   final start = day.add(lesson.parseStart().sinceDayStart);
+  //   final end = day.add(lesson.parseEnd().sinceDayStart);
 
-    final description = '教师: ${lesson.teacherName}';
+  //   final description = '教师: ${lesson.teacherName}';
 
-    final event = Event(
-      title: lesson.displayName,
-      description: description,
-      location: lesson.roomRaw,
-      startDate: start,
-      endDate: end,
-    );
-    Add2Calendar.addEvent2Cal(event);
-  }
+  //   final event = Event(
+  //     title: lesson.displayName,
+  //     description: description,
+  //     location: lesson.roomRaw,
+  //     startDate: start,
+  //     endDate: end,
+  //   );
+  //   Add2Calendar.addEvent2Cal(event);
+  // }
 }

@@ -219,7 +219,9 @@ Color resolveWithBackground(BuildContext context) {
 /// 根据Appbar背景色判断使用黑/白色
 Color judgeWhiteOrBlack4AppbarContent(BuildContext context) {
   final primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
-  return isDark(context) ? Colors.white : (primary.isBrightColor ? Colors.black : Colors.white);
+  return isDark(context)
+      ? Colors.white
+      : (primary.isBrightColor ? Colors.black : Colors.white);
 }
 
 void setSystemBottomNavigationBarColor(BuildContext context) {

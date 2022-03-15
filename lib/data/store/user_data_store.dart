@@ -10,4 +10,6 @@ class UserDataStore with PersistentStore {
   StoreProperty<UserProfile> get profile => property('profile');
   StoreProperty<bool> get loggedIn => property('loggedIn', defaultValue: false);
   StoreProperty<String> get wifiCampusInfo => property('wifiCampusInfo');
+  StoreProperty<String> get lastLoginServer => property('lastLoginServer');
+  StoreProperty<int> get lastLoginTime => property('lastLoginTime', defaultValue: 0);
 }

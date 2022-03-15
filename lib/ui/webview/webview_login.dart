@@ -57,7 +57,7 @@ class _WebviewLoginState extends State<WebviewLogin> {
 
     Timer(Duration(milliseconds: 500), () async {
       await controller.loadUrl(
-        'https://mysso.cust.edu.cn/cas/login?service=https://portal.cust.edu.cn/custp/shiro-cas',
+        'https://mysso.cust.edu.cn/cas/login?service=http://wwwn.cust.edu.cn/wengine-auth/login?cas_login=true',
       );
     });
   }
@@ -67,9 +67,9 @@ class _WebviewLoginState extends State<WebviewLogin> {
       return;
     }
 
-    if (url.contains('portal.cust.edu.cn')) {
+    if (url.contains('wwwn.cust.edu.cn')) {
       loginDone = true;
-      Future.delayed(Duration(milliseconds: 277),
+      Future.delayed(Duration(milliseconds: 377),
           () async => await loginSuccessCallback(controller));
     }
   }

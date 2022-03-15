@@ -8,13 +8,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "26.0.0"
-  add_2_calendar:
-    dependency: "direct main"
-    description:
-      name: add_2_calendar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.1"
   after_layout:
     dependency: "direct main"
     description:
@@ -510,6 +503,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.11"
+  material_color_utilities:
+    dependency: transitive
+    description:
+      name: material_color_utilities
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   meta:
     dependency: transitive
     description:
@@ -600,7 +600,7 @@ packages:
       name: platform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "3.1.0"
   plugin_platform_interface:
     dependency: transitive
     description:

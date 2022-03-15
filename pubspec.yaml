@@ -54,7 +54,7 @@ dependencies:
   connectivity: ^3.0.3
 
   http: ^0.13.0
-  cookie_jar: ^3.0.0
+  cookie_jar: ^3.0.1
   dio: ^4.0.0
   dio_cookie_manager: ^2.0.0
   countly_flutter:
@@ -62,7 +62,7 @@ dependencies:
       url: https://github.com/Countly/countly-sdk-flutter-bridge.git
       ref: master
 
-  pull_to_refresh: ^2.0.0
+  pull_to_refresh: 2.0.0
   tuple: ^2.0.0
   webview_cookie_manager: ^2.0.0-nullsafety.0
   flutter_staggered_animations: ^1.0.0
@@ -72,7 +72,6 @@ dependencies:
   #     url: git://github.com/jpush/jpush-flutter-plugin.git
   #     ref: master
   wifi_ip: ^0.0.1
-  add_2_calendar: ^2.1.0
   home_widget: ^0.1.2+1
   flutter_material_color_picker: ^1.0.5
   expand_widget: ^2.1.0
