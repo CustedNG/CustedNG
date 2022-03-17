@@ -29,7 +29,8 @@ class JwService extends WrdvpnBasedService {
     /// 每次都重新获取，以免内存内的失效
     // if (_baseUrl != null) return _baseUrl;
     final user = locator<UserDataStore>();
-    return user.lastLoginServer.fetch() ?? 'https://jwgls${Random().nextInt(4)}.cust.edu.cn';
+    return user.lastLoginServer.fetch() ??
+        'https://jwgls${Random().nextInt(4)}.cust.edu.cn';
   }
 
   final MyssoService _mysso = locator<MyssoService>();
@@ -96,6 +97,7 @@ class JwService extends WrdvpnBasedService {
           "Context": "查询"
         }
       },
+      expireTest: (resp) => resp.statusCode != 200,
       headers: {'content-type': 'application/json'},
     );
 
@@ -266,6 +268,8 @@ class JwService extends WrdvpnBasedService {
           "Context": "查询"
         }
       },
+      expireTest: (resp) => RegExp(r'{"state":[1-9],"message":".*","data":null}')
+            .hasMatch(resp.body),
       headers: {'content-type': 'application/json'},
     );
 
