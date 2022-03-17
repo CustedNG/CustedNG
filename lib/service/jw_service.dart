@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:encrypt/encrypt.dart';
 
@@ -28,12 +29,7 @@ class JwService extends WrdvpnBasedService {
     /// 每次都重新获取，以免内存内的失效
     // if (_baseUrl != null) return _baseUrl;
     final user = locator<UserDataStore>();
-    return  user.lastLoginServer.fetch();
-    // if (lastServer != null) {
-    //   _baseUrl = lastServer;
-    // }
-
-    // return _baseUrl ?? 'https://jwgls0.cust.edu.cn';
+    return user.lastLoginServer.fetch() ?? 'https://jwgls${Random().nextInt(4)}.cust.edu.cn';
   }
 
   final MyssoService _mysso = locator<MyssoService>();
@@ -43,7 +39,7 @@ class JwService extends WrdvpnBasedService {
   final Pattern sessionExpirationTest = '过期';
 
   @override
-  Future<CatLoginResult<String>> login() async {
+  Future<CatLoginResult<JwResponse>> login() async {
     final ticket = await _mysso.getTicketForJw();
     final param = encodeParams({
       'Ticket': ticket,
@@ -60,7 +56,7 @@ class JwService extends WrdvpnBasedService {
     );
 
     final parsedResponse = JwResponse.fromJson(json.decode(response.body));
-    return CatLoginResult(ok: parsedResponse.isSuccess, data: ticket);
+    return CatLoginResult(ok: parsedResponse.isSuccess, data: parsedResponse);
   }
 
   Future<JwSchedule> getSchedule([String userUUID]) async {
@@ -163,10 +159,12 @@ class JwService extends WrdvpnBasedService {
     final Map<String, dynamic> params = {
       "KBLX": "2",
       "CXLX": "0",
-      "XNXQ": (nowTime.year - (lastHalf ? 1 : 0)).toString() + (lastHalf ? '2' : '1'),
+      "XNXQ": (nowTime.year - (lastHalf ? 1 : 0)).toString() +
+          (lastHalf ? '2' : '1'),
       "CXID": userUUID,
       "CXZC": "",
-      "JXBLX": "", "IsOnLine": "-1"
+      "JXBLX": "",
+      "IsOnLine": "-1"
     };
 
     final requestUrl =
@@ -320,22 +318,8 @@ class JwService extends WrdvpnBasedService {
   }
 
   Future<String> getStudentPhoto() async {
-    final ticket = await _mysso.getTicketForJw();
-    final param = encodeParams({
-      'Ticket': ticket,
-      'Url': 'https://jwgl.cust.edu.cn/welcome',
-    });
-    param.addAll({"__permission": {}, "__log": {}});
-    final response = await request(
-      'POST',
-      '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
-      body: param,
-      headers: {
-        'content-type': 'application/json',
-      },
-    );
-
-    final parsedResponse = JwResponse.fromJson(json.decode(response.body));
+    final loginResult = await login();
+    final parsedResponse = loginResult.data;
     final resp = await xRequest(
       'POST',
       '$baseUrl/api/ClientStudent/Home/StudentHomeApi/GetFileContentById'
