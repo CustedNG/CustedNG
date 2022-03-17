@@ -7,6 +7,7 @@ import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/core/utils.dart';
 import 'package:custed2/service/custed_service.dart';
+import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/webview/plugin_debug.dart';
 import 'package:custed2/ui/webview/plugin_login.dart';
 import 'package:custed2/ui/webview/plugin_mysso.dart';
@@ -57,20 +58,23 @@ class _WebviewLoginState extends State<WebviewLogin> {
 
     Timer(Duration(milliseconds: 500), () async {
       await controller.loadUrl(
-        'https://mysso.cust.edu.cn/cas/login?service=http://wwwn.cust.edu.cn/wengine-auth/login?cas_login=true',
+        'https://mysso.cust.edu.cn/cas/login?service=https://jwgl.cust.edu.cn/welcome',
       );
     });
   }
 
-  void onLoadAborted(Webview2Controller controller, String url) async {
+  void onLoadAborted(Webview2Controller controller, String url) {
     if (loginDone) {
       return;
     }
 
-    if (url.contains('wwwn.cust.edu.cn')) {
+    final regExp = RegExp(r'https://jwgls\d.cust.edu.cn');
+    if (url.contains(regExp)) {
       loginDone = true;
-      Future.delayed(Duration(milliseconds: 377),
-          () async => await loginSuccessCallback(controller));
+      Future.delayed(
+          Duration(milliseconds: 377),
+          () async => await loginSuccessCallback(
+              controller, regExp.firstMatch(url).group(0)));
     }
   }
 
@@ -79,13 +83,15 @@ class _WebviewLoginState extends State<WebviewLogin> {
     this.password = password;
   }
 
-  Future<void> loginSuccessCallback(Webview2Controller controller) async {
-    const syncDomains = [
+  Future<void> loginSuccessCallback(
+      Webview2Controller controller, String url) async {
+    final syncDomains = [
       'https://mysso.cust.edu.cn/',
       'https://mysso.cust.edu.cn/cas/login',
       'https://wwwn.cust.edu.cn/',
       'https://vpn.cust.edu.cn/',
       'https://webvpn.cust.edu.cn/',
+      url,
       'https://portal.cust.edu.cn/custp/shiro-cas'
     ];
 
@@ -99,12 +105,15 @@ class _WebviewLoginState extends State<WebviewLogin> {
     }
 
     final userData = await locator.getAsync<UserDataStore>();
-    userData.username.put(this.username);
-    userData.password.put(this.password);
+    userData.username.put(username);
+    userData.password.put(password);
+    userData.lastLoginServer.put(url);
+
+    await locator<JwService>().login();
 
     await CustedService().login2Backend(
         buildCookie(await cookieJar.loadForRequest(syncDomains.last.uri)),
-        this.username);
+        username);
 
     if (!widget.back2PrePage) {
       return;

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:encrypt/encrypt.dart';
 
@@ -24,27 +23,17 @@ import 'package:custed2/service/wrdvpn_based_service.dart';
 import 'package:http/http.dart';
 
 class JwService extends WrdvpnBasedService {
-  String _baseUrl;
+  // String _baseUrl;
   String get baseUrl {
-    if (_baseUrl != null) return _baseUrl;
+    /// 每次都重新获取，以免内存内的失效
+    // if (_baseUrl != null) return _baseUrl;
     final user = locator<UserDataStore>();
-    final cacheTime =
-        DateTime.fromMillisecondsSinceEpoch(user.lastLoginTime.fetch());
-    final randomUrl = 'https://jwgls${Random().nextInt(4)}.cust.edu.cn';
-    final now = DateTime.now();
-    if (cacheTime.difference(now) > Duration(hours: 3)) {
-      _baseUrl = randomUrl;
-      user.lastLoginServer.put(randomUrl);
-      user.lastLoginTime.put(now.millisecondsSinceEpoch);
-    } else {
-      final lastServer = user.lastLoginServer.fetch();
-      if (lastServer == null) {
-        user.lastLoginServer.put(randomUrl);
-      }
-      _baseUrl = lastServer ?? randomUrl;
-    }
+    return  user.lastLoginServer.fetch();
+    // if (lastServer != null) {
+    //   _baseUrl = lastServer;
+    // }
 
-    return _baseUrl;
+    // return _baseUrl ?? 'https://jwgls0.cust.edu.cn';
   }
 
   final MyssoService _mysso = locator<MyssoService>();
@@ -71,8 +60,7 @@ class JwService extends WrdvpnBasedService {
     );
 
     final parsedResponse = JwResponse.fromJson(json.decode(response.body));
-    return CatLoginResult(
-        ok: parsedResponse.isSuccess, data: response.request.headers['Cookie']);
+    return CatLoginResult(ok: parsedResponse.isSuccess, data: ticket);
   }
 
   Future<JwSchedule> getSchedule([String userUUID]) async {
@@ -175,12 +163,10 @@ class JwService extends WrdvpnBasedService {
     final Map<String, dynamic> params = {
       "KBLX": "2",
       "CXLX": "0",
-      "XNXQ": (nowTime.year - (lastHalf ? 1 : 0)).toString() +
-          (lastHalf ? '2' : '1'),
+      "XNXQ": (nowTime.year - (lastHalf ? 1 : 0)).toString() + (lastHalf ? '2' : '1'),
       "CXID": userUUID,
       "CXZC": "",
-      "JXBLX": "",
-      "IsOnLine": "-1"
+      "JXBLX": "", "IsOnLine": "-1"
     };
 
     final requestUrl =

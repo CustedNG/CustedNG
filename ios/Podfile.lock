@@ -1,6 +1,4 @@
 PODS:
-  - add_2_calendar (0.0.1):
-    - Flutter
   - alice (0.0.1):
     - Flutter
   - connectivity (0.0.1):
@@ -40,7 +38,6 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - add_2_calendar (from `.symlinks/plugins/add_2_calendar/ios`)
   - alice (from `.symlinks/plugins/alice/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - countly_flutter (from `.symlinks/plugins/countly_flutter/ios`)
@@ -63,8 +60,6 @@ SPEC REPOS:
     - Reachability
 
 EXTERNAL SOURCES:
-  add_2_calendar:
-    :path: ".symlinks/plugins/add_2_calendar/ios"
   alice:
     :path: ".symlinks/plugins/alice/ios"
   connectivity:
@@ -97,7 +92,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/wifi_ip/ios"
 
 SPEC CHECKSUMS:
-  add_2_calendar: e9d68636aed37fb18e12f5a3d74c2e0589487af0
   alice: 0f49577498c6d1abee1d488e29d0a79a3e2860a1
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   countly_flutter: 38419412e193a1faa5babeb5d28a63fda260687d
