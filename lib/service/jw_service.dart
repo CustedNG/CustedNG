@@ -268,8 +268,9 @@ class JwService extends WrdvpnBasedService {
           "Context": "查询"
         }
       },
-      expireTest: (resp) => RegExp(r'{"state":[1-9],"message":".*","data":null}')
-            .hasMatch(resp.body),
+      expireTest: (resp) =>
+          RegExp(r'{"state":[1-9],"message":".*","data":null}')
+              .hasMatch(resp.body),
       headers: {'content-type': 'application/json'},
     );
 

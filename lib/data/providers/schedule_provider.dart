@@ -27,7 +27,7 @@ class ScheduleProvider extends BusyProvider {
   int get maxWeek => _schedule?.weekCount;
 
   int get currentWeek {
-    final weeks = _schedule?.calculateWeekSinceStart(DateTime.now());
+    final weeks = _schedule?.calculateWeekSinceStart(DateTime.now()) ?? 0;
     return weeks > 0 ? weeks : 1;
   }
 

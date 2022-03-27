@@ -13,65 +13,6 @@ private let widgetGroupId = "group.com.tusi.app"
 private let widgetData = UserDefaults.init(suiteName: widgetGroupId)
 
 extension UIColor {
-     
-    // Hex String -> UIColor
-    convenience init(hexString: String) {
-        let hexString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
-        let scanner = Scanner(string: hexString)
-         
-        if hexString.hasPrefix("#") {
-            scanner.scanLocation = 1
-        }
-         
-        var color: UInt32 = 0
-        scanner.scanHexInt32(&color)
-         
-        let mask = 0x000000FF
-        let r = Int(color >> 16) & mask
-        let g = Int(color >> 8) & mask
-        let b = Int(color) & mask
-         
-        let red   = CGFloat(r) / 255.0
-        let green = CGFloat(g) / 255.0
-        let blue  = CGFloat(b) / 255.0
-         
-        self.init(red: red, green: green, blue: blue, alpha: 1)
-    }
-     
-    // UIColor -> Hex String
-    var hexString: String? {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-         
-        let multiplier = CGFloat(255.999999)
-         
-        guard self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
-            return nil
-        }
-         
-        if alpha == 1.0 {
-            return String(
-                format: "#%02lX%02lX%02lX",
-                Int(red * multiplier),
-                Int(green * multiplier),
-                Int(blue * multiplier)
-            )
-        }
-        else {
-            return String(
-                format: "#%02lX%02lX%02lX%02lX",
-                Int(red * multiplier),
-                Int(green * multiplier),
-                Int(blue * multiplier),
-                Int(alpha * multiplier)
-            )
-        }
-    }
-}
-
-extension UIColor {
     var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
         var red: CGFloat = 0
         var green: CGFloat = 0
@@ -104,9 +45,7 @@ struct ScheduleProvider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (ScheduleEntry) -> Void) {
         let entry = ScheduleEntry(
             date: Date(),
-            data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "14:00", updateTime: "13:00"),
-            color1: Color.pink,
-            color2: Color.purple
+            data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "14:00", updateTime: "13:00")
         )
         completion(entry)
     }
@@ -117,22 +56,16 @@ struct ScheduleProvider: TimelineProvider {
         let currentDate = Date()
         let refreshDate = Calendar.current.date(byAdding: .second, value: 6, to: currentDate)!
         ScheduleLoader.fetch { result in
-            let oneWord: Schedule
+            let schedule: Schedule
             if case .success(let fetchedData) = result {
-                oneWord = fetchedData
+                schedule = fetchedData
             } else {
-                oneWord = Schedule(teacher: "建议稍后再试", position: "刷新失败", course: "抱歉", time: "", updateTime: date2String(currentDate, dateFormat: "HH:mm"))
+                schedule = Schedule(teacher: "无数据", position: "刷新失败", course: "抱歉", time: "请稍后再试", updateTime: date2String(currentDate, dateFormat: "HH:mm"))
             }
             
-            let color1Str = widgetData?.string(forKey: "color1")
-            let color2Str = widgetData?.string(forKey: "color2")
-            let color1: Color = color1Str != nil ? Color(uiColor: UIColor(hexString: color1Str!)) : Color.pink
-            let color2: Color = color2Str != nil ? Color(uiColor: UIColor(hexString: color2Str!)) : Color.purple
             let entry = ScheduleEntry(
                 date: currentDate,
-                data: oneWord,
-                color1: color1,
-                color2: color2
+                data: schedule
             )
             let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
             completion(timeline)
@@ -142,9 +75,7 @@ struct ScheduleProvider: TimelineProvider {
     func placeholder(in context: Context) -> ScheduleEntry {
         return ScheduleEntry(
             date: Date(),
-            data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "13:00", updateTime: "13:00"),
-            color1: Color.pink,
-            color2: Color.purple
+            data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "13:00", updateTime: "13:00")
         )
     }
 }
@@ -152,8 +83,6 @@ struct ScheduleProvider: TimelineProvider {
 struct ScheduleEntry: TimelineEntry {
     public let date: Date
     public let data: Schedule
-    public let color1: Color
-    public let color2: Color
 }
 
 struct SchedulePlaceholderView : View {
@@ -229,30 +158,28 @@ struct ScheduleLoader {
 
 struct ScheduleView: View {
     let entry: ScheduleEntry
+    
+    let bgColor = DynamicColor(dark: UIColor(.black), light: UIColor(.white))
+    let textColor = DynamicColor(dark: UIColor(.white), light: UIColor(.black))
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
+        VStack(alignment: .leading, spacing: 4.7) {
             Text(entry.data.course)
                 .font(.system(.title3))
-                .foregroundColor(.white)
+                .foregroundColor(.blue)
                 .frame(width: .none, height: .none, alignment: .topLeading)
             Spacer()
-            Text(entry.data.position)
-                .font(.system(.caption2))
-                .foregroundColor(.white)
-            Text(entry.data.teacher)
-                .font(.system(.caption2))
-                .foregroundColor(.white)
-            Text(entry.data.time)
-                .font(.system(.caption2))
-                .foregroundColor(.white)
+            DetailItem(icon: "location", text: entry.data.position, color: dynamicColor(color: textColor).opacity(0.7))
+            DetailItem(icon: "person", text: entry.data.teacher, color: dynamicColor(color: textColor).opacity(0.7))
+            DetailItem(icon: "clock", text: entry.data.time, color: dynamicColor(color: textColor).opacity(0.7))
             Spacer()
-            Text("更新:\(entry.data.updateTime)")
+            Text("更新于\(entry.data.updateTime)")
                 .font(.system(.caption2))
-                .foregroundColor(.white)
+                .foregroundColor(dynamicColor(color: textColor).opacity(0.6))
                 .frame(width: .none, height: .none, alignment: .bottom)
-        }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding()
-        .background(LinearGradient(gradient: Gradient(colors: [entry.color1, entry.color2, entry.color1]), startPoint: .topLeading, endPoint: .bottom))
+        .background(dynamicColor(color: bgColor))
     }
 }
 
@@ -262,12 +189,43 @@ struct ScheduleView_Previews: PreviewProvider {
             entry: ScheduleEntry(
                 date: Date(),
                 data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "13:00", updateTime: date2String(Date(), dateFormat: "HH:mm")
-                ),
-                color1: Color.pink,
-                color2: Color.purple
+                )
             )
         )
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
 
+private func dynamicUIColor(color: DynamicColor) -> UIColor {
+    if #available(iOS 13, *) {  // 版本号大于等于13
+  return UIColor { (traitCollection: UITraitCollection) -> UIColor in
+    return traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark ?
+      color.dark : color.light
+  }
+}
+    return color.light
+}
+
+private func dynamicColor(color: DynamicColor) -> Color {
+    return Color.init(dynamicUIColor(color: color))
+}
+
+struct DynamicColor {
+    let dark: UIColor
+    let light: UIColor
+}
+
+struct DetailItem: View {
+    let icon: String
+    let text: String
+    let color: Color
+    
+    var body: some View {
+        HStack() {
+            Image(systemName: icon).resizable().foregroundColor(color).frame(width: 12, height: 12, alignment: .center)
+            Text(text)
+                .font(.system(.caption2))
+                .foregroundColor(color)
+        }
+    }
+}

@@ -86,7 +86,7 @@ Future<void> doiOSUpdate(
   final update = await locator<CustedService>().getiOSUpdate();
   if (update == null) return;
 
-  print('Update available: $update');
+  print('Update: $update, Current: ${BuildData.build}');
 
   final isCurrentVersionTooOld = BuildData.build < update.min;
   locator<AppProvider>().build = update.newest;

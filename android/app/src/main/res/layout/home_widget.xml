@@ -1,54 +1,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/widget_background"
-    android:orientation="vertical"
-    android:id="@+id/widget_container">
+    android:background="@color/widgetBackground"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/widget_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="27sp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:paddingStart="19dp"
         android:layout_marginTop="18dp"
-        tools:text="Time"
-        tools:ignore="RtlSymmetry" />
+        android:paddingStart="19dp"
+        android:paddingEnd="19dp"
+        android:textColor="#03A9F4"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        tools:text="Time" />
 
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="22dp"
-            android:gravity="center_vertical"
-            android:id="@+id/widget_container_inner">
+        android:id="@+id/widget_container_inner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="7dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="22dp">
 
         <TextView
             android:id="@+id/widget_course"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/widgetTitleText"
             android:textSize="13sp"
-            android:textColor="#FFFFFF"
             tools:text="Course" />
 
         <TextView
             android:id="@+id/widget_position"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
             android:layout_below="@id/widget_course"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/widgetTitleText"
+            android:textSize="13sp"
             tools:text="Position" />
 
         <TextView
             android:id="@+id/widget_teacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="#FFFFFF"
             android:layout_below="@id/widget_position"
+            android:textColor="@color/widgetTitleText"
+            android:textSize="13sp"
             tools:text="Teacher" />
 
     </RelativeLayout>
@@ -57,14 +58,13 @@
         android:id="@+id/widget_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
         android:layout_alignParentBottom="true"
-        android:paddingStart="19dp"
-        android:paddingBottom="18dp"
-        android:paddingEnd="19dp"
-        android:textColor="#FFFFFF"
         android:maxLines="2"
-        tools:text="UpdateTime"
-        tools:ignore="RtlSymmetry" />
+        android:paddingStart="19dp"
+        android:paddingEnd="19dp"
+        android:paddingBottom="18dp"
+        android:textColor="@color/widgetSummaryText"
+        android:textSize="13sp"
+        tools:text="UpdateTime" />
 
 </RelativeLayout>

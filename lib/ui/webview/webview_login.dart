@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:custed2/constants.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
@@ -43,7 +44,7 @@ class _WebviewLoginState extends State<WebviewLogin> {
   Widget build(BuildContext context) {
     return Webview2(
       onCreated: onCreated,
-      onLoadAborted: onLoadAborted,
+      onLoadStop: onLoadAborted,
       invalidUrlRegex: r'custp\/index',
       plugins: [
         PluginForMysso(),
@@ -109,17 +110,25 @@ class _WebviewLoginState extends State<WebviewLogin> {
     userData.password.put(password);
     userData.lastLoginServer.put(url);
 
-    await locator<JwService>().login();
-
-    await CustedService().login2Backend(
-        buildCookie(await cookieJar.loadForRequest(syncDomains.last.uri)),
-        username);
-
     if (!widget.back2PrePage) {
       return;
     }
 
+    controller.evalJavascript(jwLoginPageEvalScript);
+
     try {
+      /// 获取wengine ticket和asp net id
+      await locator<JwService>().login();
+
+      /// 登录到后端
+      final cookie = await cookieJar.loadForRequest(syncDomains.last.uri);
+      final cookieStr = buildCookie(cookie);
+      if (cookieStr.isNotEmpty) {
+        await CustedService().login2Backend(cookieStr, username);
+      }
+      
+
+      /// 登录后的操作：获取profile、课表、成绩
       final user = locator<UserProvider>();
       await user.login();
       showSnackBar(context, '登录成功');

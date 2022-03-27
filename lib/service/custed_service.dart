@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:custed2/constants.dart';
 import 'package:custed2/core/service/cat_client.dart';
 import 'package:custed2/data/models/custed_banner.dart';
 import 'package:custed2/data/models/custed_file.dart';
@@ -17,7 +18,6 @@ import 'package:http/http.dart' show Response;
 class CustedService extends CatClient {
   static const baseUrl = 'https://cust.app';
   static const ccUrl = 'https://cust.cc';
-  static const backendUrl = 'https://v2.custed.lolli.tech';
 
   Future<WeatherData> getWeather() async {
     final resp = await get('$baseUrl/app/weather');
