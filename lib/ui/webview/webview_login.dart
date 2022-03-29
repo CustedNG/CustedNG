@@ -127,7 +127,6 @@ class _WebviewLoginState extends State<WebviewLogin> {
         await CustedService().login2Backend(cookieStr, username);
       }
       
-
       /// 登录后的操作：获取profile、课表、成绩
       final user = locator<UserProvider>();
       await user.login();

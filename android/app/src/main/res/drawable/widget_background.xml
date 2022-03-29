@@ -3,6 +3,6 @@
     <corners android:radius="16dp"/>
     <gradient
         android:angle="135"
-        android:endColor="#7B878F"
-        android:startColor="#013A80" />
+        android:endColor="@color/widgetBackgroundEnd"
+        android:startColor="@color/widgetBackgroundStart" />
 </shape>

@@ -66,11 +66,16 @@
         </provider>
 
         <receiver android:name=".HomeWidgetProvider"
+            android:label="桌面课表"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="cc.xuty.custed2.UPDATE_WIDGET"/>
+                <action android:name="miui.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+            <meta-data
+                android:name="miuiWidget"
+                android:value="true" />
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/home_widget" />
         </receiver>
@@ -80,6 +85,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="miuiWidgetVersion"
+            android:value="1" />
     </application>
 
     <queries>

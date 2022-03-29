@@ -1,9 +1,6 @@
 import 'package:custed2/constants.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
-import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/url_text.dart';
 import 'package:flutter/material.dart';
 
@@ -11,16 +8,7 @@ class IssuePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar.material(
-          context: context,
-          middle: NavbarText('反馈👉'),
-          trailing: [
-            IconButton(
-                icon: Icon(Icons.feedback),
-                onPressed: () => AppRoute(
-                        page: WebviewBrowser('https://cust.cc/go/feedback'))
-                    .go(context))
-          ]),
+      appBar: NavBar.material(context: context, middle: Text('问题反馈')),
       body: ListView(
         children: [
           Container(
@@ -45,7 +33,7 @@ class IssuePage extends StatelessWidget {
     return [
       HomeCard(
         title: Text('用户群', style: titleTextStyle),
-        content: UrlText(joinQQUserGroup, replace: '点击加入'),
+        content: UrlText('网页反馈已被弃用。\n如果有问题需要反馈，请入用户群 $joinQQUserGroup', replace: '点击加入'),
       ),
       SizedBox(height: 20),
       HomeCard(
@@ -73,8 +61,8 @@ class IssuePage extends StatelessWidget {
             'A:CustedNG课表与教务课表保持同步，请尝试查看教务课表是否缺课\n'
             'Q:如何将课程加入系统日历\n'
             'A:在课表中长按课程即可\n'
-            'Q: 如何连续翻页\n'
-            'A: 长按课表左/右 翻页箭头即可\n'
+            'Q:如何连续翻页\n'
+            'A:长按课表 左/右 翻页箭头即可\n'
             'Q:如何快速回到当前周\n'
             'A:长按课表中”第x周“即可',
             style: contentTextStyle),

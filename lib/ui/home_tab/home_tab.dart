@@ -1,4 +1,6 @@
 import 'package:custed2/config/routes.dart';
+import 'package:custed2/constants.dart';
+import 'package:custed2/core/open.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/ui/home_tab/home_banner.dart';
 import 'package:custed2/ui/home_tab/home_drawer.dart';
@@ -90,7 +92,7 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
               schoolCalendarPage.go(context);
               break;
             case 'B':
-              feedbackPage.go(context);
+              openUrl(joinQQUserGroup);
               break;
           }
         });

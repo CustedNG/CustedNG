@@ -86,8 +86,8 @@ private class NextLessonUpdate(
             return if (this == null) NextSchedule(
                 "-",
                 "获取失败",
-                "",
-                "",
+                "-",
+                "-",
                 IntArray(0)
             ) else Shared.objectMapper.readValue(this, NextSchedule::class.java)
         }
@@ -129,8 +129,8 @@ private class NextLessonUpdate(
                 updateTexts(
                     "未登录",
                     "请先登录",
-                    "并刷新一次课表",
-                    "",
+                    "刷新课表",
+                    "再重启app",
                     "更新于 ${toUserFriendlyTimeString(System.currentTimeMillis())}"
                 )
                 return

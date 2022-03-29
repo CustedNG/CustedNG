@@ -72,8 +72,8 @@ final netdiskWebPage = AppRoute(
   page: WebviewBrowser('$custccBase/go/netdisk'),
 );
 
-final feedbackPage =
-    AppRoute(title: '反馈', page: WebviewBrowser('$custccBase/go/feedback'));
+// final feedbackPage =
+//     AppRoute(title: '反馈', page: WebviewBrowser('$custccBase/go/feedback'));
 
 final bbsPage =
     AppRoute(title: '校内导航', page: WebviewBrowser('https://bbs.cust.app'));

@@ -2,17 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/widgetBackground"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:padding="40px"
+    android:orientation="vertical"
+    tools:ignore="PxUsage">
 
     <TextView
         android:id="@+id/widget_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:paddingStart="19dp"
-        android:paddingEnd="19dp"
         android:textColor="#03A9F4"
         android:textSize="27sp"
         android:textStyle="bold"
@@ -22,35 +21,84 @@
         android:id="@+id/widget_container_inner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="7dp"
         android:gravity="center_vertical"
-        android:paddingHorizontal="22dp">
+        android:paddingTop="13dp">
 
-        <TextView
-            android:id="@+id/widget_course"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/widget_course_label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/widgetTitleText"
-            android:textSize="13sp"
-            tools:text="Course" />
+            android:paddingBottom="2.7dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/widget_position"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/widget_course"
-            android:textColor="@color/widgetTitleText"
-            android:textSize="13sp"
-            tools:text="Position" />
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_baseline_book_24">
+            </ImageView>
 
-        <TextView
-            android:id="@+id/widget_teacher"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/widget_course"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:textColor="@color/widgetTitleText"
+                android:textSize="13sp"
+                tools:text="Course" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/widget_position_label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/widget_position"
-            android:textColor="@color/widgetTitleText"
-            android:textSize="13sp"
-            tools:text="Teacher" />
+            android:paddingBottom="2.7dp"
+            android:layout_below="@id/widget_course_label"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_baseline_location_on_24">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/widget_position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:maxLines="1"
+                android:textColor="@color/widgetTitleText"
+                android:textSize="13sp"
+                tools:text="Position" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/widget_teacher_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/widget_position_label"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_baseline_person_24">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/widget_teacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:maxLines="1"
+                android:textColor="@color/widgetTitleText"
+                android:textSize="13sp"
+                tools:text="Teacher" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -60,9 +108,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:maxLines="2"
-        android:paddingStart="19dp"
-        android:paddingEnd="19dp"
-        android:paddingBottom="18dp"
         android:textColor="@color/widgetSummaryText"
         android:textSize="13sp"
         tools:text="UpdateTime" />
