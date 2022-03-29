@@ -6,6 +6,8 @@ PODS:
     - Reachability
   - countly_flutter (20.11.4):
     - Flutter
+  - external_app_launcher2 (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_inappwebview (0.0.1):
     - Flutter
@@ -41,6 +43,7 @@ DEPENDENCIES:
   - alice (from `.symlinks/plugins/alice/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - countly_flutter (from `.symlinks/plugins/countly_flutter/ios`)
+  - external_app_launcher2 (from `.symlinks/plugins/external_app_launcher2/ios`)
   - Flutter (from `Flutter`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
@@ -66,6 +69,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/connectivity/ios"
   countly_flutter:
     :path: ".symlinks/plugins/countly_flutter/ios"
+  external_app_launcher2:
+    :path: ".symlinks/plugins/external_app_launcher2/ios"
   Flutter:
     :path: Flutter
   flutter_inappwebview:
@@ -95,6 +100,7 @@ SPEC CHECKSUMS:
   alice: 0f49577498c6d1abee1d488e29d0a79a3e2860a1
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   countly_flutter: 38419412e193a1faa5babeb5d28a63fda260687d
+  external_app_launcher2: 78b4ed734b055e77d31c1a549f60c067ec1969e0
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694

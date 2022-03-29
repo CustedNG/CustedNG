@@ -8,6 +8,7 @@ import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
 import 'package:custed2/core/utils.dart';
+import 'package:external_app_launcher2/external_app_launcher2.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shimmer/shimmer.dart';
@@ -76,7 +77,13 @@ class _HomeEntriesState extends State<HomeEntries> {
           HomeEntry(
             name: Text('题库', style: style),
             icon: Image(image: ImageRes.tikuIcon),
-            action: () => tikuPage.go(context),
+            action: () async {
+              final result =
+                  await ExternalAppLauncher2.openApp('toasttiku://');
+              if (!result) {
+                tikuPage.go(context);
+              }
+            },
           ),
           HomeEntry(
             name: Text('地图', style: style),
