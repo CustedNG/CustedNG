@@ -79,7 +79,7 @@ class _HomeEntriesState extends State<HomeEntries> {
             icon: Image(image: ImageRes.tikuIcon),
             action: () async {
               final result =
-                  await ExternalAppLauncher2.openApp('toasttiku://');
+                  await ExternalAppLauncher2.openApp('toasttiku://home');
               if (!result) {
                 tikuPage.go(context);
               }
