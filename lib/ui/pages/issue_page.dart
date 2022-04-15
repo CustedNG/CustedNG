@@ -33,7 +33,8 @@ class IssuePage extends StatelessWidget {
     return [
       HomeCard(
         title: Text('用户群', style: titleTextStyle),
-        content: UrlText('网页反馈已被弃用。\n如果有问题需要反馈，请入用户群 $joinQQUserGroup', replace: '点击加入'),
+        content: UrlText('网页反馈已被弃用。\n如果有问题需要反馈，请入用户群 $joinQQUserGroup',
+            replace: '点击加入'),
       ),
       SizedBox(height: 20),
       HomeCard(

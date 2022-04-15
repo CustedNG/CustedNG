@@ -1,15 +1,14 @@
 import 'dart:io';
-
-import 'package:android_path_provider/android_path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:custed2/core/platform/platform_api.dart';
+import 'package:path_provider/path_provider.dart';
 
 class GetDownloadDir extends PlatformApi<Future<String>> {
   const GetDownloadDir();
 
   @override
   Future<String> andriod() async {
-    return AndroidPathProvider.downloadsPath;
+    return (await getTemporaryDirectory()).path;
   }
 
   @override

@@ -1,46 +1,27 @@
 #!/usr/bin/env dart
+// ignore_for_file: avoid_print
 
 /// 使用示例
 /// 请在使用前，在本项目根目录创建[countly_config]文件，按行填入URL和KEY。
-/// `./make.dart build android`编译Android 64bit版本
-/// `./make.dart build android 32`编译Android 32bit版本
-/// `./make.dart build ios`编译iOS 64bit版本
+/// `./make.dart build`编译Android、iOS
+/// `./make.dart run profile`以profile模式运行
 
 import 'dart:convert';
 import 'dart:io';
 
 const appName = 'CustedNG';
-const buildDataClassPath = 'lib/res/build_data.dart';
-const countlyConfigClassPath = 'lib/config/countly.dart';
+const buildDataFilePath = 'lib/res/build_data.dart';
+const xcarchivePath = 'build/ios/archive/CustedNG.xcarchive';
 
-Encoding getCommandLineEncoding() {
-  return Encoding.getByName("UTF-8");
-}
+const skslFileSuffix = '.sksl.json';
+
 
 Future<int> getGitCommitCount() async {
-  final encoding = getCommandLineEncoding();
-  final result = await Process.run('git', ['log', '--oneline'],
-      stdoutEncoding: encoding, stderrEncoding: encoding);
+  final result = await Process.run('git', ['log', '--oneline']);
   return (result.stdout as String)
       .split('\n')
       .where((line) => line.isNotEmpty)
       .length;
-}
-
-Future<void> generateCountlyConfig() async {
-  final configs = await File('countly_config').readAsLines();
-  if (configs.length < 2) {
-    throw Exception('''No Countly config file. 
-          Please add URL and KEY by lines to 
-          file countly_config in project root dir.''');
-  }
-
-  final data = {
-    'url': configs[0],
-    'key': configs[1],
-  };
-
-  await writeStaicConfigFile(data, 'CountlyConfig', countlyConfigClassPath);
 }
 
 Future<void> writeStaicConfigFile(
@@ -68,8 +49,7 @@ Future<int> getGitModificationCount() async {
 }
 
 Future<String> getFlutterVersion() async {
-  final result = await Process.run('flutter', ['--version'],
-      runInShell: true, stdoutEncoding: getCommandLineEncoding());
+  final result = await Process.run('flutter', ['--version'], runInShell: true);
   return (result.stdout as String);
 }
 
@@ -85,7 +65,7 @@ Future<Map<String, dynamic>> getBuildData() async {
 }
 
 String jsonEncodeWithIndent(Map<String, dynamic> json) {
-  final encoder = JsonEncoder.withIndent('  ');
+  const encoder = JsonEncoder.withIndent('  ');
   return encoder.convert(json);
 }
 
@@ -93,25 +73,33 @@ Future<void> updateBuildData() async {
   print('Updating BuildData...');
   final data = await getBuildData();
   print(jsonEncodeWithIndent(data));
-  await writeStaicConfigFile(data, 'BuildData', buildDataClassPath);
+  await writeStaicConfigFile(data, 'BuildData', buildDataFilePath);
+}
+
+void dartFormat() {
+  final result = Process.runSync('dart', ['format', '.']);
+  print('\n' + result.stdout);
+  if (result.exitCode != 0) {
+    print(result.stderr);
+    exit(1);
+  }
 }
 
 void flutterRun(String mode) {
-  Process.start('flutter', ['run', '--$mode'],
+  Process.start('flutter', ['run', mode == null ? '' : '--$mode'],
       mode: ProcessStartMode.inheritStdio, runInShell: true);
 }
 
-void flutterBuild(
-    String source, String target, bool isAndroid, bool is32Bit) async {
-  final startTime = DateTime.now();
+Future<void> flutterBuild(String source, String target, bool isAndroid) async {
   final build = await getGitCommitCount();
 
   final args = [
     'build',
     isAndroid ? 'apk' : 'ipa',
-    '--target-platform=android-arm${is32Bit ? "" : 64}',
+    '--target-platform=android-arm64',
     '--build-number=$build',
-    '--build-name=1.0.$build'
+    '--build-name=1.0.$build',
+    '--bundle-sksl-path=${isAndroid ? 'android' : 'ios'}$skslFileSuffix',
   ];
   if (!isAndroid) args.removeAt(2);
   print('Building with args: ${args.join(' ')}');
@@ -121,27 +109,32 @@ void flutterBuild(
   if (exitCode == 0) {
     target = target.replaceFirst('build', build.toString());
     print('Copying from $source to $target');
-    if (!(await Directory('release').exists())) {
-      await Directory('release').create();
+    if (isAndroid) {
+      await File(source).copy(target);
+    } else {
+      final result = await Process.run('cp', ['-r', source, target]);
+      if (result.exitCode != 0) {
+        print(result.stderr);
+        exit(1);
+      }
     }
-    await File(source).copy(target);
-    print('Done.');
+
+    print('Done.\n');
   } else {
     print(buildResult.stderr.toString());
     print('\nBuild failed with exit code $exitCode');
+    exit(exitCode);
   }
-  final endTime = DateTime.now();
-  print('Spent time: ${endTime.difference(startTime).toString()}');
 }
 
-void flutterBuildIOS() async {
-  await flutterBuild('./build/ios/iphoneos/$appName.app',
-      './release/${appName}_build.app', false, false);
+Future<void> flutterBuildIOS() async {
+  await flutterBuild(
+      xcarchivePath, './release/${appName}_build.xcarchive', false);
 }
 
-void flutterBuildAndroid(bool is32Bit) async {
+Future<void> flutterBuildAndroid() async {
   await flutterBuild('./build/app/outputs/flutter-apk/app-release.apk',
-      './release/${appName}_build_Arm${is32Bit ? "" : 64}.apk', true, is32Bit);
+      './release/${appName}_build_Arm64.apk', true);
 }
 
 void main(List<String> args) async {
@@ -152,25 +145,32 @@ void main(List<String> args) async {
 
   final command = args[0];
 
-  await generateCountlyConfig();
-
   switch (command) {
     case 'run':
-      if (args.length > 1) {
-        await updateBuildData();
-        return flutterRun(args[1]);
-      }
-      return flutterRun('');
+      return flutterRun(args.length == 2 ? args[1] : null);
     case 'build':
+      final stopwatch = Stopwatch()..start();
+      final buildFunc = [flutterBuildIOS, flutterBuildAndroid];
+      await updateBuildData();
+      dartFormat();
       if (args.length > 1) {
-        await updateBuildData();
-        if (args[1] == 'android' || args[1] == 'harmony') {
-          return flutterBuildAndroid(args.last == '32');
-        } else if (args[1] == 'ios') {
-          return flutterBuildIOS();
+        final platform = args[1];
+        switch (platform) {
+          case 'ios':
+            buildFunc.remove(flutterBuildAndroid);
+            break;
+          case 'android':
+            buildFunc.remove(flutterBuildIOS);
+            break;
+          default:
+            print('Unknown platform: $platform');
+            exit(1);
         }
-        print('unkonwn build arg: ${args[1]}');
       }
+      for (final func in buildFunc) {
+        await func();
+      }
+      print('Build finished in ${stopwatch.elapsed}');
       return;
     default:
       print('Unsupported command: $command');
