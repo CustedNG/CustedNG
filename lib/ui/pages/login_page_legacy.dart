@@ -4,7 +4,7 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/mysso_service.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:flutter/material.dart';
 
 class LoginPageLegacy extends StatefulWidget {

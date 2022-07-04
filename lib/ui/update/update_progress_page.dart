@@ -9,7 +9,7 @@ import 'package:custed2/core/platform/os/app_tmp_dir.dart';
 import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/res/hitokoto.dart';
 import 'package:custed2/service/custed_service.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:install_plugin/install_plugin.dart';

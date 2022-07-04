@@ -1,5 +1,5 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/constants.dart';
+import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/ui/home_tab/home_banner.dart';

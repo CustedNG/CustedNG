@@ -15,7 +15,6 @@ const xcarchivePath = 'build/ios/archive/CustedNG.xcarchive';
 
 const skslFileSuffix = '.sksl.json';
 
-
 Future<int> getGitCommitCount() async {
   final result = await Process.run('git', ['log', '--oneline']);
   return (result.stdout as String)
@@ -150,22 +149,25 @@ void main(List<String> args) async {
       return flutterRun(args.length == 2 ? args[1] : null);
     case 'build':
       final stopwatch = Stopwatch()..start();
-      final buildFunc = [flutterBuildIOS, flutterBuildAndroid];
+      final buildFunc = [];
       await updateBuildData();
       dartFormat();
       if (args.length > 1) {
         final platform = args[1];
         switch (platform) {
           case 'ios':
-            buildFunc.remove(flutterBuildAndroid);
+            buildFunc.add(flutterBuildIOS);
             break;
           case 'android':
-            buildFunc.remove(flutterBuildIOS);
+            buildFunc.add(flutterBuildAndroid);
             break;
           default:
             print('Unknown platform: $platform');
             exit(1);
         }
+      } else {
+        buildFunc.add(flutterBuildIOS);
+        buildFunc.add(flutterBuildAndroid);
       }
       for (final func in buildFunc) {
         await func();

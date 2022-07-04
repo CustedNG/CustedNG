@@ -23,15 +23,14 @@ class IecardService extends WrdvpnBasedService {
   @override
   Future<CatLoginResult> login() async {
     final ticket = await _mysso.getTicketForIecard();
-    final prelogin =
-        await request('GET', '$preloginUrl&ticket=$ticket'.toUri());
+    final prelogin = await request('GET', '$preloginUrl&ticket=$ticket'.uri);
 
     final ssoticketid = html
         .parse(prelogin.body)
         .querySelector('#ssoticketid')
         .attributes['value'];
 
-    final response = await request('POST', loginUrl.toUri(), body: {
+    final response = await request('POST', loginUrl.uri, body: {
       'errorcode': '1',
       'continueurl': '',
       'ssoticketid': ssoticketid
@@ -43,7 +42,7 @@ class IecardService extends WrdvpnBasedService {
   Future<String> getEcardLoginUrl() async {
     final resp1 = await xRequest(
       'POST',
-      '$baseUrl/Page/Page'.toUri(),
+      '$baseUrl/Page/Page'.uri,
       maxRedirects: 1,
       body: {
         'flowID': '10002',
@@ -68,7 +67,7 @@ class IecardService extends WrdvpnBasedService {
 
     final resp2 = await xRequest(
       'GET',
-      '$baseUrl${resp1.headers[HttpHeaders.locationHeader]}'.toUri(),
+      '$baseUrl${resp1.headers[HttpHeaders.locationHeader]}'.uri,
       maxRedirects: 0,
     );
 

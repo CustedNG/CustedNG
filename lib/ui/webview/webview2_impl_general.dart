@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/data/providers/download_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/core/utils.dart';
 import 'package:custed2/ui/webview/webview2.dart';
 import 'package:custed2/ui/webview/webview2_bottom.dart';
 import 'package:custed2/ui/webview/webview2_controller.dart';

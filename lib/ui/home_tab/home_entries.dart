@@ -7,7 +7,7 @@ import 'package:custed2/service/campus_wifi_service.dart';
 import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:external_app_launcher2/external_app_launcher2.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';

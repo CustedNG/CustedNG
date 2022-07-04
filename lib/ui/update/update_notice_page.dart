@@ -4,7 +4,7 @@ import 'package:custed2/data/models/custed_update.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/update/update_progress_page.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';

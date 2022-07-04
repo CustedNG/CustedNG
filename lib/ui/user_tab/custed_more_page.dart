@@ -1,8 +1,8 @@
-import 'package:custed2/constants.dart';
+import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/update.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';

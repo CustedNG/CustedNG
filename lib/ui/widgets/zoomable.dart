@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
-import 'package:custed2/core/utils.dart';
 
 class ZoomableWidget extends StatefulWidget {
   ZoomableWidget({

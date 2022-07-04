@@ -1,4 +1,4 @@
-import 'package:custed2/constants.dart';
+import 'package:custed2/res/constants.dart';
 import 'package:flutter/material.dart';
 
 class HomeCard extends StatelessWidget {

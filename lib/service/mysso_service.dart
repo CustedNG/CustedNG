@@ -30,7 +30,7 @@ class MyssoService extends CatService {
   // final captchaVerificationFailureTest = RegExp(r'验证码错误');
 
   Future<CatLoginResult<String>> login({bool force = false}) async {
-    if (force) clearCookieFor(baseUrl.toUri());
+    if (force) clearCookieFor(baseUrl.uri);
 
     final loginService = 'https://portal.cust.edu.cn/custp/shiro-cas';
     final loginUrlWithService = '$loginUrl?service=$loginService';
@@ -160,7 +160,7 @@ class MyssoService extends CatService {
   // }
 
   Future<MyssoProfile> getProfile() async {
-    final document = parse((await xRequest('GET', loginUrl.toUri())).body);
+    final document = parse((await xRequest('GET', loginUrl.uri)).body);
     final custId = document.querySelector('strong > span')?.innerHtml ??
         document.querySelector('p > strong')?.innerHtml ??
         '用户';

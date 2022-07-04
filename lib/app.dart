@@ -5,7 +5,7 @@ import 'package:alice/alice.dart';
 import 'package:custed2/app_frame.dart';
 import 'package:custed2/core/analytics.dart';
 import 'package:custed2/core/util/build_mode.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/providers/debug_provider.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';

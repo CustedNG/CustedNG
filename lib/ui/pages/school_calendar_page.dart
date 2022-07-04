@@ -1,9 +1,9 @@
+import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/util/save_image.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:custed2/service/custed_service.dart';
@@ -34,12 +34,7 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
         children: [
           DarkModeFilter(
             level: 160,
-            child: ExtendedImage(
-              height: size.height,
-              mode: ExtendedImageMode.gesture,
-              fit: BoxFit.fitWidth,
-              image: ImageRes.miscSchoolCalendar,
-            ),
+            child: MyImage('$backendUrl/res/calendar/$getTerm.png'),
           ),
           Positioned(
             child: Container(

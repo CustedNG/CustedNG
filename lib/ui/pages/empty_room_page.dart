@@ -1,4 +1,4 @@
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/models/jw_empty_room/jw_empty_room.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_field.dart';

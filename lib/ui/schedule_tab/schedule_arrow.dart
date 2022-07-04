@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/util/time_point.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:flutter/material.dart';
 

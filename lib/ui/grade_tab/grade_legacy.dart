@@ -1,6 +1,7 @@
 import 'dart:math';
-import 'package:custed2/constants.dart';
+import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/extension/color.dart';
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
@@ -8,7 +9,7 @@ import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/grade_tab/sliver_header_delegate.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';

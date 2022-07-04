@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:custed2/constants.dart';
+import 'package:custed2/res/constants.dart';
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/webview/plugin_debug.dart';

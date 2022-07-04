@@ -1,4 +1,4 @@
-import 'package:custed2/constants.dart';
+import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:flutter/gestures.dart';

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:clipboard/clipboard.dart';
-import 'package:custed2/constants.dart';
+import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

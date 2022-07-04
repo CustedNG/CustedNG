@@ -135,7 +135,6 @@ flutter:
   assets:
     - assets/map/simple/
     - assets/icon/
-    - assets/calendar/2021-2022-1.webp
     - assets/bg/
     - assets/wechat/
     - assets/user_group.jpg

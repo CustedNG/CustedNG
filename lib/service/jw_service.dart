@@ -49,7 +49,7 @@ class JwService extends WrdvpnBasedService {
     param.addAll({"__permission": {}, "__log": {}});
     final response = await request(
       'POST',
-      '$baseUrl/api/LoginApi/LGSSOLocalLogin'.toUri(),
+      '$baseUrl/api/LoginApi/LGSSOLocalLogin'.uri,
       body: param,
       headers: {
         'content-type': 'application/json',
@@ -83,7 +83,7 @@ class JwService extends WrdvpnBasedService {
 
     final resp = await xRequest(
       'POST',
-      requestUrl.toUri(),
+      requestUrl.uri,
       body: {
         "param": "JTdCJTdE",
         "__permission": {
@@ -174,7 +174,7 @@ class JwService extends WrdvpnBasedService {
 
     final resp = await xRequest(
       'POST',
-      requestUrl.toUri(),
+      requestUrl.uri,
       body: {
         'param': encodeParamValue(params),
         "__permission": {
@@ -200,7 +200,7 @@ class JwService extends WrdvpnBasedService {
     final params = {"TakeNum": 30, "SearchText": studentNumber};
     final resp = await xRequest(
       'POST',
-      '$baseUrl/api/CommonApi/GetStudentDropDownDataBySearchText'.toUri(),
+      '$baseUrl/api/CommonApi/GetStudentDropDownDataBySearchText'.uri,
       body: {
         "param": encodeParamValue(params),
         "__permission": {
@@ -254,7 +254,7 @@ class JwService extends WrdvpnBasedService {
     final resp = await xRequest(
       'POST',
       '$baseUrl/api/ClientStudent/QueryService/GradeQueryApi/GetDataByStudent'
-          .toUri(),
+          .uri,
       body: {
         "param": "JTdCJTIyU2hvd0dyYWRlVHlwZSUyMiUzQTAlN0Q=",
         "__permission": {
@@ -313,7 +313,7 @@ class JwService extends WrdvpnBasedService {
     final resp = await xRequest(
       'POST',
       '$baseUrl/api/ClientStudent/Home/StudentInfoApi/GetSudentInfoByStudentId'
-          .toUri(),
+          .uri,
       body: encodeParams({}),
       headers: {'content-type': 'application/json'},
     );
@@ -327,8 +327,7 @@ class JwService extends WrdvpnBasedService {
     final parsedResponse = loginResult.data;
     final resp = await xRequest(
       'POST',
-      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/GetFileContentById'
-          .toUri(),
+      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/GetFileContentById'.uri,
       body: {
         'param': base64Encode(utf8.encode('%7B%22Id%22%3A%22'
             '${parsedResponse.data['StudentDto']['ZPID']}%22%7D')),
@@ -384,8 +383,7 @@ class JwService extends WrdvpnBasedService {
   Future<JwWeekTime> getWeekTime() async {
     final resp = await xRequest(
       'POST',
-      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/GetHomeCurWeekTime'
-          .toUri(),
+      '$baseUrl/api/ClientStudent/Home/StudentHomeApi/GetHomeCurWeekTime'.uri,
       body: encodeParams({}),
       headers: {'content-type': 'application/json'},
     );

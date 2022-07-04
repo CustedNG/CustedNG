@@ -1,6 +1,6 @@
 import 'package:custed2/data/providers/banner_provider.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

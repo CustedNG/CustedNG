@@ -5,7 +5,7 @@ import 'package:custed2/data/store/custom_lesson_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/lesson_detail_page.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/maps.dart';

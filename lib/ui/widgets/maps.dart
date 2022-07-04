@@ -1,6 +1,6 @@
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/theme.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/zoomable.dart';
 import 'package:flutter/material.dart';
 

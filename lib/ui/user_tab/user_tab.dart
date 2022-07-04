@@ -5,7 +5,7 @@ import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/user_tab/custed_header.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
