@@ -15,7 +15,6 @@ const xcarchivePath = 'build/ios/archive/CustedNG.xcarchive';
 
 const skslFileSuffix = '.sksl.json';
 
-
 Future<int> getGitCommitCount() async {
   final result = await Process.run('git', ['log', '--oneline']);
   return (result.stdout as String)

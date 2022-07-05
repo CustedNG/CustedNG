@@ -94,7 +94,6 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
     // 启动外围服务
     if (BuildMode.isRelease) {
       Analytics.init();
-      Analytics.isDebug = false;
     }
     if (setting.autoUpdateWeather.fetch()) weatherProvider.startAutoUpdate();
     weatherProvider.update();

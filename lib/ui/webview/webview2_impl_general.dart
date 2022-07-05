@@ -177,7 +177,7 @@ class Webview2StateGeneral extends Webview2State {
             return NavigationActionPolicy.ALLOW;
           }
         },
-        onDownloadStart: (controller, url) {
+        onDownloadStartRequest: (controller, url) {
           locator<DownloadProvider>().enqueue(url.toString());
         },
         onConsoleMessage: (controller, message) {
