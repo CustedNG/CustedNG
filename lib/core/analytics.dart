@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:countly_flutter/countly_flutter.dart';
+import 'package:countly_flutter/countly_config.dart' as cc;
 import 'package:custed2/config/countly.dart';
+import 'package:custed2/core/util/build_mode.dart';
 
 class Analytics {
   static const _url = CountlyConfig.url;
@@ -10,20 +13,17 @@ class Analytics {
   static bool _enabled = false;
 
   static Future<void> init() async {
-    if (_url.isEmpty || _key.isEmpty) {
-      return;
+    if (Platform.isAndroid || Platform.isIOS) {
+      _enabled = true;
+      final config = cc.CountlyConfig(_url, _key)
+          .setLoggingEnabled(BuildMode.isDebug)
+          .enableCrashReporting();
+      await Countly.initWithConfig(config);
+      await Countly.start();
+      await Countly.giveAllConsent();
+    } else {
+      print('[COUNTLY] Unsupported platform ${Platform.operatingSystem}');
     }
-
-    _enabled = true;
-    await Countly.init(_url, _key);
-    await Countly.start();
-    await Countly.enableCrashReporting();
-    await Countly.giveAllConsent();
-    print('Countly init successfully.');
-  }
-
-  static set isDebug(bool value) {
-    Countly.setLoggingEnabled(value);
   }
 
   static void recordView(String view) {

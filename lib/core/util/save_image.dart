@@ -4,8 +4,8 @@ import 'dart:typed_data';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:image_save/image_save.dart';
 import 'package:path/path.dart' show join;
-import 'package:save_in_gallery/save_in_gallery.dart';
 import 'package:share_extend/share_extend.dart';
 
 void saveImageToGallery(BuildContext context, Uint8List data) {
@@ -20,7 +20,8 @@ void _saveAvatarInAndroid(Uint8List data) async {
 }
 
 void _saveAvatarGeneral(BuildContext context, Uint8List data) async {
-  final ok = await ImageSaver().saveImage(imageBytes: data);
+  final year = DateTime.now().year;
+  final ok = await ImageSave.saveImage(data, 'school_calendar_$year.png');
   final msg = ok ? '保存完成' : '保存失败';
   showSnackBar(context, msg);
 }
