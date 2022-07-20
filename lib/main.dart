@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:custed2/app.dart';
 import 'package:custed2/core/analytics.dart';
@@ -23,7 +22,6 @@ import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/res/cert.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
@@ -44,8 +42,6 @@ Future<void> initApp() async {
   await setupLocator(docDir);
   locator<AppProvider>().loadLocalData();
   locator<BannerProvider>().init();
-
-  SecurityContext.defaultContext.setTrustedCertificatesBytes(certStr.codeUnits);
 }
 
 void runInZone(Function body) {
