@@ -1,4 +1,6 @@
-import 'package:custed2/res/constants.dart';
+import 'package:custed2/data/models/custed_config.dart';
+import 'package:custed2/data/providers/app_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/core/util/save_image.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
@@ -6,7 +8,6 @@ import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:custed2/service/custed_service.dart';
 
 class SchoolCalendarPage extends StatefulWidget {
   @override
@@ -19,6 +20,18 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final cal = locator<AppProvider>().cal;
+    if (cal == null) {
+      return Scaffold(
+        appBar: NavBar.material(
+          context: context,
+          middle: Text('校历'),
+        ),
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Scaffold(
       appBar: NavBar.material(
         context: context,
@@ -34,7 +47,7 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
         children: [
           DarkModeFilter(
             level: 160,
-            child: MyImage('$backendUrl/res/calendar/$getTerm.png'),
+            child: MyImage(cal.picUrl),
           ),
           Positioned(
             child: Container(
@@ -58,7 +71,7 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white)),
                   ),
-                  onTap: _showViewCalendarDialog,
+                  onTap: () => _showViewCalendarDialog(cal),
                 )),
           ),
         ],
@@ -66,12 +79,12 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
     );
   }
 
-  Future<void> _showViewCalendarDialog() async {
+  Future<void> _showViewCalendarDialog(CustedConfigSchoolCalendar cal) async {
     if (isDialogOpen) return;
     isDialogOpen = true;
 
     showRoundDialog(
-        context, '校历', Text(await CustedService().getSchoolCalendarString()), [
+        context, cal.term, Text(cal.strSummary), [
       TextButton(
         child: Text('确定'),
         onPressed: () {

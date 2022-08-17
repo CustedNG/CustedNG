@@ -1,14 +1,11 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:crypto/crypto.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/platform/os/app_tmp_dir.dart';
-import 'package:custed2/data/models/custed_update.dart';
+import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/res/hitokoto.dart';
-import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +15,7 @@ import 'package:path/path.dart' as path;
 class UpdateProgressPage extends StatefulWidget {
   UpdateProgressPage(this.update);
 
-  final CustedUpdate update;
+  final CustedConfigUpdate update;
 
   @override
   _UpdateProgressPageState createState() => _UpdateProgressPageState();
@@ -28,7 +25,6 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     with AfterLayoutMixin<UpdateProgressPage> {
   String msg = '更新中';
   String outputPath;
-  double progress = 0.0;
   bool failed = false;
   String hikotoko = hitokoto[Random().nextInt(hitokoto.length)];
 
@@ -48,7 +44,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
 
     final message = failed
         ? _buildFailedButton(context)
-        : Text('${(progress * 100).ceil()}% 已完成');
+        : SizedBox();
 
     Widget content = Container(
       alignment: Alignment.center,
@@ -152,18 +148,11 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
     }
   }
 
-  void updateProgress(double progress) {
-    if (mounted) {
-      setState(() => this.progress = progress);
-    }
-  }
-
   Future<void> init() async {
     updateMsg('正在初始化');
 
     if (mounted) {
       setState(() => failed = false);
-      setState(() => updateProgress(0.0));
     }
 
     final docDir = await getAppTmpDir.invoke();
@@ -172,11 +161,11 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
 
   Future<void> download() async {
     updateMsg('正在准备更新');
-    final url = CustedService.getFileUrl(widget.update.file);
-    final total = widget.update.file.size * 1024;
+    final url = widget.update.url.android;
+    // final total = widget.update.file.size * 1024;
     await Dio().download(url, outputPath, onReceiveProgress: (current, _) {
       if (mounted) {
-        setState(() => updateProgress(current / total));
+        setState(() => updateMsg('已下载 ${current / 1024}MB'));
       }
     });
   }
@@ -184,28 +173,16 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
   Future<void> verify() async {
     updateMsg('正在校验');
 
-    if (mounted) {
-      setState(() => updateProgress(0.25));
-    }
-
     final exists = await File(outputPath).exists();
     if (!exists) {
       throw UpdateException('校验失败[1]');
     }
 
-    if (mounted) {
-      setState(() => updateProgress(0.50));
-    }
-
-    final hash = base64.decode(base64.normalize(widget.update.file.sha256));
-    final computed = await sha256.bind(File(outputPath).openRead()).first;
-    if (compareHash(hash, computed.bytes)) {
-      throw UpdateException('校验失败[2]');
-    }
-
-    if (mounted) {
-      setState(() => updateProgress(1.0));
-    }
+    // final hash = base64.decode(base64.normalize(widget.update.file.sha256));
+    // final computed = await sha256.bind(File(outputPath).openRead()).first;
+    // if (compareHash(hash, computed.bytes)) {
+    //   throw UpdateException('校验失败[2]');
+    // }
   }
 
   Future<void> install() async {

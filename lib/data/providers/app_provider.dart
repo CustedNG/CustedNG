@@ -1,45 +1,76 @@
-import 'dart:io';
-
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/core/util/utils.dart';
+import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:flutter/material.dart';
 
 class AppProvider extends ProviderBase {
-  String _notification;
-  bool _showRealUI = true;
-  bool _useKBPro = false;
-  String _testerNameList = '无法连接到服务器，加载失败';
   BuildContext ctx;
   int build = BuildData.build;
-
-  String get notification => _notification;
-  bool get showRealUI => _showRealUI;
-  String get testerNameList => _testerNameList;
-  bool get useKBPro => _useKBPro;
+  CustedConfig _config;
+  CustedConfig get config => _config;
 
   Future<void> loadLocalData() async {
     final service = CustedService();
 
-    _notification = await service.getNotify();
+    _config = await service.getConfig();
     notifyListeners();
-    _showRealUI = await service.showRealCustedUI() || Platform.isAndroid;
-    _testerNameList = await service.getTesterNameList();
-    _useKBPro = await service.useKBPro();
-
-    notifyListeners();
-
-    showImportantNotify();
   }
 
-  void showImportantNotify() {
-    if (ctx == null) return;
-    if (notification.startsWith('！')) {
-      showRoundDialog(ctx, '重要提示', Text(notification.substring(1)), [
-        TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text('关闭'))
-      ]);
+  bool get useKBPro {
+    final cs = config.useKbpro;
+    for (final c in cs) {
+      if (c.contains('-')) {
+        final range = c.split('-');
+        final start = int.parse(range[0]);
+        final end = int.parse(range[1]);
+        if (build >= start && build <= end) {
+          return true;
+        }
+      } else {
+        if (build == int.parse(c)) {
+          return true;
+        }
+      }
     }
+    return false;
+  }
+
+  bool get showExam {
+    if (config == null) return true;
+    return config.haveExam;
+  }
+
+  bool get showRealUI {
+    if (config == null) return true;
+    final fakeBuilds = config.notShowRealUi;
+    return !fakeBuilds.contains(build);
+  }
+
+  String get notification {
+    if (config == null) return null;
+    final ns = config.notify;
+    final vers = ns.map((e) => e.version).toList();
+    final b = BuildData.build;
+    vers.removeWhere((e) => e < b);
+    vers.sort();
+    if (vers.isNotEmpty) {
+      return ns.firstWhere((e) => e.version == vers.first).content;
+    }
+    return '暂时无法获取通知';
+  }
+
+  CustedConfigSchoolCalendar get cal {
+    if (config == null) return null;
+    final cals = config.schoolCalendar;
+    if (cals == null) return null;
+    for (final cal in cals) {
+      if (cal.term == getTerm) {
+        return cal;
+      }
+    }
+    return null;
   }
 
   void setContext(c) {

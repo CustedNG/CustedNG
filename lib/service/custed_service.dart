@@ -1,16 +1,13 @@
 import 'dart:convert';
 
+import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/service/cat_client.dart';
-import 'package:custed2/data/models/custed_banner.dart';
 import 'package:custed2/data/models/custed_file.dart';
 import 'package:custed2/data/models/custed_response.dart';
 import 'package:custed2/data/models/custed_update.dart';
-import 'package:custed2/data/models/custed_update_ios.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/data/models/tiku_update.dart';
-import 'package:custed2/data/store/user_data_store.dart';
-import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:dio/dio.dart' show Dio;
 import 'package:http/http.dart' show Response;
@@ -26,41 +23,12 @@ class CustedService extends CatClient {
     return WeatherData.fromJson(custedResp.data as Map<String, dynamic>);
   }
 
-  Future<String> getNotify() async {
-    final build = BuildData.build;
-    final resp = await get('$backendUrl/notify?build=$build');
-    final body = resp.body;
-    if (body == '') return null;
-    return body;
-  }
-
   Future<CustedUpdate> getUpdate() async {
     final build = BuildData.build;
     final resp = await get('$baseUrl/app/apk/newest?build=$build');
     final custedResp = CustedResponse.fromJson(json.decode(resp.body));
     if (custedResp.hasError) return null;
     return CustedUpdate.fromJson(custedResp.data as Map<String, dynamic>);
-  }
-
-  Future<CustedUpdateiOS> getiOSUpdate() async {
-    final build = BuildData.build;
-    final resp = await get('$backendUrl/update/ios?build=$build');
-    return CustedUpdateiOS.fromJson(
-        json.decode(resp.body) as Map<String, dynamic>);
-  }
-
-  Future<CustedBanner> getBanner() async {
-    final build = BuildData.build;
-    final resp = await get('$baseUrl/app/banner?build=$build');
-    final custedResp = CustedResponse.fromJson(json.decode(resp.body));
-    if (custedResp.hasError) return null;
-    return CustedBanner.fromJson(custedResp.data as Map<String, dynamic>);
-  }
-
-  Future<bool> getShouldShowExam() async {
-    final resp = await get('$backendUrl/res/haveExam');
-    if (resp.body != null) return resp.body == '1';
-    return true;
   }
 
   Future<String> getRemoteConfigJson() async {
@@ -76,11 +44,6 @@ class CustedService extends CatClient {
   static String getFileUrl(CustedFile file) {
     if (file == null) return null;
     return file.url.startsWith('/') ? '$baseUrl${file.url}' : file.url;
-  }
-
-  Future<String> getSchoolCalendarString() async {
-    final resp = await get('$backendUrl/res/schoolCalendar.txt');
-    return resp.body;
   }
 
   Future<String> updateCachedSchedule(String body) async {
@@ -119,12 +82,6 @@ class CustedService extends CatClient {
     return await get('$backendUrl/grade');
   }
 
-  Future<bool> showRealCustedUI() async {
-    final resp = await get('$backendUrl/showRealUI?build=${BuildData.build}');
-    if (resp.body != null || resp.body != '') return resp.body == '1';
-    return true;
-  }
-
   Future<Response> getCachedExam() async {
     return await get('$backendUrl/exam');
   }
@@ -140,24 +97,10 @@ class CustedService extends CatClient {
     }
   }
 
-  Future<String> getTesterNameList() async {
-    final resp = await get('$backendUrl/res/tester');
-    if (resp.statusCode == 200) {
-      return resp.body;
-    }
-    return '名单加载失败';
-  }
-
   Future<void> setPushScheduleNotification(bool open) async {
     final on = open ? 'on' : 'off';
     final resp = await get('$backendUrl/schedule/push/$on');
     print('set schedule push notification: ${resp.statusCode} ${resp.body}');
-  }
-
-  Future<bool> sendThemeData(String color) async {
-    final id = locator<UserDataStore>().username.fetch();
-    final resp = await get('$backendUrl/theme/$id/$color');
-    return resp.statusCode == 200;
   }
 
   Future<void> login2Backend(String cookie, String id) async {
@@ -183,12 +126,6 @@ class CustedService extends CatClient {
     return await get('$backendUrl/scheduleKBPro');
   }
 
-  Future<bool> useKBPro() async {
-    final resp = await get('$backendUrl/useKBPro?build=${BuildData.build}');
-    if (resp.body != null || resp.body != '') return resp.body == 'true';
-    return false;
-  }
-
   Future<bool> isServiceAvailable() async {
     final custApp = (await Dio().head(baseUrl)).statusCode == 200;
     final backend = (await Dio().head(backendUrl)).statusCode == 200;
@@ -199,6 +136,14 @@ class CustedService extends CatClient {
     final resp = await get('$backendUrl/res/tiku/update.json');
     if (resp.statusCode == 200) {
       return TikuUpdate.fromJson(json.decode(resp.body));
+    }
+    return null;
+  }
+
+  Future<CustedConfig> getConfig() async {
+    final resp = await get('$backendUrl/res/config.json');
+    if (resp.statusCode == 200) {
+      return CustedConfig.fromJson(json.decode(resp.body));
     }
     return null;
   }

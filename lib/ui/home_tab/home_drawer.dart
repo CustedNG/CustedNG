@@ -106,8 +106,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
   }
 
   void _showTesterNameList() {
-    String nameList = locator<AppProvider>().testerNameList;
-    if (nameList.startsWith('close')) {
+    final nameList = locator<AppProvider>().config.testerList;
+    if (nameList.isEmpty) {
       showSnackBar(context, '暂时关闭');
       return;
     }
@@ -117,7 +117,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
         SizedBox(
           height: MediaQuery.of(context).size.height / 4,
           child: ListView(
-            children: [Text(nameList)],
+            children: nameList.map((e) {
+              if (e.url.isEmpty) {
+                return Text(e.name);
+              }
+              return UrlText(e.url, replace: e.name);
+            }).toList(),
           ),
         ),
         [

@@ -3,24 +3,25 @@ import 'dart:io';
 
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
+import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
-import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/update/update_notice_page.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-updateCheck(BuildContext context, {bool force = false}) async {
+void updateCheck(BuildContext context, {bool force = false}) async {
   print('Checking for updates...');
+  final update = locator<AppProvider>().config?.update;
 
   if (Platform.isAndroid) {
-    doAndroidUpdate(context, force: force);
+    doAndroidUpdate(context, update, force: force);
     return;
   }
-  doiOSUpdate(context, force: force);
+  doiOSUpdate(context, update, force: force);
 }
 
 Future<bool> isFileAvailable(String url) async {
@@ -33,35 +34,37 @@ Future<bool> isFileAvailable(String url) async {
   }
 }
 
-Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
-  final update = await locator<CustedService>().getUpdate();
+Future<void> doAndroidUpdate(BuildContext context, CustedConfigUpdate update,
+    {bool force = false}) async {
   if (update == null) return;
   print('Update available: $update');
 
   final settings = locator<SettingStore>();
   final ignore = settings.ignoreUpdate.fetch();
-  final urgent = update.level != null && update.level >= 2;
+  final priority = update.priority.android;
+  final urgent = priority != null && priority >= 2;
+  final build = update.version.android;
 
-  locator<AppProvider>().build = update.build;
+  locator<AppProvider>().build = build;
 
-  if (!urgent && !force && ignore != null && ignore >= update.build) {
+  if (!urgent && !force && ignore != null && ignore >= build) {
     print('$ignore is skipped by user.');
     print('Update Skipped.');
     return;
   }
 
-  if (!force && update.build <= BuildData.build) {
+  if (!force && build <= BuildData.build) {
     print('Update Ignored due to current: ${BuildData.build}, '
-        'update: ${update.build}');
+        'update: ${build}');
     return;
   }
 
-  if (!await isFileAvailable(update.file.url)) {
+  if (!await isFileAvailable(update.url.android)) {
     return;
   }
 
-  if (update.level >= 1 || force) {
-    if (force && update.build < BuildData.build) {
+  if (priority >= 1 || force) {
+    if (force && build < BuildData.build) {
       showSnackBar(context, '当前没有新版本');
       return;
     }
@@ -70,8 +73,8 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
       title: '更新',
       page: UpdateNoticePage(update),
     );
-    if (update.level == 1) {
-      showSnackBarWithAction(context, 'Custed有更新啦，Ver：${update.build}', '更新',
+    if (priority == 1) {
+      showSnackBarWithAction(context, 'Custed有更新啦，Ver：${build}', '更新',
           () => updatePage.go(context));
     } else {
       updatePage.go(context);
@@ -80,27 +83,27 @@ Future<void> doAndroidUpdate(BuildContext context, {bool force = false}) async {
 }
 
 Future<void> doiOSUpdate(
-  BuildContext context, {
+  BuildContext context,
+  CustedConfigUpdate update, {
   bool force = false,
 }) async {
-  final update = await locator<CustedService>().getiOSUpdate();
   if (update == null) return;
-
   print('Update: $update, Current: ${BuildData.build}');
 
-  final isCurrentVersionTooOld = BuildData.build < update.min;
-  locator<AppProvider>().build = update.newest;
-  final shouldShowDialog = force || isCurrentVersionTooOld;
+  final build = update.version.ios;
+
+  locator<AppProvider>().build = build;
+  final shouldShowDialog = force || update.priority.ios >= 1;
 
   if (shouldShowDialog) {
-    if (update.newest < BuildData.build) {
+    if (build < BuildData.build) {
       showSnackBar(context, '当前没有新版本');
       return;
     }
     showRoundDialog(
       context,
-      update.title,
-      Text(update.content),
+      '更新',
+      Text(update.changelog.ios),
       [
         TextButton(
           child: Text('取消'),
@@ -111,11 +114,7 @@ Future<void> doiOSUpdate(
         TextButton(
           child: Text('前往更新'),
           onPressed: () async {
-            for (var url in update.urls) {
-              if (await openUrl(url)) {
-                break;
-              }
-            }
+            await openUrl(update.url.ios);
             Navigator.of(context).pop();
           },
         ),

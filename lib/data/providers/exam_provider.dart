@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/data/models/jw_exam.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/exam_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 
 int sortExamByTime(JwExamRows a, JwExamRows b) {
@@ -20,9 +20,7 @@ class ExamProvider extends BusyProvider {
   Timer _updateTimer;
 
   Future<void> init() async {
-    show = await CustedService().getShouldShowExam();
-
-    if (!show) {
+    if (!locator<AppProvider>().showExam) {
       return;
     }
     loadLocalData();

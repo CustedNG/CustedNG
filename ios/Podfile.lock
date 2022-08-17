@@ -6,7 +6,7 @@ PODS:
   - connectivity (0.0.1):
     - Flutter
     - Reachability
-  - countly_flutter (20.11.4):
+  - countly_flutter (21.11.1):
     - Flutter
   - external_app_launcher2 (0.0.1):
     - Flutter
@@ -22,6 +22,8 @@ PODS:
     - Flutter
   - home_widget (0.0.1):
     - Flutter
+  - image_save (0.0.1):
+    - Flutter
   - install_plugin (0.0.1):
     - Flutter
   - OrderedSet (5.0.0)
@@ -30,8 +32,6 @@ PODS:
   - plain_notification_token (0.0.1):
     - Flutter
   - Reachability (3.2)
-  - save_in_gallery (0.0.1):
-    - Flutter
   - share_extend (0.0.1):
     - Flutter
   - url_launcher_ios (0.0.1):
@@ -51,10 +51,10 @@ DEPENDENCIES:
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - home_widget (from `.symlinks/plugins/home_widget/ios`)
+  - image_save (from `.symlinks/plugins/image_save/ios`)
   - install_plugin (from `.symlinks/plugins/install_plugin/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - plain_notification_token (from `.symlinks/plugins/plain_notification_token/ios`)
-  - save_in_gallery (from `.symlinks/plugins/save_in_gallery/ios`)
   - share_extend (from `.symlinks/plugins/share_extend/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_cookie_manager (from `.symlinks/plugins/webview_cookie_manager/ios`)
@@ -84,14 +84,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_webview_plugin/ios"
   home_widget:
     :path: ".symlinks/plugins/home_widget/ios"
+  image_save:
+    :path: ".symlinks/plugins/image_save/ios"
   install_plugin:
     :path: ".symlinks/plugins/install_plugin/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   plain_notification_token:
     :path: ".symlinks/plugins/plain_notification_token/ios"
-  save_in_gallery:
-    :path: ".symlinks/plugins/save_in_gallery/ios"
   share_extend:
     :path: ".symlinks/plugins/share_extend/ios"
   url_launcher_ios:
@@ -105,18 +105,18 @@ SPEC CHECKSUMS:
   add_2_calendar: e9d68636aed37fb18e12f5a3d74c2e0589487af0
   alice: 0f49577498c6d1abee1d488e29d0a79a3e2860a1
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
-  countly_flutter: 38419412e193a1faa5babeb5d28a63fda260687d
+  countly_flutter: a60e75a53f951affb253ae1b75e2d64a876141c0
   external_app_launcher2: a34077d93bc72ea1d502ce4930c5d9085a0f75e5
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   home_widget: 2829415127ee92e876f816cbbe44c0b6601b8a37
+  image_save: 66ab41fa2c60bc9569e55563ea287cced7b79fd1
   install_plugin: a13e7ddd2bab0c701b48cd359c26d0394125b6fb
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   plain_notification_token: b36467dc91939a7b6754267c701bbaca14996ee1
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  save_in_gallery: 75c1d76566ed1af3a266f25b38c6c19a1d019a66
   share_extend: b6748dc53695587891126a89533b862b92548c7b
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   webview_cookie_manager: eaf920722b493bd0f7611b5484771ca53fed03f7
@@ -124,4 +124,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: e78b533fd58876e6615751f61a49d346b8e35f08
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

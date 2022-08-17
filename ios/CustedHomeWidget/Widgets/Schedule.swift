@@ -130,7 +130,7 @@ struct ScheduleLoader {
             completion(.success(Schedule(teacher: "成功登录、刷新课表", position: "请打开App", course: "无数据", time: "并等待下一次刷新", updateTime: date2String(Date(), dateFormat: "HH:mm"))))
             return
         }
-        let scheduleURL = URL(string: "https://v2.custed.lolli.tech/schedule/next/" + ecardId!)!
+        let scheduleURL = URL(string: "https://v3.custed.lolli.tech/schedule/next/" + ecardId!)!
         let task = URLSession.shared.dataTask(with: scheduleURL) { (data, response, error) in
             guard error == nil else {
                 completion(.failure(error!))

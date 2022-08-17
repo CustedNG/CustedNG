@@ -230,8 +230,6 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             shrinkWrap: true,
             onColorChange: (Color color) async {
               setting.appPrimaryColor.put(color.value);
-              final suc = await custed.sendThemeData(color.toString());
-              if (suc) print('send theme data successfully: $color');
             },
             selectedColor: selected),
         [
