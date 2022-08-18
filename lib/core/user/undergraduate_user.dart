@@ -252,6 +252,7 @@ class UndergraduateUser with CustUser implements User {
       '20211': DateTime(2021, 3, 1),
       '20212': DateTime(2021, 8, 30),
       '20221': DateTime(2022, 2, 28),
+      '20222': DateTime(2022, 8, 22),
     };
 
     final year = DateTime.now().year.toString();

@@ -14,6 +14,5 @@ struct Widgets: WidgetBundle {
     @WidgetBundleBuilder
     var body: some Widget {
         ScheduleWidget()
-        OneWordWidget()
     }
 }
