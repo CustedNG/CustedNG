@@ -35,7 +35,10 @@ class _HomeScheduleState extends State<HomeSchedule> {
           trailing: true,
         ),
         onTap: () {
-          if (Provider.of<AppProvider>(context, listen: false).config.notShowRealUi.contains(BuildData.build)) {
+          if (Provider.of<AppProvider>(context, listen: false)
+              .config
+              .notShowRealUi
+              .contains(BuildData.build)) {
             WebviewLogin.begin(context, back2PrePage: true);
           } else {
             AppRoute(page: LoginPageLegacy()).go(context);

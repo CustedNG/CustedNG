@@ -23,7 +23,7 @@ class BannerProvider extends ProviderBase {
   }
 
   Future<void> update() async {
-    final banner = await locator<AppProvider>().config.banner;
+    final banner = await locator<AppProvider>().config?.banner;
     if (banner == null) return;
 
     final bannerStore = await locator.getAsync<BannerStore>();

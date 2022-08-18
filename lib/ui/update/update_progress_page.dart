@@ -42,9 +42,7 @@ class _UpdateProgressPageState extends State<UpdateProgressPage>
             child: CircularProgressIndicator(),
           );
 
-    final message = failed
-        ? _buildFailedButton(context)
-        : SizedBox();
+    final message = failed ? _buildFailedButton(context) : SizedBox();
 
     Widget content = Container(
       alignment: Alignment.center,

@@ -19,7 +19,6 @@ import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/mysso_service.dart';
-import 'package:custed2/service/remote_config_service.dart';
 import 'package:custed2/service/wrdvpn_based_service.dart';
 import 'package:http/http.dart';
 
@@ -63,21 +62,19 @@ class JwService extends WrdvpnBasedService {
   Future<JwSchedule> getSchedule([String userUUID]) async {
     if (!locator<AppProvider>().showRealUI) {
       print('using fake schedule');
-      return JwSchedule.fromJson(JwResponse.fromJson(
-              json.decode((await custed.getCacheSchedule()).body))
-          .data);
+      return await custed.getCacheSchedule();
     }
-    await locator<RemoteConfigService>().reloadData();
 
     // {"KBLX":"2","CXLX":"0","XNXQ":"20202","CXID":"b0a3fc3c-8263-4be8-bb53-58fe200f616e","CXZC":"3","JXBLX":"","IsOnLine":"-1"}
-    final resp = await (userUUID == null
-        ? getSelfSchedule()
-        : getScheduleByUUID(userUUID));
+    if (userUUID == null) {
+      return getSelfSchedule();
+    }
+    final resp = await getScheduleByUUID(userUUID);
     final parsedResponse = JwResponse.fromJson(json.decode(resp.body));
     return JwSchedule.fromJson(parsedResponse.data);
   }
 
-  Future<Response> getSelfSchedule() async {
+  Future<JwSchedule> getSelfSchedule() async {
     final requestUrl =
         '$baseUrl/api/ClientStudent/Home/StudentHomeApi/QueryStudentScheduleData';
 
@@ -104,28 +101,21 @@ class JwService extends WrdvpnBasedService {
     if (resp.statusCode == 200 && resp.body.length > 50) {
       final result4SendSchedule = await custed.updateCachedSchedule(resp.body);
       print('send cache schedule to backend: $result4SendSchedule');
+      return JwSchedule.fromJson(json.decode(resp.body));
     } else {
       final cache = await custed.getCacheSchedule();
-      print('use cached schedule from backend: ${cache.statusCode}');
-      if (cache.statusCode == 200) return cache;
+      print('use cached schedule from backend');
+      return cache;
     }
-
-    return resp;
   }
 
   Future<List<KBProSchedule>> getSelfScheduleFromKBPro() async {
     if (!locator<AppProvider>().showRealUI) {
       print('using fake schedule kbpro');
-      final resp = await custed.getCacheScheduleKBPro();
-      final data = json.decode(utf8.decode(resp.bodyBytes));
-      final List<KBProSchedule> list = [];
-      for (var item in data) {
-        list.add(KBProSchedule.fromJson(item));
-      }
-      return list;
+      return await custed.getCacheScheduleKBPro();
     }
 
-    Response resp = await xRequest(
+    final resp = await xRequest(
       'GET',
       'https://kbpro.cust.edu.cn/Schedule/Buser',
       headers: {'content-type': 'application/json;charset=utf-8'},
@@ -138,12 +128,11 @@ class JwService extends WrdvpnBasedService {
     final result = encrypter.decrypt(Encrypted.fromBase64(resp.body), iv: iv);
 
     if (resp.statusCode == 200 && resp.body.length > 50) {
-      final result4SendChedule = await custed.updateCachedScheduleKBPro(result);
-      print('send cache schedule to backend: $result4SendChedule');
+      await custed.updateCachedScheduleKBPro(result);
     } else {
       final cache = await custed.getCacheScheduleKBPro();
-      print('use cached schedule from backend: ${cache.statusCode}');
-      if (cache.statusCode == 200) resp = cache;
+      print('use cached schedule from backend');
+      if (cache != null) return cache;
     }
 
     final data = json.decode(result);
@@ -195,8 +184,6 @@ class JwService extends WrdvpnBasedService {
 
   Future<List<CustomScheduleProfile>> getProfileByStudentNumber(
       String studentNumber) async {
-    await locator<RemoteConfigService>().reloadData();
-
     final params = {"TakeNum": 30, "SearchText": studentNumber};
     final resp = await xRequest(
       'POST',
@@ -246,9 +233,7 @@ class JwService extends WrdvpnBasedService {
   Future<JwGradeData> getGrade() async {
     if (!locator<AppProvider>().showRealUI) {
       print('using fake grade.');
-      return JwGradeData.fromJson(
-          JwResponse.fromJson(json.decode((await custed.getCachedGrade()).body))
-              .data);
+      return (await custed.getCachedGrade());
     }
 
     final resp = await xRequest(
@@ -351,7 +336,7 @@ class JwService extends WrdvpnBasedService {
   Future<JwExam> getExam() async {
     if (!locator<AppProvider>().showRealUI) {
       print('using fake exam');
-      return JwExam.fromJson(json.decode((await custed.getCachedExam()).body));
+      return await custed.getCachedExam();
     }
 
     final resp = await xRequest(
@@ -376,7 +361,7 @@ class JwService extends WrdvpnBasedService {
       await custed.updateCahedExam(resp.body);
       return JwExam.fromJson(json.decode(resp.body));
     } else {
-      return JwExam.fromJson(json.decode((await custed.getCachedExam()).body));
+      return await custed.getCachedExam();
     }
   }
 

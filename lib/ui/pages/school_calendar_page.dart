@@ -83,8 +83,7 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
     if (isDialogOpen) return;
     isDialogOpen = true;
 
-    showRoundDialog(
-        context, cal.term, Text(cal.strSummary), [
+    showRoundDialog(context, cal.term, Text(cal.strSummary), [
       TextButton(
         child: Text('确定'),
         onPressed: () {

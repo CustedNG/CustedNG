@@ -119,7 +119,7 @@ private class NextLessonUpdate(
     private fun composeUrlString(eCardId: String?): String? {
         return eCardId
             ?.takeUnless { it.isBlank() }
-            ?.let { "https://v2.custed.lolli.tech/schedule/next/$it" }
+            ?.let { "https://v3.custed.lolli.tech/schedule/next/$it" }
     }
 
     fun updateNextLesson() {

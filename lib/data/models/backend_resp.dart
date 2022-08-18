@@ -16,11 +16,13 @@ class BackendResp {
     this.message,
     this.data,
   });
+
   BackendResp.fromJson(Map<String, dynamic> json) {
     code = json['code']?.toInt();
     message = json['message']?.toString();
     data = json['data'];
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['code'] = code;
@@ -30,5 +32,6 @@ class BackendResp {
     }
     return data;
   }
+
   bool get failed => code != -1;
 }

@@ -229,10 +229,18 @@ class CustedConfigUpdate {
     this.changelog,
   });
   CustedConfigUpdate.fromJson(Map<String, dynamic> json) {
-    version = (json['version'] != null) ? CustedConfigUpdateVersion.fromJson(json['version']) : null;
-    priority = (json['priority'] != null) ? CustedConfigUpdatePriority.fromJson(json['priority']) : null;
-    url = (json['url'] != null) ? CustedConfigUpdateUrl.fromJson(json['url']) : null;
-    changelog = (json['changelog'] != null) ? CustedConfigUpdateChangelog.fromJson(json['changelog']) : null;
+    version = (json['version'] != null)
+        ? CustedConfigUpdateVersion.fromJson(json['version'])
+        : null;
+    priority = (json['priority'] != null)
+        ? CustedConfigUpdatePriority.fromJson(json['priority'])
+        : null;
+    url = (json['url'] != null)
+        ? CustedConfigUpdateUrl.fromJson(json['url'])
+        : null;
+    changelog = (json['changelog'] != null)
+        ? CustedConfigUpdateChangelog.fromJson(json['changelog'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -358,56 +366,60 @@ class CustedConfig {
     this.schoolCalendar,
   });
   CustedConfig.fromJson(Map<String, dynamic> json) {
-  if (json['notify'] != null) {
-  final v = json['notify'];
-  final arr0 = <CustedConfigNotify>[];
-  v.forEach((v) {
-  arr0.add(CustedConfigNotify.fromJson(v));
-  });
-    notify = arr0;
+    if (json['notify'] != null) {
+      final v = json['notify'];
+      final arr0 = <CustedConfigNotify>[];
+      v.forEach((v) {
+        arr0.add(CustedConfigNotify.fromJson(v));
+      });
+      notify = arr0;
     }
-  if (json['jw_url'] != null) {
-  final v = json['jw_url'];
-  final arr0 = <String>[];
-  v.forEach((v) {
-  arr0.add(v.toString());
-  });
-    jwUrl = arr0;
+    if (json['jw_url'] != null) {
+      final v = json['jw_url'];
+      final arr0 = <String>[];
+      v.forEach((v) {
+        arr0.add(v.toString());
+      });
+      jwUrl = arr0;
     }
-    update = (json['update'] != null) ? CustedConfigUpdate.fromJson(json['update']) : null;
-  if (json['not_show_real_ui'] != null) {
-  final v = json['not_show_real_ui'];
-  final arr0 = <int>[];
-  v.forEach((v) {
-  arr0.add(v.toInt());
-  });
-    notShowRealUi = arr0;
+    update = (json['update'] != null)
+        ? CustedConfigUpdate.fromJson(json['update'])
+        : null;
+    if (json['not_show_real_ui'] != null) {
+      final v = json['not_show_real_ui'];
+      final arr0 = <int>[];
+      v.forEach((v) {
+        arr0.add(v.toInt());
+      });
+      notShowRealUi = arr0;
     }
-  if (json['use_kbpro'] != null) {
-  final v = json['use_kbpro'];
-  final arr0 = <String>[];
-  v.forEach((v) {
-  arr0.add(v.toString());
-  });
-    useKbpro = arr0;
+    if (json['use_kbpro'] != null) {
+      final v = json['use_kbpro'];
+      final arr0 = <String>[];
+      v.forEach((v) {
+        arr0.add(v.toString());
+      });
+      useKbpro = arr0;
     }
-  if (json['tester_list'] != null) {
-  final v = json['tester_list'];
-  final arr0 = <CustedConfigTesterList>[];
-  v.forEach((v) {
-  arr0.add(CustedConfigTesterList.fromJson(v));
-  });
-    testerList = arr0;
+    if (json['tester_list'] != null) {
+      final v = json['tester_list'];
+      final arr0 = <CustedConfigTesterList>[];
+      v.forEach((v) {
+        arr0.add(CustedConfigTesterList.fromJson(v));
+      });
+      testerList = arr0;
     }
-    banner = (json['banner'] != null) ? CustedConfigBanner.fromJson(json['banner']) : null;
+    banner = (json['banner'] != null)
+        ? CustedConfigBanner.fromJson(json['banner'])
+        : null;
     haveExam = json['have_exam'];
-  if (json['school_calendar'] != null) {
-  final v = json['school_calendar'];
-  final arr0 = <CustedConfigSchoolCalendar>[];
-  v.forEach((v) {
-  arr0.add(CustedConfigSchoolCalendar.fromJson(v));
-  });
-    schoolCalendar = arr0;
+    if (json['school_calendar'] != null) {
+      final v = json['school_calendar'];
+      final arr0 = <CustedConfigSchoolCalendar>[];
+      v.forEach((v) {
+        arr0.add(CustedConfigSchoolCalendar.fromJson(v));
+      });
+      schoolCalendar = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -415,17 +427,17 @@ class CustedConfig {
     if (notify != null) {
       final v = notify;
       final arr0 = [];
-  v.forEach((v) {
-  arr0.add(v.toJson());
-  });
+      v.forEach((v) {
+        arr0.add(v.toJson());
+      });
       data['notify'] = arr0;
     }
     if (jwUrl != null) {
       final v = jwUrl;
       final arr0 = [];
-  v.forEach((v) {
-  arr0.add(v);
-  });
+      v.forEach((v) {
+        arr0.add(v);
+      });
       data['jw_url'] = arr0;
     }
     if (update != null) {
@@ -434,25 +446,25 @@ class CustedConfig {
     if (notShowRealUi != null) {
       final v = notShowRealUi;
       final arr0 = [];
-  v.forEach((v) {
-  arr0.add(v);
-  });
+      v.forEach((v) {
+        arr0.add(v);
+      });
       data['not_show_real_ui'] = arr0;
     }
     if (useKbpro != null) {
       final v = useKbpro;
       final arr0 = [];
-  v.forEach((v) {
-  arr0.add(v);
-  });
+      v.forEach((v) {
+        arr0.add(v);
+      });
       data['use_kbpro'] = arr0;
     }
     if (testerList != null) {
       final v = testerList;
       final arr0 = [];
-  v.forEach((v) {
-  arr0.add(v.toJson());
-  });
+      v.forEach((v) {
+        arr0.add(v.toJson());
+      });
       data['tester_list'] = arr0;
     }
     if (banner != null) {
@@ -462,9 +474,9 @@ class CustedConfig {
     if (schoolCalendar != null) {
       final v = schoolCalendar;
       final arr0 = [];
-  v.forEach((v) {
-  arr0.add(v.toJson());
-  });
+      v.forEach((v) {
+        arr0.add(v.toJson());
+      });
       data['school_calendar'] = arr0;
     }
     return data;

@@ -119,8 +119,11 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
         return;
       }
 
-      await initPushService(userName);
-      await requestUpdateHomeWidget(userName, setting.pushNotification.fetch());
+      if (Platform.isIOS && Platform.isAndroid) {
+        await initPushService(userName);
+        await requestUpdateHomeWidget(
+            userName, setting.pushNotification.fetch());
+      }
     }
   }
 }

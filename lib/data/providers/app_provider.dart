@@ -43,6 +43,7 @@ class AppProvider extends ProviderBase {
   }
 
   bool get showRealUI {
+    return false;
     if (config == null) return true;
     final fakeBuilds = config.notShowRealUi;
     return !fakeBuilds.contains(build);
@@ -58,7 +59,10 @@ class AppProvider extends ProviderBase {
     if (vers.isNotEmpty) {
       return ns.firstWhere((e) => e.version == vers.first).content;
     }
-    return '暂时无法获取通知';
+    if (ns.isNotEmpty) {
+      return ns.first.content;
+    }
+    return '暂时无法获取通知。发布于：现在';
   }
 
   CustedConfigSchoolCalendar get cal {
@@ -72,6 +76,8 @@ class AppProvider extends ProviderBase {
     }
     return null;
   }
+
+  CustedConfigBanner get banner => config?.banner;
 
   void setContext(c) {
     ctx = c;
