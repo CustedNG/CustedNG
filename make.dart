@@ -44,18 +44,6 @@ Future<int> getGitModificationCount() async {
   return (result.stdout as String)
       .split('\n')
       .where((line) => line.isNotEmpty)
-      /// 在之前的build = 702时，由于使用了flutter3进行编译，导致了：
-      /// 1、hmos打开白屏
-      /// 2、PageView，initialPage属性失效
-      /// 等问题。
-      /// 但由于：
-      /// 1、702版本已经发布
-      /// 2、app无法降级
-      /// 3、数量+2不够优雅
-      /// 4、要在git log里留下记录
-      /// 等原因。
-      /// 打算git commit并force push，使commit总数达到701
-      /// 删除掉该部分注释，再次push，使得commit总数达到702，来解决这个问题
       .length;
 }
 

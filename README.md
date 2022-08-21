@@ -102,7 +102,7 @@
 
 
 ## 已知问题
-
+- [ ] 需使用Flutter2编译Android版本（[追溯](https://github.com/CustedNG/CustedNG/commit/56ca1e31bec3eeb013fe576c9d4fb67f0b500694)）
 - [ ] 当前仅支持本科生使用
 - [x] <del>由于教务尚未开放相关功能 无法查询成绩</del>
 
