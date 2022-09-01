@@ -15,8 +15,6 @@ class SchoolCalendarPage extends StatefulWidget {
 }
 
 class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
-  bool isDialogOpen = false;
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -80,9 +78,6 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
   }
 
   Future<void> _showViewCalendarDialog(CustedConfigSchoolCalendar cal) async {
-    if (isDialogOpen) return;
-    isDialogOpen = true;
-
     showRoundDialog(context, cal.term, Text(cal.strSummary), [
       TextButton(
         child: Text('确定'),
@@ -90,7 +85,7 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
           Navigator.of(context).pop();
         },
       ),
-    ]).then((value) => isDialogOpen = false);
+    ]);
   }
 
   void _showMenu(BuildContext context) {

@@ -7,7 +7,6 @@ import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/res/build_data.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/pages/login_page_legacy.dart';
 import 'package:custed2/ui/schedule_tab/lesson_preview.dart';
@@ -35,14 +34,7 @@ class _HomeScheduleState extends State<HomeSchedule> {
           trailing: true,
         ),
         onTap: () {
-          if (Provider.of<AppProvider>(context, listen: false)
-              .config
-              .notShowRealUi
-              .contains(BuildData.build)) {
-            WebviewLogin.begin(context, back2PrePage: true);
-          } else {
-            AppRoute(page: LoginPageLegacy()).go(context);
-          }
+          Scaffold.of(context).openDrawer();
         },
       );
     }

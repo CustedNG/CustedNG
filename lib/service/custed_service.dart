@@ -98,9 +98,9 @@ class CustedService extends CatClient {
     print('set push schedule notification success');
   }
 
-  Future<void> login2Backend(String cookie, String id) async {
-    final resp =
-        await post('$backendUrl/verify', body: {'cookie': cookie, 'id': id});
+  Future<void> login2Backend(String cookie, String id, String url) async {
+    final resp = await post('$backendUrl/verify',
+        body: {'cookie': cookie, 'id': id, 'url': url});
     final custedResp = BackendResp.fromJson(json.decode(resp.body));
     if (custedResp.failed) {
       return print('login to backend failed: ${custedResp.message}');
@@ -145,9 +145,11 @@ class CustedService extends CatClient {
   }
 
   Future<CustedConfig> getConfig() async {
-    final resp = await get('$backendUrl/res/config.json');
+    final resp = await get('$backendUrl/config');
     if (resp.statusCode == 200) {
-      return CustedConfig.fromJson(json.decode(utf8.decode(resp.bodyBytes)));
+      final custedResp = BackendResp.fromJson(json.decode(resp.body));
+      if (custedResp.failed) return null;
+      return CustedConfig.fromJson(custedResp.data);
     }
     return null;
   }

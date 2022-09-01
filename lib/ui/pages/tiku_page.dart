@@ -9,7 +9,6 @@ import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 
 class TikuPage extends StatelessWidget {
   const TikuPage({Key key}) : super(key: key);
@@ -44,10 +43,7 @@ class TikuPage extends StatelessWidget {
                   showSnackBar(context, '已复制题库App下载链接到剪贴板，请粘贴到浏览器打开');
                   await openUrl(url);
                 },
-                child: Shimmer.fromColors(
-                    child: Text('立即下载App'),
-                    baseColor: Colors.blue,
-                    highlightColor: Colors.redAccent)),
+                child: Text('立即下载App')),
             Divider(),
             TextButton(
               onPressed: () {

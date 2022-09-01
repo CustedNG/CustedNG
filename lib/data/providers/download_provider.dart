@@ -6,7 +6,6 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
 import 'package:custed2/core/platform/os/download_dir.dart';
 import 'package:custed2/core/provider/provider_base.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -45,21 +44,16 @@ class DownloadProvider extends ProviderBase {
     final tmepOutputDir = await behavior.getTempDir();
     final tempOutputFile = path.join(tmepOutputDir, tempName);
 
-    final snake = locator<SnakebarProvider>();
-    await snake.progress((controller) async {
-      controller.update(0, 1);
-      final response = await dio.download(
-        _currentTask.url,
-        tempOutputFile,
-        onReceiveProgress: controller.update,
-      );
-      final filenameHeader = response.headers.value('content-disposition');
-      var filename = utf8.decode(percent.decode(
-          RegExp(r'filename="(.+?)"').firstMatch(filenameHeader)?.group(1)));
+    final response = await dio.download(
+      _currentTask.url,
+      tempOutputFile,
+    );
+    final filenameHeader = response.headers.value('content-disposition');
+    var filename = utf8.decode(percent.decode(
+        RegExp(r'filename="(.+?)"').firstMatch(filenameHeader)?.group(1)));
 
-      filename ??= tempName;
-      behavior.saveFile(tempOutputFile, filename);
-    });
+    filename ??= tempName;
+    behavior.saveFile(tempOutputFile, filename);
 
     _currentTask = null;
   }
@@ -83,10 +77,6 @@ class _GeneralBehavior implements _DownloadBehavior {
     final outputDir = await getDownloadDir.invoke();
     final outputFile = path.join(outputDir, filename);
     await File(tempOutputFile).rename(outputFile);
-
-    final snake = locator<SnakebarProvider>();
-    snake.info('"$filename" 下载完成');
-    snake.info('已保存至系统 Download 文件夹下');
   }
 }
 

@@ -23,7 +23,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:plain_notification_token/plain_notification_token.dart';
 import 'package:xiao_mi_push_plugin/xiao_mi_push_plugin.dart';
-// import 'package:jpush_flutter/jpush_flutter.dart';
 
 bool _shouldEnableDarkMode(BuildContext context, int mode) {
   // print('ddf: ${MediaQuery.platformBrightnessOf(context)}');

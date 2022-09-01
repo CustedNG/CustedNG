@@ -122,10 +122,10 @@ class _WebviewLoginState extends State<WebviewLogin> {
       await locator<JwService>().login();
 
       /// 登录到后端
-      final cookie = await cookieJar.loadForRequest(syncDomains.last.uri);
+      final cookie = await cookieJar.loadForRequest(url.uri);
       final cookieStr = buildCookie(cookie);
       if (cookieStr.isNotEmpty) {
-        await CustedService().login2Backend(cookieStr, username);
+        await CustedService().login2Backend(cookieStr, username, url);
       }
 
       /// 登录后的操作：获取profile、课表、成绩

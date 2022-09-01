@@ -209,7 +209,9 @@ void setSystemBottomNavigationBarColor(BuildContext context) {
   }
 }
 
-/// 获取学期str，eg: '20221' -> 2021-2022第二学期
+/// 获取学期str
+///
+/// eg: '20221' -> 2022的第一学期 or 2021-2022第二学期
 String get getTerm {
   final now = DateTime.now();
   final year = now.year.toString();

@@ -1,4 +1,5 @@
 import 'package:custed2/core/provider/provider_base.dart';
+import 'package:custed2/core/update.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/res/build_data.dart';
@@ -16,9 +17,12 @@ class AppProvider extends ProviderBase {
 
     _config = await service.getConfig();
     notifyListeners();
+
+    updateCheck(ctx);
   }
 
   bool get useKBPro {
+    if (config == null) return false;
     final cs = config.useKbpro;
     for (final c in cs) {
       if (c.contains('-')) {
@@ -43,7 +47,6 @@ class AppProvider extends ProviderBase {
   }
 
   bool get showRealUI {
-    return false;
     if (config == null) return true;
     final fakeBuilds = config.notShowRealUi;
     return !fakeBuilds.contains(build);

@@ -1,13 +1,12 @@
 import 'package:connectivity/connectivity.dart';
-import 'package:custed2/core/route.dart';
 import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/ui/update/update_progress_page.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
+import 'package:r_upgrade/r_upgrade.dart';
 
 class UpdateNoticePage extends StatelessWidget {
   UpdateNoticePage(this.update);
@@ -48,12 +47,11 @@ class UpdateNoticePage extends StatelessWidget {
     );
   }
 
-  void doUpdate(BuildContext context) {
+  Future<void> doUpdate(BuildContext context) async {
     Navigator.pop(context);
-    AppRoute(
-      title: '更新中',
-      page: UpdateProgressPage(update),
-    ).go(context);
+    await RUpgrade.upgrade(update.url.android,
+        fileName: 'CustedNG_${update.version.android}.apk',
+        isAutoRequestInstall: true);
   }
 
   Widget _buildActions(BuildContext context) {

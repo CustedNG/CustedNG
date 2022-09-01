@@ -70,7 +70,7 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
     userData.password.put(passwordController.text);
 
     await user.login(force: true);
-    await CustedService().login2Backend("", "FakeUser");
+    await CustedService().login2Backend("", "FakeUser", "");
     Navigator.of(context).pop(ctx);
   }
 

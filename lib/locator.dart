@@ -9,7 +9,6 @@ import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/data/store/banner_store.dart';
@@ -37,7 +36,6 @@ void setupLocatorForServices() {
 }
 
 void setupLocatorForProviders() {
-  locator.registerSingleton(SnakebarProvider());
   locator.registerSingleton(ScheduleProvider());
   locator.registerSingleton(ScheduleTitleProvider());
   locator.registerSingleton(GradeProvider());

@@ -7,7 +7,7 @@ import 'package:convert/convert.dart';
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/service/cat_login_result.dart';
 import 'package:custed2/data/models/custom_schedule_profile.dart';
-import 'package:custed2/data/models/jw_empty_room/jw_empty_room.dart';
+import 'package:custed2/data/models/jw_empty_room.dart';
 import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_response.dart';
@@ -101,7 +101,8 @@ class JwService extends WrdvpnBasedService {
     if (resp.statusCode == 200 && resp.body.length > 50) {
       final result4SendSchedule = await custed.updateCachedSchedule(resp.body);
       print('send cache schedule to backend: $result4SendSchedule');
-      return JwSchedule.fromJson(json.decode(resp.body));
+      final jwResp = JwResponse.fromJson(json.decode(resp.body));
+      return JwSchedule.fromJson(jwResp.data);
     } else {
       final cache = await custed.getCacheSchedule();
       print('use cached schedule from backend');

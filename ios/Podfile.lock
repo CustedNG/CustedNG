@@ -24,12 +24,12 @@ PODS:
     - Flutter
   - image_save (0.0.1):
     - Flutter
-  - install_plugin (0.0.1):
-    - Flutter
   - OrderedSet (5.0.0)
   - path_provider_ios (0.0.1):
     - Flutter
   - plain_notification_token (0.0.1):
+    - Flutter
+  - r_upgrade (0.0.1):
     - Flutter
   - Reachability (3.2)
   - share_extend (0.0.1):
@@ -52,9 +52,9 @@ DEPENDENCIES:
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
   - home_widget (from `.symlinks/plugins/home_widget/ios`)
   - image_save (from `.symlinks/plugins/image_save/ios`)
-  - install_plugin (from `.symlinks/plugins/install_plugin/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - plain_notification_token (from `.symlinks/plugins/plain_notification_token/ios`)
+  - r_upgrade (from `.symlinks/plugins/r_upgrade/ios`)
   - share_extend (from `.symlinks/plugins/share_extend/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_cookie_manager (from `.symlinks/plugins/webview_cookie_manager/ios`)
@@ -86,12 +86,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/home_widget/ios"
   image_save:
     :path: ".symlinks/plugins/image_save/ios"
-  install_plugin:
-    :path: ".symlinks/plugins/install_plugin/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   plain_notification_token:
     :path: ".symlinks/plugins/plain_notification_token/ios"
+  r_upgrade:
+    :path: ".symlinks/plugins/r_upgrade/ios"
   share_extend:
     :path: ".symlinks/plugins/share_extend/ios"
   url_launcher_ios:
@@ -112,10 +112,10 @@ SPEC CHECKSUMS:
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
   home_widget: 2829415127ee92e876f816cbbe44c0b6601b8a37
   image_save: 66ab41fa2c60bc9569e55563ea287cced7b79fd1
-  install_plugin: a13e7ddd2bab0c701b48cd359c26d0394125b6fb
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   plain_notification_token: b36467dc91939a7b6754267c701bbaca14996ee1
+  r_upgrade: 44d715c61914cce3d01ea225abffe894fd51c114
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   share_extend: b6748dc53695587891126a89533b862b92548c7b
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
