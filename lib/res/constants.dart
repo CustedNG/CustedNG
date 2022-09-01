@@ -16,6 +16,6 @@ const tikuUrl = 'https://tiku-ng.lacus.site';
 const custedServiceAgreementUrl =
     'https://blog.tusi.site/serviceagreement.html';
 const joinQQUserGroup = 'https://jq.qq.com/?_wv=1027&k=TLrWZjtp';
-const backendUrl = 'https://v2.custed.lolli.tech';
+const backendUrl = 'https://v3.custed.lolli.tech';
 const jwLoginPageEvalScript =
     "document.body.innerHTML='<p>正在登录，请等待自动返回，如果等待时间过长(10s)，请返回重试。</p>';";

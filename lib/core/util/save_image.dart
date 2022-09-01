@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:custed2/core/platform/os/app_doc_dir.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_save/image_save.dart';
 import 'package:path/path.dart' show join;

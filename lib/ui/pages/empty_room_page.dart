@@ -1,5 +1,5 @@
-import 'package:custed2/core/utils.dart';
-import 'package:custed2/data/models/jw_empty_room/jw_empty_room.dart';
+import 'package:custed2/core/util/utils.dart';
+import 'package:custed2/data/models/jw_empty_room.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_field.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
@@ -48,11 +48,11 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
 
   Widget _buildEmptyRoomList(JwEmptyRoom data) {
     List<Widget> children = [];
-    if (data.data.pagingResult.total == 0) {
+    if (data.data.PagingResult.Total == 0) {
       return Text('该建筑在此时间段，无空教室。');
     }
-    for (var item in data.data.pagingResult.rows) {
-      children.add(Center(child: Text(item.jsmc)));
+    for (var item in data.data.PagingResult.Rows) {
+      children.add(Center(child: Text(item.JSMC)));
     }
     return ListView(
       shrinkWrap: true,

@@ -1,9 +1,9 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/constants.dart';
+import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/open.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
@@ -106,16 +106,24 @@ class _HomeDrawerState extends State<HomeDrawer> {
   }
 
   void _showTesterNameList() {
-    String nameList = locator<AppProvider>().testerNameList;
-    if (nameList.startsWith('close')) {
+    final nameList = locator<AppProvider>().config.testerList;
+    if (nameList.isEmpty) {
       showSnackBar(context, '暂时关闭');
       return;
     }
     showRoundDialog(
         context,
         '感谢以下贡献者',
-        ListView(
-          children: [Text(nameList)],
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 4,
+          child: ListView(
+            children: nameList.map((e) {
+              if (e.url.isEmpty) {
+                return Text(e.name);
+              }
+              return UrlText(e.url, replace: e.name);
+            }).toList(),
+          ),
         ),
         [
           TextButton(

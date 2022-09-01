@@ -1,18 +1,17 @@
 import 'package:connectivity/connectivity.dart';
-import 'package:custed2/core/route.dart';
-import 'package:custed2/data/models/custed_update.dart';
+import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/ui/update/update_progress_page.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:flutter/material.dart';
+import 'package:r_upgrade/r_upgrade.dart';
 
 class UpdateNoticePage extends StatelessWidget {
   UpdateNoticePage(this.update);
 
-  final CustedUpdate update;
+  final CustedConfigUpdate update;
 
   @override
   Widget build(BuildContext context) {
@@ -36,24 +35,23 @@ class UpdateNoticePage extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        Text('Ver：${update.build}', style: textStyle),
+        Text('Ver：${update.version.android}', style: textStyle),
         SizedBox(height: 37),
         Padding(
           padding: EdgeInsets.all(17),
-          child: Text(update.changelog, textAlign: TextAlign.center),
+          child: Text(update.changelog.android, textAlign: TextAlign.center),
         ),
         SizedBox(height: 37),
-        Text('安装包大小：${(update.file.size / 1024).toStringAsFixed(2)} MB')
+        // Text('安装包大小：${(update.file.size / 1024).toStringAsFixed(2)} MB')
       ],
     );
   }
 
-  void doUpdate(BuildContext context) {
+  Future<void> doUpdate(BuildContext context) async {
     Navigator.pop(context);
-    AppRoute(
-      title: '更新中',
-      page: UpdateProgressPage(update),
-    ).go(context);
+    await RUpgrade.upgrade(update.url.android,
+        fileName: 'CustedNG_${update.version.android}.apk',
+        isAutoRequestInstall: true);
   }
 
   Widget _buildActions(BuildContext context) {
@@ -93,7 +91,7 @@ class UpdateNoticePage extends StatelessWidget {
           child: Text('不再提示该版本'),
           onPressed: () {
             final settings = locator<SettingStore>();
-            settings.ignoreUpdate.put(update.build);
+            settings.ignoreUpdate.put(update.version.android);
             Navigator.pop(context);
           },
         )

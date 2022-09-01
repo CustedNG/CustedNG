@@ -1,7 +1,7 @@
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/core/extension/iterablex.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
@@ -34,11 +34,7 @@ class _HomeScheduleState extends State<HomeSchedule> {
           trailing: true,
         ),
         onTap: () {
-          if (Provider.of<AppProvider>(context, listen: false).showRealUI) {
-            WebviewLogin.begin(context, back2PrePage: true);
-          } else {
-            AppRoute(page: LoginPageLegacy()).go(context);
-          }
+          Scaffold.of(context).openDrawer();
         },
       );
     }

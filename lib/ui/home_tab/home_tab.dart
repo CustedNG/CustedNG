@@ -1,7 +1,6 @@
 import 'package:custed2/config/routes.dart';
-import 'package:custed2/constants.dart';
-import 'package:custed2/core/open.dart';
 import 'package:custed2/data/providers/user_provider.dart';
+import 'package:custed2/locator.dart';
 import 'package:custed2/ui/home_tab/home_banner.dart';
 import 'package:custed2/ui/home_tab/home_drawer.dart';
 import 'package:custed2/ui/home_tab/home_entries.dart';
@@ -57,6 +56,10 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
       SizedBox(height: 7)
     ];
 
+    if (!locator<UserProvider>().loggedIn) {
+      widgets.removeAt(3);
+    }
+
     Widget widget = AnimationLimiter(
       child: ListView.builder(
         itemCount: widgets.length,
@@ -84,15 +87,11 @@ class _HomeTabState extends State<HomeTab> with AutomaticKeepAliveClientMixin {
     return PopupMenuButton<String>(
         itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
               SelectView(Icons.calendar_view_day, '查看校历', 'A', context),
-              SelectView(Icons.feedback, '我要反馈', 'B', context),
             ],
         onSelected: (String action) {
           switch (action) {
             case 'A':
               schoolCalendarPage.go(context);
-              break;
-            case 'B':
-              openUrl(joinQQUserGroup);
               break;
           }
         });

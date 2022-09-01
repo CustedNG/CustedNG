@@ -5,7 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:collection/collection.dart';
 import 'package:custed2/core/user/cust_user.dart';
 import 'package:custed2/core/user/user.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
@@ -246,6 +246,7 @@ class UndergraduateUser with CustUser implements User {
 
   static DateTime getScheduleStartTime() {
     // This is hardcoded, don't forget to update this :)
+    // TODO: Make this dynamic
     final table = {
       '20201': DateTime(2020, 2, 24),
       '20202': DateTime(2020, 8, 31),
@@ -255,10 +256,7 @@ class UndergraduateUser with CustUser implements User {
       '20222': DateTime(2022, 8, 22),
     };
 
-    final year = DateTime.now().year.toString();
-    final nth = DateTime.now().month >= 8 ? 2 : 1;
-
-    return table['$year$nth'] ?? table.values.last;
+    return table[getTerm] ?? table.values.last;
   }
 }
 

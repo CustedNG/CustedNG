@@ -1,6 +1,5 @@
 import 'package:after_layout/after_layout.dart';
-import 'package:custed2/core/update.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -110,7 +109,6 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   @override
   Future<void> afterFirstLayout(BuildContext context) async {
-    updateCheck(context);
     locator<AppProvider>().setContext(context);
     try {
       await CustedService().isServiceAvailable();

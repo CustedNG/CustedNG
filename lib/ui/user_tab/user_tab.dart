@@ -5,7 +5,7 @@ import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/user_tab/custed_header.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
@@ -215,7 +215,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   }
 
   void sendSetting2Backend(bool v) async {
-    if ((await custed.getCacheSchedule()).statusCode != 200) {
+    if ((await custed.getCacheSchedule()) == null) {
       setting.pushNotification.put(false);
       return showSnackBar(context, '未能检测到课表！\n请登录并刷新课表后重试');
     }
@@ -230,8 +230,6 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             shrinkWrap: true,
             onColorChange: (Color color) async {
               setting.appPrimaryColor.put(color.value);
-              final suc = await custed.sendThemeData(color.toString());
-              if (suc) print('send theme data successfully: $color');
             },
             selectedColor: selected),
         [

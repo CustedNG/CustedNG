@@ -9,7 +9,6 @@ import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/schedule_title_provider.dart';
-import 'package:custed2/data/providers/snakebar_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/data/store/banner_store.dart';
@@ -24,7 +23,6 @@ import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/jw_service.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/service/netdisk_service.dart';
-import 'package:custed2/service/remote_config_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
@@ -35,11 +33,9 @@ void setupLocatorForServices() {
   locator.registerLazySingleton(() => JwService());
   locator.registerLazySingleton(() => CustedService());
   locator.registerLazySingleton(() => NetdiskService());
-  locator.registerLazySingleton(() => RemoteConfigService());
 }
 
 void setupLocatorForProviders() {
-  locator.registerSingleton(SnakebarProvider());
   locator.registerSingleton(ScheduleProvider());
   locator.registerSingleton(ScheduleTitleProvider());
   locator.registerSingleton(GradeProvider());

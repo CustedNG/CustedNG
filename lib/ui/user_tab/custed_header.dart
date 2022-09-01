@@ -1,6 +1,5 @@
 import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/core/route.dart';
-import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
@@ -8,7 +7,6 @@ import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/custed_more_page.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 
 class CustedHeader extends StatefulWidget {
   @override
@@ -55,7 +53,7 @@ class _CustedHeaderState extends State<CustedHeader> {
   }
 
   Widget _buildBackground(Color primary) {
-    final child = AspectRatio(
+    return AspectRatio(
       aspectRatio: (MediaQuery.of(context).size.width - 40) / 110,
       child: Container(
           decoration: BoxDecoration(
@@ -68,22 +66,6 @@ class _CustedHeaderState extends State<CustedHeader> {
         ],
       ))),
     );
-    if (BuildData.build < locator<AppProvider>().build) {
-      if (isDark(context)) {
-        return Shimmer.fromColors(
-            child: child,
-            baseColor: Colors.transparent,
-            highlightColor: Colors.black26,
-            period: Duration(seconds: 3));
-      }
-      return Shimmer.fromColors(
-        child: child,
-        baseColor: primary,
-        highlightColor: primary.withOpacity(0.6),
-        period: Duration(seconds: 3),
-      );
-    }
-    return child;
   }
 
   Widget _buildFloat(bool floatTextUseWhite) {

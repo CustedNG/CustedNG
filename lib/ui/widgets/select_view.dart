@@ -1,4 +1,4 @@
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:flutter/material.dart';
 
 SelectView(IconData icon, String text, String id, BuildContext context) {

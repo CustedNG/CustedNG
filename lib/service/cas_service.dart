@@ -1,4 +1,4 @@
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:http/http.dart';
 
 class CasService extends BaseClient {

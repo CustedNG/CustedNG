@@ -1,12 +1,13 @@
+import 'package:custed2/core/open.dart';
 import 'package:custed2/core/provider/provider_base.dart';
-import 'package:custed2/data/models/custed_banner.dart';
+import 'package:custed2/data/models/custed_config.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/banner_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/service/custed_service.dart';
 
 class BannerProvider extends ProviderBase {
-  CustedBanner _banner;
-  String get bannerUrl => CustedService.getFileUrl(_banner?.image);
+  CustedConfigBanner _banner;
+  String get bannerUrl => _banner?.imgUrl;
 
   Future<void> init() async {
     await loadLocalData();
@@ -22,7 +23,7 @@ class BannerProvider extends ProviderBase {
   }
 
   Future<void> update() async {
-    final banner = await locator<CustedService>().getBanner();
+    final banner = await locator<AppProvider>().config?.banner;
     if (banner == null) return;
 
     final bannerStore = await locator.getAsync<BannerStore>();
@@ -30,13 +31,13 @@ class BannerProvider extends ProviderBase {
     setBanner(banner);
   }
 
-  void setBanner(CustedBanner banner) {
+  void setBanner(CustedConfigBanner banner) {
     setState(() => _banner = banner);
   }
 
   void execAction() {
     if (_banner == null) return;
-    if (_banner.action == null) return;
-    _banner.action.exec();
+    if (_banner.actionUrl == null) return;
+    openUrl(_banner.actionUrl);
   }
 }

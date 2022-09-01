@@ -12,7 +12,6 @@ import 'package:custed2/ui/widgets/fade_in.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_inappwebview/src/types.dart';
 import 'dart:async';
 import 'dart:typed_data';
 
@@ -61,36 +60,6 @@ Future<T> showRoundDialog<T>(
           padding: padding,
         );
       });
-}
-
-extension StringX on String {
-  Uri get uri => Uri.parse(this);
-
-  URLRequest get uq => URLRequest(url: this.uri);
-
-  bool operator <(Object x) {
-    final s = num.tryParse(this);
-    if (s == null) return null;
-    return x is String ? s < num.parse(x) : s < x;
-  }
-
-  bool operator >(Object x) {
-    final s = num.tryParse(this);
-    if (s == null) return null;
-    return x is String ? s > num.parse(x) : s > x;
-  }
-
-  bool operator <=(Object x) {
-    final s = num.tryParse(this);
-    if (s == null) return null;
-    return x is String ? s <= num.parse(x) : s <= x;
-  }
-
-  bool operator >=(Object x) {
-    final s = num.tryParse(this);
-    if (s == null) return null;
-    return x is String ? s >= num.parse(x) : s >= x;
-  }
 }
 
 Widget MyImage(String url) {
@@ -224,6 +193,7 @@ Color judgeWhiteOrBlack4AppbarContent(BuildContext context) {
       : (primary.isBrightColor ? Colors.black : Colors.white);
 }
 
+/// 设置底部小白条颜色（仅Android）
 void setSystemBottomNavigationBarColor(BuildContext context) {
   if (Platform.isAndroid) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
@@ -237,4 +207,14 @@ void setSystemBottomNavigationBarColor(BuildContext context) {
           : Brightness.dark, // This defines the color of the scrim
     ));
   }
+}
+
+/// 获取学期str
+///
+/// eg: '20221' -> 2022的第一学期 or 2021-2022第二学期
+String get getTerm {
+  final now = DateTime.now();
+  final year = now.year.toString();
+  final nth = now.month >= 8 ? 2 : 1;
+  return '$year$nth';
 }

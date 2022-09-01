@@ -4,14 +4,12 @@ import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/campus_wifi_service.dart';
-import 'package:custed2/ui/dynamic_color.dart';
 import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/ui/home_tab/home_entry.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:external_app_launcher2/external_app_launcher2.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shimmer/shimmer.dart';
 
 class HomeEntries extends StatefulWidget {
   @override
@@ -62,12 +60,8 @@ class _HomeEntriesState extends State<HomeEntries> {
             action: () => ticeWebPage.go(context),
           ),
           HomeEntry(
-            name: Shimmer.fromColors(
-                child: Text('长理指北',
-                    style: style.copyWith(fontWeight: FontWeight.bold)),
-                baseColor:
-                    DynamicColor(Colors.black, Colors.white).resolve(context),
-                highlightColor: Colors.redAccent),
+            name: Text('长理指北',
+                style: style.copyWith(fontWeight: FontWeight.bold)),
             icon: Image(image: ImageRes.networkIcon),
             // action: () => ecardWebPage.go(context),
             action: () => custWikiPage.go(context),

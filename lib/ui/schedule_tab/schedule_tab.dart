@@ -11,7 +11,7 @@ import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/schedule_tab/schedule_table.dart';
 import 'package:custed2/ui/schedule_tab/schedule_week_navigator.dart';
 import 'package:custed2/ui/schedule_tab/select_schedule_page.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';

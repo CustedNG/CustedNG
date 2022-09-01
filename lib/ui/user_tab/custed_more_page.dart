@@ -1,18 +1,17 @@
-import 'package:custed2/constants.dart';
-import 'package:custed2/core/open.dart';
+import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/core/update.dart';
-import 'package:custed2/core/utils.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
-import 'package:custed2/ui/pages/issue_page.dart';
 import 'package:custed2/ui/webview/webview_browser.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/setting_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class CustedMorePage extends StatelessWidget {
@@ -45,15 +44,9 @@ class CustedMorePage extends StatelessWidget {
         ).go(context),
       ),
       SettingItem(
-        title: '我要反馈',
-        onTap: () => AppRoute(
-          page: IssuePage(),
-        ).go(context),
-      ),
-      SettingItem(
-        title: '加入我们',
+        title: '我要反馈 | 加入我们',
         onTap: () => showSnackBarWithAction(
-            context, '请在用户群内私聊管理员', '加入用户群', () => openUrl(joinQQUserGroup)),
+            context, '请在用户群内联系管理员', '复制群号', () => copyGroupNumber(context)),
       ),
     ];
 
@@ -79,6 +72,11 @@ class CustedMorePage extends StatelessWidget {
             },
           ),
         ));
+  }
+
+  void copyGroupNumber(BuildContext context) {
+    Clipboard.setData(ClipboardData(text: '1057534645'));
+    showSnackBar(context, '已复制群号');
   }
 
   Widget _buildCheckUpdate(BuildContext context) {

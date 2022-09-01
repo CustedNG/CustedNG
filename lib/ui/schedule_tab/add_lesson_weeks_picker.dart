@@ -30,7 +30,9 @@ class _AddLessonWeeksPickerState extends State<AddLessonWeeksPicker> {
             alignment: Alignment.center,
             child: Text(
               key.toString(),
-              style: TextStyle(fontSize: 15.0),
+              maxLines: 1,
+              softWrap: false,
+              style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.normal, color: Colors.white, decoration: TextDecoration.none),
               textAlign: TextAlign.center,
             ),
             decoration: BoxDecoration(
