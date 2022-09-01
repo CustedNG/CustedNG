@@ -171,6 +171,8 @@ void main(List<String> args) async {
       }
       print('Build finished in ${stopwatch.elapsed}');
       return;
+    case 'update-build':
+      return updateBuildData();
     default:
       print('Unsupported command: $command');
       return;

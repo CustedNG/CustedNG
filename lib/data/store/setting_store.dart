@@ -40,10 +40,10 @@ class SettingStore with PersistentStore {
       property('pushNotification', defaultValue: false);
 
   StoreProperty<int> get scheduleTheme =>
-      property('scheduleTheme', defaultValue: 0);
+      property('scheduleTheme', defaultValue: 1);
 
   StoreProperty<int> get appPrimaryColor =>
-      property('appPrimaryColor', defaultValue: Colors.blueAccent.value);
+      property('appPrimaryColor', defaultValue: Colors.purpleAccent.value);
 
   StoreProperty<bool> get scheduleHideWeekend =>
       property('scheduleHideWeekend', defaultValue: false);
