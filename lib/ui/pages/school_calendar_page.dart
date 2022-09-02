@@ -1,13 +1,16 @@
+import 'dart:typed_data';
+
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/core/util/save_image.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/dark_mode_filter.dart';
-import 'package:custed2/res/image_res.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:custed2/ui/widgets/zoomable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:http/http.dart';
 
 class SchoolCalendarPage extends StatefulWidget {
   @override
@@ -36,17 +39,17 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
         middle: Text('校历'),
         trailing: [
           IconButton(
-            onPressed: () => _showMenu(context),
+            onPressed: () => _showMenu(context, cal.picUrl),
             icon: Icon(Icons.file_download),
           )
         ],
       ),
       body: Stack(
         children: [
-          DarkModeFilter(
+          Expanded(child: DarkModeFilter(
             level: 160,
-            child: MyImage(cal.picUrl),
-          ),
+            child: ZoomableWidget(child: MyImage(cal.picUrl), maxScale: 5.7, minScale: 1,),
+          )),
           Positioned(
             child: Container(
               height: 47,
@@ -78,7 +81,7 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
   }
 
   Future<void> _showViewCalendarDialog(CustedConfigSchoolCalendar cal) async {
-    showRoundDialog(context, cal.term, Text(cal.strSummary), [
+    showRoundDialog(context, cal.term, Text(cal.strSummary.isEmpty ? '抱歉，暂无文字版' : cal.strSummary), [
       TextButton(
         child: Text('确定'),
         onPressed: () {
@@ -88,13 +91,13 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
     ]);
   }
 
-  void _showMenu(BuildContext context) {
+  void _showMenu(BuildContext context, String picUrl) {
     showRoundDialog(context, '保存到本地', null, [
       TextButton(
         child: Text('确定'),
-        onPressed: () {
+        onPressed: () async {
           Navigator.of(context).pop();
-          save(context);
+          await save(context, (await Client().get(picUrl.uri)).bodyBytes);
         },
       ),
       TextButton(
@@ -106,8 +109,7 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
     ]);
   }
 
-  Future<void> save(BuildContext context) async {
-    final bytes = await rootBundle.load(ImageRes.miscSchoolCalendar.assetName);
-    saveImageToGallery(context, bytes.buffer.asUint8List());
+  Future<void> save(BuildContext context, Uint8List data) async {
+    saveImageToGallery(context, data);
   }
 }

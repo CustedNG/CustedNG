@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
 import 'package:custed2/core/util/utils.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:r_upgrade/r_upgrade.dart';
 
 void updateCheck(BuildContext context, {bool force = false}) async {
@@ -19,7 +20,7 @@ void updateCheck(BuildContext context, {bool force = false}) async {
 
 Future<bool> isFileAvailable(String url) async {
   try {
-    final resp = await Dio().head(url);
+    final resp = await Client().head(url.uri);
     return resp.statusCode == 200;
   } catch (e) {
     print('update file not available: $e');

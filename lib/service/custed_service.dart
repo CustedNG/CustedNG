@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/data/models/backend_resp.dart';
 import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/data/models/jw_exam.dart';
@@ -10,7 +11,7 @@ import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/service/cat_client.dart';
 import 'package:custed2/data/models/custed_weather.dart';
 import 'package:custed2/data/models/tiku_update.dart';
-import 'package:dio/dio.dart' show Dio;
+import 'package:http/http.dart' show Client;
 
 class CustedService extends CatClient {
   static const baseUrl = 'https://cust.app';
@@ -34,7 +35,7 @@ class CustedService extends CatClient {
       headers: {'content-type': 'application/json'},
       body: body,
     );
-    return BackendResp.fromJson(json.decode(resp.body)).failed;
+    return !BackendResp.fromJson(json.decode(resp.body)).failed;
   }
 
   Future<JwSchedule> getCacheSchedule() async {
@@ -131,8 +132,8 @@ class CustedService extends CatClient {
   }
 
   Future<bool> isServiceAvailable() async {
-    final custApp = (await Dio().head(baseUrl)).statusCode == 200;
-    final backend = (await Dio().head(backendUrl)).statusCode == 200;
+    final custApp = (await Client().head(baseUrl.uri)).statusCode == 200;
+    final backend = (await Client().head(backendUrl.uri)).statusCode == 200;
     return custApp && backend;
   }
 
