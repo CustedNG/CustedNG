@@ -80,7 +80,7 @@ class CustedMorePage extends StatelessWidget {
   }
 
   Widget _buildCheckUpdate(BuildContext context) {
-    final newBuild = locator<AppProvider>().build;
+    final newBuild = locator<AppProvider>().newest;
     if (newBuild > BuildData.build) {
       return SettingItem(
         title: '发现新版本: $newBuild',

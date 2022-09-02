@@ -1,7 +1,6 @@
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/user_data_store.dart';
 import 'package:custed2/locator.dart';
-import 'package:custed2/res/image_res.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/service/mysso_service.dart';
 import 'package:custed2/core/util/utils.dart';
@@ -81,15 +80,8 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
   @override
   Widget build(BuildContext ctx) {
     return Scaffold(
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: ImageRes.bgAbstractDark,
-          ),
-        ),
-        child: Builder(builder: (cc) => _buildLoginForm(cc)),
-      ),
+      backgroundColor: Color.fromARGB(255, 67, 67, 67),
+      body: _buildLoginForm(ctx),
     );
   }
 
@@ -141,8 +133,8 @@ class _LoginPageLegacyState extends State<LoginPageLegacy> {
             ),
             ConstrainedBox(
               constraints: BoxConstraints(
-                maxWidth: 80,
-                maxHeight: 80,
+                maxWidth: 67,
+                maxHeight: 67,
               ),
               child: GestureDetector(
                 onLongPress: () => forceLogin(context),

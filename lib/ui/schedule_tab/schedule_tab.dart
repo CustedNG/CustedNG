@@ -18,7 +18,6 @@ import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ScheduleTab extends StatefulWidget {
   @override
@@ -31,7 +30,6 @@ class _ScheduleTabState extends State<ScheduleTab>
   var showWeekInTitle = false;
   final scheduleProvider = locator<ScheduleProvider>();
   final settings = locator<SettingStore>();
-  final _refreshController = RefreshController(initialRefresh: false);
 
   void onScroll() {
     final titleProvider = locator<ScheduleTitleProvider>();
@@ -71,12 +69,7 @@ class _ScheduleTabState extends State<ScheduleTab>
                         ).go(context),
                     icon: Icon(Icons.bookmark_add)),
           ]),
-      body: SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: false,
-        physics: BouncingScrollPhysics(),
-        header: MaterialClassicHeader(),
-        controller: _refreshController,
+      body: RefreshIndicator(
         onRefresh: _onRefresh,
         child: ListView(
           controller: scrollController,
@@ -94,18 +87,15 @@ class _ScheduleTabState extends State<ScheduleTab>
     try {
       if (!Provider.of<UserProvider>(context, listen: false).loggedIn) {
         showSnackBar(context, '请登录');
-        _refreshController.refreshFailed();
         return;
       }
       await scheduleProvider.updateScheduleData();
-      _refreshController.refreshCompleted();
       showSnackBar(context, '更新成功');
       requestUpdateHomeWidget(locator<UserDataStore>().username.fetch(),
           locator<SettingStore>().pushNotification.fetch());
     } catch (e) {
       print(e);
       showSnackBar(context, '更新失败');
-      _refreshController.refreshFailed();
     }
   }
 

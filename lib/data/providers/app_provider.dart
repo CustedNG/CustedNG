@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 
 class AppProvider extends ProviderBase {
   BuildContext ctx;
-  int build = BuildData.build;
   CustedConfig _config;
+  int newest = BuildData.build;
   CustedConfig get config => _config;
 
   Future<void> loadLocalData() async {
@@ -24,16 +24,17 @@ class AppProvider extends ProviderBase {
   bool get useKBPro {
     if (config == null) return false;
     final cs = config.useKbpro;
+    final ver = BuildData.build;
     for (final c in cs) {
       if (c.contains('-')) {
         final range = c.split('-');
         final start = int.parse(range[0]);
         final end = int.parse(range[1]);
-        if (build >= start && build <= end) {
+        if (ver >= start && ver <= end) {
           return true;
         }
       } else {
-        if (build == int.parse(c)) {
+        if (ver == int.parse(c)) {
           return true;
         }
       }
@@ -49,7 +50,7 @@ class AppProvider extends ProviderBase {
   bool get showRealUI {
     if (config == null) return true;
     final fakeBuilds = config.notShowRealUi;
-    return !fakeBuilds.contains(build);
+    return !fakeBuilds.contains(BuildData.build);
   }
 
   String get notification {

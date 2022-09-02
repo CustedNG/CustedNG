@@ -57,7 +57,7 @@ Future<void> _doUpdate(
 
   print('Update: $version, Current: ${BuildData.build}');
 
-  locator<AppProvider>().build = version;
+  locator<AppProvider>().newest = version;
   final shouldShowDialog = force || priority >= 1;
 
   if (shouldShowDialog) {

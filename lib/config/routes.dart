@@ -1,5 +1,4 @@
 import 'package:custed2/core/route.dart';
-import 'package:custed2/ui/home_tab/home_go_to_wechat.dart';
 import 'package:custed2/ui/pages/cet_avatar_page.dart';
 import 'package:custed2/ui/pages/debug_page.dart';
 import 'package:custed2/ui/pages/empty_room_page.dart';
@@ -87,11 +86,6 @@ final ticeWebPage = AppRoute(
   title: '体测成绩',
   //page: TiceWebPage(),
   page: WebviewBrowser('$custccBase/go/tice'),
-);
-
-final gotoWechat = AppRoute(
-  title: '',
-  page: GoToWechat(),
 );
 
 final examPage = AppRoute(

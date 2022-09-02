@@ -1,9 +1,6 @@
 import 'package:flutter/painting.dart';
 
 class ImageRes {
-  static const bgAbstractDark = AssetImage('assets/bg/abstract-dark.jpg');
-  static const bgPink = AssetImage('assets/bg/pink.jpg');
-
   static const custWMapSimple = AssetImage('assets/map/simple/CustW.png');
   static const custEMapSimple = AssetImage('assets/map/simple/CustE.png');
   static const custSMapSimple = AssetImage('assets/map/simple/CustS.png');
@@ -34,13 +31,4 @@ class ImageRes {
   static const custedLiteIcon = AssetImage('assets/icon/custed_lite.png');
   static const testPaperIcon = AssetImage('assets/icon/test_paper.png');
   static const tikuIcon = AssetImage('assets/icon/tiku.png');
-
-  static const miscSchoolCalendar =
-      AssetImage('assets/calendar/2021-2022-1.webp');
-
-  static const wechatStep1 = AssetImage('assets/wechat/step1.jpg');
-  static const wechatStep2 = AssetImage('assets/wechat/step2.jpg');
-  static const wechatStep3 = AssetImage('assets/wechat/step3.jpg');
-
-  static const jwCaptchaHelp = AssetImage('assets/jw_captcha_help.jpg');
 }

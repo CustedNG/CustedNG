@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/core/extension/stringx.dart';
@@ -16,7 +17,6 @@ import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 final setting = locator<SettingStore>();
 
@@ -31,7 +31,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   TextTheme get textTheme => Theme.of(context).textTheme;
 
   double currentPage;
-  final _refreshController = RefreshController(initialRefresh: false);
 
   GradeProvider get gradeProvider =>
       Provider.of<GradeProvider>(context, listen: false);
@@ -125,12 +124,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
           controller: controller,
           children: <Widget>[
             for (var i = 0; i < (grade?.terms?.length ?? 1); i++)
-              SmartRefresher(
-                enablePullDown: true,
-                enablePullUp: false,
-                physics: BouncingScrollPhysics(),
-                header: MaterialClassicHeader(),
-                controller: _refreshController,
+              RefreshIndicator(
                 onRefresh: _onRefresh,
                 child: _buildTermReport(context, i),
               ),
@@ -145,17 +139,18 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
           ? Colors.black87
           : Colors.white);
 
-  void _onRefresh() async {
+  Future<void> _onRefresh() async {
+    if (!locator<UserProvider>().loggedIn) {
+      return showSnackBar(context, '请先登录');
+    }
     try {
       if (isRefreshing) return;
       isRefreshing = true;
       await gradeProvider.updateGradeData();
-      _refreshController.refreshCompleted();
       showSnackBar(context, '刷新成功');
       isRefreshing = false;
       setState(() {});
     } catch (e) {
-      _refreshController.refreshFailed();
       showSnackBar(context, '刷新失败');
       isRefreshing = false;
       rethrow;

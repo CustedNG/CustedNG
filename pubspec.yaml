@@ -58,7 +58,6 @@ dependencies:
       url: https://github.com/Countly/countly-sdk-flutter-bridge.git
       ref: master
 
-  pull_to_refresh: 2.0.0
   tuple: ^2.0.0
   webview_cookie_manager: ^2.0.0-nullsafety.0
   flutter_staggered_animations: ^1.0.0
