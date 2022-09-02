@@ -36,12 +36,11 @@ class CampusWiFiService extends CatClient {
     };
 
     final uri = Uri(
-      scheme: 'http',
-      host: '172.16.30.98',
-      port: 801,
-      path: '/eportal',
-      queryParameters: param
-    );
+        scheme: 'http',
+        host: '172.16.30.98',
+        port: 801,
+        path: '/eportal',
+        queryParameters: param);
 
     final resp = await post(uri.toString(),
         body: body,

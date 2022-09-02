@@ -46,9 +46,14 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
       ),
       body: Stack(
         children: [
-          Expanded(child: DarkModeFilter(
+          Expanded(
+              child: DarkModeFilter(
             level: 160,
-            child: ZoomableWidget(child: MyImage(cal.picUrl), maxScale: 5.7, minScale: 1,),
+            child: ZoomableWidget(
+              child: MyImage(cal.picUrl),
+              maxScale: 5.7,
+              minScale: 1,
+            ),
           )),
           Positioned(
             child: Container(
@@ -81,7 +86,8 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
   }
 
   Future<void> _showViewCalendarDialog(CustedConfigSchoolCalendar cal) async {
-    showRoundDialog(context, cal.term, Text(cal.strSummary.isEmpty ? '抱歉，暂无文字版' : cal.strSummary), [
+    showRoundDialog(context, cal.term,
+        Text(cal.strSummary.isEmpty ? '抱歉，暂无文字版' : cal.strSummary), [
       TextButton(
         child: Text('确定'),
         onPressed: () {

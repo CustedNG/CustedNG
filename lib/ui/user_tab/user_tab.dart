@@ -11,7 +11,6 @@ import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:custed2/ui/widgets/select_view.dart';
 import 'package:custed2/ui/widgets/setting_item.dart';
-import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:provider/provider.dart';
@@ -66,14 +65,21 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
                 func: (v) => checkWeekendHaveLesson(v)),
           ),
           SettingItem(
+            title: '绩点不计选修',
+            showArrow: false,
+            rightBtn:
+                buildSwitch(context, setting.dontCountElectiveCourseGrade),
+          ),
+          SettingItem(
             title: '显示非当前周课程',
             showArrow: false,
             rightBtn: buildSwitch(context, setting.showInactiveLessons),
           ),
           SettingItem(
-            title: '使用渐变色',
+            title: '推送上课通知',
             showArrow: false,
-            rightBtn: buildSwitch(context, setting.scheduleUseGradient),
+            rightBtn: buildSwitch(context, setting.pushNotification,
+                func: (v) => sendSetting2Backend(v)),
           ),
           SizedBox(height: 10.0),
           Text('主题'),
@@ -82,6 +88,11 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             title: '课表主题',
             showArrow: false,
             rightBtn: _showMenu(context),
+          ),
+          SettingItem(
+            title: '使用渐变色',
+            showArrow: false,
+            rightBtn: buildSwitch(context, setting.scheduleUseGradient),
           ),
           SettingItem(
             title: 'App强调色',
@@ -96,45 +107,13 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             showArrow: false,
             rightBtn: _buildDarkModeRadio(),
           ),
-          // SettingItem(
-          //   title: '启动时自动更新课表',
-          //   titleStyle: settingTextStyle,
-          //   isShowArrow: false,
-          //   rightBtn: buildSwitch(
-          //       context, setting.autoUpdateSchedule),
-          // ),
-          ExpandChild(
-            arrowColor: resolveWithBackground(context),
-            icon: Icons.keyboard_arrow_down,
-            expandArrowStyle: ExpandArrowStyle.both,
-            collapsedHint: '更多设置',
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 10.0),
-                Text('更多'),
-                SizedBox(height: 10.0),
-                SettingItem(
-                  title: '绩点不计选修',
-                  showArrow: false,
-                  rightBtn: buildSwitch(
-                      context, setting.dontCountElectiveCourseGrade),
-                ),
-                SettingItem(
-                  title: '持续自动更新天气',
-                  showArrow: false,
-                  rightBtn: buildSwitch(context, setting.autoUpdateWeather),
-                ),
-                SizedBox(height: 10.0),
-                Text('Beta设置'),
-                SizedBox(height: 10.0),
-                SettingItem(
-                  title: '推送上课通知',
-                  showArrow: false,
-                  rightBtn: buildSwitch(context, setting.pushNotification,
-                      func: (v) => sendSetting2Backend(v)),
-                ),
-              ],
-            ),
+          SizedBox(height: 10.0),
+          Text('更多'),
+          SizedBox(height: 10.0),
+          SettingItem(
+            title: '持续自动更新天气',
+            showArrow: false,
+            rightBtn: buildSwitch(context, setting.autoUpdateWeather),
           ),
           SizedBox(height: 40.0)
         ],
