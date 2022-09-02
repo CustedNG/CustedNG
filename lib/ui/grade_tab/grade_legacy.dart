@@ -32,8 +32,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
 
   double currentPage;
 
-  GradeProvider get gradeProvider =>
-      Provider.of<GradeProvider>(context, listen: false);
+  GradeProvider get gradeProvider => Provider.of<GradeProvider>(context);
 
   Grade get grade => gradeProvider.grade;
 
@@ -122,7 +121,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
       body: Material(
         child: PageView(
           controller: controller,
-          children: <Widget>[
+          children: [
             for (var i = 0; i < (grade?.terms?.length ?? 1); i++)
               RefreshIndicator(
                 onRefresh: _onRefresh,

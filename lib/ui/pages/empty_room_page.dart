@@ -47,16 +47,20 @@ class _EmptyRoomPageState extends State<EmptyRoomPage> {
   }
 
   Widget _buildEmptyRoomList(JwEmptyRoom data) {
-    List<Widget> children = [];
     if (data.data.PagingResult.Total == 0) {
       return Text('该建筑在此时间段，无空教室。');
     }
+    List<Widget> children = [];
     for (var item in data.data.PagingResult.Rows) {
       children.add(Center(child: Text(item.JSMC)));
     }
-    return ListView(
-      shrinkWrap: true,
-      children: children,
+    return SizedBox(
+      height: 377,
+      width: 377,
+      child: ListView(
+        shrinkWrap: true,
+        children: children,
+      ),
     );
   }
 

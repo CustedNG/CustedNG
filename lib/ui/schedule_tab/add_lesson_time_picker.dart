@@ -1,7 +1,6 @@
 import 'package:custed2/core/extension/intx.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_time.dart';
-import 'package:custed2/ui/theme.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:custed2/ui/widgets/card_dialog.dart';
 import 'package:flutter/material.dart';
 
 class AddLessonTimePicker extends StatefulWidget {
@@ -20,75 +19,96 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      bottom: false,
-      child: Container(
-        color: Colors.white24,
-        height: 260.0,
-        child: Column(
+    return CardDialog(
+      actions: [
+        TextButton(
+          child: Text('取消'),
+          onPressed: () => Navigator.pop(context),
+        ),
+        TextButton(
+          child: Text('确定'),
+          onPressed: () {
+            final data = AddLessonTime(
+              weekday: weekDay,
+              startSection: lesson,
+              endSection: lesson + 1,
+            );
+            Navigator.pop(context, data);
+          },
+        )
+      ],
+      content: Container(
+        height: 200.0,
+        child: Row(
           children: <Widget>[
-            Container(
-              height: 60.0,
-              child: NavigationToolbar(
-                leading: TextButton(
-                  child: Text('取消'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                trailing: TextButton(
-                  child: Text('确定'),
-                  onPressed: () {
-                    final data = AddLessonTime(
-                      weekday: weekDay,
-                      startSection: lesson,
-                      endSection: lesson + 1,
-                    );
-                    Navigator.pop(context, data);
-                  },
-                ),
-              ),
-            ),
-            Container(
-              height: 200.0,
-              child: Row(
-                children: <Widget>[
-                  Flexible(
-                    child: CupertinoPicker(
-                      scrollController:
-                          FixedExtentScrollController(initialItem: weekDay - 1),
-                      itemExtent: 30.0,
-                      onSelectedItemChanged: (index) {
-                        weekDay = index + 1;
-                      },
-                      children: List<Widget>.generate(7, (index) {
-                        return Text(
-                          (index + 1).weekdayInChinese(),
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              color: isDark(context)
-                                  ? Colors.white
-                                  : Colors.black),
-                        );
+            Flexible(
+              child: Stack(
+                children: [
+                  Positioned(
+                    child: Container(
+                      height: 37,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                        color: Colors.black12,
+                      ),
+                    ),
+                    top: 47,
+                    bottom: 63,
+                    left: 0,
+                    right: 0,
+                  ),
+                  Container(
+                    height: 150,
+                    child: ListWheelScrollView.useDelegate(
+                      itemExtent: 37,
+                      diameterRatio: 1.2,
+                      onSelectedItemChanged: (n) => setState(() {
+                        weekDay = n + 1;
                       }),
+                      controller:
+                          FixedExtentScrollController(initialItem: weekDay - 1),
+                      physics: FixedExtentScrollPhysics(),
+                      childDelegate: ListWheelChildBuilderDelegate(
+                          builder: (context, index) =>
+                              Text((index + 1).weekdayInChinese(), textAlign: TextAlign.center,),
+                          childCount: 7),
                     ),
                   ),
-                  Flexible(
-                    child: CupertinoPicker(
-                      scrollController:
-                          FixedExtentScrollController(initialItem: lesson ~/ 2),
-                      itemExtent: 30.0,
-                      onSelectedItemChanged: (index) {
-                        lesson = index * 2 + 1;
-                      },
-                      children: List<Widget>.generate(6, (index) {
-                        return Text(
-                          '${index * 2 + 1}-${(index + 1) * 2}节',
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              color: isDark(context)
-                                  ? Colors.white
-                                  : Colors.black),
-                        );
+                ],
+              ),
+            ),
+            SizedBox(width: 17,),
+            Flexible(
+              child: Stack(
+                children: [
+                  Positioned(
+                    child: Container(
+                      height: 37,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(7)),
+                        color: Colors.black12,
+                      ),
+                    ),
+                    top: 47,
+                    bottom: 63,
+                    left: 0,
+                    right: 0,
+                  ),
+                  Container(
+                    height: 150,
+                    child: ListWheelScrollView.useDelegate(
+                      itemExtent: 37,
+                      diameterRatio: 1.2,
+                      onSelectedItemChanged: (n) => setState(() {
+                        lesson = n * 2 + 1;
                       }),
+                      controller:
+                          FixedExtentScrollController(initialItem: lesson ~/ 2),
+                      physics: FixedExtentScrollPhysics(),
+                      childDelegate: ListWheelChildBuilderDelegate(
+                          builder: (context, index) =>
+                              Text('${index * 2 + 1}-${(index + 1) * 2}节', textAlign: TextAlign.center,),
+                          childCount: 6),
                     ),
                   ),
                 ],

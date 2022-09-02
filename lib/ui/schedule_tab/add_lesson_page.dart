@@ -9,7 +9,6 @@ import 'package:custed2/ui/schedule_tab/add_lesson_time_picker.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_weeks_picker.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddLessonPage extends StatefulWidget {
@@ -166,20 +165,6 @@ class _AddLessonPageState extends State<AddLessonPage> {
     );
   }
 
-  /*Widget _buildDeleteButton(BuildContext context) {
-    return CupertinoButton(
-      child: Text(
-        '删除',
-        style: TextStyle(color: CupertinoColors.destructiveRed),
-      ),
-      onPressed: () {
-        widget.lesson.delete();
-        locator<ScheduleProvider>().loadLocalData();
-        Navigator.pop(context);
-      },
-    );
-  }*/
-
   Iterable<int> get activeWeeks {
     return weeks.entries
         .where((entry) => entry.value == true)
@@ -187,7 +172,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
   }
 
   void _openWeekPicker(BuildContext context) async {
-    final Map<int, bool> result = await showCupertinoModalPopup(
+    final Map<int, bool> result = await showDialog(
       context: context,
       builder: (context) => AddLessonWeeksPicker(weeks),
     );
@@ -197,7 +182,7 @@ class _AddLessonPageState extends State<AddLessonPage> {
   }
 
   void _openTimePicker(BuildContext context) async {
-    final AddLessonTime result = await showCupertinoModalPopup(
+    final AddLessonTime result = await showDialog(
       context: context,
       builder: (context) => AddLessonTimePicker(),
     );

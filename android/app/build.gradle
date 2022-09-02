@@ -76,14 +76,17 @@ android {
         }
     }
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+            resValue "string", "app_name", "CustedBeta"
+            // signingConfig signingConfigs.release
+        }
         release {
             signingConfig signingConfigs.release
-            minifyEnabled false        
-            shrinkResources false     
+            minifyEnabled true
+            shrinkResources true
         }
-        // debug {
-            // signingConfig signingConfigs.release
-        // }
     }
 }
 
