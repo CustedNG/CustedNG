@@ -3,7 +3,6 @@ import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/core/extension/stringx.dart';
-import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
@@ -16,7 +15,6 @@ import 'package:custed2/ui/widgets/navbar/navbar_text.dart';
 import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:provider/provider.dart';
 
 final setting = locator<SettingStore>();
 
@@ -30,23 +28,16 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
   bool isRefreshing = false;
   TextTheme get textTheme => Theme.of(context).textTheme;
 
-  double currentPage;
+  final gradeProvider = locator<GradeProvider>();
+  final grade = locator<GradeProvider>().grade;
 
-  GradeProvider get gradeProvider => Provider.of<GradeProvider>(context);
-
-  Grade get grade => gradeProvider.grade;
-
-  int get initPage => (grade?.terms?.length ?? 1) - 1;
+  int currentPage;
 
   @override
-  void didChangeDependencies() {
-    final current = currentPage ?? initPage;
-    controller = PageController(initialPage: current.toInt());
-    setState(() => currentPage = current.toDouble());
-    controller.addListener(() {
-      setState(() => currentPage = controller.page);
-    });
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    currentPage = (grade?.terms?.length ?? 1) - 1;
+    controller = PageController(initialPage: currentPage);
   }
 
   void _showSelector(BuildContext context) async {
@@ -106,6 +97,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
 
   @override
   Widget build(BuildContext context) {
+    final grade = locator<GradeProvider>().grade;
     return Scaffold(
       appBar: NavBar.material(
           leading: SizedBox(),

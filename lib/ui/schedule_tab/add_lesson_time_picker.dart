@@ -69,15 +69,19 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
                           FixedExtentScrollController(initialItem: weekDay - 1),
                       physics: FixedExtentScrollPhysics(),
                       childDelegate: ListWheelChildBuilderDelegate(
-                          builder: (context, index) =>
-                              Text((index + 1).weekdayInChinese(), textAlign: TextAlign.center,),
+                          builder: (context, index) => Text(
+                                (index + 1).weekdayInChinese(),
+                                textAlign: TextAlign.center,
+                              ),
                           childCount: 7),
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(width: 17,),
+            SizedBox(
+              width: 17,
+            ),
             Flexible(
               child: Stack(
                 children: [
@@ -106,8 +110,10 @@ class _AddLessonTimePickerState extends State<AddLessonTimePicker> {
                           FixedExtentScrollController(initialItem: lesson ~/ 2),
                       physics: FixedExtentScrollPhysics(),
                       childDelegate: ListWheelChildBuilderDelegate(
-                          builder: (context, index) =>
-                              Text('${index * 2 + 1}-${(index + 1) * 2}节', textAlign: TextAlign.center,),
+                          builder: (context, index) => Text(
+                                '${index * 2 + 1}-${(index + 1) * 2}节',
+                                textAlign: TextAlign.center,
+                              ),
                           childCount: 6),
                     ),
                   ),

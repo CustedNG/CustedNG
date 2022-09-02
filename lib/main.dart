@@ -17,7 +17,6 @@ import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
 import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
-import 'package:custed2/data/providers/schedule_title_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
 import 'package:custed2/locator.dart';
@@ -84,8 +83,6 @@ void main() async {
         providers: [
           ChangeNotifierProvider(create: (_) => locator<DebugProvider>()),
           ChangeNotifierProvider(create: (_) => locator<ScheduleProvider>()),
-          ChangeNotifierProvider(
-              create: (_) => locator<ScheduleTitleProvider>()),
           ChangeNotifierProvider(create: (_) => locator<UserProvider>()),
           ChangeNotifierProvider(create: (_) => locator<AppProvider>()),
           ChangeNotifierProvider(create: (_) => locator<WeatherProvider>()),

@@ -2,7 +2,6 @@ import 'package:custed2/app.dart';
 import 'package:custed2/core/extension/datetimex.dart';
 import 'package:custed2/core/route.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
-import 'package:custed2/data/providers/schedule_title_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/data/store/user_data_store.dart';
@@ -26,25 +25,8 @@ class ScheduleTab extends StatefulWidget {
 
 class _ScheduleTabState extends State<ScheduleTab>
     with AutomaticKeepAliveClientMixin<ScheduleTab> {
-  final scrollController = ScrollController();
-  var showWeekInTitle = false;
   final scheduleProvider = locator<ScheduleProvider>();
   final settings = locator<SettingStore>();
-
-  void onScroll() {
-    final titleProvider = locator<ScheduleTitleProvider>();
-
-    if (scrollController.offset >= 30 &&
-        titleProvider.showWeekInTitle == false) {
-      titleProvider.setShowWeekInTitle(true);
-      return;
-    }
-
-    if (scrollController.offset < 30 && titleProvider.showWeekInTitle == true) {
-      titleProvider.setShowWeekInTitle(false);
-      return;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +54,6 @@ class _ScheduleTabState extends State<ScheduleTab>
       body: RefreshIndicator(
         onRefresh: _onRefresh,
         child: ListView(
-          controller: scrollController,
           children: <Widget>[
             _buildCloseAutoUpdateTip(),
             ScheduleWeekNavigator(),
@@ -130,7 +111,6 @@ class _ScheduleTabState extends State<ScheduleTab>
   // }
 
   Widget _buildNavbarMiddle(BuildContext context) {
-    final scheduleTitleProvider = Provider.of<ScheduleTitleProvider>(context);
     final scheduleProvider = Provider.of<ScheduleProvider>(context);
     final profile = scheduleProvider.customScheduleProfile;
     final captionLastUpdateValue = scheduleProvider.schedule != null
@@ -142,15 +122,10 @@ class _ScheduleTabState extends State<ScheduleTab>
     final studentInfo =
         usingCustomProfile ? profile.name + ' ' + profile.studentNumber : null;
 
-    var display;
+    List<String> display;
 
     if (scheduleProvider.isBusy) {
       display = ['更新中'];
-    } else if (scheduleTitleProvider.showWeekInTitle) {
-      display = [
-        '第${scheduleProvider.selectedWeek}周',
-        if (usingCustomProfile) studentInfo
-      ];
     } else {
       if (usingCustomProfile) {
         display = [
