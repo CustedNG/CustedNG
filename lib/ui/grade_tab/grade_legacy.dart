@@ -164,9 +164,6 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
 
   Widget _buildInfo(BuildContext context, int level) {
     final info = grade?.terms?.elementAt(level);
-    final diff = currentPage - level;
-    final value = -2.5 * diff.abs() + 1.0;
-    final pageOpacity = min(max(value, 0.0), 1.0);
 
     final maxHeight = 150.0;
     final minHeight = 50.0;
@@ -184,7 +181,7 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
               ? Center(child: _buildSmallData(context, level, info))
               : _buildFullData(context, level, info);
           final result = Opacity(
-            opacity: min(pageOpacity, scrollOpacity),
+            opacity: scrollOpacity,
             child: data,
           );
           return Container(

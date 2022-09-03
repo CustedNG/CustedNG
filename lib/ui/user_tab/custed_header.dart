@@ -1,5 +1,6 @@
 import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/core/route.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/res/build_data.dart';
@@ -16,9 +17,9 @@ class CustedHeader extends StatefulWidget {
 class _CustedHeaderState extends State<CustedHeader> {
   @override
   Widget build(BuildContext context) {
-    Color primary = Color(locator<SettingStore>().appPrimaryColor.fetch());
-    bool isBrightBackground = primary.isBrightColor;
-    bool floatTextUseWhite =
+    final priColor = primaryColor;
+    final isBrightBackground = priColor.isBrightColor;
+    final floatTextUseWhite =
         isDark(context) ? true : (isBrightBackground ? false : true);
 
     return Padding(
@@ -34,7 +35,7 @@ class _CustedHeaderState extends State<CustedHeader> {
               semanticContainer: false,
               child: Stack(
                 children: <Widget>[
-                  _buildBackground(primary),
+                  _buildBackground(priColor),
                   _buildFloat(floatTextUseWhite),
                   _buildRightIcon(isBrightBackground)
                 ],

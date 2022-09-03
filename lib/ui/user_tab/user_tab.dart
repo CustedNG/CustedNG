@@ -146,16 +146,16 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _buildAppColorPreview() {
-    final nowAppColor = setting.appPrimaryColor.fetch();
+    final nowAppColor = primaryColor;
     return GestureDetector(
       child: ClipOval(
         child: Container(
-          color: Color(setting.appPrimaryColor.fetch()),
+          color: nowAppColor,
           height: 27,
           width: 27,
         ),
       ),
-      onTap: () => _showAppColorPicker(Color(nowAppColor)),
+      onTap: () => _showAppColorPicker(nowAppColor),
     );
   }
 
@@ -218,7 +218,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
               onPressed: () async {
                 final dark = setting.darkMode.fetch();
                 setting.darkMode.put(dark);
-                if (Color(setting.appPrimaryColor.fetch()).isBrightColor) {
+                if (primaryColor.isBrightColor) {
                   showSnackBar(context, '当前设置的颜色过浅\n不会应用至高亮字、按钮、开关等');
                 }
                 setState(() {});
@@ -230,7 +230,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
 
   Widget _buildDarkModeRadio() {
     final color =
-        MaterialStateProperty.all(Color(setting.appPrimaryColor.fetch()));
+        MaterialStateProperty.all(primaryColor);
     final value = setting.darkMode.fetch();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
