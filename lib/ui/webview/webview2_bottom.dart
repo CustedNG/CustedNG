@@ -94,7 +94,7 @@ class _Webview2BottomState extends State<Webview2Bottom> {
               //   url = url.substring(1, url.length - 1);
               // }
               final url = await widget.url();
-              print('open in browser: $url');
+              print('[WEBVIEW] Open in browser: $url');
               openUrl(resolveUrl(url));
             },
           ),

@@ -44,7 +44,7 @@ abstract class CatService extends CatClient {
         (expireTest != null && expireTest(response));
 
     if (expired) {
-      print('Session expiration detected');
+      print('[CAT] Session expiration detected');
       final loginResult = await login();
       if (!loginResult.ok) {
         throw CatError('login() failed');

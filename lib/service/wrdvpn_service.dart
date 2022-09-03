@@ -62,7 +62,7 @@ class WrdvpnService extends CatService {
         ?.contains(RegExp(r'wwwn'));
 
     if (expired == true) {
-      print('Wrdvpn expiration detected');
+      print('[Wrdvpn] expiration detected');
 
       final loginResult = await login();
 

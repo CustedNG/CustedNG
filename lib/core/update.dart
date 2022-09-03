@@ -12,7 +12,7 @@ import 'package:http/http.dart';
 import 'package:r_upgrade/r_upgrade.dart';
 
 void updateCheck(BuildContext context, {bool force = false}) async {
-  print('Checking for updates...');
+  print('[UPDATE] Checking...');
   final update = locator<AppProvider>().config?.update;
 
   _doUpdate(context, update, force: force);
@@ -23,7 +23,7 @@ Future<bool> isFileAvailable(String url) async {
     final resp = await Client().head(url.uri);
     return resp.statusCode == 200;
   } catch (e) {
-    print('update file not available: $e');
+    print('[UPDATE] File not available: $e');
     return false;
   }
 }
@@ -55,7 +55,7 @@ Future<void> _doUpdate(
   final url = Platform.isAndroid ? urls.android : urls.ios;
   final priority = Platform.isAndroid ? priorities.android : priorities.ios;
 
-  print('Update: $version, Current: ${BuildData.build}');
+  print('[UPDATE] Newest: $version, Current: ${BuildData.build}');
 
   locator<AppProvider>().newest = version;
   final shouldShowDialog = force || priority >= 1;

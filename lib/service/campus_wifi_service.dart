@@ -47,7 +47,7 @@ class CampusWiFiService extends CatClient {
         headers: {'content-type': 'application/json'},
         maxRedirects: 0);
     if (isSuccess(resp)) {
-      print('campus wifi login success');
+      print('[WIFI] Login success');
       return true;
     }
     return false;

@@ -69,7 +69,7 @@ class ExamProvider extends BusyProvider {
     final examStore = await locator.getAsync<ExamStore>();
     var cacheExamData = examStore.fetch();
     if (cacheExamData != null) {
-      print('use cached exam data.');
+      print('[EXAM] Use cached data.');
       data = cacheExamData;
       useCache = true;
       data.rows.sort((a, b) => sortExamByTime(a, b));
@@ -90,7 +90,7 @@ class ExamProvider extends BusyProvider {
       failed = true;
       var cacheExamData = examStore.fetch();
       if (cacheExamData != null) {
-        print('use cached exam data.');
+        print('[EXAM] Use cached data.');
         data = cacheExamData;
         useCache = true;
       }

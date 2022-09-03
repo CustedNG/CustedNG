@@ -75,7 +75,7 @@ class _ScheduleTabState extends State<ScheduleTab>
       requestUpdateHomeWidget(locator<UserDataStore>().username.fetch(),
           locator<SettingStore>().pushNotification.fetch());
     } catch (e) {
-      print(e);
+      print('[SCHEDULE] Refresh failed: $e');
       showSnackBar(context, '更新失败');
     }
   }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:custed2/core/extension/stringx.dart';
 import 'package:custed2/core/open.dart';
+import 'package:custed2/core/util/build_mode.dart';
 import 'package:custed2/core/webview/user_agent.dart';
 import 'package:custed2/ui/webview/webview2.dart';
 import 'package:custed2/ui/webview/webview2_bottom.dart';
@@ -180,7 +181,9 @@ class Webview2StateGeneral extends Webview2State {
           openUrl(url.url.toString());
         },
         onConsoleMessage: (controller, message) {
-          print('Console: ${message.message}');
+          if (!BuildMode.isRelease) {
+            print('[WEBVIEW] Console: ${message.message}');
+          }
         },
       ),
     );

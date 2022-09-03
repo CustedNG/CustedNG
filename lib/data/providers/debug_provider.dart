@@ -1,11 +1,30 @@
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:flutter/material.dart';
 
+final headReg = RegExp(r'(\[[A-Z]+\])( .*)');
+
 class DebugProvider extends ProviderBase {
   final widgets = <Widget>[];
 
   void addText(String text) {
-    _addText(text);
+    final match = headReg.allMatches(text);
+
+    if (match.isNotEmpty) {
+      addWidget(Text.rich(TextSpan(
+        children: [
+          TextSpan(
+            text: match.first.group(1),
+            style: TextStyle(color: Colors.cyan),
+          ),
+          TextSpan(
+            text: match.first.group(2),
+          )
+        ],
+      )));
+    } else {
+      _addText(text);
+    }
+
     notifyListeners();
   }
 

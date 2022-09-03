@@ -78,7 +78,7 @@ class WebviewBrowser extends StatelessWidget {
     final uriOverride = urlOverride != null ? Uri.tryParse(urlOverride) : null;
 
     if (uri == null) {
-      print('no cookie for bad url $url');
+      print('[WEBVIEW] No cookie for bad url $url');
     }
 
     for (var rawCookie in rawCookies) {
@@ -93,7 +93,6 @@ class WebviewBrowser extends StatelessWidget {
       cookies.add(cookie);
     }
 
-    print('cookies $url $cookies');
     // final uriOverride = urlOverride?.toUri();
     await controller.setCookies(cookies);
   }

@@ -113,7 +113,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 
       final userData = locator<UserDataStore>();
       final userName = userData.username.fetch();
-      print('User name is $userName');
+      print('[USER] ID is $userName');
       if (userName == null) {
         return;
       }
@@ -130,7 +130,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 Future<void> initPushService(String userName) async {
   String token = await getToken();
   if (token == null) {
-    print('get token failed');
+    print('[Token] Get failed');
     return;
   }
   await CustedService().sendToken(token, Platform.isIOS);
@@ -156,12 +156,12 @@ Future<void> requestUpdateHomeWidget(String userName, bool enablePush) async {
   if (Platform.isIOS) await HomeWidget.setAppGroupId('group.com.tusi.app');
   final setIdResult =
       await HomeWidget.saveWidgetData('ecardId', userName ?? '');
-  print('set ecardId for home widget: ${setIdResult ? "success" : "failed"}');
+  print('[WIDGET] Set ecardId: $setIdResult');
 
   if (Platform.isAndroid) {
     final setPushResult =
         await HomeWidget.saveWidgetData('enableLessonPush', enablePush);
-    print('set lessonPush for home widget successfully? $setPushResult');
+    print('[WIDGET] Set lessonPush: $setPushResult');
     HomeWidget.updateWidget(
         name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
   }

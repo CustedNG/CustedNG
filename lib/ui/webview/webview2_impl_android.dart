@@ -149,7 +149,6 @@ class Webview2StateAndroid extends Webview2State {
     }
 
     if (state.type == WebViewState.shouldStart) {
-      print('shouldStart ${state.url}');
       // locator<DownloadProvider>().enqueue(state.url);
       widget.onLoadAborted?.call(Webview2ControllerAndroid(), state.url);
     }

@@ -105,8 +105,6 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
       shouldOverrideUrlLoading: (controller, request) async {
         if (!shouldOverrideUrlLoading) return NavigationActionPolicy.ALLOW;
 
-        print('open ${request.request.url}');
-
         if (request.request.url.toString().contains('custed-target=blank')) {
           openUrl(request.request.url.toString());
         } else {

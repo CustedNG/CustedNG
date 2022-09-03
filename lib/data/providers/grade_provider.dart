@@ -18,7 +18,7 @@ class GradeProvider extends BusyProvider {
     safeOperation();
 
     if (_grade != null) {
-      print('use cached grade: $_grade');
+      print('[GRADE] Use cached: $_grade');
       notifyListeners();
     }
   }
@@ -28,7 +28,7 @@ class GradeProvider extends BusyProvider {
     final settingStore = await locator.get<SettingStore>();
 
     if (settingStore.gradeSafeMode.fetch()) {
-      print('using grade safe mode');
+      print('[GRADE] Using safe mode');
 
       for (int i = 0; i < _grade.terms.length; i++) {
         var gradeDetails = _grade.terms[i].grades;

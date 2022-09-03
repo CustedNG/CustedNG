@@ -28,7 +28,7 @@ class WeatherProvider extends BusyProvider {
     _data = await custed.getWeather();
 
     if (_data != null) {
-      print('updated weather data: $_data');
+      print('[WEATHER] Updated: $_data');
       notifyListeners();
     }
   }

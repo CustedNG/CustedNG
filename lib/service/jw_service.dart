@@ -61,8 +61,8 @@ class JwService extends WrdvpnBasedService {
 
   Future<JwSchedule> getSchedule([String userUUID]) async {
     if (!locator<AppProvider>().showRealUI) {
-      print('using fake schedule');
-      return await custed.getCacheSchedule();
+      print('[SCHEDULE] Using fake data');
+      return await custed.getSchedule();
     }
 
     // {"KBLX":"2","CXLX":"0","XNXQ":"20202","CXID":"b0a3fc3c-8263-4be8-bb53-58fe200f616e","CXZC":"3","JXBLX":"","IsOnLine":"-1"}
@@ -99,20 +99,19 @@ class JwService extends WrdvpnBasedService {
     );
 
     if (resp.statusCode == 200 && resp.body.length > 50) {
-      final result4SendSchedule = await custed.updateCachedSchedule(resp.body);
-      print('send cache schedule to backend: $result4SendSchedule');
+      await custed.updateSchedule(resp.body);
       final jwResp = JwResponse.fromJson(json.decode(resp.body));
       return JwSchedule.fromJson(jwResp.data);
     } else {
-      final cache = await custed.getCacheSchedule();
-      print('use cached schedule from backend');
+      final cache = await custed.getSchedule();
+      print('[SCHEDULE] Use cached from backend');
       return cache;
     }
   }
 
   Future<List<KBProSchedule>> getSelfScheduleFromKBPro() async {
     if (!locator<AppProvider>().showRealUI) {
-      print('using fake schedule kbpro');
+      print('[KBPRO] Using fake data');
       return await custed.getCacheScheduleKBPro();
     }
 
@@ -129,10 +128,10 @@ class JwService extends WrdvpnBasedService {
     final result = encrypter.decrypt(Encrypted.fromBase64(resp.body), iv: iv);
 
     if (resp.statusCode == 200 && resp.body.length > 50) {
-      await custed.updateCachedScheduleKBPro(result);
+      await custed.updateKBPro(result);
     } else {
       final cache = await custed.getCacheScheduleKBPro();
-      print('use cached schedule from backend');
+      print('[KBPRO] Use cache from backend');
       if (cache != null) return cache;
     }
 
@@ -210,7 +209,7 @@ class JwService extends WrdvpnBasedService {
     final dataList = response['data'];
     if (dataList == null || !(dataList is List)) {
       print(
-          "Getting profile for $studentNumber: data list is null or not a list.");
+          "[PROFILE] Getting for $studentNumber: data list is null or not a list.");
       return null;
     }
     if ((dataList as List).isNotEmpty) {
@@ -224,17 +223,17 @@ class JwService extends WrdvpnBasedService {
         ret.add(CustomScheduleProfile(
             name: name, studentNumber: number, uuid: uuid));
       }
-      print("Profiles for $studentNumber: $ret");
+      print("[PROFILE] $studentNumber: $ret");
       return ret;
     }
-    print("Profiles for $studentNumber is empty");
+    print("[PROFILE] $studentNumber is empty");
     return [];
   }
 
   Future<JwGradeData> getGrade() async {
     if (!locator<AppProvider>().showRealUI) {
-      print('using fake grade.');
-      return (await custed.getCachedGrade());
+      print('[GRADE] Using fake data.');
+      return (await custed.getGrade());
     }
 
     final resp = await xRequest(
@@ -336,8 +335,8 @@ class JwService extends WrdvpnBasedService {
 
   Future<JwExam> getExam() async {
     if (!locator<AppProvider>().showRealUI) {
-      print('using fake exam');
-      return await custed.getCachedExam();
+      print('[EXAM] Using fake data');
+      return await custed.getExam();
     }
 
     final resp = await xRequest(
@@ -359,10 +358,10 @@ class JwService extends WrdvpnBasedService {
     );
 
     if (resp.statusCode == 200 && resp.body.length > 50) {
-      await custed.updateCahedExam(resp.body);
+      await custed.updateExam(resp.body);
       return JwExam.fromJson(json.decode(resp.body));
     } else {
-      return await custed.getCachedExam();
+      return await custed.getExam();
     }
   }
 

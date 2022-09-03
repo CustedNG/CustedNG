@@ -27,7 +27,7 @@ class PluginFromRemote extends Webview2Plugin {
       _plugins.complete(result);
     } catch (e) {
       _plugins.completeError(e);
-      print('failed to fetch webview plugins');
+      print('[PLUGIN] Failed to fetch webview plugins');
       rethrow;
     }
   }

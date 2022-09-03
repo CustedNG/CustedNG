@@ -1,18 +1,15 @@
 import 'package:url_launcher/url_launcher_string.dart';
 
 Future<bool> openUrl(String url) async {
-  print('openUrl $url');
-
   if (!await canLaunchUrlString(url)) {
-    print('canLaunch false');
     return false;
   }
 
   if (await launchUrlString(url)) {
+    print('[URL] Launching: $url');
     return true;
   }
 
-  print('launch $url failed');
-
+  print('[URL] Launch failed: $url');
   return false;
 }

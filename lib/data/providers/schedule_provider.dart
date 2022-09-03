@@ -51,7 +51,6 @@ class ScheduleProvider extends BusyProvider {
       {bool resetWeek = false,
       bool refreshAnyway = false,
       bool updateOnAbsent = false}) async {
-    print("Loading local data");
     Schedule head;
     if (customScheduleProfile == null) {
       final scheduleStore = await locator.getAsync<ScheduleStore>();
@@ -63,7 +62,7 @@ class ScheduleProvider extends BusyProvider {
     }
     await _useSchedule(head, acceptNullSchedule: refreshAnyway);
     if (refreshAnyway || head != null) {
-      print('use cached schedule: $head');
+      print('[SCHEDULE] Use cached: $head');
       if (resetWeek) {
         resetWeekToCurrentWeek();
       }

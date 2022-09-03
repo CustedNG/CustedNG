@@ -5,7 +5,7 @@ class CasService extends BaseClient {
   final Client _client = Client();
 
   Future<StreamedResponse> send(BaseRequest request) {
-    print('request: ${request.url}');
+    print('[CAS] request: ${request.url}');
     return _client.send(request);
   }
 

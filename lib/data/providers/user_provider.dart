@@ -26,7 +26,7 @@ class UserProvider extends BusyProvider {
     _loggedIn = userData.loggedIn.fetch();
 
     if (_profile != null) {
-      print('use cached profile: $_profile');
+      print('[PROFILE] Use cached: $_profile');
       notifyListeners();
     }
 

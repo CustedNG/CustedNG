@@ -85,7 +85,7 @@ class ScheduleTable extends StatelessWidget {
       } else {
         final lw = (lessonWidget as ScheduleLessonWidget);
         lw.conflict.add(lesson);
-        print('Conflict Detected: ${lw.lesson} -> ${lw.conflict}');
+        print('[SCHEDULE] Conflict detected: ${lw.lesson} -> ${lw.conflict}');
       }
     }
   }
