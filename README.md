@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="500px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/master/screenshot/CustedNG.png">
+  <img width="500px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/CustedNG.png">
 </p>
 
 <p align="center">
@@ -20,33 +20,16 @@
 <table>
   <tr>
     <td>
-		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3489.PNG">
+		  <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3489.PNG">
     </td>
     <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3490.PNG">
+      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3490.PNG">
     </td>
     <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3491.PNG">
+      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3491.PNG">
     </td>
     <td>
-		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3492.PNG">
-    </td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-    <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3493.PNG">
-    </td>
-    <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3494.PNG">
-    </td>
-    <td>
-		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3495.PNG">
-    </td>
-    <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3496.PNG">
+		  <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3492.PNG">
     </td>
   </tr>
 </table>
@@ -54,26 +37,39 @@
 <table>
   <tr>
     <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3497.PNG">
+      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3493.PNG">
     </td>
     <td>
-		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3498.PNG">
+      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3494.PNG">
     </td>
     <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3499.PNG">
+		  <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3495.PNG">
     </td>
     <td>
-      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/tiku.png">
+      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3496.PNG">
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3497.PNG">
+    </td>
+    <td>
+		  <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3498.PNG">
+    </td>
+    <td>
+      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3499.PNG">
+    </td>
     </td>
   </tr>
 </table>
 
 
 ## 功能
-✔️ 查课表  
-✔️ 查成绩  
-✔️ 充网费  
-✔️ 一卡通  
+✔️ 查课表、成绩  
+✔️ ~~充网费、一卡通~~
 ✔️ 教务快速登录  
 ✔️ 一键评教  
 ✔️ 四六级照片  
@@ -83,9 +79,9 @@
 ✔️ ...  
 
 ## 安装
-|Android|iOS|桌面客户端|
-|:--:|:--:|:--:|
-|[二维码](https://cust.app/CustedNG.svg) or [直链](https://cust.app/app/apk/downloadUrl)|[AppStore](https://apps.apple.com/cn/app/custed/id1483085363) or [Testflight](https://cust.app/ios)|需自行下载编译|
+Android|iOS|桌面客户端
+:--:|:--:|:--:
+[直链](https://cust.app/app/apk/downloadUrl)|[AppStore](https://apps.apple.com/cn/app/custed/id1483085363) |需自行下载编译
 
 
 
@@ -96,9 +92,9 @@
 4. **修改本项目**。do whatever you want。
 
 ## 反馈、贡献
-[Github Issues](https://github.com/CustedNG/CustedNG/issues) | [QQ群](https://jq.qq.com/?_wv=1027&k=Hh5Yans4)  
-如果你对开发感兴趣，欢迎先加入[Custed Insider 内测群](https://jq.qq.com/?_wv=1027&k=b5Yfv0KF)。做出突出贡献者，会加入**Custed内的贡献者名单**。  
-如果你有一定的开发基础，愿意为Custed添砖java，欢迎先加入内测群，经过一定考核后，可以进入开发组。
+[Github Issues](https://github.com/CustedNG/CustedNG/issues) | [用户群](https://jq.qq.com/?_wv=1027&k=Hh5Yans4)  
+如果你对开发感兴趣，欢迎先加入用户群。做出突出贡献者，会加入**Custed内的贡献者名单**。  
+如果你有一定的开发基础，愿意为Custed添砖java，欢迎加入用户群联系管理员，经过一定考核后，可以进入开发组。
 
 
 ## 已知问题

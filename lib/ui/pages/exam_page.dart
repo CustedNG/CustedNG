@@ -12,7 +12,6 @@ import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
 import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ExamPage extends StatefulWidget {
   @override
@@ -20,11 +19,14 @@ class ExamPage extends StatefulWidget {
 }
 
 class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
+  final setting = locator<SettingStore>();
+  final exam = locator<ExamProvider>();
+  final hint = Center(
+      child: Text('正在使用缓存，可能考表不准确，可尝试下拉刷新\n',
+          style: TextStyle(color: Colors.red)));
+
   @override
   Widget build(BuildContext context) {
-    final setting = locator<SettingStore>();
-    final exam = Provider.of<ExamProvider>(context);
-
     Widget content = SizedBox();
 
     // 三种特殊情况：
@@ -37,11 +39,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       final list = <Widget>[];
 
       if (exam.useCache) {
-        final hint = '正在使用缓存，可能考表不准确，可尝试下拉刷新\n';
-
-        list.add(
-          Center(child: Text(hint, style: TextStyle(color: Colors.red))),
-        );
+        list.add(hint);
       }
 
       for (JwExamRows eachExam in rows) {
@@ -109,7 +107,6 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       }
 
       content = ListView(
-        physics: BouncingScrollPhysics(),
         children: [
           SizedBox(height: 17),
           ...list,
@@ -122,24 +119,22 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
           child: Text(exam.data == null ? '暂时无法获取考场信息' : '没有考试啦～'),
         );
       }
+    }
 
-      content = RefreshIndicator(
-        child: content,
+    return Scaffold(
+      body: RefreshIndicator(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 17),
+          child: content,
+        ),
         onRefresh: () async {
           await exam.refreshData();
           if (exam.failed) {
-            showSnackBar(context, '刷新成功');
+            showSnackBar(context, '刷新失败');
           } else {
             showSnackBar(context, '刷新成功');
           }
         },
-      );
-    }
-
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(left: 27, right: 27),
-        child: content,
       ),
       appBar: NavBar.material(
         context: context,
@@ -162,7 +157,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     }
 
     Future.delayed(
-      Duration(milliseconds: 777),
+      Duration(milliseconds: 377),
       () => showRoundDialog(
         context,
         '提示',

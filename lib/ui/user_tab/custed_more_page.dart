@@ -88,7 +88,7 @@ class CustedMorePage extends StatelessWidget {
       );
     }
     return SettingItem(
-      title: '检查更新',
+      title: '当前已是最新版',
       onTap: () => updateCheck(context, force: true),
     );
   }

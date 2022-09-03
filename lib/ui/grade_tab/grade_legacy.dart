@@ -202,6 +202,9 @@ class _GradeReportLegacyState extends State<GradeReportLegacy> {
     final dontCountElective = setting.dontCountElectiveCourseGrade.fetch();
 
     final noElectionGP = term?.averageGradePointNoElectiveCourse;
+    if (noElectionGP == null) {
+      return noResultString;
+    }
     final gp = dontCountElective
         ? (noElectionGP.isNaN
             ? noResultString
