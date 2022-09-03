@@ -45,17 +45,18 @@ class _SchoolCalendarPageState extends State<SchoolCalendarPage> {
         ],
       ),
       body: Stack(
+        alignment: AlignmentDirectional.center,
         children: [
-          Expanded(
-              child: DarkModeFilter(
+          DarkModeFilter(
             level: 160,
             child: ZoomableWidget(
               child: MyImage(cal.picUrl),
               maxScale: 5.7,
               minScale: 1,
             ),
-          )),
+          ),
           Positioned(
+            top: 0,
             child: Container(
               height: 47,
               decoration: BoxDecoration(
