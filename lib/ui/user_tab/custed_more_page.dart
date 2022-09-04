@@ -81,15 +81,11 @@ class CustedMorePage extends StatelessWidget {
 
   Widget _buildCheckUpdate(BuildContext context) {
     final newBuild = locator<AppProvider>().newest;
-    if (newBuild > BuildData.build) {
-      return SettingItem(
-        title: '发现新版本: $newBuild',
-        onTap: () => updateCheck(context, force: true),
-      );
-    }
+    final title = newBuild > BuildData.build ? '发现新版本: $newBuild' : '当前已是最新版';
+
     return SettingItem(
-      title: '当前已是最新版',
-      onTap: () => updateCheck(context, force: true),
+      title: title,
+      onTap: () => updateCheck(context),
     );
   }
 }

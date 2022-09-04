@@ -11,11 +11,17 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:r_upgrade/r_upgrade.dart';
 
-void updateCheck(BuildContext context, {bool force = false}) async {
+bool _isChecking = false;
+
+Future<void> updateCheck(BuildContext context, {bool force = false}) async {
+  if (_isChecking) return;
+  _isChecking = true;
+
   print('[UPDATE] Checking...');
   final update = locator<AppProvider>().config?.update;
 
-  _doUpdate(context, update, force: force);
+  await _doUpdate(context, update, force: force);
+  _isChecking = false;
 }
 
 Future<bool> isFileAvailable(String url) async {
