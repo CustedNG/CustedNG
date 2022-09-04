@@ -10,6 +10,7 @@ import cc.xuty.custed2.TimeUtil.toUserFriendlyTimeString
 import com.alibaba.fastjson.TypeReference
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.readValue
 import es.antonborri.home_widget.HomeWidgetProvider
 import okhttp3.Request
@@ -153,12 +154,14 @@ private class NextLessonUpdate(
             val currentTimeString = toUserFriendlyTimeString(currentTimeStamp)
             val lastSuccessfulUpdate = savedLastSuccessfulUpdate
 
-            val texts: List<String> = when (val resultWithFallback =
-                if (result.successful) result.result!! else savedLessonInfoResponse) {
-                null -> {
+            val resultWithFallback: String? =
+                if (result.successful) result.result!! else savedLessonInfoResponse
+
+            val texts: List<String> = when  {
+                resultWithFallback == null -> {
                     "更新失败|尝试Custed内|刷新课表后|重新添加该小部件".split('|')
                 }
-                "today have no more lesson" -> {
+                resultWithFallback.contains("today have no more lesson") -> {
                     "今天|没有课了|放松一下吧|(｡ì _ í｡)".split('|')
                 }
                 else -> {
@@ -249,12 +252,13 @@ private class NextLessonUpdate(
         companion object {
             @JvmStatic
             val SUCCESS = -1
+
             @JvmStatic
             val DB_OP_FAILED = 6
         }
 
         val code: Int? = null
-        val data: String? = null
+        val data: JsonNode? = null
         val message: String? = null
     }
 
@@ -286,12 +290,12 @@ private class NextLessonUpdate(
                 )
             }
 
-            when(serverResponse.code) {
+            when (serverResponse.code) {
                 ServerResponse.SUCCESS -> {
                     return NextScheduleFetchResult(
                         successful = true,
                         cancelled = false,
-                        result = serverResponse.data
+                        result = Shared.objectMapper.writeValueAsString(serverResponse.data)
                     )
                 }
                 ServerResponse.DB_OP_FAILED -> {
