@@ -14,7 +14,6 @@ import 'package:custed2/data/models/tiku_update.dart';
 import 'package:http/http.dart' show Client;
 
 class CustedService extends CatClient {
-  static const baseUrl = 'https://cust.app';
   static const ccUrl = 'https://cust.cc';
 
   Future<WeatherData> getWeather() async {
@@ -127,9 +126,7 @@ class CustedService extends CatClient {
   }
 
   Future<bool> isServiceAvailable() async {
-    final custApp = (await Client().head(baseUrl.uri)).statusCode == 200;
-    final backend = (await Client().head(backendUrl.uri)).statusCode == 200;
-    return custApp && backend;
+    return (await Client().head(backendUrl.uri)).statusCode == 200;
   }
 
   Future<TikuUpdate> getTikuUpdate() async {

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:custed2/core/open.dart';
 import 'package:flutter/material.dart';
-import 'package:share_extend/share_extend.dart';
 
 class Webview2BottomController extends ChangeNotifier {
   bool canGoBack = false;
@@ -77,14 +76,6 @@ class _Webview2BottomState extends State<Webview2Bottom> {
           IconButton(
             icon: const Icon(Icons.arrow_forward_ios),
             onPressed: canGoForward ? widget.onGoForward?.call : null,
-          ),
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () async {
-              // var url = await webview.evalJavascript('window.location.href');
-              final url = await widget.url();
-              ShareExtend.share(resolveUrl(url), 'text');
-            },
           ),
           IconButton(
             icon: const Icon(Icons.open_in_browser, size: 26),

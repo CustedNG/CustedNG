@@ -7,7 +7,7 @@ class DynamicColor {
   final Color light;
   final Color dark;
 
-  resolve(BuildContext context) {
+  Color resolve(BuildContext context) {
     return isDark(context) ? dark : light;
   }
 }

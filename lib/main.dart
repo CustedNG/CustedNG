@@ -41,6 +41,7 @@ Future<void> initApp() async {
 }
 
 void runInZone(Function body) {
+  final debugProvider = locator<DebugProvider>();
   final zoneSpec = ZoneSpecification(
     print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
       parent.print(zone, line);
@@ -48,7 +49,6 @@ void runInZone(Function body) {
       // `setState() or markNeedsBuild() called during build`
       // error.
       Future.delayed(Duration(milliseconds: 1), () {
-        final debugProvider = locator<DebugProvider>();
         debugProvider.addText(line);
       });
     },
@@ -57,7 +57,6 @@ void runInZone(Function body) {
   final onError = (Object obj, StackTrace stack) {
     print('error: $obj');
     Analytics.recordException(obj);
-    final debugProvider = locator<DebugProvider>();
     debugProvider.addError(obj);
     debugProvider.addError(stack);
   };
