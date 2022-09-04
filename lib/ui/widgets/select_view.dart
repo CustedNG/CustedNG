@@ -1,7 +1,7 @@
 import 'package:custed2/core/util/utils.dart';
 import 'package:flutter/material.dart';
 
-SelectView(IconData icon, String text, String id, BuildContext context) {
+Widget SelectView(IconData icon, String text, String id, BuildContext context) {
   return PopupMenuItem<String>(
       value: id,
       child: Row(
@@ -14,7 +14,7 @@ SelectView(IconData icon, String text, String id, BuildContext context) {
       ));
 }
 
-SelectViewText<T>(String text, T id) {
+Widget SelectViewText<T>(String text, T id) {
   return PopupMenuItem<T>(
       value: id,
       child: Row(

@@ -1,3 +1,4 @@
+import 'package:custed2/app.dart';
 import 'package:custed2/core/extension/color.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
@@ -199,6 +200,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
       return showSnackBar(context, '未能检测到课表！\n请登录并刷新课表后重试');
     }
     await custed.setPushScheduleNotification(v);
+    requestUpdateHomeWidget(enablePush: v);
   }
 
   void _showAppColorPicker(Color selected) {
@@ -229,8 +231,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
   }
 
   Widget _buildDarkModeRadio() {
-    final color =
-        MaterialStateProperty.all(primaryColor);
+    final color = MaterialStateProperty.all(primaryColor);
     final value = setting.darkMode.fetch();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,

@@ -72,8 +72,9 @@ class _ScheduleTabState extends State<ScheduleTab>
       }
       await scheduleProvider.updateScheduleData();
       showSnackBar(context, '更新成功');
-      requestUpdateHomeWidget(locator<UserDataStore>().username.fetch(),
-          locator<SettingStore>().pushNotification.fetch());
+      requestUpdateHomeWidget(
+          userName: locator<UserDataStore>().username.fetch(),
+          enablePush: locator<SettingStore>().pushNotification.fetch());
     } catch (e) {
       print('[SCHEDULE] Refresh failed: $e');
       showSnackBar(context, '更新失败');

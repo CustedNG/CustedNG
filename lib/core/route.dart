@@ -17,6 +17,4 @@ class AppRoute {
       ),
     );
   }
-
-  void exception(e) {}
 }

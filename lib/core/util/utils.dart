@@ -185,7 +185,8 @@ Color resolveWithBackground(BuildContext context) {
   return null;
 }
 
-Color get primaryColor => Color(locator<SettingStore>().appPrimaryColor.fetch());
+Color get primaryColor =>
+    Color(locator<SettingStore>().appPrimaryColor.fetch());
 
 /// 根据Appbar背景色判断使用黑/白色
 Color judgeWhiteOrBlack4AppbarContent(BuildContext context) {

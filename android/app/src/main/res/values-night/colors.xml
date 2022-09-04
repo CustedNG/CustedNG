@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="widgetBackgroundStart">#020202</color>
-    <color name="widgetBackgroundEnd">#1B1B1B</color>
+    <color name="widgetBackgroundStart">#002323</color>
+    <color name="widgetBackgroundEnd">#003023</color>
     <color name="widgetTitleText">#FFFFFF</color>
     <color name="widgetSummaryText">#BBBBBB</color>
 </resources>

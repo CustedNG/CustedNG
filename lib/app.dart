@@ -120,7 +120,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       if (Platform.isIOS && Platform.isAndroid) {
         await initPushService(userName);
         await requestUpdateHomeWidget(
-            userName, setting.pushNotification.fetch());
+            userName: userName, enablePush: setting.pushNotification.fetch());
       }
     }
   }
@@ -151,16 +151,17 @@ Future<String> getToken() async {
   return null;
 }
 
-Future<void> requestUpdateHomeWidget(String userName, bool enablePush) async {
+Future<void> requestUpdateHomeWidget({String userName, bool enablePush}) async {
   if (Platform.isIOS) await HomeWidget.setAppGroupId('group.com.tusi.app');
-  final setIdResult =
-      await HomeWidget.saveWidgetData('ecardId', userName ?? '');
-  print('[WIDGET] Set ecardId: $setIdResult');
+  if (userName != null) {
+    final setIdResult = await HomeWidget.saveWidgetData('ecardId', userName);
+    print('[WIDGET] Set ecardId: $setIdResult');
+  }
 
-  if (Platform.isAndroid) {
+  if (Platform.isAndroid && enablePush != null) {
     final setPushResult =
         await HomeWidget.saveWidgetData('enableLessonPush', enablePush);
-    print('[WIDGET] Set lessonPush: $setPushResult');
+    print('[WIDGET] Set lessonPush to [$enablePush]: $setPushResult');
     HomeWidget.updateWidget(
         name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
   }

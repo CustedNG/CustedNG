@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_background"
-    android:padding="40px"
+    android:padding="47px"
     android:orientation="vertical"
     tools:ignore="PxUsage">
 

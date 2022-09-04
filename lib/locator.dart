@@ -1,7 +1,6 @@
 import 'package:alice/alice.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:custed2/data/providers/app_provider.dart';
-import 'package:custed2/data/providers/banner_provider.dart';
 import 'package:custed2/data/providers/cet_avatar_provider.dart';
 import 'package:custed2/data/providers/exam_provider.dart';
 import 'package:custed2/data/providers/grade_provider.dart';
@@ -9,7 +8,6 @@ import 'package:custed2/data/providers/netdisk_provider.dart';
 import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/providers/weather_provider.dart';
-import 'package:custed2/data/store/banner_store.dart';
 import 'package:custed2/data/store/custom_lesson_store.dart';
 import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/data/store/exam_store.dart';
@@ -41,7 +39,6 @@ void setupLocatorForProviders() {
   locator.registerSingleton(WeatherProvider());
   locator.registerSingleton(CetAvatarProvider());
   locator.registerSingleton(NetdiskProvider());
-  locator.registerSingleton(BannerProvider());
   locator.registerSingleton(ExamProvider());
 }
 
@@ -70,12 +67,6 @@ Future<void> setupLocatorForStores() async {
 
   locator.registerSingletonAsync<GradeStore>(() async {
     final store = GradeStore();
-    await store.init();
-    return store;
-  });
-
-  locator.registerSingletonAsync<BannerStore>(() async {
-    final store = BannerStore();
     await store.init();
     return store;
   });
