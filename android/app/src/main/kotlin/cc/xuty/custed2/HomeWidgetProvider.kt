@@ -7,13 +7,17 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.RemoteViews
 import cc.xuty.custed2.TimeUtil.toUserFriendlyTimeString
+import com.alibaba.fastjson.TypeReference
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.module.kotlin.readValue
 import es.antonborri.home_widget.HomeWidgetProvider
 import okhttp3.Request
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.io.PrintWriter
+import java.lang.RuntimeException
 import java.util.concurrent.Future
 
 @Suppress("ArrayInDataClass")
@@ -69,7 +73,13 @@ class HomeWidgetProvider : HomeWidgetProvider() {
 
         previousTask =
             Shared.executor.submit {
-                NextLessonUpdate(eCardId, enablePush, context, appWidgetManager, appWidgetIds).updateNextLesson()
+                NextLessonUpdate(
+                    eCardId,
+                    enablePush,
+                    context,
+                    appWidgetManager,
+                    appWidgetIds
+                ).updateNextLesson()
             }
     }
 }
@@ -93,7 +103,8 @@ private class NextLessonUpdate(
         }
     }
 
-    private val sharedPreferences = context.getSharedPreferences("home_widget_config", Context.MODE_PRIVATE)
+    private val sharedPreferences =
+        context.getSharedPreferences("home_widget_config", Context.MODE_PRIVATE)
 
     private fun RemoteViews.setTextViewTextUnlessNull(resId: Int, content: String?) {
         if (content != null) {
@@ -142,7 +153,8 @@ private class NextLessonUpdate(
             val currentTimeString = toUserFriendlyTimeString(currentTimeStamp)
             val lastSuccessfulUpdate = savedLastSuccessfulUpdate
 
-            val texts: List<String> = when (val resultWithFallback = if (result.successful) result.result!! else savedLessonInfoResponse) {
+            val texts: List<String> = when (val resultWithFallback =
+                if (result.successful) result.result!! else savedLessonInfoResponse) {
                 null -> {
                     "更新失败|尝试Custed内|刷新课表后|重新添加该小部件".split('|')
                 }
@@ -190,7 +202,10 @@ private class NextLessonUpdate(
     }
 
 
-    private fun shouldNotify(manager: CourseReminderNotificationManager, schedule: NextSchedule): Boolean {
+    private fun shouldNotify(
+        manager: CourseReminderNotificationManager,
+        schedule: NextSchedule
+    ): Boolean {
         val startTime = ApproximateTime.parseOrNull(schedule.startTime)
         if (startTime != null) {
             val timeToStart = startTime.relativeDifferenceToInMinutes(ApproximateTime.now())
@@ -230,6 +245,20 @@ private class NextLessonUpdate(
         }
     }
 
+    private class ServerResponse {
+        companion object {
+            @JvmStatic
+            val SUCCESS = -1
+            @JvmStatic
+            val DB_OP_FAILED = 6
+        }
+
+        val code: Int? = null
+        val data: String? = null
+        val message: String? = null
+    }
+
+
     private fun fetchNextLessonBlocking(urlString: String): NextScheduleFetchResult {
         try {
             val request = Request.Builder()
@@ -243,7 +272,11 @@ private class NextLessonUpdate(
                 .takeIf { it.isSuccessful }
                 ?.body
                 ?.string()
-            if (responseString == null) {
+            val serverResponse = responseString
+                ?.takeIf { it.isNotBlank() }
+                ?.let { Shared.objectMapper.readValue<ServerResponse>(it) }
+
+            if (serverResponse?.code == null) { // the server did not return a valid response
                 val failureMessage = "Server Returned ${response.code}"
                 logException(IOException(failureMessage))
                 return NextScheduleFetchResult(
@@ -252,12 +285,30 @@ private class NextLessonUpdate(
                     failureReason = failureMessage
                 )
             }
-            if (Thread.interrupted()) throw InterruptedException()
-            return NextScheduleFetchResult(
-                successful = true,
-                cancelled = false,
-                result = responseString
-            )
+
+            when(serverResponse.code) {
+                ServerResponse.SUCCESS -> {
+                    return NextScheduleFetchResult(
+                        successful = true,
+                        cancelled = false,
+                        result = serverResponse.data
+                    )
+                }
+                ServerResponse.DB_OP_FAILED -> {
+                    return NextScheduleFetchResult(
+                        successful = false,
+                        cancelled = false,
+                        failureReason = "请先刷新一次课表"
+                    )
+                }
+                else -> {
+                    return NextScheduleFetchResult(
+                        successful = false,
+                        cancelled = false,
+                        failureReason = "未知响应${serverResponse.code}: ${serverResponse.message}"
+                    )
+                }
+            }
         } catch (e: IOException) {
             e.printStackTrace()
             logException(e)
@@ -271,6 +322,13 @@ private class NextLessonUpdate(
             return NextScheduleFetchResult(
                 successful = false,
                 cancelled = true
+            )
+        } catch (e: RuntimeException) {
+            logException(e)
+            return NextScheduleFetchResult(
+                successful = false,
+                cancelled = false,
+                failureReason = "内部错误: $e"
             )
         }
     }
