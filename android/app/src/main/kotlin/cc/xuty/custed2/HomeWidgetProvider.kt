@@ -7,9 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.RemoteViews
 import cc.xuty.custed2.TimeUtil.toUserFriendlyTimeString
-import com.alibaba.fastjson.TypeReference
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.readValue
 import es.antonborri.home_widget.HomeWidgetProvider
@@ -18,7 +16,6 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.io.PrintWriter
-import java.lang.RuntimeException
 import java.util.concurrent.Future
 
 @Suppress("ArrayInDataClass")

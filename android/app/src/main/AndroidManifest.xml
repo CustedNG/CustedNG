@@ -58,7 +58,7 @@
 
         <receiver android:name=".HomeWidgetProvider"
             android:label="桌面课表"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="cc.xuty.custed2.UPDATE_WIDGET"/>
