@@ -401,6 +401,7 @@ class _ReportItem extends StatefulWidget {
 class __ReportItemState extends State<_ReportItem>
     with AutomaticKeepAliveClientMixin {
   bool isExpanded = false;
+  final now = DateTime.now();
 
   @override
   void initState() {
@@ -497,10 +498,16 @@ class __ReportItemState extends State<_ReportItem>
   Widget _buildScore(String score) {
     bool pass = score > 59;
     pass ??= true;
+    Color color = () {
+      if (now.month == 4 && now.day == 1) {
+        return Colors.blue;
+      }
+      return pass ? Colors.green : Colors.white;
+    }();
     return Container(
       child: Text(
         score,
-        style: TextStyle(color: pass ? Colors.green : Colors.white),
+        style: TextStyle(color: color),
       ),
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(

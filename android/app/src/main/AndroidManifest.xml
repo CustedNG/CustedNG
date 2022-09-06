@@ -70,7 +70,7 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/home_widget" />
         </receiver>
-        
+
         <!-- <meta-data
             android:name="miuiWidgetVersion"
             android:value="1" /> -->

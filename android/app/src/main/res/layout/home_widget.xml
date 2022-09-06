@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_background"
-    android:padding="47px"
+    android:padding="17dp"
     android:orientation="vertical"
     tools:ignore="PxUsage">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#03A9F4"
-        android:textSize="27sp"
+        android:textSize="23dp"
         android:textStyle="bold"
         tools:text="Time" />
 
@@ -42,8 +42,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
+                android:singleLine="true"
+                android:ellipsize = "marquee"
                 android:textColor="@color/widgetTitleText"
-                android:textSize="13sp"
+                android:textSize="11dp"
                 tools:text="Course" />
 
 
@@ -70,7 +72,7 @@
                 android:layout_marginStart="3dp"
                 android:maxLines="1"
                 android:textColor="@color/widgetTitleText"
-                android:textSize="13sp"
+                android:textSize="11dp"
                 tools:text="Position" />
 
         </LinearLayout>
@@ -95,7 +97,7 @@
                 android:layout_marginStart="3dp"
                 android:maxLines="1"
                 android:textColor="@color/widgetTitleText"
-                android:textSize="13sp"
+                android:textSize="11dp"
                 tools:text="Teacher" />
 
         </LinearLayout>
@@ -109,7 +111,7 @@
         android:layout_alignParentBottom="true"
         android:maxLines="2"
         android:textColor="@color/widgetSummaryText"
-        android:textSize="13sp"
+        android:textSize="11dp"
         tools:text="UpdateTime" />
 
 </RelativeLayout>

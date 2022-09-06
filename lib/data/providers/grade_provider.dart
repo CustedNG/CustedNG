@@ -2,9 +2,10 @@ import 'dart:math';
 
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/core/user/user.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/models/grade.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/grade_store.dart';
-import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 
 class GradeProvider extends BusyProvider {
@@ -24,15 +25,26 @@ class GradeProvider extends BusyProvider {
   }
 
   Future<void> safeOperation() async {
-    int standardMark = 70;
-    final settingStore = await locator.get<SettingStore>();
+    int standardMark = 90;
+    final now = DateTime.now();
 
-    if (settingStore.gradeSafeMode.fetch()) {
-      print('[GRADE] Using safe mode');
+    if (now.month == 4 && now.day == 1) {
+      showSnackBar(locator<AppProvider>().ctx, '叮～触发彩蛋：愚人节快乐');
+      print("[GRADE] Happy fools' day!");
+      print('''
+ _____           _     _       _             
+|  ___|__   ___ | |___( )   __| | __ _ _   _ 
+| |_ / _ \ / _ \| / __|/   / _` |/ _` | | | |
+|  _| (_) | (_) | \__ \   | (_| | (_| | |_| |
+|_|  \___/ \___/|_|___/    \__,_|\__,_|\__, |
+                                       |___/ 
+''');
 
       for (int i = 0; i < _grade.terms.length; i++) {
         var gradeDetails = _grade.terms[i].grades;
         for (int ii = 0; ii < gradeDetails.length; ii++) {
+          _grade.terms[i].averageGradePoint = randomGradePoint;
+          _grade.terms[i].averageGradePointNoElectiveCourse = randomGradePoint;
           if (gradeDetails[ii].mark < standardMark) {
             double safeMark = standardMark + Random().nextInt(10) + 0.0;
             _grade.terms[i].grades[ii].mark = safeMark;
@@ -40,8 +52,12 @@ class GradeProvider extends BusyProvider {
           }
         }
       }
+      _grade.averageGradePoint = randomGradePoint;
     }
   }
+
+  double get randomGradePoint =>
+      double.parse((4.0 + Random().nextDouble()).toStringAsFixed(3));
 
   Future<void> updateGradeData() async {
     await busyRun(_updateGradeData);
