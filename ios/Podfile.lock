@@ -28,8 +28,6 @@ PODS:
     - Flutter
   - r_upgrade (0.0.1):
     - Flutter
-  - share_extend (0.0.1):
-    - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
   - webview_cookie_manager (0.0.1):
@@ -50,7 +48,6 @@ DEPENDENCIES:
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - plain_notification_token (from `.symlinks/plugins/plain_notification_token/ios`)
   - r_upgrade (from `.symlinks/plugins/r_upgrade/ios`)
-  - share_extend (from `.symlinks/plugins/share_extend/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_cookie_manager (from `.symlinks/plugins/webview_cookie_manager/ios`)
   - wifi_ip (from `.symlinks/plugins/wifi_ip/ios`)
@@ -84,8 +81,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/plain_notification_token/ios"
   r_upgrade:
     :path: ".symlinks/plugins/r_upgrade/ios"
-  share_extend:
-    :path: ".symlinks/plugins/share_extend/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   webview_cookie_manager:
@@ -107,7 +102,6 @@ SPEC CHECKSUMS:
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   plain_notification_token: b36467dc91939a7b6754267c701bbaca14996ee1
   r_upgrade: 44d715c61914cce3d01ea225abffe894fd51c114
-  share_extend: b6748dc53695587891126a89533b862b92548c7b
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   webview_cookie_manager: eaf920722b493bd0f7611b5484771ca53fed03f7
   wifi_ip: a97652dceba35b28465dcf89781f300c91f22de7

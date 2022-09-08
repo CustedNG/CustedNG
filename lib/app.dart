@@ -117,7 +117,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
         return;
       }
 
-      if (Platform.isIOS && Platform.isAndroid) {
+      if (Platform.isIOS || Platform.isAndroid) {
         await initPushService(userName);
         await requestUpdateHomeWidget(
             userName: userName, enablePush: setting.pushNotification.fetch());
@@ -129,7 +129,7 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
 Future<void> initPushService(String userName) async {
   String token = await getToken();
   if (token == null) {
-    print('[Token] Get failed');
+    print('[TOKEN] Get failed');
     return;
   }
   await CustedService().sendToken(token, Platform.isIOS);
@@ -163,6 +163,7 @@ Future<void> requestUpdateHomeWidget({String userName, bool enablePush}) async {
         await HomeWidget.saveWidgetData('enableLessonPush', enablePush);
     print('[WIDGET] Set lessonPush to [$enablePush]: $setPushResult');
     HomeWidget.updateWidget(
-        name: 'HomeWidgetProvider', androidName: 'HomeWidgetProvider');
+        iOSName: 'HomeWidgetProvider',
+        qualifiedAndroidName: 'cc.xuty.custed2.HomeWidgetProvider');
   }
 }

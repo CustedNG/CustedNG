@@ -148,9 +148,9 @@ struct ScheduleLoader {
             return Schedule(teacher: "去放松一下吧", position: "没有课啦", course: "今天", time: "(｡ì _ í｡)", updateTime: date2String(Date(), dateFormat: "HH:mm"))
         }
         let jsonAll = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-        if (jsonAll["code"] as! Int != -1) {
-            let msg = jsonAll["messsage"] as! String
-            return Schedule(teacher: msg, position: "刷新失败", course: "抱歉", time: "请稍后再试", updateTime: date2String(Date(), dateFormat: "HH:mm"))
+        let code = jsonAll["code"] as! Int
+        if (code != -1) {
+            return Schedule(teacher: "错误码:\(code)", position: "刷新失败", course: "抱歉", time: "请稍后再试", updateTime: date2String(Date(), dateFormat: "HH:mm"))
         }
         let json = jsonAll["data"] as! [String: Any]
         let name = json["Name"] as! String
