@@ -35,6 +35,15 @@ data class ApproximateTime(
             calendar.timeInMillis = epochMillis
             return fromCalendar(calendar)
         }
+
+        /*
+         * 这个函数假定 [timeLiteral] 一定符合如下的格式：
+         * XX HH:MM
+         * 其中，XX可能是明天/后天/下周等非今日的限定词，HH:MM是24小时制的时间
+         */
+        fun isTimeLiteralContainingDeterminer(timeLiteral: String): Boolean {
+            return timeLiteral.trim().contains(' ')
+        }
     }
 
     fun toMinutes(): Int {

@@ -7,9 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.widget.RemoteViews
 import cc.xuty.custed2.TimeUtil.toUserFriendlyTimeString
-import com.alibaba.fastjson.TypeReference
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.module.kotlin.readValue
 import es.antonborri.home_widget.HomeWidgetProvider
@@ -209,6 +207,9 @@ private class NextLessonUpdate(
         manager: CourseReminderNotificationManager,
         schedule: NextSchedule
     ): Boolean {
+        if(ApproximateTime.isTimeLiteralContainingDeterminer(schedule.startTime)) {
+            return false
+        }
         val startTime = ApproximateTime.parseOrNull(schedule.startTime)
         if (startTime != null) {
             val timeToStart = startTime.relativeDifferenceToInMinutes(ApproximateTime.now())
