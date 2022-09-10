@@ -51,25 +51,10 @@
   </tr>
 </table>
 
-<table>
-  <tr>
-    <td>
-      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3497.PNG">
-    </td>
-    <td>
-		  <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3498.PNG">
-    </td>
-    <td>
-      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3499.PNG">
-    </td>
-    </td>
-  </tr>
-</table>
-
 
 ## 功能
 ✔️ 查课表、成绩  
-✔️ ~~充网费、一卡通~~
+✔️ ~~充网费、一卡通~~  
 ✔️ 教务快速登录  
 ✔️ 一键评教  
 ✔️ 四六级照片  

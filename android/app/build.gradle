@@ -53,18 +53,18 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-	        abiFilters 'armeabi', 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'       
+	        abiFilters 'arm64-v8a'
         }
     
-        manifestPlaceholders = [
-            JPUSH_PKGNAME : applicationId,
-            JPUSH_APPKEY : "09dc461a0f268ddb989152f6",
-            JPUSH_CHANNEL : "web",
-            XIAOMI_APPID : "MI-2882303761518813144",
-            XIAOMI_APPKEY : "MI-5601881368144",
-            MEIZU_APPKEY : "MZ-6894522c1f1049bc972ce4fa05a46d96",
-            MEIZU_APPID : "MZ-140751",
-        ]
+//        manifestPlaceholders = [
+//            JPUSH_PKGNAME : applicationId,
+//            JPUSH_APPKEY : "09dc461a0f268ddb989152f6",
+//            JPUSH_CHANNEL : "web",
+//            XIAOMI_APPID : "MI-2882303761518813144",
+//            XIAOMI_APPKEY : "MI-5601881368144",
+//            MEIZU_APPKEY : "MZ-6894522c1f1049bc972ce4fa05a46d96",
+//            MEIZU_APPID : "MZ-140751",
+//        ]
     }
 
     signingConfigs {

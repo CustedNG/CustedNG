@@ -67,7 +67,7 @@ Future<void> _doUpdate(
   final shouldShowDialog = force || priority >= 1;
 
   if (shouldShowDialog) {
-    if (version < BuildData.build) {
+    if (version <= BuildData.build) {
       if (force) {
         showSnackBar(context, '当前没有新版本');
       }

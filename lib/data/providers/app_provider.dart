@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:custed2/core/provider/provider_base.dart';
 import 'package:custed2/core/update.dart';
 import 'package:custed2/core/util/utils.dart';
@@ -48,6 +50,7 @@ class AppProvider extends ProviderBase {
   }
 
   bool get showRealUI {
+    if (Platform.isAndroid) return true;
     if (config == null) return true;
     final fakeBuilds = config.notShowRealUi;
     return !fakeBuilds.contains(BuildData.build);
