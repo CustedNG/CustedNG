@@ -10,7 +10,7 @@ class AppRoute {
   AppRoute({this.title, this.page});
 
   Future go(BuildContext context, {bool rootNavigator = false}) {
-    Analytics.recordView(title);
+    Analytics.recordView(title ?? '');
     return Navigator.of(context, rootNavigator: rootNavigator).push(
       MaterialPageRoute(
         builder: (_) => page,

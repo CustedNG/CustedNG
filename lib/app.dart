@@ -18,7 +18,9 @@ import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/widgets/setting_builder.dart';
+import 'package:custed2/ui/widgets/url_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:plain_notification_token/plain_notification_token.dart';
@@ -89,6 +91,8 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
   
     ''');
 
+    await agreeUserAgreement(context, setting);
+
     // 启动外围服务
     if (BuildMode.isRelease) {
       Analytics.init();
@@ -124,6 +128,27 @@ class _CustedState extends State<Custed> with AfterLayoutMixin<Custed> {
       }
     }
   }
+}
+
+Future<void> agreeUserAgreement(BuildContext context, SettingStore setting) async {
+  if (setting.userAgreement.fetch()) return;
+
+  showRoundDialog(
+      context,
+      '使用须知',
+      UrlText(
+        '是否已阅读并同意《 https://res.lolli.tech/service_agreement.txt 》',
+        replace: '用户协议',
+      ),
+      [
+        TextButton(onPressed: () => SystemNavigator.pop(), child: Text('否')),
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              setting.userAgreement.put(true);
+            },
+            child: Text('是')),
+      ]);
 }
 
 Future<void> initPushService(String userName) async {
