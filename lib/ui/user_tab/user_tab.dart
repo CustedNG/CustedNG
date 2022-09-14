@@ -1,6 +1,5 @@
 import 'package:custed2/app.dart';
 import 'package:custed2/core/extension/color.dart';
-import 'package:custed2/data/providers/schedule_provider.dart';
 import 'package:custed2/data/providers/user_provider.dart';
 import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
@@ -60,10 +59,9 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             rightBtn: buildSwitch(context, setting.useScheduleAsHome),
           ),
           SettingItem(
-            title: '隐藏周末',
+            title: '研究生课表',
             showArrow: false,
-            rightBtn: buildSwitch(context, setting.scheduleHideWeekend,
-                func: (v) => checkWeekendHaveLesson(v)),
+            rightBtn: buildSwitch(context, setting.isGraduate),
           ),
           SettingItem(
             title: '显示非当前周课程',
@@ -120,30 +118,6 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
         ],
       ),
     );
-  }
-
-  void checkWeekendHaveLesson(bool on) {
-    if (!on) return;
-    final schedule = locator<ScheduleProvider>().schedule;
-    for (var item in schedule.lessons) {
-      if (item.weekday > 5) {
-        showRoundDialog(context, '警告', Text('您的课表在周末有课，是否隐藏周末？'), [
-          TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(
-                '是',
-                style: TextStyle(color: Colors.red),
-              )),
-          TextButton(
-              onPressed: () {
-                setting.scheduleHideWeekend.put(false);
-                Navigator.of(context).pop();
-              },
-              child: Text('否'))
-        ]);
-        return;
-      }
-    }
   }
 
   Widget _buildAppColorPreview() {

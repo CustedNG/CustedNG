@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:custed2/data/store/user_data_store.dart';
-import 'package:encrypt/encrypt.dart';
 
 import 'package:convert/convert.dart';
 import 'package:custed2/core/extension/stringx.dart';

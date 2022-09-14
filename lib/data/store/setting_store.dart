@@ -51,6 +51,12 @@ class SettingStore with PersistentStore {
   StoreProperty<bool> get scheduleUseGradient =>
       property('scheduleUseGradient', defaultValue: true);
 
+  /// 是否同意了用户协议，因为没同意用户协议就不会进入app，
+  /// 所以可以用作判断是否进行过初始化设置
   StoreProperty<bool> get userAgreement =>
       property('userAgreement', defaultValue: false);
+
+  /// 是否是研究生
+  StoreProperty<bool> get isGraduate =>
+      property('isGraduate', defaultValue: false);
 }

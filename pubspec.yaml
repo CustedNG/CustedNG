@@ -65,7 +65,6 @@ dependencies:
   xiao_mi_push_plugin: ^2.0.0
   plain_notification_token: ^0.0.1
 
-  encrypt: ^5.0.1
   external_app_launcher2:
     git:
       url: https://github.com/CustedNG/external_app_launcher.git

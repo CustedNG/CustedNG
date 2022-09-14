@@ -3,12 +3,15 @@ import 'dart:math' as math;
 import 'package:custed2/core/provider/busy_provider.dart';
 import 'package:custed2/core/user/undergraduate_user.dart';
 import 'package:custed2/core/user/user.dart';
+import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/models/custom_schedule_profile.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
+import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/custom_lesson_store.dart';
 import 'package:custed2/data/store/custom_schedule_store.dart';
 import 'package:custed2/data/store/schedule_store.dart';
+import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 
 class ScheduleProvider extends BusyProvider {
@@ -94,6 +97,21 @@ class ScheduleProvider extends BusyProvider {
     if (customScheduleProfile == requestedProfile) {
       _useSchedule(schedule);
     }
+    autoHideWeek(schedule);
+  }
+
+  void autoHideWeek(Schedule schedule) {
+    var hideWeek = true;
+    for (var item in schedule.lessons) {
+      if (item.weekday > 5) {
+        hideWeek = false;
+        break;
+      }
+    }
+    locator<SettingStore>().scheduleHideWeekend.put(hideWeek);
+    final context = locator<AppProvider>().ctx;
+    showSnackBar(context,
+        '检测到您周末${hideWeek ? '没' : '有'}课，已自动${hideWeek ? '隐藏' : '显示'}周末课表');
   }
 
   Future<void> _useSchedule(Schedule schedule,

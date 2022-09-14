@@ -142,5 +142,15 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
               },
               child: Text('是')),
         ]);
+    
+    await showRoundDialog(context, '您是否是研究生？', SizedBox(), [
+      TextButton(onPressed: () => Navigator.of(context).pop(), child: Text('否')),
+      TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+            setting.isGraduate.put(true);
+          },
+          child: Text('是')),
+    ]);
   }
 }
