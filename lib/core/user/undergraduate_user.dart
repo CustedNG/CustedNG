@@ -26,7 +26,8 @@ class UndergraduateUser with CustUser implements User {
 
   @override
   Future<Schedule> getSchedule() async {
-    if (locator<AppProvider>().useKBPro || locator<SettingStore>().isGraduate.fetch()) {
+    if (locator<AppProvider>().useKBPro ||
+        locator<SettingStore>().isGraduate.fetch()) {
       final raw = await _jw.getSelfScheduleFromKBPro();
       return normalizeScheduleKBPro(raw);
     }

@@ -17,6 +17,6 @@ class UserProfile {
 
   @override
   String toString() {
-    return 'Profile<$displayName>';
+    return 'Profile<$studentNumber>';
   }
 }

@@ -112,6 +112,6 @@ class WeatherData {
 
   @override
   String toString() {
-    return '$city-$updateTime $wendu℃';
+    return '$updateTime $wendu℃';
   }
 }

@@ -108,10 +108,13 @@ class ScheduleProvider extends BusyProvider {
         break;
       }
     }
-    locator<SettingStore>().scheduleHideWeekend.put(hideWeek);
-    final context = locator<AppProvider>().ctx;
-    showSnackBar(context,
-        '检测到您周末${hideWeek ? '没' : '有'}课，已自动${hideWeek ? '隐藏' : '显示'}周末课表');
+    
+    final store = locator<SettingStore>().scheduleHideWeekend;
+    if (hideWeek != store.fetch()) {
+      store.put(hideWeek);
+      showSnackBar(locator<AppProvider>().ctx,
+          '检测到您周末${hideWeek ? '没' : '有'}课，已自动${hideWeek ? '隐藏' : '显示'}周末课表');
+    }
   }
 
   Future<void> _useSchedule(Schedule schedule,
