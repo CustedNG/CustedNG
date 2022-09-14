@@ -10,7 +10,9 @@ import 'package:custed2/ui/nav_tab/nav_tab.dart';
 import 'package:custed2/ui/schedule_tab/schedule_tab.dart';
 import 'package:custed2/ui/theme.dart';
 import 'package:custed2/ui/user_tab/user_tab.dart';
+import 'package:custed2/ui/widgets/url_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppFrame extends StatefulWidget {
   @override
@@ -110,11 +112,35 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   @override
   Future<void> afterFirstLayout(BuildContext context) async {
     locator<AppProvider>().setContext(context);
+    await agreeUserAgreement(context, setting);
     try {
       await CustedService().isServiceAvailable();
     } catch (e) {
       showSnackBar(context, '无法连接到服务器，请等待修复');
       rethrow;
     }
+  }
+
+  Future<void> agreeUserAgreement(
+      BuildContext context, SettingStore setting) async {
+    if (setting.userAgreement.fetch()) return;
+    print('[USER] User Agreement not agreed');
+
+    await showRoundDialog(
+        context,
+        '使用须知',
+        UrlText(
+          '是否已阅读并同意《 https://res.lolli.tech/service_agreement.txt 》？',
+          replace: '用户协议',
+        ),
+        [
+          TextButton(onPressed: () => SystemNavigator.pop(), child: Text('否')),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setting.userAgreement.put(true);
+              },
+              child: Text('是')),
+        ]);
   }
 }

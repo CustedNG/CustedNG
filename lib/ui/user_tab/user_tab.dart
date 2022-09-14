@@ -66,12 +66,6 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
                 func: (v) => checkWeekendHaveLesson(v)),
           ),
           SettingItem(
-            title: '绩点不计选修',
-            showArrow: false,
-            rightBtn:
-                buildSwitch(context, setting.dontCountElectiveCourseGrade),
-          ),
-          SettingItem(
             title: '显示非当前周课程',
             showArrow: false,
             rightBtn: buildSwitch(context, setting.showInactiveLessons),
@@ -111,6 +105,12 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
           SizedBox(height: 10.0),
           Text('更多'),
           SizedBox(height: 10.0),
+          SettingItem(
+            title: '绩点不计选修',
+            showArrow: false,
+            rightBtn:
+                buildSwitch(context, setting.dontCountElectiveCourseGrade),
+          ),
           SettingItem(
             title: '持续自动更新天气',
             showArrow: false,

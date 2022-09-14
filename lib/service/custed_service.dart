@@ -6,7 +6,7 @@ import 'package:custed2/data/models/custed_config.dart';
 import 'package:custed2/data/models/jw_exam.dart';
 import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
-import 'package:custed2/data/models/kbpro_schedule.dart';
+import 'package:custed2/data/models/jw_kbpro.dart';
 import 'package:custed2/res/constants.dart';
 import 'package:custed2/core/service/cat_client.dart';
 import 'package:custed2/data/models/custed_weather.dart';
@@ -115,14 +115,12 @@ class CustedService extends CatClient {
     return !custedResp.failed;
   }
 
-  Future<List<KBProSchedule>> getCacheScheduleKBPro() async {
+  Future<List<JwKbpro>> getCacheScheduleKBPro() async {
     final resp = await get('$backendUrl/scheduleKBPro');
     final custedResp = BackendResp.fromJson(json.decode(resp.body));
     print('[SERVICE] Get kbpro: ${custedResp.message}');
     if (custedResp.failed) return null;
-    return (custedResp.data as List)
-        .map((e) => KBProSchedule.fromJson(e))
-        .toList();
+    return (custedResp.data as List).map((e) => JwKbpro.fromJson(e)).toList();
   }
 
   Future<bool> isServiceAvailable() async {

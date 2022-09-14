@@ -14,7 +14,7 @@ import 'package:custed2/data/models/jw_response.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
 import 'package:custed2/data/models/jw_student_info.dart';
 import 'package:custed2/data/models/jw_week_time.dart';
-import 'package:custed2/data/models/kbpro_schedule.dart';
+import 'package:custed2/data/models/jw_kbpro.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/locator.dart';
 import 'package:custed2/service/custed_service.dart';
@@ -109,7 +109,7 @@ class JwService extends WrdvpnBasedService {
     }
   }
 
-  Future<List<KBProSchedule>> getSelfScheduleFromKBPro() async {
+  Future<List<JwKbpro>> getSelfScheduleFromKBPro() async {
     if (!locator<AppProvider>().showRealUI) {
       print('[KBPRO] Using fake data');
       return await custed.getCacheScheduleKBPro();
@@ -117,28 +117,23 @@ class JwService extends WrdvpnBasedService {
 
     final resp = await xRequest(
       'GET',
-      'https://kbpro.cust.edu.cn/Schedule/Buser',
+      'https://kbpro.cust.edu.cn/Schedule/getSchedulejson',
       headers: {'content-type': 'application/json;charset=utf-8'},
       expireTest: (res) => res.body.length < 10,
     );
 
-    final key = Key.fromUtf8('ytdxcmqwbQS=@phr');
-    final iv = IV.fromLength(16);
-    final encrypter = Encrypter(AES(key, mode: AESMode.ecb));
-    final result = encrypter.decrypt(Encrypted.fromBase64(resp.body), iv: iv);
-
     if (resp.statusCode == 200 && resp.body.length > 50) {
-      await custed.updateKBPro(result);
+      await custed.updateKBPro(resp.body);
     } else {
       final cache = await custed.getCacheScheduleKBPro();
       print('[KBPRO] Use cache from backend');
       if (cache != null) return cache;
     }
 
-    final data = json.decode(result);
-    final List<KBProSchedule> list = [];
+    final data = json.decode(resp.body);
+    final List<JwKbpro> list = [];
     for (var item in data) {
-      list.add(KBProSchedule.fromJson(item));
+      list.add(JwKbpro.fromJson(item));
     }
     return list;
   }

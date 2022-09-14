@@ -83,7 +83,8 @@ class ScheduleLessonWidget extends StatelessWidget {
                 maxLines: 2, style: textStyle, textAlign: TextAlign.center))));
     addDivider(content);
     final displayLesson =
-        lesson.roomRaw.replaceFirst('[理论]', '理').replaceFirst('[实验]', '实');
+        lesson.roomRaw?.replaceFirst('[理论]', '理')?.replaceFirst('[实验]', '实') ??
+            '';
     content.add(SizedBox(
       height: 37,
       child: Center(

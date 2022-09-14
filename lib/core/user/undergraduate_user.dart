@@ -11,7 +11,7 @@ import 'package:custed2/data/models/grade_detail.dart';
 import 'package:custed2/data/models/grade_term.dart';
 import 'package:custed2/data/models/jw_grade_data.dart';
 import 'package:custed2/data/models/jw_schedule.dart';
-import 'package:custed2/data/models/kbpro_schedule.dart';
+import 'package:custed2/data/models/jw_kbpro.dart';
 import 'package:custed2/data/models/schedule.dart';
 import 'package:custed2/data/models/schedule_lesson.dart';
 import 'package:custed2/data/providers/app_provider.dart';
@@ -45,8 +45,7 @@ class UndergraduateUser with CustUser implements User {
     return normalizeSchedule(rawSchedule);
   }
 
-  static Future<Schedule> normalizeScheduleKBPro(
-      List<KBProSchedule> raw) async {
+  static Future<Schedule> normalizeScheduleKBPro(List<JwKbpro> raw) async {
     final result = Schedule()
       ..createdAt = DateTime.now()
       ..versionHash = await computeJsonHashAsync(raw)
@@ -54,24 +53,38 @@ class UndergraduateUser with CustUser implements User {
       ..lessons = [];
 
     for (var rawLesson in raw) {
-      final lesson = ScheduleLesson()
-        ..weeks = rawLesson.sKZC.parseWeeks(rawLesson.sKZCTYPE)
-        ..name = rawLesson.kCMC
-        ..classes = [rawLesson.jXBMC]
-        ..startTime = rawLesson.kSJC.startTime
-        ..endTime = rawLesson.jSJC.endTime
-        ..type = ScheduleLessonType.general
-        ..weekday = int.parse(rawLesson.wEEK)
-        ..classRaw = rawLesson.jXBMC
-        ..startSection = int.parse(rawLesson.kSJC)
-        ..endSection = int.parse(rawLesson.jSJC)
-        ..roomRaw = rawLesson.jSMC
-        ..teacherName = rawLesson.jSXM
-        ..classRaw = rawLesson.jXBMC;
+      final startSection = int.parse(rawLesson.beginSection);
+      final endSection = int.parse(rawLesson.endSection);
+      final sectionLength = endSection - startSection;
+      final roomName = rawLesson.classroomName ?? '未知';
+      final weeks = rawLesson.weekDescription.parseWeeks;
+      final weekday = int.parse(rawLesson.dayOfWeek);
 
-      result.lessons.add(lesson);
+      for (var idx = 0; idx < sectionLength; idx += 2) {
+        final startSec = startSection + idx;
+        final endSec = startSec + 1;
+        final startTime = startSec.toString().startTime;
+        final endTime = endSec.toString().endTime;
+        final lesson = ScheduleLesson()
+          ..weeks = weeks
+          ..name = rawLesson.courseName
+          ..classes = []
+          ..startTime = startTime
+          ..endTime = endTime
+          ..type = ScheduleLessonType.general
+          ..weekday = weekday
+          ..classRaw = ''
+          ..startSection = startSec
+          ..endSection = endSec
+          ..roomRaw = roomName
+          ..room = roomName
+          ..teacherName = rawLesson.teacherName;
+
+        result.lessons.add(lesson);
+      }
     }
 
+    final removeIdxes = <int>[];
     for (var idx1 = 0; idx1 < result.lessons.length - 1; idx1++) {
       for (var idx2 = idx1 + 1; idx2 < result.lessons.length; idx2++) {
         final l1 = result.lessons[idx1];
@@ -82,10 +95,19 @@ class UndergraduateUser with CustUser implements User {
             l1.endSection == l2.endSection &&
             l1.roomRaw == l2.roomRaw &&
             l1.weekday == l2.weekday) {
-          result.lessons[idx1].teacherName += ' ${l2.teacherName}';
-          result.lessons.removeAt(idx2);
+          result.lessons[idx1].teacherName += '\n${l2.teacherName}';
+          if (!removeIdxes.contains(idx2)) {
+            removeIdxes.add(idx2);
+          }
         }
       }
+    }
+
+    // 从大到小排序
+    removeIdxes.sort();
+    // 先反转list，防止先删除前面的，导致后面idx改变
+    for (var idx in removeIdxes.reversed) {
+      result.lessons.removeAt(idx);
     }
 
     return result;
@@ -270,23 +292,23 @@ class SectionTime {
 extension Section2Time on String {
   String get startTime {
     switch (this) {
-      case '01':
+      case '1':
         return '8:00';
-      case '02':
+      case '2':
         return '8:50';
-      case '03':
+      case '3':
         return '10:05';
-      case '04':
+      case '4':
         return '10:50';
-      case '05':
+      case '5':
         return '13:30';
-      case '06':
+      case '6':
         return '14:20';
-      case '07':
+      case '7':
         return '15:35';
-      case '08':
+      case '8':
         return '16:25';
-      case '09':
+      case '9':
         return '18:00';
       case '10':
         return '18:50';
@@ -301,23 +323,23 @@ extension Section2Time on String {
 
   String get endTime {
     switch (this) {
-      case '01':
+      case '1':
         return '8:45';
-      case '02':
+      case '2':
         return '9:35';
-      case '03':
+      case '3':
         return '10:50';
-      case '04':
+      case '4':
         return '11:40';
-      case '05':
+      case '5':
         return '14:15';
-      case '06':
+      case '6':
         return '15:05';
-      case '07':
+      case '7':
         return '16:20';
-      case '08':
+      case '8':
         return '17:10';
-      case '09':
+      case '9':
         return '18:45';
       case '10':
         return '19:35';
@@ -330,21 +352,12 @@ extension Section2Time on String {
     }
   }
 
-  List<int> parseWeeks(String type) {
-    if (this.length == 2) {
-      return [int.parse(this)];
-    }
+  List<int> get parseWeeks {
     List<int> weeks = [];
-    for (var i = 0; i < this.length; i++) {
+    for (var i = 0; i < length; i++) {
       if (this[i] == '1') {
-        weeks.add(i + 1);
+        weeks.add(i);
       }
-    }
-    if (type == '1') {
-      weeks.removeWhere((ele) => ele % 2 == 0);
-    }
-    if (type == '2') {
-      weeks.removeWhere((ele) => ele % 2 == 1);
     }
     return weeks;
   }
