@@ -145,4 +145,11 @@ class CustedService extends CatClient {
     }
     return null;
   }
+
+  Future<bool> remoteHaveSchedule(String id) async {
+    final resp = await get('$backendUrl/schedule/next/$id');
+    final custedResp = BackendResp.fromJson(json.decode(resp.body));
+    print('[SERVICE] Check schedule: ${custedResp.message}');
+    return !custedResp.failed;
+  }
 }

@@ -178,7 +178,7 @@ struct ScheduleView: View {
             DetailItem(icon: "person", text: entry.data.teacher, color: dynamicColor(color: textColor).opacity(0.7))
             DetailItem(icon: "clock", text: entry.data.time, color: dynamicColor(color: textColor).opacity(0.7))
             Spacer()
-            Text("更新于\(entry.data.updateTime)")
+            Text("于 \(entry.data.updateTime)")
                 .font(.system(.caption2))
                 .foregroundColor(dynamicColor(color: textColor).opacity(0.6))
                 .frame(width: .none, height: .none, alignment: .bottom)

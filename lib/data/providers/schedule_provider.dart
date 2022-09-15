@@ -108,7 +108,7 @@ class ScheduleProvider extends BusyProvider {
         break;
       }
     }
-    
+
     final store = locator<SettingStore>().scheduleHideWeekend;
     if (hideWeek != store.fetch()) {
       store.put(hideWeek);

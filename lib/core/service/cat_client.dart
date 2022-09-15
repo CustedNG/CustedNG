@@ -40,7 +40,7 @@ class CatClient {
     );
     saveCookies(response);
     final host = request.url.host;
-    if (!host.contains('lolli.tech') || !BuildMode.isRelease) {
+    if (!host.contains('cust.team') || !BuildMode.isRelease) {
       _alice.onHttpResponse(response);
     }
     return await followRedirect(response, maxRedirects, body: body);
