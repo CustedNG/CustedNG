@@ -143,15 +143,17 @@ struct ScheduleLoader {
     }
 
     static func getScheduleInfo(fromData data: Foundation.Data) -> Schedule {
-        let str = String(decoding: data, as: UTF8.self)
-        if (str == "today have no more lesson") {
-            return Schedule(teacher: "去放松一下吧", position: "没有课啦", course: "今天", time: "(｡ì _ í｡)", updateTime: date2String(Date(), dateFormat: "HH:mm"))
-        }
         let jsonAll = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
         let code = jsonAll["code"] as! Int
         if (code != -1) {
             return Schedule(teacher: "错误码:\(code)", position: "刷新失败", course: "抱歉", time: "请稍后再试", updateTime: date2String(Date(), dateFormat: "HH:mm"))
         }
+        
+        let str = jsonAll["data"] as! String
+        if (str.contains("today have no more lesson")) {
+            return Schedule(teacher: "去放松一下吧", position: "没有课啦", course: "今天", time: "(｡ì _ í｡)", updateTime: date2String(Date(), dateFormat: "HH:mm"))
+        }
+        
         let json = jsonAll["data"] as! [String: Any]
         let name = json["Name"] as! String
         let teacher = json["Teacher"] as! String
@@ -178,7 +180,7 @@ struct ScheduleView: View {
             DetailItem(icon: "person", text: entry.data.teacher, color: dynamicColor(color: textColor).opacity(0.7))
             DetailItem(icon: "clock", text: entry.data.time, color: dynamicColor(color: textColor).opacity(0.7))
             Spacer()
-            Text("于 \(entry.data.updateTime)")
+            Text("更新 \(entry.data.updateTime)")
                 .font(.system(.caption2))
                 .foregroundColor(dynamicColor(color: textColor).opacity(0.6))
                 .frame(width: .none, height: .none, alignment: .bottom)
