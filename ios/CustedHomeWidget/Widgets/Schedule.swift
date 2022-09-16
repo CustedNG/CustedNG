@@ -12,27 +12,6 @@ import Intents
 private let widgetGroupId = "group.com.tusi.app"
 private let widgetData = UserDefaults.init(suiteName: widgetGroupId)
 
-extension UIColor {
-    var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-
-        return (red, green, blue, alpha)
-    }
-}
-
-extension Color {
-    init(uiColor: UIColor) {
-        self.init(red: Double(uiColor.rgba.red),
-                  green: Double(uiColor.rgba.green),
-                  blue: Double(uiColor.rgba.blue),
-                  opacity: Double(uiColor.rgba.alpha))
-    }
-}
-
 func date2String(_ date:Date, dateFormat:String = "yyyy-MM-dd HH:mm:ss") -> String {
     let formatter = DateFormatter()
     formatter.locale = Locale.init(identifier: "zh_CN")
@@ -41,11 +20,13 @@ func date2String(_ date:Date, dateFormat:String = "yyyy-MM-dd HH:mm:ss") -> Stri
     return date
 }
 
+let demoSchedule = Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "14:00", updateTime: "13:00")
+
 struct ScheduleProvider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (ScheduleEntry) -> Void) {
         let entry = ScheduleEntry(
             date: Date(),
-            data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "14:00", updateTime: "13:00")
+            data: demoSchedule
         )
         completion(entry)
     }
@@ -75,7 +56,7 @@ struct ScheduleProvider: TimelineProvider {
     func placeholder(in context: Context) -> ScheduleEntry {
         return ScheduleEntry(
             date: Date(),
-            data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "13:00", updateTime: "13:00")
+            data: demoSchedule
         )
     }
 }
@@ -85,16 +66,9 @@ struct ScheduleEntry: TimelineEntry {
     public let data: Schedule
 }
 
-struct SchedulePlaceholderView : View {
-    //这里是PlaceholderView - 提醒用户选择部件功能
-    var body: some View {
-        Text("人类的悲欢并不相通，我只觉得他们吵闹。")
-    }
-}
-
 struct ScheduleEntryView : View {
-    //这里是Widget的类型判断
-    @Environment(\.widgetFamily) var family: WidgetFamily
+    @Environment(\.widgetFamily)
+    var family: WidgetFamily
     var entry: ScheduleProvider.Entry
     
     @ViewBuilder
@@ -143,17 +117,25 @@ struct ScheduleLoader {
     }
 
     static func getScheduleInfo(fromData data: Foundation.Data) -> Schedule {
-        let jsonAll = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-        let code = jsonAll["code"] as! Int
-        if (code != -1) {
-            return Schedule(teacher: "错误码:\(code)", position: "刷新失败", course: "抱歉", time: "请稍后再试", updateTime: date2String(Date(), dateFormat: "HH:mm"))
-        }
-        
-        let str = jsonAll["data"] as! String
+        let str = String(decoding: data, as: UTF8.self)
         if (str.contains("today have no more lesson")) {
             return Schedule(teacher: "去放松一下吧", position: "没有课啦", course: "今天", time: "(｡ì _ í｡)", updateTime: date2String(Date(), dateFormat: "HH:mm"))
         }
         
+        let dateStr = date2String(Date(), dateFormat: "HH:mm")
+
+        let jsonAll = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+        let code = jsonAll["code"] as! Int
+        if (code != -1) {
+            switch (code) {
+            case 6:
+                return Schedule(teacher: "成功刷新课表", position: "请在app", course: "失败", time: "再添加小部件", updateTime: dateStr)
+            default:
+                let msg = jsonAll["message"] as! String? ?? ""
+                return Schedule(teacher: "错误码:\(code)", position: "刷新失败", course: "抱歉", time: msg, updateTime: dateStr)
+            }
+        }
+
         let json = jsonAll["data"] as! [String: Any]
         let name = json["Name"] as! String
         let teacher = json["Teacher"] as! String
@@ -163,27 +145,25 @@ struct ScheduleLoader {
     }
 }
 
+let bgColor = DynamicColor(dark: UIColor(.black), light: UIColor(.white))
+let textColor = DynamicColor(dark: UIColor(.white), light: UIColor(.black))
+
 struct ScheduleView: View {
     let entry: ScheduleEntry
-    
-    let bgColor = DynamicColor(dark: UIColor(.black), light: UIColor(.white))
-    let textColor = DynamicColor(dark: UIColor(.white), light: UIColor(.black))
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4.7) {
             Text(entry.data.course)
                 .font(.system(.title3))
                 .foregroundColor(.blue)
-                .frame(width: .none, height: .none, alignment: .topLeading)
             Spacer()
             DetailItem(icon: "location", text: entry.data.position, color: dynamicColor(color: textColor).opacity(0.7))
             DetailItem(icon: "person", text: entry.data.teacher, color: dynamicColor(color: textColor).opacity(0.7))
             DetailItem(icon: "clock", text: entry.data.time, color: dynamicColor(color: textColor).opacity(0.7))
             Spacer()
-            Text("更新 \(entry.data.updateTime)")
+            Text("更新于 \(entry.data.updateTime)")
                 .font(.system(.caption2))
                 .foregroundColor(dynamicColor(color: textColor).opacity(0.6))
-                .frame(width: .none, height: .none, alignment: .bottom)
         }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding()
         .background(dynamicColor(color: bgColor))
@@ -192,14 +172,14 @@ struct ScheduleView: View {
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
+        let date = Date()
         ScheduleView(
             entry: ScheduleEntry(
-                date: Date(),
-                data: Schedule(teacher: "张三", position: "西区主教501", course: "概率论", time: "13:00", updateTime: date2String(Date(), dateFormat: "HH:mm")
-                )
+                date: date,
+                data: demoSchedule
             )
         )
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
 
@@ -228,8 +208,8 @@ struct DetailItem: View {
     let color: Color
     
     var body: some View {
-        HStack() {
-            Image(systemName: icon).resizable().foregroundColor(color).frame(width: 12, height: 12, alignment: .center)
+        HStack(spacing: 5.7) {
+            Image(systemName: icon).resizable().foregroundColor(color).frame(width: 11, height: 11, alignment: .center)
             Text(text)
                 .font(.system(.caption2))
                 .foregroundColor(color)
