@@ -70,6 +70,11 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
             rightBtn: buildSwitch(context, setting.showInactiveLessons),
           ),
           SettingItem(
+            title: '隐藏周末',
+            showArrow: false,
+            rightBtn: buildSwitch(context, setting.scheduleHideWeekend),
+          ),
+          SettingItem(
             title: '推送上课通知',
             showArrow: false,
             rightBtn: buildSwitch(context, setting.pushNotification,

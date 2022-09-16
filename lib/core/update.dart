@@ -60,6 +60,8 @@ Future<void> _doUpdate(
   final version = Platform.isAndroid ? versions.android : versions.ios;
   final url = Platform.isAndroid ? urls.android : urls.ios;
   final priority = Platform.isAndroid ? priorities.android : priorities.ios;
+  final changelog =
+      Platform.isAndroid ? update.changelog.android : update.changelog.ios;
 
   print('[UPDATE] Newest: $version, Current: ${BuildData.build}');
 
@@ -80,7 +82,7 @@ Future<void> _doUpdate(
     }
 
     if (priority == 1) {
-      showSnackBarWithAction(context, 'Custed有更新啦，Ver：${version}', '更新',
+      showSnackBarWithAction(context, '有更新啦，Ver：${version}\n${changelog}', '更新',
           () => _update(context, url, version));
       return;
     }
@@ -88,7 +90,7 @@ Future<void> _doUpdate(
     showRoundDialog(
       context,
       'v1.0.${version}',
-      Text(update.changelog.ios),
+      Text(changelog),
       [
         TextButton(
           child: Text('取消'),
