@@ -10,7 +10,6 @@ import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
-import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/material.dart';
 
 class ExamPage extends StatefulWidget {
@@ -127,26 +126,28 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
           padding: EdgeInsets.symmetric(horizontal: 17),
           child: content,
         ),
-        onRefresh: () async {
-          await exam.refreshData();
-          if (exam.failed) {
-            showSnackBar(context, '刷新失败');
-          } else {
-            showSnackBar(context, '刷新成功');
-          }
-        },
+        onRefresh: _onRefresh,
       ),
       appBar: NavBar.material(
         context: context,
-        middle: NavbarMiddle(textAbove: '考试安排', textBelow: '可下拉刷新'),
+        middle: Text('考试安排'),
         trailing: [
           IconButton(
-            icon: Icon(Icons.info),
-            onPressed: () => showSnackBar(context, '点击卡片可添加至课表'),
+            icon: Icon(Icons.refresh),
+            onPressed: _onRefresh,
           )
         ],
       ),
     );
+  }
+
+  Future<void> _onRefresh() async {
+    await exam.refreshData();
+    if (exam.failed) {
+      showSnackBar(context, '刷新失败');
+    } else {
+      showSnackBar(context, '刷新成功');
+    }
   }
 
   @override

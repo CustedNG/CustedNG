@@ -2,7 +2,6 @@
 // ignore_for_file: avoid_print
 
 /// 使用示例
-/// 请在使用前，在本项目根目录创建[countly_config]文件，按行填入URL和KEY。
 /// `./make.dart build`编译Android、iOS
 /// `./make.dart run profile`以profile模式运行
 
@@ -76,7 +75,7 @@ Future<void> updateBuildData() async {
 }
 
 void dartFormat() {
-  final result = Process.runSync('dart', ['format', '.']);
+  final result = Process.runSync('fvm', ['dart', 'format', '.']);
   print('\n' + result.stdout);
   if (result.exitCode != 0) {
     print(result.stderr);
@@ -85,7 +84,7 @@ void dartFormat() {
 }
 
 void flutterRun(String mode) {
-  Process.start('flutter', ['run', mode == null ? '' : '--$mode'],
+  Process.start('fvm', ['flutter', 'run', mode == null ? '' : '--$mode'],
       mode: ProcessStartMode.inheritStdio, runInShell: true);
 }
 
@@ -93,6 +92,7 @@ Future<void> flutterBuild(String source, String target, bool isAndroid) async {
   final build = await getGitCommitCount();
 
   final args = [
+    'flutter',
     'build',
     isAndroid ? 'apk' : 'ipa',
     '--target-platform=android-arm64',
@@ -102,7 +102,7 @@ Future<void> flutterBuild(String source, String target, bool isAndroid) async {
   ];
   if (!isAndroid) args.removeAt(2);
   print('Building with args: ${args.join(' ')}');
-  final buildResult = await Process.run('flutter', args, runInShell: true);
+  final buildResult = await Process.run('fvm', args, runInShell: true);
   final exitCode = buildResult.exitCode;
 
   if (exitCode == 0) {

@@ -49,3 +49,4 @@ ios/build
 models.jsonc
 .custed
 .fvm/flutter_sdk
+.fvm
