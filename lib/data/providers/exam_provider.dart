@@ -94,11 +94,13 @@ class ExamProvider extends BusyProvider {
         data = cacheExamData;
         useCache = true;
       }
+      rethrow;
     } finally {
+      if (data != null) {
+        data.rows.sort((a, b) => sortExamByTime(a, b));
+      }
       setBusyState(false);
     }
-    if (data == null) return;
-    data.rows.sort((a, b) => sortExamByTime(a, b));
   }
 
   void startAutoRefresh() {

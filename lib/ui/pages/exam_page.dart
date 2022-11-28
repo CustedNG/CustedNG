@@ -10,7 +10,9 @@ import 'package:custed2/ui/home_tab/home_card.dart';
 import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/ui/schedule_tab/add_lesson_page.dart';
 import 'package:custed2/ui/widgets/navbar/navbar.dart';
+import 'package:custed2/ui/widgets/navbar/navbar_middle.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ExamPage extends StatefulWidget {
   @override
@@ -19,14 +21,11 @@ class ExamPage extends StatefulWidget {
 
 class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
   final setting = locator<SettingStore>();
-  final exam = locator<ExamProvider>();
-  final hint = Center(
-      child: Text('正在使用缓存，可能考表不准确，可尝试下拉刷新\n',
-          style: TextStyle(color: Colors.red)));
 
   @override
   Widget build(BuildContext context) {
     Widget content = SizedBox();
+    final exam = Provider.of<ExamProvider>(context, listen: true);
 
     // 三种特殊情况：
     // 1.没有考试
@@ -36,10 +35,6 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
     if (setting.agreeToShowExam.fetch() == true) {
       final rows = exam?.data?.rows ?? <JwExamRows>[];
       final list = <Widget>[];
-
-      if (exam.useCache) {
-        list.add(hint);
-      }
 
       for (JwExamRows eachExam in rows) {
         final examTime = (eachExam.examTask.beginDate.substring(5, 11) +
@@ -106,6 +101,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       }
 
       content = ListView(
+        padding: EdgeInsets.symmetric(horizontal: 17),
         children: [
           SizedBox(height: 17),
           ...list,
@@ -122,15 +118,12 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
 
     return Scaffold(
       body: RefreshIndicator(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17),
-          child: content,
-        ),
+        child: content,
         onRefresh: _onRefresh,
       ),
       appBar: NavBar.material(
         context: context,
-        middle: Text('考试安排'),
+        middle: exam.useCache ? NavbarMiddle(textAbove: '考试安排', textBelow: '注意，正在使用缓存！',) : Text('考试安排'),
         trailing: [
           IconButton(
             icon: Icon(Icons.refresh),
@@ -142,6 +135,7 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
   }
 
   Future<void> _onRefresh() async {
+    final exam = locator<ExamProvider>();
     await exam.refreshData();
     if (exam.failed) {
       showSnackBar(context, '刷新失败');

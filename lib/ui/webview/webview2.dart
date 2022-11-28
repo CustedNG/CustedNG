@@ -72,7 +72,7 @@ abstract class Webview2State extends State<Webview2> {
     activePlugins =
         widget.plugins.where((plugin) => plugin.shouldActivate(uri)).toList();
 
-    print('[WEBVIEW2] activePlugins $activePlugins');
+    print('[WEBVIEW] activePlugins $activePlugins');
   }
 
   void pluginOnLoadStart(Webview2Controller controller, String url) async {
