@@ -58,7 +58,7 @@ class UndergraduateUser with CustUser implements User {
       final startSection = int.parse(rawLesson.beginSection);
       final endSection = int.parse(rawLesson.endSection);
       final sectionLength = endSection - startSection;
-      final roomName = rawLesson.classroomName ?? '未知';
+      final roomName = rawLesson.classroomName ?? rawLesson.buildingName;
       final weeks = rawLesson.weekDescription.parseWeeks;
       final weekday = int.parse(rawLesson.dayOfWeek);
 
@@ -105,7 +105,7 @@ class UndergraduateUser with CustUser implements User {
       }
     }
 
-    // 从大到小排序
+    // 从小到大排序
     removeIdxes.sort();
     // 先反转list，防止先删除前面的，导致后面idx改变
     for (var idx in removeIdxes.reversed) {

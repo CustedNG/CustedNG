@@ -46,16 +46,11 @@ Future<int> getGitModificationCount() async {
       .length;
 }
 
-Future<String> getFlutterVersion() async {
-  final result = await Process.run('flutter', ['--version'], runInShell: true);
-  return (result.stdout as String);
-}
-
 Future<Map<String, dynamic>> getBuildData() async {
   final data = {
     'name': appName,
     'build': await getGitCommitCount(),
-    'engine': await getFlutterVersion(),
+    'engine': '2.10.5',
     'buildAt': DateTime.now().toString(),
     'modifications': await getGitModificationCount(),
   };

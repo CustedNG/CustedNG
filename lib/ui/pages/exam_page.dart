@@ -123,7 +123,12 @@ class _ExamPageState extends State<ExamPage> with AfterLayoutMixin {
       ),
       appBar: NavBar.material(
         context: context,
-        middle: exam.useCache ? NavbarMiddle(textAbove: '考试安排', textBelow: '注意，正在使用缓存！',) : Text('考试安排'),
+        middle: exam.useCache
+            ? NavbarMiddle(
+                textAbove: '考试安排',
+                textBelow: '注意，正在使用缓存！',
+              )
+            : Text('考试安排'),
         trailing: [
           IconButton(
             icon: Icon(Icons.refresh),
