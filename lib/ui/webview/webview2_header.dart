@@ -10,7 +10,7 @@ class Webview2HeaderController with ChangeNotifier {
   double progress = 0;
 
   void setUrl(String url) {
-    host = Uri?.tryParse(url)?.host ?? url;
+    host = Uri.tryParse(url)?.host ?? url;
     notifyListeners();
   }
 

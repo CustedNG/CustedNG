@@ -95,7 +95,7 @@ Future<void> flutterBuild(String source, String target, bool isAndroid) async {
     '--build-name=1.0.$build',
     '--bundle-sksl-path=${isAndroid ? 'android' : 'ios'}$skslFileSuffix',
   ];
-  if (!isAndroid) args.removeAt(2);
+  if (!isAndroid) args.removeAt(3);
   print('Building with args: ${args.join(' ')}');
   final buildResult = await Process.run('fvm', args, runInShell: true);
   final exitCode = buildResult.exitCode;

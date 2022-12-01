@@ -34,11 +34,9 @@ class UserProvider extends BusyProvider {
   }
 
   Future<void> login({bool force = false}) async {
-    await busyRun(() async {
-      await _updateProfileData(force: force);
-      await _setLoginState(true);
-      _afterLogin();
-    });
+    await _updateProfileData(force: force);
+    await _setLoginState(true);
+    _afterLogin();
   }
 
   Future<void> logout() async {

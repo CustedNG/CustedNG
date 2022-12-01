@@ -58,7 +58,8 @@ class UndergraduateUser with CustUser implements User {
       final startSection = int.parse(rawLesson.beginSection);
       final endSection = int.parse(rawLesson.endSection);
       final sectionLength = endSection - startSection;
-      final roomName = rawLesson.classroomName ?? rawLesson.buildingName;
+      final roomName =
+          rawLesson.classroomName ?? rawLesson.buildingName ?? '未知';
       final weeks = rawLesson.weekDescription.parseWeeks;
       final weekday = int.parse(rawLesson.dayOfWeek);
 
