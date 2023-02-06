@@ -353,6 +353,7 @@ class CustedConfig {
   CustedConfigBanner banner;
   bool haveExam;
   List<CustedConfigSchoolCalendar> schoolCalendar;
+  DateTime semesterStart;
 
   CustedConfig({
     this.notify,
@@ -364,6 +365,7 @@ class CustedConfig {
     this.banner,
     this.haveExam,
     this.schoolCalendar,
+    this.semesterStart,
   });
   CustedConfig.fromJson(Map<String, dynamic> json) {
     if (json['notify'] != null) {
@@ -420,6 +422,10 @@ class CustedConfig {
         arr0.add(CustedConfigSchoolCalendar.fromJson(v));
       });
       schoolCalendar = arr0;
+    }
+    final semester = json['semester_start'] as List;
+    if (semester.length == 3) {
+      semesterStart = DateTime(semester[0], semester[1], semester[2]);
     }
   }
   Map<String, dynamic> toJson() {
@@ -479,6 +485,11 @@ class CustedConfig {
       });
       data['school_calendar'] = arr0;
     }
+    data['semester_start'] = [
+      semesterStart.year,
+      semesterStart.month,
+      semesterStart.day,
+    ];
     return data;
   }
 }

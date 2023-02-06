@@ -32,6 +32,12 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _width = MediaQuery.of(context).size.width;
+  }
+
+  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -39,7 +45,6 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
 
   @override
   Widget build(BuildContext context) {
-    _width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
@@ -112,7 +117,7 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
   @override
   Future<void> afterFirstLayout(BuildContext context) async {
     locator<AppProvider>().setContext(context);
-    await agreeUserAgreement(context, setting);
+    await firstTimeCheck(context, setting);
     try {
       await CustedService().isServiceAvailable();
     } catch (e) {
@@ -121,12 +126,10 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
     }
   }
 
-  Future<void> agreeUserAgreement(
+  Future<void> firstTimeCheck(
       BuildContext context, SettingStore setting) async {
-    if (setting.userAgreement.fetch()) return;
-    print('[USER] User Agreement not agreed');
-
-    await showRoundDialog(
+    if (!setting.userAgreement.fetch()) {
+      await showRoundDialog(
         context,
         '使用须知',
         UrlText(
@@ -141,17 +144,38 @@ class _AppFrameState extends State<AppFrame> with AfterLayoutMixin<AppFrame> {
                 setting.userAgreement.put(true);
               },
               child: Text('是')),
-        ]);
+        ],
+      );
+      await showRoundDialog(context, '您是否是研究生？', SizedBox(), [
+        TextButton(
+            onPressed: () => Navigator.of(context).pop(), child: Text('否')),
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              setting.isGraduate.put(true);
+            },
+            child: Text('是')),
+      ]);
+    }
 
-    await showRoundDialog(context, '您是否是研究生？', SizedBox(), [
-      TextButton(
-          onPressed: () => Navigator.of(context).pop(), child: Text('否')),
-      TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-            setting.isGraduate.put(true);
-          },
-          child: Text('是')),
-    ]);
+//     if (!setting.hire.fetch()) {
+//       await showRoundDialog(
+//         context,
+//         '纳新',
+//         UrlText(
+//           '''
+// 我们正在寻找新的 Maintainer，如果您有兴趣，请在 $custedGithubUrl 发起 Issue。
+// 感谢各位为 开源生态、Custed 做出的贡献。''',
+//           replace: 'GitHub',
+//         ),
+//         [
+//           TextButton(
+//             onPressed: () => Navigator.of(context).pop(),
+//             child: Text('关闭'),
+//           ),
+//         ],
+//       );
+//       setting.hire.put(true);
+//     }
   }
 }

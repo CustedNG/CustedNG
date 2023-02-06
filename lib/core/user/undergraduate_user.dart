@@ -270,18 +270,8 @@ class UndergraduateUser with CustUser implements User {
   }
 
   static DateTime getScheduleStartTime() {
-    // This is hardcoded, don't forget to update this :)
-    // TODO: Make this dynamic
-    final table = {
-      '20201': DateTime(2020, 2, 24),
-      '20202': DateTime(2020, 8, 31),
-      '20211': DateTime(2021, 3, 1),
-      '20212': DateTime(2021, 8, 30),
-      '20221': DateTime(2022, 2, 28),
-      '20222': DateTime(2022, 8, 22),
-    };
-
-    return table[getTerm] ?? table.values.last;
+    // TODO: Update this :)
+    return locator<AppProvider>().config.semesterStart ?? DateTime(2023, 2, 27);
   }
 }
 

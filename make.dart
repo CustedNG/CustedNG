@@ -1,4 +1,4 @@
-#!/usr/bin/env dart
+#!/usr/bin/env fvm dart
 // ignore_for_file: avoid_print
 
 /// 使用示例
@@ -13,6 +13,11 @@ const buildDataFilePath = 'lib/res/build_data.dart';
 const xcarchivePath = 'build/ios/archive/CustedNG.xcarchive';
 
 const skslFileSuffix = '.sksl.json';
+
+final buildFuncs = {
+  'ios': flutterBuildIOS,
+  'android': flutterBuildAndroid,
+};
 
 Future<int> getGitCommitCount() async {
   final result = await Process.run('git', ['log', '--oneline']);
@@ -144,29 +149,23 @@ void main(List<String> args) async {
       return flutterRun(args.length == 2 ? args[1] : null);
     case 'build':
       final stopwatch = Stopwatch()..start();
-      final buildFunc = [];
       await updateBuildData();
       dartFormat();
+
       if (args.length > 1) {
         final platform = args[1];
-        switch (platform) {
-          case 'ios':
-            buildFunc.add(flutterBuildIOS);
-            break;
-          case 'android':
-            buildFunc.add(flutterBuildAndroid);
-            break;
-          default:
-            print('Unknown platform: $platform');
-            exit(1);
+        if (buildFuncs.containsKey(platform)) {
+          await buildFuncs[platform]();
+        } else {
+          print('Unknown platform: $platform');
+          exit(1);
         }
       } else {
-        buildFunc.add(flutterBuildIOS);
-        buildFunc.add(flutterBuildAndroid);
+        for (final func in buildFuncs.values) {
+          await func();
+        }
       }
-      for (final func in buildFunc) {
-        await func();
-      }
+
       print('Build finished in ${stopwatch.elapsed}');
       return;
     case 'update-build':
