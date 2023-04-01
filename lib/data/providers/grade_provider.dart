@@ -6,6 +6,7 @@ import 'package:custed2/core/util/utils.dart';
 import 'package:custed2/data/models/grade.dart';
 import 'package:custed2/data/providers/app_provider.dart';
 import 'package:custed2/data/store/grade_store.dart';
+import 'package:custed2/data/store/setting_store.dart';
 import 'package:custed2/locator.dart';
 
 class GradeProvider extends BusyProvider {
@@ -28,7 +29,9 @@ class GradeProvider extends BusyProvider {
     int standardMark = 90;
     final now = DateTime.now();
 
-    if (now.month == 4 && now.day == 1) {
+    if (now.month == 4 &&
+        now.day == 1 &&
+        locator<SettingStore>().foolDay.fetch()) {
       showSnackBar(locator<AppProvider>().ctx, '叮～触发彩蛋：愚人节快乐');
       print("[GRADE] Happy fools' day!");
       print('''

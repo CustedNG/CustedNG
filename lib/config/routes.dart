@@ -34,9 +34,9 @@ final cetAvatarPage = AppRoute(
   page: CetAvatarPage(),
 );
 
-final jwWebPage = AppRoute(
-  title: '教务系统',
-  page: WebviewBrowser('$custccBase/go/jwgl'),
+final portalPage = AppRoute(
+  title: '长理门户',
+  page: WebviewBrowser('https://portal.cust.edu.cn'),
 );
 
 final tikuPage = AppRoute(

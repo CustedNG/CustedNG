@@ -45,9 +45,9 @@ class _HomeEntriesState extends State<HomeEntries> {
       content: Table(children: [
         TableRow(children: [
           HomeEntry(
-            name: Text('我的教务', style: style),
+            name: Text('教务门户', style: style),
             icon: Image(image: ImageRes.manageIcon),
-            action: () => jwWebPage.go(context),
+            action: () => portalPage.go(context),
           ),
           HomeEntry(
               name: Text('空教室', style: style),

@@ -61,4 +61,7 @@ class SettingStore with PersistentStore {
 
   // 是否展示过寻找新maintainer的弹窗
   StoreProperty<bool> get hire => property('hire', defaultValue: false);
+
+  // 是否开启愚人节彩蛋
+  StoreProperty<bool> get foolDay => property('foolDay', defaultValue: true);
 }

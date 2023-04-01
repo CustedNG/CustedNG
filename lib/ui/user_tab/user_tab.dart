@@ -77,8 +77,16 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
           SettingItem(
             title: '推送上课通知',
             showArrow: false,
-            rightBtn: buildSwitch(context, setting.pushNotification,
-                func: (v) => sendSetting2Backend(v)),
+            rightBtn: buildSwitch(
+              context,
+              setting.pushNotification,
+              func: (v) => sendSetting2Backend(v),
+            ),
+          ),
+          SettingItem(
+            title: '开启彩蛋',
+            showArrow: false,
+            rightBtn: buildSwitch(context, setting.foolDay),
           ),
           SizedBox(height: 10.0),
           Text('主题'),
