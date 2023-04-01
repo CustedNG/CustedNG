@@ -10,15 +10,16 @@ class GradeStore with PersistentStore<Grade> {
       return;
     }
 
-    final shouldAddToBox =
-        head == null || grade.versionHash != head.versionHash;
+    // final shouldAddToBox =
+    //     head == null || grade.versionHash != head.versionHash;
 
-    if (shouldAddToBox) {
-      box.add(grade);
-    } else {
-      head.createdAt = grade.createdAt;
-      head.save();
-    }
+    // if (shouldAddToBox) {
+    //   box.add(grade);
+    // } else {
+    //   head.createdAt = grade.createdAt;
+    //   head.save();
+    // }
+    box.add(grade);
   }
 
   Grade get head {
