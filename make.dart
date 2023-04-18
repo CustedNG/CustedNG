@@ -11,17 +11,23 @@ import 'dart:io';
 const appName = 'CustedNG';
 const buildDataFilePath = 'lib/res/build_data.dart';
 const xcarchivePath = 'build/ios/archive/CustedNG.xcarchive';
+const appleXCConfigPath = 'Runner.xcodeproj/project.pbxproj';
+
+var regAppleProjectVer = RegExp(r'CURRENT_PROJECT_VERSION = .+;');
+var regAppleMarketVer = RegExp(r'MARKETING_VERSION = .+');
 
 const skslFileSuffix = '.sksl.json';
+
+int build = 0;
 
 final buildFuncs = {
   'ios': flutterBuildIOS,
   'android': flutterBuildAndroid,
 };
 
-Future<int> getGitCommitCount() async {
+Future<void> getGitCommitCount() async {
   final result = await Process.run('git', ['log', '--oneline']);
-  return (result.stdout as String)
+  build = (result.stdout as String)
       .split('\n')
       .where((line) => line.isNotEmpty)
       .length;
@@ -54,7 +60,7 @@ Future<int> getGitModificationCount() async {
 Future<Map<String, dynamic>> getBuildData() async {
   final data = {
     'name': appName,
-    'build': await getGitCommitCount(),
+    'build': build,
     'engine': '2.10.5',
     'buildAt': DateTime.now().toString(),
     'modifications': await getGitModificationCount(),
@@ -74,8 +80,8 @@ Future<void> updateBuildData() async {
   await writeStaticConfigFile(data, 'BuildData', buildDataFilePath);
 }
 
-void dartFormat() {
-  final result = Process.runSync('fvm', ['dart', 'format', '.']);
+Future<void> dartFormat() async {
+  final result = await Process.run('fvm', ['dart', 'format', '.']);
   print('\n' + result.stdout);
   if (result.exitCode != 0) {
     print(result.stderr);
@@ -89,8 +95,6 @@ void flutterRun(String mode) {
 }
 
 Future<void> flutterBuild(String source, String target, bool isAndroid) async {
-  final build = await getGitCommitCount();
-
   final args = [
     'flutter',
     'build',
@@ -127,6 +131,7 @@ Future<void> flutterBuild(String source, String target, bool isAndroid) async {
 }
 
 Future<void> flutterBuildIOS() async {
+  await changeAppleVersion();
   await flutterBuild(
       xcarchivePath, './release/${appName}_build.xcarchive', false);
 }
@@ -135,6 +140,17 @@ Future<void> flutterBuildAndroid() async {
   await flutterBuild('./build/app/outputs/flutter-apk/app-release.apk',
       './release/${appName}_build_Arm64.apk', true);
   await killJava();
+}
+
+Future<void> changeAppleVersion() async {
+  for (final path in ['ios', 'macos']) {
+    final file = File('$path/$appleXCConfigPath');
+    final contents = await file.readAsString();
+    final newContents = contents
+        .replaceAll(regAppleMarketVer, 'MARKETING_VERSION = 1.0.$build;')
+        .replaceAll(regAppleProjectVer, 'CURRENT_PROJECT_VERSION = $build;');
+    await file.writeAsString(newContents);
+  }
 }
 
 Future<void> killJava() async {
@@ -161,10 +177,11 @@ void main(List<String> args) async {
     case 'run':
       return flutterRun(args.length == 2 ? args[1] : null);
     case 'build':
-      final stopwatch = Stopwatch()..start();
+      await getGitCommitCount();
+      await dartFormat();
       await updateBuildData();
-      dartFormat();
 
+      final stopwatch = Stopwatch()..start();
       if (args.length > 1) {
         final platform = args[1];
         if (buildFuncs.containsKey(platform)) {
