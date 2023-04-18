@@ -70,22 +70,28 @@ class ScheduleTable extends StatelessWidget {
   }
 
   void _fillActiveLessons(
-      List<TableRow> rows, bool useGradient, bool hideWeekend) {
+    List<TableRow> rows,
+    bool useGradient,
+    bool hideWeekend,
+  ) {
     for (var lesson in schedule.activeLessons(week)) {
-      final slotIndex = (lesson.startSection - 1) ~/ 2;
       final weekIndex = lesson.weekday - 1;
       if (lesson.weekday > 5 && hideWeekend) return;
-      final lessonWidget = rows[slotIndex].children[weekIndex];
-      if (lessonWidget == placeholder) {
-        rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(
-          lesson,
-          themeIdx: themeIdx,
-          useGradient: useGradient,
-        );
-      } else {
-        final lw = (lessonWidget as ScheduleLessonWidget);
-        lw.conflict.add(lesson);
-        print('[SCHEDULE] Conflict detected: ${lw.lesson} -> ${lw.conflict}');
+      final slotIndex = (lesson.startSection - 1) ~/ 2;
+      final elotIndex = (lesson.endSection - 1) ~/ 2;
+      for (var i = slotIndex; i <= elotIndex; i++) {
+        final lessonWidget = rows[slotIndex].children[weekIndex];
+        if (lessonWidget == placeholder) {
+          rows[slotIndex].children[weekIndex] = ScheduleLessonWidget(
+            lesson,
+            themeIdx: themeIdx,
+            useGradient: useGradient,
+          );
+        } else {
+          final lw = (lessonWidget as ScheduleLessonWidget);
+          lw.conflict.add(lesson);
+          print('[SCHEDULE] Conflict: ${lw.lesson} -> ${lw.conflict}');
+        }
       }
     }
   }

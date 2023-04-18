@@ -133,7 +133,11 @@ class ScheduleLessonWidget extends StatelessWidget {
     int range = higher - lower;
     interpolateValue = max(0, interpolateValue);
     interpolateValue = min(1, interpolateValue);
-    return lower + (range * interpolateValue).toInt();
+    final diff = range * interpolateValue;
+    if (diff.isNaN) {
+      return lower;
+    }
+    return (lower + diff).toInt();
   }
 
   Color _interpolateColor(Color lower, Color higher, double interpolateValue) {

@@ -18,6 +18,8 @@ import 'package:custed2/ui/widgets/placeholder/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+const _outdateDuration = Duration(days: 17);
+
 class ScheduleTab extends StatefulWidget {
   @override
   _ScheduleTabState createState() => _ScheduleTabState();
@@ -55,7 +57,6 @@ class _ScheduleTabState extends State<ScheduleTab>
         onRefresh: _onRefresh,
         child: ListView(
           children: <Widget>[
-            _buildCloseAutoUpdateTip(),
             ScheduleWeekNavigator(),
             _buildTable(context),
           ],
@@ -71,31 +72,15 @@ class _ScheduleTabState extends State<ScheduleTab>
         return;
       }
       await scheduleProvider.updateScheduleData();
-      showSnackBar(context, '更新成功');
-      requestUpdateHomeWidget(
-          userName: locator<UserDataStore>().username.fetch(),
-          enablePush: locator<SettingStore>().pushNotification.fetch());
     } catch (e) {
       print('[SCHEDULE] Refresh failed: $e');
-      showSnackBar(context, '更新失败');
+      rethrow;
+    } finally {
+      requestUpdateHomeWidget(
+        userName: locator<UserDataStore>().username.fetch(),
+        enablePush: locator<SettingStore>().pushNotification.fetch(),
+      );
     }
-  }
-
-  Widget _buildCloseAutoUpdateTip() {
-    return !settings.autoUpdateSchedule.fetch()
-        ? Center(
-            child: Text(
-              '鉴于教务验证机制，已关闭自动更新',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context)
-                      .textTheme
-                      .bodyText1
-                      .color
-                      .withOpacity(0.5)),
-            ),
-          )
-        : SizedBox();
   }
 
   // @override
@@ -124,6 +109,7 @@ class _ScheduleTabState extends State<ScheduleTab>
         usingCustomProfile ? profile.name + ' ' + profile.studentNumber : null;
 
     List<String> display;
+    final updateTime = scheduleProvider.schedule.createdAt;
 
     if (scheduleProvider.isBusy) {
       display = ['更新中'];
@@ -137,11 +123,13 @@ class _ScheduleTabState extends State<ScheduleTab>
         display = [
           '上次更新',
           scheduleProvider.schedule != null
-              ? scheduleProvider.schedule.createdAt.toHumanReadable()
+              ? updateTime.toHumanReadable()
               : '-',
         ];
       }
     }
+    final isOutdate =
+        updateTime.isBefore(DateTime.now().subtract(_outdateDuration));
 
     // return Text(title);
     return AnimatedSwitcher(
@@ -151,6 +139,7 @@ class _ScheduleTabState extends State<ScheduleTab>
           : NavbarMiddle(
               textAbove: display[0],
               textBelow: display[1],
+              colorOverride: isOutdate ? Colors.redAccent : null,
             ),
     );
   }
