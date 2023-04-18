@@ -131,9 +131,9 @@ class _WebviewLoginState extends State<WebviewLogin> {
       /// 登录后的操作：获取profile、课表、成绩
       final user = locator<UserProvider>();
       await user.login();
-      showSnackBar(context, '登录成功');
     } catch (e) {
       showSnackBar(context, '登录出错啦 等下再试吧');
+      print('[LOGIN] failed:\n$e');
       rethrow;
     }
 

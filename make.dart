@@ -134,6 +134,19 @@ Future<void> flutterBuildIOS() async {
 Future<void> flutterBuildAndroid() async {
   await flutterBuild('./build/app/outputs/flutter-apk/app-release.apk',
       './release/${appName}_build_Arm64.apk', true);
+  await killJava();
+}
+
+Future<void> killJava() async {
+  final result = await Process.run('ps', ['-A']);
+  final lines = (result.stdout as String).split('\n');
+  for (final line in lines) {
+    if (line.contains('java')) {
+      final pid = line.split(' ')[0];
+      print('Killing java process: $pid');
+      await Process.run('kill', [pid]);
+    }
+  }
 }
 
 void main(List<String> args) async {
