@@ -82,8 +82,7 @@ class Schedule extends HiveObject {
     int week;
     while (true) {
       final lessons = activeLessonsIn(date).toList();
-      lessons.removeWhere((lesson) =>
-          lesson.startTime == null || lesson.parseStart().isBefore(date));
+      lessons.removeWhere((lesson) => lesson.parseStart().isBefore(date));
       lessons.sort((a, b) => a.startTime.compareTo(b.startTime));
       yield* lessons;
 

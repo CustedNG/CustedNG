@@ -145,8 +145,8 @@ class ScheduleTable extends StatelessWidget {
       final displayDate =
           shouldShowMonth ? '${date.month}/${date.day}' : '${date.day}';
 
-      final dateOverride = showFestivalAndHoliday
-          ? ScheduleDates.getHoliday(date) : null;
+      final dateOverride =
+          showFestivalAndHoliday ? ScheduleDates.getHoliday(date) : null;
 
       items.add(Container(
         padding: EdgeInsets.symmetric(vertical: 5),

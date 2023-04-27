@@ -38,7 +38,7 @@ class LessonInfo extends StatelessWidget {
   }
 
   Widget _buildData(BuildContext context, double width) {
-    final tercherNameSplited = lesson.teacherName.split(' ');
+    final tercherNameSplited = (lesson.teacherName ?? '').split(' ');
     var teacherName = '';
     if (tercherNameSplited.length > 2) {
       teacherName = tercherNameSplited[0] + ' 等';

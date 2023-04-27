@@ -67,8 +67,10 @@ class ScheduleLesson extends HiveObject {
 
   bool isActiveInWeek(int week) => weeks.contains(week);
 
-  TimePoint parseStart() => TimePoint?.fromString(startTime);
-  TimePoint parseEnd() => TimePoint?.fromString(endTime);
+  TimePoint parseStart() =>
+      TimePoint?.fromString(startTime) ?? TimePoint?.fromInt(startSection);
+  TimePoint parseEnd() =>
+      TimePoint?.fromString(endTime) ?? TimePoint?.fromInt(endSection);
 
   bool get isCustom => type == ScheduleLessonType.custom;
 

@@ -109,6 +109,7 @@ class _AddCustomSchedulePageState extends State<AddCustomSchedulePage> {
       }
     } catch (e) {
       _showBadNotice(reason: '解析失败：$e');
+      rethrow;
     } finally {
       setState(() {
         _isLoading = false;

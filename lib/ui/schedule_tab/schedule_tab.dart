@@ -109,7 +109,8 @@ class _ScheduleTabState extends State<ScheduleTab>
         usingCustomProfile ? profile.name + ' ' + profile.studentNumber : null;
 
     List<String> display;
-    final updateTime = scheduleProvider.schedule.createdAt;
+    final now = DateTime.now();
+    final updateTime = scheduleProvider.schedule?.createdAt ?? now;
 
     if (scheduleProvider.isBusy) {
       display = ['更新中'];
@@ -128,8 +129,7 @@ class _ScheduleTabState extends State<ScheduleTab>
         ];
       }
     }
-    final isOutdate =
-        updateTime.isBefore(DateTime.now().subtract(_outdateDuration));
+    final isOutdate = updateTime.isBefore(now.subtract(_outdateDuration));
 
     // return Text(title);
     return AnimatedSwitcher(
