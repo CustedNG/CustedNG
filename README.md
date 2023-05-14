@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="500px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/CustedNG.png">
+  <img width="500px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/CustedNG.png">
 </p>
 
 <p align="center">
@@ -20,16 +20,16 @@
 <table>
   <tr>
     <td>
-		  <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3489.PNG">
+		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3489.PNG">
     </td>
     <td>
-      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3490.PNG">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3490.PNG">
     </td>
     <td>
-      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3491.PNG">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3491.PNG">
     </td>
     <td>
-		  <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3492.PNG">
+		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3492.PNG">
     </td>
   </tr>
 </table>
@@ -37,16 +37,16 @@
 <table>
   <tr>
     <td>
-      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3493.PNG">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3493.PNG">
     </td>
     <td>
-      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3494.PNG">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3494.PNG">
     </td>
     <td>
-		  <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3495.PNG">
+		  <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3495.PNG">
     </td>
     <td>
-      <img width="200px" src="https://git.lolli.tech/custed/CustedNG/raw/material/screenshot/IMG_3496.PNG">
+      <img width="200px" src="https://raw.githubusercontent.com/CustedNG/CustedNG/material/screenshot/IMG_3496.PNG">
     </td>
   </tr>
 </table>
