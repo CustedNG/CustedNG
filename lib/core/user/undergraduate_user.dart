@@ -152,7 +152,7 @@ class UndergraduateUser with CustUser implements User {
     return result;
   }
 
-  static bool isElectiveCourse(GradeDetail grade) {
+  static bool isNotElectiveCourse(GradeDetail grade) {
     return grade.lessonType != '选修';
   }
 
@@ -194,33 +194,49 @@ class UndergraduateUser with CustUser implements User {
         grades.add(grade);
       }
 
+      // 加权总绩点
       double weightedGradePointSum = 0.0;
+      // 总学分
       double creditTotal = 0.0;
+      // 已获得学分
       double creditEarned = 0.0;
+      // 课程总数
       int subjectCount = 0;
+      // 通过课程数
       int subjectPassed = 0;
 
+      // 不含选修课的加权总绩点
       double weightedGradePointSumNoElectiveCourse = 0.0;
+      // 不含选修课的总学分
       double creditTotalNoElectiveCourse = 0.0;
 
       for (var grade in effectiveGrades.values) {
+        // 如果是正常考试状态，且成绩大于等于60分，则算通过
         final passed = grade.testStatus == '正常' && grade.mark >= 60;
+        // 这一门课的单科绩点
         final gradePoint = markToGradePoint(grade.mark);
+        // 总学分 = 总学分 + 本门课学分
         creditTotal += grade.credit;
+        // 课程总数 + 1
         subjectCount += 1;
+        // 如果通过，则已获得学分 = 已获得学分 + 本门课学分，通过课程数 + 1
         if (passed) {
           creditEarned += grade.credit;
           subjectPassed += 1;
         }
+        // 加权总绩点 = 加权总绩点 + 本门课绩点 * 本门课学分
         weightedGradePointSum += gradePoint * grade.credit;
 
-        if (isElectiveCourse(grade)) {
+        // 如果不是选修课，则不含选修课的总学分 = 不含选修课的总学分 + 本门课学分
+        if (isNotElectiveCourse(grade)) {
           weightedGradePointSumNoElectiveCourse += gradePoint * grade.credit;
           creditTotalNoElectiveCourse += grade.credit;
         }
       }
 
+      // 平均绩点 = 加权总绩点 / 总学分
       final averageGradePoint = weightedGradePointSum / creditTotal;
+      // 不含选修课的平均绩点 = 不含选修课的加权总绩点 / 不含选修课的总学分
       final averageGradePointNoElectiveCourse =
           weightedGradePointSumNoElectiveCourse / creditTotalNoElectiveCourse;
       return GradeTerm()
